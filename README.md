@@ -4,7 +4,7 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 # Links and Resources 
 - [Research Notebook][notebook] (OneDrive sign-in required)
-- [SP2019 shared folder][gdrive] on OneDrive (sign-in required)
+- [SP2019 shared folder][onedrive] on OneDrive (sign-in required)
 
 [notebook]:https://ucf-my.sharepoint.com/:w:/g/personal/ki637574_ucf_edu/Ebcn_bcQRNpHtf97_nRvJYABQWOPzmpoC80ZPXct46gXVA?e=IYfaQh
-[gdrive]:https://drive.google.com/drive/folders/1_TQsKTHbliWip72XB-0ncN1am_G8IsYx?usp=sharing
+[onedrive]:https://ucf-my.sharepoint.com/:f:/r/personal/ki637574_ucf_edu/Documents/SP2019?csf=1&e=OFZmDl
