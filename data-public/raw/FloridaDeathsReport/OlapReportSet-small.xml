@@ -1,0 +1,530 @@
+<?xml version="1.0"?>
+<OlapReports>
+  <OlapReport Name="Death Counts by Year by County" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Residence County].[Residence County].[All]" />
+              <Member Name="Alachua" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[1]" />
+              <Member Name="Baker" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[2]" />
+              <Member Name="Calhoun" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[7]" />
+            </Members>
+            <Parents>
+              <Member UniqueName="[Residence County].[Residence County].[All]" />
+            </Parents>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Year].[Year].[All]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+            <Parents>
+              <Member UniqueName="[Year].[Year].[All]" />
+            </Parents>
+          </Dimension>
+          <Dimension Name="Cause of Death - 358 Cause Groups" LevelName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[All]" />
+              <Member Name="External Causes of Mortality" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+              <Member Name="Suicide: Drugs &amp; Biological Substances (X60-X64)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Drugs &amp; Biological Substances (X60-X64)]" />
+              <Member Name="Suicide: Other &amp; Unspec Sol/Liq &amp; Vapor (X65-X66, X68-X69)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Other &amp; Unspec Sol/Liq &amp; Vapor (X65-X66, X68-X69)]" />
+              <Member Name="Suicide: Other Gases &amp; Vapors (X67)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Other Gases &amp; Vapors (X67)]" />
+              <Member Name="Suicide: Hanging, Strangulation, Suffocation (X70)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Hanging, Strangulation, Suffocation (X70)]" />
+              <Member Name="Suicide: Firearms Discharge (X72-X74)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Firearms Discharge (X72-X74)]" />
+              <Member Name="Suicide: Jump From High Place (X80)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Jump From High Place (X80)]" />
+              <Member Name="Suicide: Other &amp; Unspec &amp; Sequelae (X71, X75-X79, X81-X84, Y87.0)" UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality].&amp;[Suicide: Other &amp; Unspec &amp; Sequelae (X71, X75-X79, X81-X84, Y87.0)]" />
+            </Members>
+            <Parents>
+              <Member UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[All]" />
+              <Member UniqueName="[Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+            </Parents>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[Race Group2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+        <ExpandedTuples>
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+          <Tuple UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+        </ExpandedTuples>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer" />
+    </AxisDescriptors>
+    <ExpandedTuples>
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2017], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[1], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[7], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2015], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+      <ExpandedTuple Name="[Residence County].[Residence County].[Residence County Name].&amp;[2], [Year].[Year].[Year].&amp;[2016], [Cause of Death - 358 Cause Groups].[358 Cause of Death Groupings].[Major Groups].&amp;[External Causes of Mortality]" />
+    </ExpandedTuples>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCP6RH4cojlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEZhdTlsAAACMTojl////AKVwAAAAaKcHAAAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXDrlUUq8PDw/wAAAAC4TdfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAACZTdfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAACq29PT0/801AVTb2xpZKpUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Arial;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Leading Causes of Death by Year" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Rankable Causes of Death" LevelName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Acute Bronchitis &amp; Bronchiolitis (J20-J21)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Acute Bronchitis &amp; Bronchiolitis (J20-J21)]" />
+              <Member Name="Acute Poliomyelitis (A80)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Acute Poliomyelitis (A80)]" />
+              <Member Name="Alzheimers Disease (G30)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Alzheimers Disease (G30)]" />
+              <Member Name="Anemias (D50-D64)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Anemias (D50-D64)]" />
+              <Member Name="Aortic Aneurysm &amp; Dissection (I71)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Aortic Aneurysm &amp; Dissection (I71)]" />
+              <Member Name="Appendix Diseases (K35-K38)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Appendix Diseases (K35-K38)]" />
+              <Member Name="Arthopod-Borne Viral Encephalitis (A83-A84,A85.2)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Arthopod-Borne Viral Encephalitis (A83-A84,A85.2)]" />
+              <Member Name="Atherosclerosis (I70)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Atherosclerosis (I70)]" />
+              <Member Name="Cerebrovascular Diseases (I60-I69)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Cerebrovascular Diseases (I60-I69)]" />
+              <Member Name="Cholelithiasis &amp; Other Gallbladder Disorders (K80-K82)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Cholelithiasis &amp; Other Gallbladder Disorders (K80-K82)]" />
+              <Member Name="Chronic Liver Disease &amp; Cirrhosis (K70,K73-K74)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Chronic Liver Disease &amp; Cirrhosis (K70,K73-K74)]" />
+              <Member Name="Chronic Lower Respiratory Disease (J40-J42,J43,J44,J45-J46,J47)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Chronic Lower Respiratory Disease (J40-J42,J43,J44,J45-J46,J47)]" />
+              <Member Name="Congenital Malformations" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Congenital Malformations]" />
+              <Member Name="Diabetes Mellitus (E10-E14)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Diabetes Mellitus (E10-E14)]" />
+              <Member Name="Essen Hypertension &amp; Hypertensive Renal Dis (I10,I12,I15)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Essen Hypertension &amp; Hypertensive Renal Dis (I10,I12,I15)]" />
+              <Member Name="Female Pelvic Organs-Inflammatory Diseases (N70-N76)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Female Pelvic Organs-Inflammatory Diseases (N70-N76)]" />
+              <Member Name="Heart Diseases" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Heart Diseases]" />
+              <Member Name="Hernia (K40-K46)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Hernia (K40-K46)]" />
+              <Member Name="Homicide" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Homicide]" />
+              <Member Name="Human Immunodeficiency Virus (HIV) Disease (B20-B24)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Human Immunodeficiency Virus (HIV) Disease (B20-B24)]" />
+              <Member Name="Hyperplasia of Prostate (N40)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Hyperplasia of Prostate (N40)]" />
+              <Member Name="In Situ, Benign, Uncertain and Unknown Behavior Neoplasms (D00-D48)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[In Situ, Benign, Uncertain and Unknown Behavior Neoplasms (D00-D48)]" />
+              <Member Name="Influenza &amp; Pneumonia (J09-J11,J12-J18)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Influenza &amp; Pneumonia (J09-J11,J12-J18)]" />
+              <Member Name="Kidney Infections (N10-N12, N13.6, N15.1)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Kidney Infections (N10-N12, N13.6, N15.1)]" />
+              <Member Name="Legal Intervention (Y35, Y89.0)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Legal Intervention (Y35, Y89.0)]" />
+              <Member Name="Malaria (B50-B54)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Malaria (B50-B54)]" />
+              <Member Name="Malignant Neoplasm (Cancer)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Malignant Neoplasm (Cancer)]" />
+              <Member Name="Measles (B05)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Measles (B05)]" />
+              <Member Name="Medical &amp; Surgical Care Complications (Y40-Y84,Y88)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Medical &amp; Surgical Care Complications (Y40-Y84,Y88)]" />
+              <Member Name="Meningitis (G00,G03)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Meningitis (G00,G03)]" />
+              <Member Name="Meningococcal Infection (A39)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Meningococcal Infection (A39)]" />
+              <Member Name="Nephritis, Nephrotic Syndrome, Nephrosis (N00-N07,N17-N19,N25-N27)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Nephritis, Nephrotic Syndrome, Nephrosis (N00-N07,N17-N19,N25-N27)]" />
+              <Member Name="Nutritional Deficiencies (E40-E64)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Nutritional Deficiencies (E40-E64)]" />
+              <Member Name="Parkinsons Disease (G20-G21)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Parkinsons Disease (G20-G21)]" />
+              <Member Name="Peptic Ulcer (K25-K28)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Peptic Ulcer (K25-K28)]" />
+              <Member Name="Perinatal Period Conditions (P00-P96)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Perinatal Period Conditions (P00-P96)]" />
+              <Member Name="Pneumoconiosis &amp; Chemical Effects (J60-J66,J68)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Pneumoconiosis &amp; Chemical Effects (J60-J66,J68)]" />
+              <Member Name="Pneumonitis Due To Solids &amp; Liquids (J69)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Pneumonitis Due To Solids &amp; Liquids (J69)]" />
+              <Member Name="Pregnancy, Childbirth and the Puerperium (O00-O99)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Pregnancy, Childbirth and the Puerperium (O00-O99)]" />
+              <Member Name="Salmonella Infections (A01-A02)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Salmonella Infections (A01-A02)]" />
+              <Member Name="Scarlet Fever &amp; Erysipelas (A38,A46)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Scarlet Fever &amp; Erysipelas (A38,A46)]" />
+              <Member Name="Septicemia (A40-A41)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Septicemia (A40-A41)]" />
+              <Member Name="Shigellosis &amp; Amebiasis (A03,A06)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Shigellosis &amp; Amebiasis (A03,A06)]" />
+              <Member Name="Suicide" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Suicide]" />
+              <Member Name="Syphilis (A50-A53)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Syphilis (A50-A53)]" />
+              <Member Name="Tuberculosis (A16-A19)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Tuberculosis (A16-A19)]" />
+              <Member Name="Unintentional Injury" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Unintentional Injury]" />
+              <Member Name="Viral Hepatitis (B15-B19)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Viral Hepatitis (B15-B19)]" />
+              <Member Name="War Operations &amp; Sequelae (Y36,Y89.1)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[War Operations &amp; Sequelae (Y36,Y89.1)]" />
+              <Member Name="Whooping Cough (A37)" UniqueName="[Rankable Causes of Death].[Cause of Death - Rankable].[Rankable Cause of Death].&amp;[Whooping Cough (A37)]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+        <SortingAndFiltering SortOrder="Descending" SortBreaksHierarchy="True" SortMeasure="[Measures].[Resident Deaths]" />
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Year].[Year].[All]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+            <Parents>
+              <Member UniqueName="[Year].[Year].[All]" />
+            </Parents>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Sex].[Sex].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Residence County].[Residence County].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/8ngFIywjIyMAAPYlDVZhcmlhYmxlQ291bnQAAOgRmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAKrb09PT/6pUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Death Counts by Age Groups by County" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Death 113 Causes Plus SIDS" LevelName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Sex].[Sex].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/8ngFIywjIyMAAPYlDVZhcmlhYmxlQ291bnQAAOgRmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAKrb09PT/6pUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Death Counts by Sex by Race by County" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[Race Group1]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Death 113 Causes Plus SIDS" LevelName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/8ngFIywjIyMAAPYlDVZhcmlhYmxlQ291bnQAAOgRmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAKrb09PT/6pUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Death Counts by Sex by Ethnicity by County" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Death 113 Causes Plus SIDS" LevelName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/8ngFIywjIyMAAPYlDVZhcmlhYmxlQ291bnQAAOgRmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAKrb09PT/6pUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Death Counts by Year by Cause of Death" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Death 113 Causes Plus SIDS" LevelName="[Death 113 Causes Plus SIDS].[Death 113 Causes Plus SIDS].[Cause of Death Group 1]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Deaths" UniqueName="[Measures].[Resident Deaths]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Residence County].[Residence County].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Detailed Race - Counts Only" LevelName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Detailed Race - Counts Only].[Detailed Race - Counts Only].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Sex].[Sex].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="axbdeathscolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAHgIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/8ngFIywjIyMAAPYlDVZhcmlhYmxlQ291bnQAAOgRmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAKrb09PT/6pUB0RlZmF1bHQAAAAAxXNwh6pUB0RlZmF1bHQAAAAAggmP+LltAKpUCU1haW5UaXRsZV4sGk1pY3Jvc29mdCBTYW5zIFNlcmlmLCAxMnB0AACP+LltAKpUBk5vRGF0YeRtB0RlZmF1bHRg0BFObyBEYXRhIEF2YWlsYWJsZQAAAAD4w9zc3P9u6AVTb2xpZAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgddeaths"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdDeaths" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="#MEASURES #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbdeathsrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Maternal Death Counts by Year" Description="" CubeName="Death Public" DataTitleFormat="#MEASURES by #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="1970" UniqueName="[Year].[Year].[Year].&amp;[1970]" />
+              <Member Name="1971" UniqueName="[Year].[Year].[Year].&amp;[1971]" />
+              <Member Name="1972" UniqueName="[Year].[Year].[Year].&amp;[1972]" />
+              <Member Name="1973" UniqueName="[Year].[Year].[Year].&amp;[1973]" />
+              <Member Name="1974" UniqueName="[Year].[Year].[Year].&amp;[1974]" />
+              <Member Name="1975" UniqueName="[Year].[Year].[Year].&amp;[1975]" />
+              <Member Name="1976" UniqueName="[Year].[Year].[Year].&amp;[1976]" />
+              <Member Name="1977" UniqueName="[Year].[Year].[Year].&amp;[1977]" />
+              <Member Name="1978" UniqueName="[Year].[Year].[Year].&amp;[1978]" />
+              <Member Name="1979" UniqueName="[Year].[Year].[Year].&amp;[1979]" />
+              <Member Name="1980" UniqueName="[Year].[Year].[Year].&amp;[1980]" />
+              <Member Name="1981" UniqueName="[Year].[Year].[Year].&amp;[1981]" />
+              <Member Name="1982" UniqueName="[Year].[Year].[Year].&amp;[1982]" />
+              <Member Name="1983" UniqueName="[Year].[Year].[Year].&amp;[1983]" />
+              <Member Name="1984" UniqueName="[Year].[Year].[Year].&amp;[1984]" />
+              <Member Name="1985" UniqueName="[Year].[Year].[Year].&amp;[1985]" />
+              <Member Name="1986" UniqueName="[Year].[Year].[Year].&amp;[1986]" />
+              <Member Name="1987" UniqueName="[Year].[Year].[Year].&amp;[1987]" />
+              <Member Name="1988" UniqueName="[Year].[Year].[Year].&amp;[1988]" />
+              <Member Name="1989" UniqueName="[Year].[Year].[Year].&amp;[1989]" />
+              <Member Name="1990" UniqueName="[Year].[Year].[Year].&amp;[1990]" />
+              <Member Name="1991" UniqueName="[Year].[Year].[Year].&amp;[1991]" />
+              <Member Name="1992" UniqueName="[Year].[Year].[Year].&amp;[1992]" />
+              <Member Name="1993" UniqueName="[Year].[Year].[Year].&amp;[1993]" />
+              <Member Name="1994" UniqueName="[Year].[Year].[Year].&amp;[1994]" />
+              <Member Name="1995" UniqueName="[Year].[Year].[Year].&amp;[1995]" />
+              <Member Name="1996" UniqueName="[Year].[Year].[Year].&amp;[1996]" />
+              <Member Name="1997" UniqueName="[Year].[Year].[Year].&amp;[1997]" />
+              <Member Name="1998" UniqueName="[Year].[Year].[Year].&amp;[1998]" />
+              <Member Name="1999" UniqueName="[Year].[Year].[Year].&amp;[1999]" />
+              <Member Name="2000" UniqueName="[Year].[Year].[Year].&amp;[2000]" />
+              <Member Name="2001" UniqueName="[Year].[Year].[Year].&amp;[2001]" />
+              <Member Name="2002" UniqueName="[Year].[Year].[Year].&amp;[2002]" />
+              <Member Name="2003" UniqueName="[Year].[Year].[Year].&amp;[2003]" />
+              <Member Name="2004" UniqueName="[Year].[Year].[Year].&amp;[2004]" />
+              <Member Name="2005" UniqueName="[Year].[Year].[Year].&amp;[2005]" />
+              <Member Name="2006" UniqueName="[Year].[Year].[Year].&amp;[2006]" />
+              <Member Name="2007" UniqueName="[Year].[Year].[Year].&amp;[2007]" />
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Resident Maternal Deaths" UniqueName="[Measures].[Resident Maternal Deaths]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer" />
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAzwMAAAJEQ0JGMzAwAAAAAAAAAADNrsiKB0RpYW1vbmQVrhVWYWx1ZSBpcyB1bmF2YWlsYWJsZS7YBQUAAABCIAAA//965QEUrgF5vBt+XHRlbXAvQ2hhcnRQaWNfI1NFUSgzMDAsMymq5arlqlQWUmVzaWRlbnQgSW5mYW50IERlYXRoc+NHAYvvAAAAAMLtQbT8/6rbQEBA/x3WAAAA/5lGRURyYXdpbmdTdHlsZT1DeWxpbmRlciwgUGllRHJhd2luZ1N0eWxlPUNvbmNhdmUsIF9PbGFwRGF0YVNlcmllc189dHJ1ZU1CFlJlc2lkZW50IEluZmFudCBEZWF0aHMAAAAAhkYGRHVuZGFzpg8KNi4yLjAuMTc2MsF2UI/pEfhys2kEQXV0b4jlwMDA/wAA/CCI5cDAwP8AAJhds2kEQXV0bwAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov7NpBEF1dG8AAPYlDVZhcmlhYmxlQ291bnQAAOgR+HKzaQRBdXRviOX///8ATlsAAAD8IIjl////AAAAmF2zaQRBdXRvTlsAAACMTojl////AKVwAAAAaKcHAAAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov7NpBEF1dG8AALDaLMUAAAAAAAAAAGilAAAAAAAAMEAAAOuVRSrI0NT/AAAAALhN+HKzaQRBdXRviOXAwMD/TlsAAAD8IIjlwMDA/wAAmF2zaQRBdXRvAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcCi/s2kEQXV0bwAAAACZTfhys2kEQXV0b4jlwMDA/wAA/CCI5cDAwP8AAJhds2kEQXV0bwAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov7NpBEF1dG8AAAAARSr/////xtkCAAAAqttpOxr/NNQFU29saWSqVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/iqVAlNYWluVGl0bGVg0B9SZXNpZGVudCBJbmZhbnQgRGVhdGhzIGJ5IERhdGVzXiwaTWljcm9zb2Z0IFNhbnMgU2VyaWYsIDEycHQAAI/4uW0AqlQGTm9EYXRh5G0HRGVmYXVsdGDQEU5vIERhdGEgQXZhaWxhYmxlAAAAAAoxqkjtlWT/2dntlWT/AAAAAAAAAAABBAAAAAEAAAAJBQAAAAkGAAAAEQUAAAAAAAAADwYAAAC/JQAAAgEAAAAHRGVmYXVsdCwAAAAAAAAAAADgPwAAAAAAAPg/DEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTcwAAAAAAVGaXJzdA1DYWxlbmRhciAxOTcwAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0UwODZDQkRDIV1dJyk7IiAAAAAAAAD4PwAAAAAAAARADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTcxAAAAAAVGaXJzdA1DYWxlbmRhciAxOTcxAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzc3NTYyODhGIV1dJyk7IiAAAAAAAAAEQAAAAAAAAAxADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTcyAAAAAAVGaXJzdA1DYWxlbmRhciAxOTcyAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0I4QjFDNUNBIV1dJyk7IiAAAAAAAAAMQAAAAAAAABJADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTczAAAAAAVGaXJzdA1DYWxlbmRhciAxOTczAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0I4NDMxN0VEIV1dJyk7IiAAAAAAAAASQAAAAAAAABZADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc0AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc0AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzVBOTgwMzQ4IV1dJyk7IiAAAAAAAAAWQAAAAAAAABpADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc1AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc1AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzM3RTJBQ0RCIV1dJyk7IiAAAAAAAAAaQAAAAAAAAB5ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc2AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc2AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzMyQzJGRDM2IV1dJyk7IiAAAAAAAAAeQAAAAAAAACFADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc3AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc3AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0JCMjc5QzM5IV1dJyk7IiAAAAAAAAAhQAAAAAAAACNADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc4AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc4AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0M2MDE1MjQ0IV1dJyk7IiAAAAAAAAAjQAAAAAAAACVADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTc5AAAAAAVGaXJzdA1DYWxlbmRhciAxOTc5AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0JFQUJCOUI3IV1dJyk7IiAAAAAAAAAlQAAAAAAAACdADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTgwAAAAAAVGaXJzdA1DYWxlbmRhciAxOTgwAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0Y0M0RDRDlBIV1dJyk7IiAAAAAAAAAnQAAAAAAAAClADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTgxAAAAAAVGaXJzdA1DYWxlbmRhciAxOTgxAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzhCMEQyQTREIV1dJyk7IiAAAAAAAAApQAAAAAAAACtADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTgyAAAAAAVGaXJzdA1DYWxlbmRhciAxOTgyAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0NDNjhDNzg4IV1dJyk7IiAAAAAAAAArQAAAAAAAAC1ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTgzAAAAAAVGaXJzdA1DYWxlbmRhciAxOTgzAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0NCRkExOUFCIV1dJyk7IiAAAAAAAAAtQAAAAAAAAC9ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg0AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg0AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzZFNEYwNTA2IV1dJyk7IiAAAAAAAAAvQAAAAAAAgDBADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg1AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg1AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzRCOTlBRTk5IV1dJyk7IiAAAAAAAIAwQAAAAAAAgDFADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg2AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg2AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzQ2NzlGRUY0IV1dJyk7IiAAAAAAAIAxQAAAAAAAgDJADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg3AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg3AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0NFREU5REY3IV1dJyk7IiAAAAAAAIAyQAAAAAAAgDNADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg4AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg4AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0Q5Qjg1NDAyIV1dJyk7IiAAAAAAAIAzQAAAAAAAgDRADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTg5AAAAAAVGaXJzdA1DYWxlbmRhciAxOTg5AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0QyNjJCQjc1IV1dJyk7IiAAAAAAAIA0QAAAAAAAgDVADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTkwAAAAAAVGaXJzdA1DYWxlbmRhciAxOTkwAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0UzN0NDRDY4IV1dJyk7IiAAAAAAAIA1QAAAAAAAgDZADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTkxAAAAAAVGaXJzdA1DYWxlbmRhciAxOTkxAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzdBNEMyQTFCIV1dJyk7IiAAAAAAAIA2QAAAAAAAgDdADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTkyAAAAAAVGaXJzdA1DYWxlbmRhciAxOTkyAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0JCQTdDNzU2IV1dJyk7IiAAAAAAAIA3QAAAAAAAgDhADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTkzAAAAAAVGaXJzdA1DYWxlbmRhciAxOTkzAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0JCMzkxOTc5IV1dJyk7IiAAAAAAAIA4QAAAAAAAgDlADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk0AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk0AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzVEOEUwNEQ0IV1dJyk7IiAAAAAAAIA5QAAAAAAAgDpADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk1AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk1AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzNBRDhBRTY3IV1dJyk7IiAAAAAAAIA6QAAAAAAAgDtADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk2AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk2AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzM1QjhGRUMyIV1dJyk7IiAAAAAAAIA7QAAAAAAAgDxADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk3AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk3AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0JFMUQ5REM1IV1dJyk7IiAAAAAAAIA8QAAAAAAAgD1ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk4AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk4AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0M4Rjc1M0QwIV1dJyk7IiAAAAAAAIA9QAAAAAAAgD5ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAxOTk5AAAAAAVGaXJzdA1DYWxlbmRhciAxOTk5AAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0MxQTFCQjQzIV1dJyk7IiAAAAAAAIA+QAAAAAAAgD9ADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAyMDAwAAAAAAVGaXJzdA1DYWxlbmRhciAyMDAwAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxLzYwMUZBQ0U0IV1dJyk7IiAAAAAAAIA/QAAAAAAAQEBADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAyMDAxAAAAAAVGaXJzdA1DYWxlbmRhciAyMDAxAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBxaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0UyNjAxMDZCIV1dJyk7IiAAAAAAAEBAQAAAAAAAwEBADEN1c3RvbSBMYWJlbA1DYWxlbmRhciAyMDAyAAAAAAVGaXJzdA1DYWxlbmRhciAyMDAyAAROb25lAANCb3gAAA9BWElTX0xBQkVMX1BMVVMAByNmZjAwMDBwaHJlZj0iamF2YXNjcmlwdDpPbGFwQ2FsbEJhY2soJ09sYXBDbGllbnQxTWFuYWdlcicsJ1tPbGFwQ2xpZW50MUNoYXJ0OjpPbGFwQ2hhcnRbIURybERuJDUzMUIzRjYxL0Y1MkNFMzIhXV0nKTsiIAAAAAAAwEBAAAAAAABAQUAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDMAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDMABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvOUFDQ0E0QTEhXV0nKTsiIAAAAAAAQEFAAAAAAADAQUAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDQAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDQABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvQjI4M0JEOTAhXV0nKTsiIAAAAAAAwEFAAAAAAABAQkAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDUAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDUABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvOTE4QTQ3MzchXV0nKTsiIAAAAAAAQEJAAAAAAADAQkAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDYAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDYABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvRjM3OTA3N0UhXV0nKTsiIAAAAAAAwEJAAAAAAABAQ0AMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDcAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDcABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvNDlGNkRCNkQhXV0nKTsiIAAAAAAAQENAAAAAAADAQ0AMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDgAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDgABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvQzU0QTMzNEMhXV0nKTsiIAAAAAAAwENAAAAAAABAREAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMDkAAAAABUZpcnN0DUNhbGVuZGFyIDIwMDkABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvRDM5MkM4NTMhXV0nKTsiIAAAAAAAQERAAAAAAADAREAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMTAAAAAABUZpcnN0DUNhbGVuZGFyIDIwMTAABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvMkY1RUFDRjQhXV0nKTsiIAAAAAAAwERAAAAAAABARUAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMTEAAAAABUZpcnN0DUNhbGVuZGFyIDIwMTEABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvQjE5RjEwN0IhXV0nKTsiIAAAAAAAQEVAAAAAAADARUAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMTIAAAAABUZpcnN0DUNhbGVuZGFyIDIwMTIABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvREU5MUNFNDIhXV0nKTsiIAAAAAAAwEVAAAAAAABARkAMQ3VzdG9tIExhYmVsDUNhbGVuZGFyIDIwMTMAAAAABUZpcnN0DUNhbGVuZGFyIDIwMTMABE5vbmUAA0JveAAAD0FYSVNfTEFCRUxfUExVUwAHI2ZmMDAwMHFocmVmPSJqYXZhc2NyaXB0Ok9sYXBDYWxsQmFjaygnT2xhcENsaWVudDFNYW5hZ2VyJywnW09sYXBDbGllbnQxQ2hhcnQ6Ok9sYXBDaGFydFshRHJsRG4kNTMxQjNGNjEvNkEwQkE0QjEhXV0nKTsiIAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="olapclient1grid"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="" BorderWidth="" BorderStyle="NotSet" InterlacedRows="True" Visible="True" ID="OlapClient1Grid" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total /><Title /></OlapGrid>]]></StateBag>
+    </ControlState>
+  </OlapReport>
+</OlapReports>
