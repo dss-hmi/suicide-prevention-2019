@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<OlapReports>
+  <OlapReport Name="Population by Year by County" Description="" CubeName="Population" DataTitleFormat="Florida Population Estimates #BY #DIMENSIONS &#xA;#SLICER_DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Alachua" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[1]" />
+              <Member Name="Baker" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[2]" />
+              <Member Name="Bay" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[3]" />
+              <Member Name="Bradford" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[4]" />
+              <Member Name="Brevard" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[5]" />
+              <Member Name="Broward" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[6]" />
+              <Member Name="Calhoun" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[7]" />
+              <Member Name="Charlotte" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[8]" />
+              <Member Name="Citrus" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[9]" />
+              <Member Name="Clay" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[10]" />
+              <Member Name="Collier" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[11]" />
+              <Member Name="Columbia" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[12]" />
+              <Member Name="Miami-Dade" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[13]" />
+              <Member Name="Desoto" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[14]" />
+              <Member Name="Dixie" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[15]" />
+              <Member Name="Duval" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[16]" />
+              <Member Name="Escambia" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[17]" />
+              <Member Name="Flagler" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[18]" />
+              <Member Name="Franklin" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[19]" />
+              <Member Name="Gadsden" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[20]" />
+              <Member Name="Gilchrist" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[21]" />
+              <Member Name="Glades" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[22]" />
+              <Member Name="Gulf" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[23]" />
+              <Member Name="Hamilton" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[24]" />
+              <Member Name="Hardee" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[25]" />
+              <Member Name="Hendry" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[26]" />
+              <Member Name="Hernando" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[27]" />
+              <Member Name="Highlands" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[28]" />
+              <Member Name="Hillsborough" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[29]" />
+              <Member Name="Holmes" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[30]" />
+              <Member Name="Indian River" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[31]" />
+              <Member Name="Jackson" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[32]" />
+              <Member Name="Jefferson" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[33]" />
+              <Member Name="Lafayette" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[34]" />
+              <Member Name="Lake" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[35]" />
+              <Member Name="Lee" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[36]" />
+              <Member Name="Leon" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[37]" />
+              <Member Name="Levy" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[38]" />
+              <Member Name="Liberty" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[39]" />
+              <Member Name="Madison" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[40]" />
+              <Member Name="Manatee" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[41]" />
+              <Member Name="Marion" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[42]" />
+              <Member Name="Martin" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[43]" />
+              <Member Name="Monroe" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[44]" />
+              <Member Name="Nassau" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[45]" />
+              <Member Name="Okaloosa" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[46]" />
+              <Member Name="Okeechobee" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[47]" />
+              <Member Name="Orange" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[48]" />
+              <Member Name="Osceola" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[49]" />
+              <Member Name="Palm Beach" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[50]" />
+              <Member Name="Pasco" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[51]" />
+              <Member Name="Pinellas" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[52]" />
+              <Member Name="Polk" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[53]" />
+              <Member Name="Putnam" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[54]" />
+              <Member Name="Saint Johns" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[55]" />
+              <Member Name="Saint Lucie" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[56]" />
+              <Member Name="Santa Rosa" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[57]" />
+              <Member Name="Sarasota" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[58]" />
+              <Member Name="Seminole" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[59]" />
+              <Member Name="Sumter" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[60]" />
+              <Member Name="Suwannee" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[61]" />
+              <Member Name="Taylor" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[62]" />
+              <Member Name="Union" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[63]" />
+              <Member Name="Volusia" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[64]" />
+              <Member Name="Wakulla" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[65]" />
+              <Member Name="Walton" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[66]" />
+              <Member Name="Washington" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[67]" />
+              <Member Name="Unknown" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[68]" />
+              <Member Name="Out of State" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[88]" />
+              <Member Name="Unknown" UniqueName="[Residence County].[Residence County].[Residence County Name].&amp;[99]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2001" UniqueName="[Year].[Year].[Year].&amp;[2001]" />
+              <Member Name="2002" UniqueName="[Year].[Year].[Year].&amp;[2002]" />
+              <Member Name="2003" UniqueName="[Year].[Year].[Year].&amp;[2003]" />
+              <Member Name="2004" UniqueName="[Year].[Year].[Year].&amp;[2004]" />
+              <Member Name="2005" UniqueName="[Year].[Year].[Year].&amp;[2005]" />
+              <Member Name="2006" UniqueName="[Year].[Year].[Year].&amp;[2006]" />
+              <Member Name="2007" UniqueName="[Year].[Year].[Year].&amp;[2007]" />
+              <Member Name="2008" UniqueName="[Year].[Year].[Year].&amp;[2008]" />
+              <Member Name="2009" UniqueName="[Year].[Year].[Year].&amp;[2009]" />
+              <Member Name="2010" UniqueName="[Year].[Year].[Year].&amp;[2010]" />
+              <Member Name="2011" UniqueName="[Year].[Year].[Year].&amp;[2011]" />
+              <Member Name="2012" UniqueName="[Year].[Year].[Year].&amp;[2012]" />
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[Race Group1]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="&lt;1" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[0]" />
+              <Member Name="1-4" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[1]" />
+              <Member Name="5-9" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[2]" />
+              <Member Name="10-14" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[3]" />
+              <Member Name="15-19" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[4]" />
+              <Member Name="20-24" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[5]" />
+              <Member Name="25-34" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[6]" />
+              <Member Name="35-44" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[7]" />
+              <Member Name="45-54" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[8]" />
+              <Member Name="55-64" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[9]" />
+              <Member Name="65-74" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[10]" />
+              <Member Name="75-84" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[11]" />
+              <Member Name="85+" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[12]" />
+              <Member Name="Unknown" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[13]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer" />
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCP6RH4cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwKL/yeAUjLCMjIwAA9iUNVmFyaWFibGVDb3VudAAA6BH4cojl////AAAA/CCI5f///wAAAJhdTlsAAACMTojl////AKVwAAAAaKcHAAAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXDrlUUq8PDw/wAAAAC4TfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAAAJlN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAARSr/////xtkCAAAAqttpOxr/NNQFU29saWSqVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="olapclpopulationseries_pagerseries"><![CDATA[0;5;0;1;False;;100%;50;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="olapclpopulationgrid"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="" BorderWidth="" BorderStyle="NotSet" InterlacedRows="True" Visible="True" ID="olapclPopulationGrid" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total /><Title /></OlapGrid>]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="olapclpopulationcategorical_pagercategorical"><![CDATA[0;5;0;3;True;;0px;50;VG90YWwmbmJzcDtQYWdlczo=]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="0" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Arial;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Population by Age Groups by County" Description="" CubeName="Population" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="&lt;1" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[0]" />
+              <Member Name="1-4" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[1]" />
+              <Member Name="5-9" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[2]" />
+              <Member Name="10-14" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[3]" />
+              <Member Name="15-19" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[4]" />
+              <Member Name="20-24" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[5]" />
+              <Member Name="25-34" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[6]" />
+              <Member Name="35-44" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[7]" />
+              <Member Name="45-54" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[8]" />
+              <Member Name="55-64" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[9]" />
+              <Member Name="65-74" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[10]" />
+              <Member Name="75-84" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[11]" />
+              <Member Name="85+" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[12]" />
+              <Member Name="Unknown" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[13]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Sex].[Sex].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[RACE - Counts and Rate].[Race - Counts and Rate].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEfhyiOX///8AAAD8IIjl////AAAAmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAAmU34cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAABFKv/////G2QIAAACq22k7Gv+qVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Population by Sex by Race by County " Description="" CubeName="Population" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[Race Group1]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEfhyiOX///8AAAD8IIjl////AAAAmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAAmU34cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAABFKv/////G2QIAAACq22k7Gv+qVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Population by Sex by Ethnicity by County " Description="" CubeName="Population" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[Residence County Name]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[RACE - Counts and Rate].[Race - Counts and Rate].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEfhyiOX///8AAAD8IIjl////AAAAmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAAmU34cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAABFKv/////G2QIAAACq22k7Gv+qVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Population by Sex by Race by Age Groups " Description="" CubeName="Population" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="&lt;1" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[0]" />
+              <Member Name="1-4" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[1]" />
+              <Member Name="5-9" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[2]" />
+              <Member Name="10-14" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[3]" />
+              <Member Name="15-19" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[4]" />
+              <Member Name="20-24" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[5]" />
+              <Member Name="25-34" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[6]" />
+              <Member Name="35-44" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[7]" />
+              <Member Name="45-54" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[8]" />
+              <Member Name="55-64" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[9]" />
+              <Member Name="65-74" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[10]" />
+              <Member Name="75-84" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[11]" />
+              <Member Name="85+" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[12]" />
+              <Member Name="Unknown" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[13]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[Race Group1]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None" />
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Residence County].[Residence County].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[Year]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+            <Parents>
+              <Member UniqueName="[Year].[Year].[All]" />
+            </Parents>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEfhyiOX///8AAAD8IIjl////AAAAmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAAmU34cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAABFKv/////G2QIAAACq22k7Gv+qVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+    </ControlState>
+  </OlapReport>
+  <OlapReport Name="Population by Sex by Ethnicity by Age Groups" Description="" CubeName="Population" DataTitleFormat="#MEASURES #BY #DIMENSIONS" ReadOnly="False" NonEmptyCellsOnly="True">
+    <AxisDescriptors>
+      <AxisDescriptor AxisName="Categorical">
+        <Dimensions>
+          <Dimension Name="Death and Pop Age Groups" LevelName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="&lt;1" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[0]" />
+              <Member Name="1-4" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[1]" />
+              <Member Name="5-9" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[2]" />
+              <Member Name="10-14" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[3]" />
+              <Member Name="15-19" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[4]" />
+              <Member Name="20-24" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[5]" />
+              <Member Name="25-34" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[6]" />
+              <Member Name="35-44" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[7]" />
+              <Member Name="45-54" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[8]" />
+              <Member Name="55-64" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[9]" />
+              <Member Name="65-74" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[10]" />
+              <Member Name="75-84" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[11]" />
+              <Member Name="85+" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[12]" />
+              <Member Name="Unknown" UniqueName="[Death and Pop Age Groups].[Age Group - use for Death-Pop].[Agegroup2].&amp;[13]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Series">
+        <Dimensions>
+          <Dimension Name="Measures" LevelName="" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Population" UniqueName="[Measures].[Population]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Ethnicity - Counts and Rate" LevelName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Hispanic" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity].&amp;[Hispanic]" />
+              <Member Name="Non-Hispanic" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity].&amp;[Non-Hispanic]" />
+              <Member Name="Unknown" UniqueName="[Ethnicity - Counts and Rate].[Ethnicity - Counts and Rates].[Ethnicity].&amp;[Unknown]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Sex" LevelName="[Sex].[Sex].[Sex]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="Female" UniqueName="[Sex].[Sex].[Sex].&amp;[Female]" />
+              <Member Name="Male" UniqueName="[Sex].[Sex].[Sex].&amp;[Male]" />
+              <Member Name="Unknown" UniqueName="[Sex].[Sex].[Sex].&amp;[Unknown]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+      <AxisDescriptor AxisName="Slicer">
+        <Dimensions>
+          <Dimension Name="RACE - Counts and Rate" LevelName="[RACE - Counts and Rate].[Race - Counts and Rate].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[RACE - Counts and Rate].[Race - Counts and Rate].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Residence County" LevelName="[Residence County].[Residence County].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="All" UniqueName="[Residence County].[Residence County].[All]" />
+            </Members>
+          </Dimension>
+          <Dimension Name="Year" LevelName="[Year].[Year].[(All)]" NamedSetName="" ShowAllParentLevels="False" MemberSortOrder="None">
+            <Members>
+              <Member Name="2013" UniqueName="[Year].[Year].[Year].&amp;[2013]" />
+              <Member Name="2014" UniqueName="[Year].[Year].[Year].&amp;[2014]" />
+              <Member Name="2015" UniqueName="[Year].[Year].[Year].&amp;[2015]" />
+              <Member Name="2016" UniqueName="[Year].[Year].[Year].&amp;[2016]" />
+              <Member Name="2017" UniqueName="[Year].[Year].[Year].&amp;[2017]" />
+            </Members>
+          </Dimension>
+        </Dimensions>
+      </AxisDescriptor>
+    </AxisDescriptors>
+    <ControlState>
+      <StateBag Name="olapchart"><![CDATA[AAEAAAD/////AQAAAAAAAAAMAgAAAE1TeXN0ZW0uV2ViLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEzYQUBAAAAElN5c3RlbS5XZWIuVUkuUGFpcgIAAAAFRmlyc3QGU2Vjb25kAgICAAAACQMAAAAJBAAAAA8DAAAAogIAAAJEQ0JGMzAwAAAAAAAAAADNrs1cAAAAAACYjUAGWAAAAAAAgHZAyIoHRGlhbW9uZBWuFVZhbHVlIGlzIHVuYXZhaWxhYmxlLtgFBQAAAEIgAAD//3rlAXm8G35cdGVtcC9DaGFydFBpY18jU0VRKDMwMCwzKYZGBkR1bmRhc6YPCjcuMC4wLjE4MDXBdlCPNNQFU29saWTpEfhyiOXAwMD/AAD8IIjlwMDA/wAA18MpRGVjcmVhc2VGb250LCBMYWJlbHNBbmdsZVN0ZXA5MCwgV29yZFdyYXAov/J4BSMsIyMjAAD2JQ1WYXJpYWJsZUNvdW50AADoEfhyiOX///8AAAD8IIjl////AAAAmF1OWwAAAIxOiOX///8ApXAAAABopwcAAADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcOuVRSrI0NT/AAAAALhN+HKI5cDAwP8AAPwgiOXAwMD/AADXwylEZWNyZWFzZUZvbnQsIExhYmVsc0FuZ2xlU3RlcDkwLCBXb3JkV3JhcAAAmU34cojlwMDA/wAA/CCI5cDAwP8AANfDKURlY3JlYXNlRm9udCwgTGFiZWxzQW5nbGVTdGVwOTAsIFdvcmRXcmFwAABFKv/////G2QIAAACq22k7Gv+qVAdEZWZhdWx0AAAAAMVzcIeqVAdEZWZhdWx0RSr/////qttpOxr/xtkCAAAAAAAAAIIJj/i5bQCqVAlNYWluVGl0bGVeLBpNaWNyb3NvZnQgU2FucyBTZXJpZiwgMTJwdAAAj/i5bQCqVAZOb0RhdGHkbQdEZWZhdWx0YNARTm8gRGF0YSBBdmFpbGFibGUAAAAACjGqSO2VZP/Z2e2VZP8AAAAAAAAAAAEEAAAAAQAAAAkFAAAACQYAAAARBQAAAAAAAAAPBgAAABwAAAACAQAAAAdEZWZhdWx0AAAAAAAAAAAAAAAAAAAAAAs=]]></StateBag>
+      <StateBag Name="ctl00$contentplaceholder1$olapgdpopulation"><![CDATA[<?xml version="1.0"?><OlapGrid ForeColor="" BackColor="" BorderColor="#DCDCDC" BorderWidth="1px" BorderStyle="Solid" InterlacedRows="True" Visible="True" ID="olapgdPopulation" EnableMemberDrillDown="True" Orientation="Vertical" EmptyCellValue="" TitleText="Florida Population Estimates #BY #DIMENSIONS &lt;br/&gt;#SLICER_DIMENSIONS" ctm="True" SubTotals="True" EmptyRows="&lt;Drop rows here&gt;" EmptyColumns="&lt;Drop columns here&gt;" ErrorText="Value is unavailable." TotalsCaption="Total" ErrorBackColor="#FF0000"><ColumnHeader /><Regular /><Interlaced /><RowHeader /><Total><font value="False;False;Tahoma;False;8pt;False;False" /></Total><Title backColor="#FFFFFF" foreColor="#000000"><pad left="1" right="1" top="8" bottom="10" /><font value="True;False;Tahoma;False;10pt;False;False" /></Title></OlapGrid>]]></StateBag>
+      <StateBag Name="axbpopulationcolumns_pagercategorical"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+      <StateBag Name="axbpopulationrows_pagerseries"><![CDATA[0;5;0;0;False;;;0;VG90YWwmbmJzcDtQYWdlczog]]></StateBag>
+    </ControlState>
+  </OlapReport>
+</OlapReports>
