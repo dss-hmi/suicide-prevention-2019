@@ -38,20 +38,22 @@ lapply(ls_ds, dplyr::glimpse)
 # ---- tweak-1 -----------------------------------------------------
 # capture basic grooming sequence in a function to be applied to each sheet
 basic_grooming <- function(d){
-  d <- d %>% dplyr::select(-X__1,-X__2) # remove right shoulder
-# because names contained non-text characters:  
-colnames(d) <- gsub(" " ,"_",colnames(d)) %>% tolower()
-colnames(d) <- gsub("/" ,"_",colnames(d)) 
-colnames(d) <- gsub("#" ,"n",colnames(d)) 
-# because sections were separated by a group of empty cells  
-  d <- d %>% 
-    dplyr::filter(
-      !( is.na(dates) & is.na(county_zipcode) & is.na(type_training) )
-    ) %>% 
-    dplyr::filter(
-      ! grepl("(^TOTAL)",dates)
-    )
-  return(d)
+  # remove the right shoulder
+  first_five_colnames <- names(d)[1:5]
+  d <- d %>% dplyr::select(first_five_colnames)
+  # because names contained non-text characters:  
+  colnames(d) <- gsub(" " ,"_",colnames(d)) %>% tolower()
+  colnames(d) <- gsub("/" ,"_",colnames(d)) 
+  colnames(d) <- gsub("#" ,"n",colnames(d)) 
+  # because sections were separated by a group of empty cells  
+    d <- d %>% 
+      dplyr::filter(
+        !( is.na(dates) & is.na(county_zipcode) & is.na(type_training) )
+      ) %>% 
+      dplyr::filter(
+        ! grepl("(^TOTAL)",dates)
+      )
+    return(d)
 }
 # apply grooming to each sheet
 for(i in names(ls_ds) ){
@@ -111,13 +113,13 @@ d5 <- ds %>%
 dd <- list(d2,d3,d4,d5) %>% 
   dplyr::bind_rows() %>% 
   dplyr::mutate(
-    date_char = gsub("  "," ", date_char)
-    ,day = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\2", date_char)
-    ,month = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\1", date_char)
-    ,year = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\3", date_char)
-    ,year = ifelse(nchar(year)==2L, paste0("20",year), year)
+    date_char      = gsub("  "," ", date_char)
+    ,day           = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\2", date_char)
+    ,month         = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\1", date_char)
+    ,year          = gsub("^(\\d+)-(\\d+)-(\\d+)$","\\3", date_char)
+    ,year          = ifelse(nchar(year)==2L, paste0("20",year), year)
     ,date_standard = paste0(year,"-",month,"-",day)
-    ,date = lubridate::as_date(date_standard)
+    ,date          = lubridate::as_date(date_standard)
   ) %>% 
   dplyr::select_(.dots = c(
     "region","audience","dates","county_zipcode","type_training","n_trained", "date"
