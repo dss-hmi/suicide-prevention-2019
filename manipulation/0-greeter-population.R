@@ -30,6 +30,14 @@ ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3)
 # ---- tweak-data -----------------------------------------------------
 names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total")
 
+d <- ds0 %>% 
+  dplyr::slice(1:76) %>% 
+  dplyr::select("county", "year","sex","race","ethnicity", "total")
+
+readr::write_csv(d,"./data-public/derived/fill_NA_subject.csv")
+dput(d)
+
+
 # ---- save-to-disk ----------------------------
 
 
