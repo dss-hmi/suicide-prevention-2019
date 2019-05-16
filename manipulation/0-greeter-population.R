@@ -20,15 +20,20 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-small.xlsx"
-# path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-full.xlsx"
+# path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-small.xlsx"
+path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-full.xlsx"
 
 # ---- load-data ---------------------------------------------------------------
 #
-ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3)
+ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) %>% dplyr::slice(1:1000)
 
 # ---- tweak-data -----------------------------------------------------
-names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total")
+# names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total") # small
+
+names(ds0) <- c("county","year","sex","race","ethnicity",
+                "less_than_1", "1_4","5_9","10_14","15_19", "20_24",
+                "25_34","35_44","45_54","55_64","65_74","75_84","85_plus"
+                ,"total")
 
 d <- ds0 %>% 
   dplyr::slice(1:76) %>% 
