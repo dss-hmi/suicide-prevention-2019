@@ -33,7 +33,7 @@ ls_ds <- list(
   ,"northeast" = readxl::read_excel(path_file_input,sheet = "northeast" )
 )
 
-lapply(ls_ds, dplyr::glimpse)
+lapply(ls_ds, dplyr::glimpse, 100)
 
 # ---- tweak-1 -----------------------------------------------------
 # capture basic grooming sequence in a function to be applied to each sheet
@@ -59,15 +59,15 @@ basic_grooming <- function(d){
 for(i in names(ls_ds) ){
   ls_ds[[i]] <- ls_ds[[i]] %>% basic_grooming()
 }
-ls_ds[["central"]] %>% dplyr::glimpse()
+ls_ds[["central"]] %>% dplyr::glimpse(100)
 # to handle as a single flat dataframe:
 ds <- ls_ds %>% dplyr::bind_rows( .id = "region")
 
 ds <- ds %>% 
   dplyr::mutate(
     dates = ifelse(dates %in% c("missing", "date missing"), NA, dates)
-  )
-
+  ) 
+ds %>% dplyr::glimpse(100)
 # ---- tweak-2 ------------------------------------------------------
 # Dates are stored in a variety of formats. Make them conform.
 
@@ -75,11 +75,12 @@ ds <- ds %>%
 d0 <- ds %>% 
   dplyr::filter(grepl("^(\\d{5})$" , dates) | is.na(dates) ) %>%
   dplyr::mutate(date = lubridate::as_date(as.integer(dates), origin = "1900-01-01"))
-d0 %>% dplyr::glimpse(80)
+d0 %>% dplyr::glimpse(100)
 
 # all those needing special attention
 d1 <- ds %>% 
   dplyr::filter( ! grepl("^(\\d{5})$" , dates)| is.na(dates) ) 
+d0 %>% dplyr::glimpse(100)
 
 # dates stored as M/D/YY
 d2 <- ds %>% 
@@ -87,6 +88,7 @@ d2 <- ds %>%
   dplyr::mutate(
     date_char = gsub("(\\d{1,2})\\/(\\d{1,2})\\/(\\d{2,4})$", "\\1-\\2-\\3", dates)
   )
+d0 %>% dplyr::glimpse(100)
 
 # dates stored as  MMDDYY with a "C" prefix
 d3 <- ds %>% 
@@ -94,6 +96,7 @@ d3 <- ds %>%
   dplyr::mutate(
     date_char  =  gsub("^C(\\d+)\\/(\\d{2})(\\d{2})(\\d{2})$", "\\2-\\3-\\4", dates)
   )
+d0 %>% dplyr::glimpse(100)
 
 # dates stored as M/D/YY or M/D/YYYY with a "C" prefix
 d4 <- ds %>% 
@@ -101,6 +104,7 @@ d4 <- ds %>%
   dplyr::mutate(
       date_char  =  gsub("^C(\\d+)(: ?)(\\d{1,2})\\/(\\d{1,2})\\/(\\d{2,4})$", "\\3-\\4-\\5", dates)
   )
+d0 %>% dplyr::glimpse(100)
 
 # dates stored as M.D.YY 
 d5 <- ds %>% 
@@ -108,6 +112,7 @@ d5 <- ds %>%
   dplyr::mutate(
     date_char  =  gsub("^(\\d{1,2})\\.(\\d{1,2})\\.(\\d{2,4})$", "\\1-\\2-\\3", dates)
   )
+d0 %>% dplyr::glimpse(100)
 
 # combine all special cases into a singl df
 dd <- list(d2,d3,d4,d5) %>% 
@@ -125,13 +130,19 @@ dd <- list(d2,d3,d4,d5) %>%
     "region","audience","dates","county_zipcode","type_training","n_trained", "date"
     )
   )
+d0 %>% dplyr::glimpse(100)
 # inspect what was not addressed 
 d <- d1 %>% dplyr::left_join(dd)# see what is yet to be adjusted, quick inspection
+d %>% dplyr::glimpse(100)
 
 # combine the unproblematic dates with corrected dates
 ds_combined <- list(d0, dd) %>% 
-  dplyr::bind_rows() 
-
+  dplyr::bind_rows() %>% 
+  # dplyr::mutate(
+  #   date = lubridate::as_date(as.numeric(date),origin = "1900-01-01")
+  # ) %>% 
+  dplyr::select(-dates)
+ds_combined %>% dplyr::glimpse(100)
 # ---- tweak-3 ---------------------------------
 # separate and standardize county names and zipcode
 counties_without_zipcode <- c(
@@ -157,14 +168,14 @@ ds_combined <- ds_combined %>%
     ,county = ifelse(county %in% c("St John","St. John's","St. Johns"), "St Johns", county)
     ,county = ifelse(county %in% c("St Luice","St. Lucie"), "St Lucie", county)
   )
-# check unique spelling of counties
-ds_combined %>% dplyr::arrange(county) %>% dplyr::distinct(county) %>% print(n = nrow(.))
-ds_combined %>% dplyr::arrange(zipcode) %>% dplyr::distinct(zipcode) %>% print(n = nrow(.))
-ds_combined %>% dplyr::arrange(county,zipcode) %>% dplyr::distinct(county,zipcode) %>% print(n = nrow(.))
-
-# dplyr::select(c("date","region","county_zipcode", "county","zipcode", "type_training","n_trained","audience"))
-
+ds_combined %>% dplyr::glimpse(100)
 # ---- tweak-4 --------------------------------
+# check unique spelling of counties
+# ds_combined %>% dplyr::arrange(county) %>% dplyr::distinct(county) %>% print(n = nrow(.))
+# ds_combined %>% dplyr::arrange(zipcode) %>% dplyr::distinct(zipcode) %>% print(n = nrow(.))
+# ds_combined %>% dplyr::arrange(county,zipcode) %>% dplyr::distinct(county,zipcode) %>% print(n = nrow(.))
+
+
 ds_combined %>% 
   dplyr::group_by(audience, type_training) %>% 
   dplyr::summarize(
@@ -174,6 +185,35 @@ ds_combined %>%
   dplyr::arrange() %>%
   print(n = nrow(.))
 
+# ---- basic-table ----------------------------
+ds_combined %>% 
+  dplyr::select(-county_zipcode) %>% 
+  dplyr::mutate(
+    year   = lubridate::year(date) %>% as.character()
+    ,month = lubridate::month(date) %>% as.character()
+    ,day   = lubridate::wday(date ) %>% as.character()
+  ) %>% 
+  neat_DT()
+
+# ---- basic-pivot -----------------------------
+ds_combined %>% 
+  dplyr::select(-county_zipcode) %>% 
+  dplyr::mutate(
+    year   = lubridate::year(date)
+    ,month = lubridate::month(date)
+    ,day   = lubridate::wday(date )
+  ) %>% 
+  rpivotTable::rpivotTable(
+    rows = c("audience", "county")
+    , cols = c("year")
+    , vals = "n_trained"
+    , aggregatorName = "Integer Sum"
+    , rendererName = "Heatmap"
+    # , width="100%"
+    # , height="400px"
+  )
+
+
 # ---- save-to-disk ----------------------------
 
 
@@ -182,16 +222,29 @@ ds_combined %>%          saveRDS("./data-unshared/derived/0-greeted-gls.rds")
 ds_combined %>% readr::write_csv("./data-unshared/derived/0-greeted-gls.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
-rmarkdown::render(
-  input = "./analysis/0-greeter/0-greeter-gls.Rmd"
-  ,output_format = c(
-    "html_document" 
-    # ,"pdf_document"
-    # ,"md_document"
-    # "word_document" 
-  )
-  ,clean=TRUE
-)
+
+path_report_1 <- "./analysis/0-greeter/0-greeter-gls-table.Rmd"
+path_report_2 <- "./analysis/0-greeter/0-greeter-gls-pivot.Rmd"
+path_report_3 <- "./analysis/0-greeter/0-greeter-gls.Rmd"
+
+allReports <- c(path_report_1,path_report_2, path_report_3)
+
+pathFilesToBuild <- c(allReports)
+testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
+# Build the reports
+for( pathFile in pathFilesToBuild ) {
+  
+  rmarkdown::render(input = pathFile,
+                    output_format=c(
+                      "html_document" # set print_format <- "html" in seed-study.R
+                      # "pdf_document"
+                      # ,"md_document"
+                      # "word_document" # set print_format <- "pandoc" in seed-study.R
+                    ),
+                    clean=TRUE)
+}
+
+
 
 
 
