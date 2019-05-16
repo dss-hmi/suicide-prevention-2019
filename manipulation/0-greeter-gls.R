@@ -164,13 +164,22 @@ ds_combined %>% dplyr::arrange(county,zipcode) %>% dplyr::distinct(county,zipcod
 
 # dplyr::select(c("date","region","county_zipcode", "county","zipcode", "type_training","n_trained","audience"))
 
+# ---- tweak-4 --------------------------------
+ds_combined %>% 
+  dplyr::group_by(audience, type_training) %>% 
+  dplyr::summarize(
+    n_trained = sum(n_trained)
+  ) %>% 
+  # dplyr::distinct(type_training) %>% 
+  dplyr::arrange() %>%
+  print(n = nrow(.))
 
 # ---- save-to-disk ----------------------------
 
 
-ds_out %>% pryr::object_size()
-ds_out %>%          saveRDS("./data-unshared/derived/0-greeted-gls.rds")
-ds_out %>% readr::write_csv("./data-unshared/derived/0-greeted-gls.csv") # for read-only inspection
+ds_combined %>% pryr::object_size()
+ds_combined %>%          saveRDS("./data-unshared/derived/0-greeted-gls.rds")
+ds_combined %>% readr::write_csv("./data-unshared/derived/0-greeted-gls.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
 rmarkdown::render(
