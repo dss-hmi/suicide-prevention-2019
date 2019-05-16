@@ -22,7 +22,7 @@ library(readxl)
 # ---- declare-globals ---------------------------------------------------------
 # path_file_input       <- "./data-unshared/raw/GLS targeted areas _Final.xlsx"
 # path_file_input       <- "./data-unshared/raw/GLS-roster-2019-05-10.xlsx"
-path_file_input       <- "./data-unshared/raw/GLS-roster-2019-05-10-2.xlsx"
+path_file_input       <- "./data-unshared/raw/GLS-roster-2019-05-10.xlsx"
 
 # ---- load-data ---------------------------------------------------------------
 # source 1 : Data from Nebraska dept of Corrections
@@ -129,15 +129,40 @@ dd <- list(d2,d3,d4,d5) %>%
 d <- d1 %>% dplyr::left_join(dd)# see what is yet to be adjusted, quick inspection
 
 # combine the unproblematic dates with corrected dates
-ds_out <- list(d0, dd) %>% 
-  dplyr::bind_rows() %>%
+ds_combined <- list(d0, dd) %>% 
+  dplyr::bind_rows() 
+
+# ---- tweak-3 ---------------------------------
+# separate and standardize county names and zipcode
+counties_without_zipcode <- c(
+  "West Palm Beach",
+  "Indian River County",
+  "Palm Beach",
+  "Fort Lauderdale"
+)
+
+ds_combined <- ds_combined %>% 
+  dplyr::filter(!county_zipcode == "/3276") %>% # correct typo
   dplyr::mutate(
-    county   = gsub("^(\\w+)\\/(\\d+)$", "\\1", county_zipcode)
-    ,zipcode = gsub("^(\\w+)\\/(\\d+)$", "\\2", county_zipcode)
+    county_zipcode = ifelse(county_zipcode=="missing",NA,county_zipcode)
   ) %>% 
-  dplyr::select(c("date","region","county","zipcode", "type_training","n_trained","audience")) 
-# sanity check
-nrow(ds_out); nrow(ds) # must be the same number to account for all rows
+  dplyr::mutate(
+    county   = gsub("^(.+)\\/(.+)$", "\\1", county_zipcode)
+    ,zipcode = gsub("^(.+)\\/(.+)$", "\\2", county_zipcode)
+    ,zipcode = ifelse(zipcode %in% c(counties_without_zipcode,"missing"),NA, zipcode)
+  ) %>% 
+  # manual correction of county name spelling
+  dplyr::mutate(
+    county = ifelse(county %in% c("Indian River County"), "Indian River", county)
+    ,county = ifelse(county %in% c("St John","St. John's","St. Johns"), "St Johns", county)
+    ,county = ifelse(county %in% c("St Luice","St. Lucie"), "St Lucie", county)
+  )
+# check unique spelling of counties
+ds_combined %>% dplyr::arrange(county) %>% dplyr::distinct(county) %>% print(n = nrow(.))
+ds_combined %>% dplyr::arrange(zipcode) %>% dplyr::distinct(zipcode) %>% print(n = nrow(.))
+ds_combined %>% dplyr::arrange(county,zipcode) %>% dplyr::distinct(county,zipcode) %>% print(n = nrow(.))
+
+# dplyr::select(c("date","region","county_zipcode", "county","zipcode", "type_training","n_trained","audience"))
 
 
 # ---- save-to-disk ----------------------------
