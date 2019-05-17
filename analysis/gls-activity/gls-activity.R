@@ -157,8 +157,8 @@ g2 <- dt2 %>%
 
 # SINGLE audience
 g3 <- dt2 %>% 
-  dplyr::filter(audience == "professionals") %>%
-  # dplyr::filter(audience == "community") %>%
+  # dplyr::filter(audience == "professionals") %>%
+  dplyr::filter(audience == "community") %>%
   tidyr::gather(
     "measure"
     ,"count"
@@ -186,8 +186,8 @@ g3
 
 # Experimental: want to make bars the same width
 dt4 <- dt2 %>% 
-  dplyr::filter(audience == "professionals") %>%
-  # dplyr::filter(audience == "community") %>%
+  # dplyr::filter(audience == "professionals") %>%
+  dplyr::filter(audience == "community") %>%
   tidyr::gather(
     "measure"
     ,"count"
@@ -198,25 +198,24 @@ dt4 <- dt2 %>%
       "n_zipcodes"
       ,"n_training_types"
       ,"total_persons_trained"))
-    ,county_region = paste0(county,"-",region)
-    ,region_county = paste0(region,"-",county)
+    ,county_region = paste0(county,"-",toupper(region))
+    ,region_county = paste0(toupper(region),"-",county)
   ) 
-county_region_levels <- (dt4 %>% 
-  dplyr::arrange(region, county))[,"county_region"] %>% 
-  as.list() %>% unlist() %>% as.character()
 
-region_county_levels <- (
-  dt4 %>% 
-    dplyr::arrange(county, region)
-  )[,"region_county"] %>% 
+cr_levels <- dt4 %>% 
+  # dplyr::arrange(county, region) %>% 
+  dplyr::arrange(region, county) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::distinct(county_region ) %>% 
   as.list() %>% unlist() %>% as.character()
 
 g4 <- dt4 %>% 
-  # dplyr::mutate( 
-  #   cd = factor(county_region, levels = county_region_levels) 
-  # ) %>% 
-  ggplot(aes(x=region_county, y = count, fill = measure ))+
-  # ggplot(aes(x=county_region, y = count, fill = measure ))+
+  dplyr::mutate(
+    county_region = factor(county_region,levels = cr_levels)
+    ,county_region = factor(county_region, levels = rev(levels(county_region)))
+  ) %>% 
+  ggplot(aes(x=county_region, y = count, fill = measure ))+
+  # ggplot(aes(x=region_county, y = count, fill = measure ))+
   geom_bar(stat = "identity", alpha = .5)+
   geom_text( aes(label = count), vjust = 0.2)+
   coord_flip()+
@@ -224,7 +223,8 @@ g4 <- dt4 %>%
   theme_minimal()+
   theme(
     legend.position = "none"
-    ,axis.text.y = element_text(hjust = -.1)
+    ,axis.text.y = element_text(hjust = 1)
+    ,axis.title.y = element_blank()
   )
 g4
 # ---- basic-graph -------------------------------------------------------
