@@ -61,8 +61,11 @@ ds <- ds %>%
     ,month = lubridate::month(date)
     ,weekday = lubridate::wday(date)
   )
-ds %>% glimpse()
+ds %>% glimpse(60)
 
+ds %>% explore::explore( )
+ds %>% explore::explore_all( )
+ds %>% explore::describe()
 # ----- basic-questions -------------------------------------------------
 
 #How many counties and zipcodes were engaged by the program?
@@ -71,21 +74,159 @@ ds %>% glimpse()
 ds %>% 
   dplyr::group_by(region) %>% 
   dplyr::summarize(
-    n_counties = length(unique(county))
-    ,n_zipcodes = length(unique(zipcode))
-    ,n_training_types = length(unique(type_training))
+    n_counties             =  dplyr::n_distinct(county)
+    ,n_zipcodes            =  dplyr::n_distinct(zipcode)
+    ,n_training_types      =  dplyr::n_distinct(type_training)
+    ,total_persons_trained = sum(na.omit(n_trained))
+  )
+
+ds %>% 
+  dplyr::group_by(audience, region) %>% 
+  dplyr::summarize(
+    n_counties             =  dplyr::n_distinct(county)
+    ,n_zipcodes            =  dplyr::n_distinct(zipcode)
+    ,n_training_types      =  dplyr::n_distinct(type_training)
     ,total_persons_trained = sum(na.omit(n_trained))
     )
 
-ds %>% 
-  dplyr::group_by(region, county,zipcode) %>% 
+dt1 <- ds %>% 
+  dplyr::group_by(region, county) %>% 
   dplyr::summarize(
-     n_zipcodes = length(unique(zipcode))
-    ,n_program_types = length(unique(type_training))
-    ,total_persons_trained = sum(n_trained)
-    ) %>% 
-  neat()
+    n_zipcodes             =  dplyr::n_distinct(zipcode)
+    ,n_training_types      =  dplyr::n_distinct(type_training)
+    ,total_persons_trained = sum(na.omit(n_trained))
+    ) 
 
+dt1 %>%  neat()
+
+g1 <- dt1 %>% 
+  tidyr::gather(
+    "measure"
+    ,"count"
+    , c("n_zipcodes","n_training_types","total_persons_trained")
+  ) %>% 
+  ggplot(aes(x=county, y = count, fill = measure ))+
+  geom_bar(stat = "identity")+
+  coord_flip()+
+  # facet_grid(region ~ measure )+
+  facet_grid(region ~ measure,scales = "free")+
+  theme_minimal()+
+  theme( legend.position = "none")
+
+
+
+#########################
+
+
+dt2 <- ds %>% 
+  dplyr::group_by(region, county, audience) %>% 
+  dplyr::summarize(
+    n_zipcodes             =  dplyr::n_distinct(zipcode)
+    ,n_training_types      =  dplyr::n_distinct(type_training)
+    ,total_persons_trained = sum(na.omit(n_trained))
+  ) 
+
+dt2 %>%  neat()
+
+# BOTH audiences
+g2 <- dt2 %>% 
+  tidyr::gather(
+    "measure"
+    ,"count"
+    , c("n_zipcodes","n_training_types","total_persons_trained")
+  ) %>% 
+  dplyr::mutate(
+    measure = factor(measure, levels = c(
+      "n_zipcodes"
+      ,"n_training_types"
+      ,"total_persons_trained"))
+    ,audience = factor(audience, levels = c(
+      "community"
+      ,"professionals"
+      ,NA
+    ))
+  ) %>%    
+  ggplot(aes(x=county, y = count, color = audience, fill = audience ))+
+  scale_fill_manual(values = c("professionals" = "red", "community" = NA))+
+  scale_color_manual(values = c("professionals" = NA, "community" = "black"))+
+  geom_bar(stat = "identity", position = "identity", alpha = .5)+
+  coord_flip()+
+  # facet_grid(region ~ measure )+
+  facet_grid(region ~ measure, scales = "free")+
+  theme_minimal()
+
+# SINGLE audience
+g3 <- dt2 %>% 
+  dplyr::filter(audience == "professionals") %>%
+  # dplyr::filter(audience == "community") %>%
+  tidyr::gather(
+    "measure"
+    ,"count"
+    , c("n_zipcodes","n_training_types","total_persons_trained")
+  ) %>% 
+  dplyr::mutate(
+    measure = factor(measure, levels = c(
+      "n_zipcodes"
+      ,"n_training_types"
+      ,"total_persons_trained")) 
+  ) %>%  
+  # dplyr::arrange(county) %>% 
+  ggplot(aes(x=county, y = count, fill = measure, pattern = region ))+
+  # ggplot(aes(x=county, y = count ))+
+  geom_bar(stat = "identity", alpha = .5)+
+  geom_text( aes(label = count), vjust = 0.2)+
+  coord_flip()+
+  facet_grid(region ~ measure, scales = "free")+
+  theme_minimal()+
+  theme(
+    legend.position = "none"
+  )
+g3
+
+
+# Experimental: want to make bars the same width
+dt4 <- dt2 %>% 
+  dplyr::filter(audience == "professionals") %>%
+  # dplyr::filter(audience == "community") %>%
+  tidyr::gather(
+    "measure"
+    ,"count"
+    , c("n_zipcodes","n_training_types","total_persons_trained")
+  ) %>% 
+  dplyr::mutate(
+    measure = factor(measure, levels = c(
+      "n_zipcodes"
+      ,"n_training_types"
+      ,"total_persons_trained"))
+    ,county_region = paste0(county,"-",region)
+    ,region_county = paste0(region,"-",county)
+  ) 
+county_region_levels <- (dt4 %>% 
+  dplyr::arrange(region, county))[,"county_region"] %>% 
+  as.list() %>% unlist() %>% as.character()
+
+region_county_levels <- (
+  dt4 %>% 
+    dplyr::arrange(county, region)
+  )[,"region_county"] %>% 
+  as.list() %>% unlist() %>% as.character()
+
+g4 <- dt4 %>% 
+  # dplyr::mutate( 
+  #   cd = factor(county_region, levels = county_region_levels) 
+  # ) %>% 
+  ggplot(aes(x=region_county, y = count, fill = measure ))+
+  # ggplot(aes(x=county_region, y = count, fill = measure ))+
+  geom_bar(stat = "identity", alpha = .5)+
+  geom_text( aes(label = count), vjust = 0.2)+
+  coord_flip()+
+  facet_grid(. ~ measure, scales = "free")+
+  theme_minimal()+
+  theme(
+    legend.position = "none"
+    ,axis.text.y = element_text(hjust = -.1)
+  )
+g4
 # ---- basic-graph -------------------------------------------------------
 
 g1 <- ds %>% 
