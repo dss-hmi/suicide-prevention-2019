@@ -39,6 +39,37 @@ d <- ds0 %>%
   dplyr::slice(1:76) %>% 
   dplyr::select("county", "year","sex","race","ethnicity", "total")
 
+# function to fill last seen for given column
+
+fill_last_seen <- function(column){
+  
+  # first value is non-empty
+  last_seen = column[[1]]
+  count = 1L
+  
+  #fill rest of the cells with first non empty value
+  
+  for(cell in column){
+    if(is.na(cell)){
+      cell = last_seen
+      column[[count]] = cell
+    }
+    else{
+      last_seen = cell
+    }
+    
+    count = count +1
+  }
+  return(column)
+}
+
+# replace with a apply function to do in one go
+ds0$county <- fill_last_seen(column = ds0$county)
+ds0$race <- fill_last_seen(column = ds0$race)
+ds0$year <- fill_last_seen(column = ds0$year)
+ds0$sex <- fill_last_seen(column = ds0$sex)
+ds0$ethnicity <- fill_last_seen(column = ds0$ethnicity)
+
 readr::write_csv(d,"./data-public/derived/fill_NA_subject.csv")
 dput(d)
 
