@@ -25,7 +25,7 @@ path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulatio
 
 # ---- load-data ---------------------------------------------------------------
 #
-ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) %>% dplyr::slice(1:1000)
+ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) #%>% dplyr::slice(1:1000)
 
 # ---- tweak-data -----------------------------------------------------
 # names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total") # small
