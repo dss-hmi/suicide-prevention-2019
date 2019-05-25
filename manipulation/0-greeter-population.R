@@ -35,51 +35,50 @@ names(ds0) <- c("county","year","sex","race","ethnicity",
                 "25_34","35_44","45_54","55_64","65_74","75_84","85_plus"
                 ,"total")
 
+stem <- c("county", "year","sex","race","ethnicity")
+
 d <- ds0 %>% 
   dplyr::slice(1:76) %>% 
-  dplyr::select("county", "year","sex","race","ethnicity", "total")
+  dplyr::select(stem, "total")
 
 # function to fill last seen for given column
-
 fill_last_seen <- function(column){
   
   # first value is non-empty
   last_seen = column[[1]]
-  count = 1L
+  count     = 1L
   
   #fill rest of the cells with first non empty value
-  
-  for(cell in column){
+    for(cell in column){
     if(is.na(cell)){
-      cell = last_seen
+      cell            = last_seen
       column[[count]] = cell
     }
     else{
       last_seen = cell
     }
-    
     count = count +1
   }
   return(column)
 }
 
-# replace with a apply function to do in one go
-ds0$county <- fill_last_seen(column = ds0$county)
-ds0$race <- fill_last_seen(column = ds0$race)
-ds0$year <- fill_last_seen(column = ds0$year)
-ds0$sex <- fill_last_seen(column = ds0$sex)
-ds0$ethnicity <- fill_last_seen(column = ds0$ethnicity)
+# test on small
+d1 <- d %>% 
+  dplyr::mutate_all( list(name = ~fill_last_seen(.) ) )
 
-readr::write_csv(d,"./data-public/derived/fill_NA_subject.csv")
-dput(d)
+# apply to the full data set
+ds1 <- ds0 %>% 
+  dplyr::mutate_all( list(name = ~fill_last_seen(.) ) ) %>% 
+  dplyr::select( paste0(stem,"_name"), setdiff(names(ds0),stem))
+names(ds1) <- gsub("_name$", "", names(ds1))
 
-
+ds_out <- ds1  
 # ---- save-to-disk ----------------------------
 
 
 ds_out %>% pryr::object_size()
-ds_out %>%          saveRDS("./data-unshared/derived/0-greeted-gls.rds")
-ds_out %>% readr::write_csv("./data-unshared/derived/0-greeted-gls.csv") # for read-only inspection
+ds_out %>%          saveRDS("./data-unshared/derived/0-greeted-population.rds")
+ds_out %>% readr::write_csv("./data-unshared/derived/0-greeted-population.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
 rmarkdown::render(
