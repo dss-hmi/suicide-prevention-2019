@@ -22,7 +22,7 @@ library(readxl)
 # ---- declare-globals ---------------------------------------------------------
 # path_file_input       <- "./data-unshared/raw/GLS targeted areas _Final.xlsx"
 # path_file_input       <- "./data-unshared/raw/GLS-roster-2019-05-10.xlsx"
-path_file_input       <- "./data-unshared/raw/GLS-roster-2019-05-10.xlsx"
+path_file_input       <- "./data-unshared/raw/GLS-targeted-areas-2019-05-10.xlsx"
 
 # ---- load-data ---------------------------------------------------------------
 # source 1 : Data from Nebraska dept of Corrections
