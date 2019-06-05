@@ -1,5 +1,5 @@
 ---
-title: "1-greeter-Population"
+title: "2-greeter-suicide"
 output:
   html_document:
     always_allow_html: yes
@@ -47,10 +47,10 @@ echoChunks <- TRUE
 warningChunk <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./manipulation/1-greeter-population.R") 
+read_chunk("./manipulation/2-greeter-suicide.R") 
 ```
 
-This document is the annotation layer to [`./manipulation/1-greeter-populaton.R`][path_greeter] script, which connects to data sources used in the study, imports them into RStudio environment and prepares them for analytic enquiry.
+This document is the annotation layer to [`./manipulation/2-greeter-suicide.R`][path_greeter] script, which connects to data sources used in the study, imports them into RStudio environment and prepares them for analytic enquiry.
 
 [path_greeter]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/1-greeter-population.R
 

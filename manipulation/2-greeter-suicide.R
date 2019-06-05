@@ -20,23 +20,17 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-# path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-small.xlsx"
-path_file_input       <- "./data-unshared/raw/FloridaPopulation/FloridaPopulation-full.xlsx"
+path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-small.xlsx"
+# path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-full.xlsx"
+
 
 # ---- load-data ---------------------------------------------------------------
 #
-ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) #%>% dplyr::slice(1:1000)
+ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 2)
 
 # ---- tweak-data -----------------------------------------------------
-# names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total") # small
-
-ds1 <- ds0
-names(ds1) <- c("county","year","sex","race","ethnicity",
-                "less_than_1", "1_4","5_9","10_14","15_19", "20_24",
-                "25_34","35_44","45_54","55_64","65_74","75_84","85_plus"
-                ,"total")
-
-# function to fill last seen for given column
+names(ds0) <- c("county","year","mortality_locus","mortality_cause", "age","sex","race","ethnicity","value")
+ds0 %>% dplyr::glimpse()
 
 fill_last_seen <- function(
   column
@@ -58,34 +52,20 @@ fill_last_seen <- function(
   return(column)
 }
 
-# # replace with a apply function to do in one go
-ds1$county     <- fill_last_seen(column = ds1$county)
-ds1$race       <- fill_last_seen(column = ds1$race)
-ds1$year       <- fill_last_seen(column = ds1$year)
-ds1$sex        <- fill_last_seen(column = ds1$sex)
-ds1$ethnicity  <- fill_last_seen(column = ds1$ethnicity)
+ds1 <- ds0 %>%
+  dplyr::mutate_all(fill_last_seen)
+names(ds1) <- names(ds0)
 
-ds1 %>% dplyr::glimpse(70)
-# ds2 <- ds1 %>%
-#   dplyr::mutate_all(fill_last_seen)
-# names(ds2) <- names(ds1)
-var_stem <- c("county","year","sex","race","ethnicity")
-ds2 <- ds1 %>% 
-  tidyr::gather(
-    "age_group","count", setdiff(names(ds1), var_stem)
-  )
-
-ds2 %>% dplyr::glimpse(80)
 # ---- save-to-disk ----------------------------
 
 
-ds2 %>% pryr::object_size()
-ds2 %>%          saveRDS("./data-unshared/derived/1-greeted-population.rds")
-ds2 %>% readr::write_csv("./data-unshared/derived/1-greeted-population.csv") # for read-only inspection
+ds1 %>% pryr::object_size()
+ds1 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
+ds1 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/1-greeter/1-greeter-population.Rmd"
+  input = "./analysis/2-greeter/2-greeter-suicide.Rmd"
   ,output_format = c(
     "html_document" 
     # ,"pdf_document"
