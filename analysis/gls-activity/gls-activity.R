@@ -11,6 +11,7 @@ cat("\f") # clear console when working in RStudio
 # ---- load-sources ------------------------------------------------------------
 # Call `base::source()` on any repo file that defines functions needed below. 
 base::source("./scripts/common-functions.R")
+
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified
 library(magrittr) # pipes
@@ -21,6 +22,7 @@ library(ggpubr)   # documents
 # ---- declare-globals ---------------------------------------------------------
 path_file_input <- "./data-unshared/derived/0-greeted-gls.rds"
 html_flip <- FALSE
+baseSize <- 10
 # ---- load-data ---------------------------------------------------------------
 dto      <- readRDS(path_file_input)
 dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
@@ -51,7 +53,7 @@ get_a_sample <- function(
 # target_sample <- ds %>% 
 #   dplyr::filter(n_offenses > 1L) %>% 
 #   get_a_sample("person_id", 500)
-
+ds %>% distinct(region)
 # ---- tweak-data ---------------------------------------------------------------
 
 # create auxilary variables
@@ -61,7 +63,16 @@ ds <- ds %>%
     year = lubridate::year(date)
     ,month = lubridate::month(date)
     ,weekday = lubridate::wday(date)
+    ,rgn = car::recode(
+      region,
+      "
+      'central'='CN'
+     ;'southeast'='SE'
+     ;'northeast'='NE  '
+      "
+    )
   )
+
 ds %>% glimpse(60)
 
 # ds %>% explore::explore( )
@@ -101,7 +112,7 @@ dt1 %>%  neat()
 
 # ----- county-reports ---------------------------------
 
-# for a given county, produce a standard reporting table
+# to produce tables with (row = county) 
 
 region_table <- function(
   d
@@ -109,8 +120,8 @@ region_table <- function(
 ){
   # d <- ds 
   # pick_region = "central"
-  # pick_audience = "professionals"
-cat("\n Professionals by training type (for all years)","\n")
+
+cat("\n Trained PROFESSIONALS by training type (for all years)","\n")
   d <- d %>% 
     dplyr::filter(region %in% pick_region) 
   d1 <- d %>% 
@@ -129,7 +140,7 @@ cat("\n Professionals by training type (for all years)","\n")
   d1[is.na(d1)] <- "."
   d1  %>% neat() %>% print()
 
-  cat("\n Professionals by year (for training types","\n") 
+  cat("\n Trained PROFESSIONALS by year (for all training types)","\n") 
   d2 <- d %>% 
     dplyr::filter(audience == "professionals") %>% 
     dplyr::group_by(county, year) %>% 
@@ -146,7 +157,7 @@ cat("\n Professionals by training type (for all years)","\n")
   d2[is.na(d2)] <- "."
   d2 %>% neat() %>% print()
   
-  cat("\n Community by year (for training types","\n") 
+  cat("\n Trained IN COMMUNITY by year (for all training types)","\n") 
   d3 <- d %>% 
     dplyr::filter(audience == "community") %>% 
     dplyr::group_by(county, year) %>% 
@@ -166,10 +177,9 @@ cat("\n Professionals by training type (for all years)","\n")
   
   
 }
-regions_available <- ds %>% dplyr::distinct(region) %>% 
-  as.list() %>% unlist() %>% as.character()
+regions_available <- ds %>% dplyr::distinct(region) %>% as.list() %>% unlist() %>% as.character()
 
-cat("\n# all regions\n")
+cat("\n## all regions\n")
 ds %>% 
   dplyr::mutate(
     county = paste0(county,"     (",region,")" )
@@ -179,7 +189,7 @@ cat("\n")
 # ds %>% region_table("central")
 
 for(region_i in regions_available){
-  cat("\n# ", region_i, "\n")
+  cat("\n## ", region_i, "\n")
   ds %>% region_table(pick_region = region_i)
   cat("\n")
 }
@@ -200,202 +210,167 @@ g1 <- d1 %>%
       ,y = professionals
     )
   )+
-  # geom_point()+
   geom_text(aes(label= county, color = region), size = 4 )+
-  # geom_line(aes(group = county) )+
-  # facet_wrap("year")+
-  # scale_x_continuous(limits = c(0, 5000))+
-  # scale_y_continuous(limits = c(0, 1400))+
-  # scale_x_continuous(limits = c(0, 500))+
-  # scale_y_continuous(limits = c(0, 300))+
   theme_minimal()+
   labs(
     x = "(N) exposure in community"
     ,y = "(N) trained professionals"
     )
+# to zoom in 
 g1 +
   geom_hline(aes(yintercept = 1400), linetype = "dashed")+
   geom_vline(aes(xintercept = 5000), linetype = "dashed")
-
+# to zoom in 
 g1 +
   scale_x_continuous(limits = c(0, 5000))+
   scale_y_continuous(limits = c(0, 1400))+
   geom_hline(aes(yintercept = 400), linetype = "dashed")+
   geom_vline(aes(xintercept = 600), linetype = "dashed")
-
+# to zoom in 
 g1 +
   scale_x_continuous(limits = c(0, 600))+
   scale_y_continuous(limits = c(0, 400))
-# ----- --------------------------
+
+# ---- explore-2-define-function -------------------------------
+
+show_coverage <- function(
+  d
+  ,pick_audience = "both"
+)
+{
+  # d <- ds
+  d1 <- d %>% 
+    dplyr::group_by(region,rgn, county, audience) %>% 
+    dplyr::summarize(
+      n_zipcodes             =  dplyr::n_distinct(zipcode)
+      ,n_training_types      =  dplyr::n_distinct(type_training)
+      ,total_persons_trained = sum(na.omit(n_trained))
+    ) %>% 
+    dplyr::ungroup() %>% 
+    dplyr::mutate(
+      county  = paste0(county,"-",rgn)
+    ) 
+  # dt2 %>%  neat()
+ 
+   cr_levels <- d1 %>% 
+    # dplyr::arrange(county, region) %>% 
+    dplyr::arrange(region, county) %>% 
+    # dplyr::ungroup() %>% 
+    dplyr::distinct(county ) %>% 
+    as.list() %>% unlist() %>% as.character()
+  
+   d2 <- d1 %>% 
+     dplyr::mutate(
+       # to control the order of counties on the graph
+       county  = factor(county,levels = cr_levels)
+       ,county = factor(county, levels = rev(levels(county)))
+     ) %>% 
+     tidyr::gather(
+       "measure"
+       ,"count"
+       , c("n_zipcodes","n_training_types","total_persons_trained")
+     ) %>% 
+     dplyr::mutate(
+       measure = factor(measure, levels = c(
+         "n_zipcodes"
+         ,"n_training_types"
+         ,"total_persons_trained"),
+         labels = c("Zipcodes", "Training Types", "Persons")
+         )
+       ,audience = factor(audience, levels = c(
+         "community"
+         ,"professionals"
+         ,NA
+       ))
+     )
+  # to make plot of 
+  # BOTH audiences
+  if(pick_audience == "both"){
+    g1 <- d2 %>% 
+      ggplot(aes(x=county, y = count, color = audience, fill = audience ))+
+      scale_fill_manual( values = c("professionals" = "red", "community" = NA))+
+      scale_color_manual(values = c("professionals" = NA,    "community" = "black"))+
+      geom_bar(stat = "identity", position = "identity", alpha = .5)+
+      coord_flip()+
+      facet_grid(. ~ measure, scales = "free")+
+      # facet_grid(region ~ measure, scales = "free")+
+      theme_minimal()+
+      labs(
+        title = paste0("How many ... were engaged by GLS program?")
+        ,x = "County in Florida" , y = "Units engaged"
+      )+
+      theme(
+        axis.text = element_text(size = baseSize + 2)
+      )
+      
+    g_out <- g1
+  }
+  # SINGLE audience
+  if(!pick_audience == "both"){
+    g2 <- d2 %>% 
+      dplyr::filter(audience == pick_audience) %>% 
+      #
+      ggplot(aes(x=county, y = count, fill = measure, pattern = region ))+
+      # ggplot(aes(x=county, y = count ))+
+      geom_bar(stat = "identity", alpha = .5)+
+      geom_text( aes(label = count), vjust = 0.2)+
+      coord_flip()+
+      facet_grid(. ~ measure, scales = "free")+
+      theme_minimal()+
+      theme(
+        legend.position = "none"
+      )+
+      labs(
+        title = paste0("How many ... were engaged by GLS program? Audience = (",pick_audience,") ?")
+        ,x = "County in Florida" , y = "Number of persons trained"
+      )
+    
+    g_out <- g2
+  }
+   return(g_out)
+}
+# how to use:
+# ds %>% show_coverage()
+
+# ---- explore-2 -------------------------------
+
+ds %>% show_coverage()
+
+# to remove the outlier
+ds %>% 
+  dplyr::filter( !county %in% c("Orange") ) %>% 
+  show_coverage()
+
+# to remove another outlier
+ds %>% 
+  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
+  show_coverage()
+
+# ---- explore-3 -------------------------------
+ds %>% show_coverage("professionals")
+# to remove the outlier
+ds %>%   
+  dplyr::filter( !county %in% c("Orange") ) %>% 
+  show_coverage("professionals")
+# to remove another outlier
+ds %>%   
+  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
+  show_coverage("professionals")
 
 
+# ---- explore-3-1 -------------------------------
+ds %>% show_coverage("community")
+# to remove the outlier
+ds %>%   
+  dplyr::filter( !county %in% c("Orange") ) %>% 
+  show_coverage("community")
+# to remove another outlier
+ds %>%   
+  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
+  show_coverage("community")
 
-
-dt2 <- ds %>% 
-  dplyr::filter(audience == "community") %>% 
-  dplyr::group_by(type_training) %>% 
-  dplyr::summarize(
-    n_trained = sum(n_trained)
-  ) %>% 
-  dplyr::arrange(desc(n_trained))
-
-dt2 %>% neat()
-
-g1 <- dt1 %>% 
-  tidyr::gather(
-    "measure"
-    ,"count"
-    , c("n_zipcodes","n_training_types","total_persons_trained")
-  ) %>% 
-  ggplot(aes(x=county, y = count, fill = measure ))+
-  geom_bar(stat = "identity")+
-  coord_flip()+
-  # facet_grid(region ~ measure )+
-  facet_grid(region ~ measure,scales = "free")+
-  theme_minimal()+
-  theme( legend.position = "none")
-
-g1
-
-#########################
-
-
-dt2 <- ds %>% 
-  dplyr::group_by(region, county, audience) %>% 
-  dplyr::summarize(
-    n_zipcodes             =  dplyr::n_distinct(zipcode)
-    ,n_training_types      =  dplyr::n_distinct(type_training)
-    ,total_persons_trained = sum(na.omit(n_trained))
-  ) 
-
-dt2 %>%  neat()
-
-# BOTH audiences
-g2 <- dt2 %>% 
-  tidyr::gather(
-    "measure"
-    ,"count"
-    , c("n_zipcodes","n_training_types","total_persons_trained")
-  ) %>% 
-  dplyr::mutate(
-    measure = factor(measure, levels = c(
-      "n_zipcodes"
-      ,"n_training_types"
-      ,"total_persons_trained"))
-    ,audience = factor(audience, levels = c(
-      "community"
-      ,"professionals"
-      ,NA
-    ))
-  ) %>%    
-  ggplot(aes(x=county, y = count, color = audience, fill = audience ))+
-  scale_fill_manual(values = c("professionals" = "red", "community" = NA))+
-  scale_color_manual(values = c("professionals" = NA, "community" = "black"))+
-  geom_bar(stat = "identity", position = "identity", alpha = .5)+
-  coord_flip()+
-  # facet_grid(region ~ measure )+
-  facet_grid(region ~ measure, scales = "free")+
-  theme_minimal()
-
-# SINGLE audience
-g3 <- dt2 %>% 
-  dplyr::filter(audience == "professionals") %>%
-  # dplyr::filter(audience == "community") %>%
-  tidyr::gather(
-    "measure"
-    ,"count"
-    , c("n_zipcodes","n_training_types","total_persons_trained")
-  ) %>% 
-  dplyr::mutate(
-    measure = factor(measure, levels = c(
-      "n_zipcodes"
-      ,"n_training_types"
-      ,"total_persons_trained")) 
-  ) %>%  
-  # dplyr::arrange(county) %>% 
-  ggplot(aes(x=county, y = count, fill = measure, pattern = region ))+
-  # ggplot(aes(x=county, y = count ))+
-  geom_bar(stat = "identity", alpha = .5)+
-  geom_text( aes(label = count), vjust = 0.2)+
-  coord_flip()+
-  facet_grid(region ~ measure, scales = "free")+
-  theme_minimal()+
-  theme(
-    legend.position = "none"
-  )
-g3
-
-
-# Experimental: want to make bars the same width
-dt4 <- dt2 %>% 
-  # dplyr::filter(audience == "professionals") %>%
-  dplyr::filter(audience == "community") %>%
-  tidyr::gather(
-    "measure"
-    ,"count"
-    , c("n_zipcodes","n_training_types","total_persons_trained")
-  ) %>% 
-  dplyr::mutate(
-    measure = factor(measure, levels = c(
-      "n_zipcodes"
-      ,"n_training_types"
-      ,"total_persons_trained"))
-    ,county_region = paste0(county,"-",toupper(region))
-    ,region_county = paste0(toupper(region),"-",county)
-  ) 
-
-cr_levels <- dt4 %>% 
-  # dplyr::arrange(county, region) %>% 
-  dplyr::arrange(region, county) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::distinct(county_region ) %>% 
-  as.list() %>% unlist() %>% as.character()
-
-g4 <- dt4 %>% 
-  dplyr::mutate(
-    county_region = factor(county_region,levels = cr_levels)
-    ,county_region = factor(county_region, levels = rev(levels(county_region)))
-  ) %>% 
-  ggplot(aes(x=county_region, y = count, fill = measure ))+
-  # ggplot(aes(x=region_county, y = count, fill = measure ))+
-  geom_bar(stat = "identity", alpha = .5)+
-  geom_text( aes(label = count), vjust = 0.2)+
-  coord_flip()+
-  facet_grid(. ~ measure, scales = "free")+
-  theme_minimal()+
-  theme(
-    legend.position = "none"
-    ,axis.text.y = element_text(hjust = 1)
-    ,axis.title.y = element_blank()
-  )
-g4
 # ---- basic-graph -------------------------------------------------------
 
-d5 <- ds %>% 
-  dplyr::group_by(county, audience, region) %>% 
-  # dplyr::group_by(county, year, audience) %>% 
-  dplyr::summarize(
-    n_trained = sum(na.omit(n_trained))
-  ) %>% 
-  tidyr::spread(key = "audience", value = "n_trained")
-  
-g5 <- d5 %>% 
-  ggplot2::ggplot(
-    aes(
-      x  = community
-      ,y = professionals
-    )
-  )+
-  # geom_point()+
-  geom_text(aes(label= county, color = region), size = 4 )+
-  # geom_line(aes(group = county) )+
-  # facet_wrap("year")+
-  # scale_x_continuous(limits = c(0, 5000))+
-  # scale_y_continuous(limits = c(0, 1400))+
-  # scale_x_continuous(limits = c(0, 500))+
-  # scale_y_continuous(limits = c(0, 300))+
-  theme_minimal()
-g5
 
 # ---- define-utility-functions ---------------
 

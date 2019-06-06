@@ -9,9 +9,7 @@ output:
     theme: spacelab
     toc: yes
     toc_float: yes
-  pdf_document: 
-    highlight: pygments
-    toc: yes
+    table: kable
 ---
 
 <!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
@@ -52,9 +50,9 @@ read_chunk("./analysis/gls-activity/gls-activity.R")
 ```
 
 
-# I. Exposition 
+# Set the scene 
 
-Some text here
+Describe the environment.
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
 ```{r load-packages, echo=echoChunks, message=FALSE}
 ```
@@ -74,7 +72,6 @@ Some text here
 #Put code in here.  It doesn't call a chunk in the codebehind file.
 ```
 
-## I.A. Data
 <!-- Load the datasets.   -->
 ```{r load-data, echo=echoChunks, results='show', message=FALSE}
 ```
@@ -88,7 +85,7 @@ Some text here
 ```
 
 
-
+# I Exposition 
 <!-- Basic table view.   -->
 ```{r county-reports, echo=TRUE, results='asis', message=FALSE}
 ```
@@ -101,22 +98,34 @@ Some text here
 
 # II. Development
 
-## 1
-```{r explore-1, echo=FALSE, results='show', message=FALSE}
+## 1 scatter
+```{r explore-1, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
 
-## 2
+## 2 Coverage - DUAL
 
-```{r explore-2, echo=TRUE, results='show', message=FALSE}
+```{r explore-2-define-function, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
 
-## 3
+```{r explore-2, echo=TRUE, results='show', message=FALSE, warning = F}
+```
+
+## 3 Coverage - SINGLE
+
+### Professionals
 ```{r explore-3, echo=TRUE, results='show', message=FALSE}
+```
+
+### Community
+```{r explore-3-1, echo=TRUE, results='show', message=FALSE}
 ```
 
 ## 4
 ```{r explore-4, echo=TRUE, results='show', message=FALSE}
 ```
+
+# III. Recapitulation
+
 
 
 
