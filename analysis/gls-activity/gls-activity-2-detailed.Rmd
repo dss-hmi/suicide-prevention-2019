@@ -8,7 +8,7 @@ output:
     keep_md: yes
     theme: spacelab
     toc: yes
-    toc_float: yes
+    toc_float: no
     table: kable
 ---
 
@@ -52,7 +52,7 @@ read_chunk("./analysis/gls-activity/gls-activity.R")
 
 # Set the scene 
 
-Describe the environment.
+Describe the working environment. 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
 ```{r load-packages, echo=echoChunks, message=FALSE}
 ```
@@ -86,10 +86,13 @@ Describe the environment.
 
 
 # I Exposition 
+
 <!-- Basic table view.   -->
-```{r county-reports, echo=TRUE, results='asis', message=FALSE}
+```{r county-reports, echo=FALSE, results='asis', message=FALSE}
 ```
 
+```{r county-reports-1, echo=TRUE, results='asis', message=FALSE}
+```
 
 
 ```{r save-to-disk, echo=TRUE, results='show', message=FALSE}
@@ -98,7 +101,7 @@ Describe the environment.
 
 # II. Development
 
-## 1 scatter
+## 1 County scatter
 ```{r explore-1, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
 
@@ -110,17 +113,12 @@ Describe the environment.
 ```{r explore-2, echo=TRUE, results='show', message=FALSE, warning = F}
 ```
 
-## 3 Coverage - SINGLE
+## 3 Coverage - Professionals
 
-### Professionals
 ```{r explore-3, echo=TRUE, results='show', message=FALSE}
 ```
 
-### Community
-```{r explore-3-1, echo=TRUE, results='show', message=FALSE}
-```
-
-## 4
+## 4 Coverage -  Community
 ```{r explore-4, echo=TRUE, results='show', message=FALSE}
 ```
 

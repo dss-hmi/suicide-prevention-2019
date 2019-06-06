@@ -188,6 +188,7 @@ ds %>%
 cat("\n")
 # ds %>% region_table("central")
 
+# ----- county-reports-1 ---------------------------------
 for(region_i in regions_available){
   cat("\n## ", region_i, "\n")
   ds %>% region_table(pick_region = region_i)
@@ -210,12 +211,20 @@ g1 <- d1 %>%
       ,y = professionals
     )
   )+
-  geom_text(aes(label= county, color = region), size = 4 )+
+  geom_text(aes(label= county, color = region), size = baseSize-4 )+
+  scale_color_manual(values = c(
+    "central"    ="#1b9e77"
+    ,"northeast" ="#d95f02"
+    , "southeast"="#7570b3"
+  ))+
   theme_minimal()+
   labs(
-    x = "(N) exposure in community"
-    ,y = "(N) trained professionals"
-    )
+    x = "Number of people in community exposed to GLS program"
+    ,y = "Number of professionals receiving GLP training"
+    )+
+  theme(
+    axis.text = element_text(size = baseSize + 2)
+  )
 # to zoom in 
 g1 +
   geom_hline(aes(yintercept = 1400), linetype = "dashed")+
@@ -298,6 +307,7 @@ show_coverage <- function(
       labs(
         title = paste0("How many ... were engaged by GLS program?")
         ,x = "County in Florida" , y = "Units engaged"
+        ,fill = "Audience", color = "Audience"
       )+
       theme(
         axis.text = element_text(size = baseSize + 2)
@@ -316,13 +326,22 @@ show_coverage <- function(
       geom_text( aes(label = count), vjust = 0.2)+
       coord_flip()+
       facet_grid(. ~ measure, scales = "free")+
+      scale_fill_manual(values = c(
+        "Zipcodes"        = "#a6cee3"
+        ,"Training Types"  = "#1f78b4"
+        ,"Persons"         = "#b2df8a"
+
+      ))+
       theme_minimal()+
       theme(
         legend.position = "none"
       )+
       labs(
         title = paste0("How many ... were engaged by GLS program? Audience = (",pick_audience,") ?")
-        ,x = "County in Florida" , y = "Number of persons trained"
+        ,x = "County in Florida" , y = "Units engaged", fill = "Audience"
+      )+
+      theme(
+        axis.text = element_text(size = baseSize + 2)
       )
     
     g_out <- g2
@@ -358,7 +377,7 @@ ds %>%
   show_coverage("professionals")
 
 
-# ---- explore-3-1 -------------------------------
+# ---- explore-4 -------------------------------
 ds %>% show_coverage("community")
 # to remove the outlier
 ds %>%   
