@@ -56,6 +56,7 @@ get_a_sample <- function(
 
 # create auxilary variables
 ds <- ds %>% 
+  dplyr::select(-county_zipcode) %>% 
   dplyr::mutate(
     year = lubridate::year(date)
     ,month = lubridate::month(date)
@@ -63,8 +64,7 @@ ds <- ds %>%
   )
 ds %>% glimpse(60)
 
-ds %>% explore::explore( )
-ds %>% explore::explore_all( )
+# ds %>% explore::explore( )
 ds %>% explore::describe()
 # ----- basic-questions -------------------------------------------------
 
@@ -90,7 +90,7 @@ ds %>%
     )
 
 dt1 <- ds %>% 
-  dplyr::group_by(region, county) %>% 
+  dplyr::group_by(audience, region, county) %>% 
   dplyr::summarize(
     n_zipcodes             =  dplyr::n_distinct(zipcode)
     ,n_training_types      =  dplyr::n_distinct(type_training)
@@ -98,6 +98,148 @@ dt1 <- ds %>%
     ) 
 
 dt1 %>%  neat()
+
+# ----- county-reports ---------------------------------
+
+# for a given county, produce a standard reporting table
+
+region_table <- function(
+  d
+  ,pick_region
+){
+  # d <- ds 
+  # pick_region = "central"
+  # pick_audience = "professionals"
+cat("\n Professionals by training type (for all years)","\n")
+  d <- d %>% 
+    dplyr::filter(region %in% pick_region) 
+  d1 <- d %>% 
+    dplyr::filter(audience == "professionals") %>% 
+    dplyr::group_by(county, type_training) %>% 
+    dplyr::summarize(
+      n_trained = sum(n_trained)
+    ) %>% 
+    dplyr::group_by(county) %>% 
+    dplyr::mutate(
+      total_trained = sum(n_trained)
+    ) %>% 
+    dplyr::ungroup() %>% 
+    tidyr::spread(key = "type_training", value = "n_trained") %>% 
+    dplyr::arrange(desc(total_trained))
+  d1[is.na(d1)] <- "."
+  d1  %>% neat() %>% print()
+
+  cat("\n Professionals by year (for training types","\n") 
+  d2 <- d %>% 
+    dplyr::filter(audience == "professionals") %>% 
+    dplyr::group_by(county, year) %>% 
+    dplyr::summarize(
+      n_trained = sum(n_trained)
+    ) %>% 
+    dplyr::group_by(county) %>% 
+    dplyr::mutate(
+      total_trained = sum(n_trained)
+    ) %>% 
+    dplyr::ungroup() %>% 
+    tidyr::spread(key = "year", value = "n_trained") %>% 
+    dplyr::arrange(desc(total_trained))
+  d2[is.na(d2)] <- "."
+  d2 %>% neat() %>% print()
+  
+  cat("\n Community by year (for training types","\n") 
+  d3 <- d %>% 
+    dplyr::filter(audience == "community") %>% 
+    dplyr::group_by(county, year) %>% 
+    dplyr::summarize(
+      n_trained = sum(na.omit(n_trained))
+    ) %>% 
+    dplyr::group_by(county) %>% 
+    dplyr::mutate(
+      total_trained = sum(na.omit(n_trained))
+    ) %>% 
+    tidyr::spread("year","n_trained") %>% 
+    dplyr::arrange(desc(total_trained)) %>% 
+    tidyr::replace_na(list("."))
+ d3[is.na(d3)] <- "."
+ d3 %>% neat()  %>% print()
+ cat("\n") 
+  
+  
+}
+regions_available <- ds %>% dplyr::distinct(region) %>% 
+  as.list() %>% unlist() %>% as.character()
+
+cat("\n# all regions\n")
+ds %>% 
+  dplyr::mutate(
+    county = paste0(county,"     (",region,")" )
+  ) %>% 
+  region_table(pick_region = regions_available)
+cat("\n")
+# ds %>% region_table("central")
+
+for(region_i in regions_available){
+  cat("\n# ", region_i, "\n")
+  ds %>% region_table(pick_region = region_i)
+  cat("\n")
+}
+
+# ---- explore-1 ------------------
+d1 <- ds %>% 
+  dplyr::group_by(county, audience, region) %>% 
+  # dplyr::group_by(county, year, audience) %>% 
+  dplyr::summarize(
+    n_trained = sum(na.omit(n_trained))
+  ) %>% 
+  tidyr::spread(key = "audience", value = "n_trained")
+
+g1 <- d1 %>% 
+  ggplot2::ggplot(
+    aes(
+      x  = community
+      ,y = professionals
+    )
+  )+
+  # geom_point()+
+  geom_text(aes(label= county, color = region), size = 4 )+
+  # geom_line(aes(group = county) )+
+  # facet_wrap("year")+
+  # scale_x_continuous(limits = c(0, 5000))+
+  # scale_y_continuous(limits = c(0, 1400))+
+  # scale_x_continuous(limits = c(0, 500))+
+  # scale_y_continuous(limits = c(0, 300))+
+  theme_minimal()+
+  labs(
+    x = "(N) exposure in community"
+    ,y = "(N) trained professionals"
+    )
+g1 +
+  geom_hline(aes(yintercept = 1400), linetype = "dashed")+
+  geom_vline(aes(xintercept = 5000), linetype = "dashed")
+
+g1 +
+  scale_x_continuous(limits = c(0, 5000))+
+  scale_y_continuous(limits = c(0, 1400))+
+  geom_hline(aes(yintercept = 400), linetype = "dashed")+
+  geom_vline(aes(xintercept = 600), linetype = "dashed")
+
+g1 +
+  scale_x_continuous(limits = c(0, 600))+
+  scale_y_continuous(limits = c(0, 400))
+# ----- --------------------------
+
+
+
+
+dt2 <- ds %>% 
+  dplyr::filter(audience == "community") %>% 
+  dplyr::group_by(type_training) %>% 
+  dplyr::summarize(
+    n_trained = sum(n_trained)
+  ) %>% 
+  dplyr::arrange(desc(n_trained))
+
+dt2 %>% neat()
 
 g1 <- dt1 %>% 
   tidyr::gather(
@@ -113,7 +255,7 @@ g1 <- dt1 %>%
   theme_minimal()+
   theme( legend.position = "none")
 
-
+g1
 
 #########################
 
@@ -157,8 +299,8 @@ g2 <- dt2 %>%
 
 # SINGLE audience
 g3 <- dt2 %>% 
-  # dplyr::filter(audience == "professionals") %>%
-  dplyr::filter(audience == "community") %>%
+  dplyr::filter(audience == "professionals") %>%
+  # dplyr::filter(audience == "community") %>%
   tidyr::gather(
     "measure"
     ,"count"
@@ -229,8 +371,31 @@ g4 <- dt4 %>%
 g4
 # ---- basic-graph -------------------------------------------------------
 
-g1 <- ds %>% 
-  ggplot2::ggplot(aes(x = date, y = ))
+d5 <- ds %>% 
+  dplyr::group_by(county, audience, region) %>% 
+  # dplyr::group_by(county, year, audience) %>% 
+  dplyr::summarize(
+    n_trained = sum(na.omit(n_trained))
+  ) %>% 
+  tidyr::spread(key = "audience", value = "n_trained")
+  
+g5 <- d5 %>% 
+  ggplot2::ggplot(
+    aes(
+      x  = community
+      ,y = professionals
+    )
+  )+
+  # geom_point()+
+  geom_text(aes(label= county, color = region), size = 4 )+
+  # geom_line(aes(group = county) )+
+  # facet_wrap("year")+
+  # scale_x_continuous(limits = c(0, 5000))+
+  # scale_y_continuous(limits = c(0, 1400))+
+  # scale_x_continuous(limits = c(0, 500))+
+  # scale_y_continuous(limits = c(0, 300))+
+  theme_minimal()
+g5
 
 # ---- define-utility-functions ---------------
 
@@ -238,7 +403,8 @@ g1 <- ds %>%
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/gls-activity/gls-activity-1.Rmd"
+  # input = "./analysis/gls-activity/gls-activity-1.Rmd"
+  input = "./analysis/gls-activity/gls-activity-2-detailed.Rmd"
   ,output_format = c(
     "html_document" 
     # "pdf_document"
