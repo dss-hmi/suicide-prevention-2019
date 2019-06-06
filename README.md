@@ -13,7 +13,7 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
  - [description of data sources](https://github.com/dss-hmi/suicide-prevention-2019/blob/master/data-public/raw/README.md)   
 
 Using query builder of the Florida Health Charts (http://flhealthcharts.com)  we have obtained the following data tables:  
-- Population estimates ( see [issue  4][4])
+- Population estimates ( see [issue  4][issue4])
 - Death Counts (see [issue 5][issue5])
 
 [issue4]:https://github.com/dss-hmi/suicide-prevention-2019/issues/4
