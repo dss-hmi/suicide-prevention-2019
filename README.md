@@ -3,7 +3,6 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 # Analytic Products
 
-- [`./analysis/0-greeter/0-greeter-gls-pivot`][gls_pivot] - pivot table for exploring basic trends and quick reference  
 - [`./analysis/gls-activity/gls-activity-2-coverage`][gls_coverage] - Summary tables and graphs of GLS programming coverage (zipcodes, training types, persons) in the state of Florida. 
 
 [gls_coverage]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/gls-activity/gls-activity-2-coverage.html
