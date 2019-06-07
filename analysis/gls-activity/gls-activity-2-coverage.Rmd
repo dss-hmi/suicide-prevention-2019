@@ -1,15 +1,17 @@
 ---
-title: "GLS Activity Report"
+title: "GLS Activity: Coverage"
 output:
   html_document:
     always_allow_html: yes
     df_print: kable
     highlight: tango
     keep_md: yes
+    table: kable
     theme: spacelab
     toc: yes
-    toc_float: no
-    table: kable
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
 ---
 
 <!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
@@ -44,6 +46,7 @@ opts_chunk$set(
   # dev.args=list(pdf = list(colormodel = 'cmyk'))
 )
 echoChunks <- TRUE
+warningChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
 read_chunk("./analysis/gls-activity/gls-activity.R") 
@@ -54,48 +57,48 @@ read_chunk("./analysis/gls-activity/gls-activity.R")
 
 Describe the working environment. 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
-```{r load-packages, echo=echoChunks, message=FALSE}
+```{r load-packages, echo=echoChunks, message=FALSE,warning=warningChunks}
 ```
 
 
 <!-- Load the sources.  Suppress the output when loading sources. --> 
-```{r load-sources, echo=echoChunks, message=FALSE}
+```{r load-sources, echo=echoChunks, message=FALSE,warning=warningChunks}
 ```
 
 
 <!-- Load any Global functions and variables declared in the R file.  Suppress the output. --> 
-```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
+```{r declare-globals, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 <!-- Declare any global functions specific to a Rmd output.  Suppress the output. --> 
-```{r, echo=echoChunks, message=FALSE}
+```{r, echo=echoChunks, message=FALSE,warning=warningChunks}
 #Put code in here.  It doesn't call a chunk in the codebehind file.
 ```
 
 <!-- Load the datasets.   -->
-```{r load-data, echo=echoChunks, results='show', message=FALSE}
+```{r load-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 <!-- Inspect the datasets.   -->
-```{r inspect-data, echo=echoChunks, results='show', message=FALSE}
+```{r inspect-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 <!-- Tweak the datasets.   -->
-```{r tweak-data, echo=echoChunks, results='show', message=FALSE}
+```{r tweak-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 
 # I Exposition 
 
 <!-- Basic table view.   -->
-```{r county-reports, echo=FALSE, results='asis', message=FALSE}
+```{r county-reports, echo=FALSE, results='asis', message=FALSE,warning=warningChunks}
 ```
 
-```{r county-reports-1, echo=TRUE, results='asis', message=FALSE}
+```{r county-reports-1, echo=TRUE, results='asis', message=FALSE,warning=warningChunks}
 ```
 
 
-```{r save-to-disk, echo=TRUE, results='show', message=FALSE}
+```{r save-to-disk, echo=TRUE, results='show', message=FALSE,warning=warningChunks}
 ```
 
 
@@ -124,7 +127,12 @@ Describe the working environment.
 
 # III. Recapitulation
 
-
+- **Orange** county received the most of GLS programming (1-scatter](#1_county_scatter))
+  - The next cluser of counties with high programming:
+    - **Volusia** +  **St Lucie**
+    - **Palrm Beach** + **Brevard** + **Seminole**
+    - **Lake** 
+  
 
 
 Session Information {#session-info}

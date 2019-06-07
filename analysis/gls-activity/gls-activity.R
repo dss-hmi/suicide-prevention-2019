@@ -360,33 +360,10 @@ ds %>%
   dplyr::filter( !county %in% c("Orange") ) %>% 
   show_coverage()
 
-# to remove another outlier
-ds %>% 
-  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
-  show_coverage()
-
 # ---- explore-3 -------------------------------
 ds %>% show_coverage("professionals")
-# to remove the outlier
-ds %>%   
-  dplyr::filter( !county %in% c("Orange") ) %>% 
-  show_coverage("professionals")
-# to remove another outlier
-ds %>%   
-  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
-  show_coverage("professionals")
-
-
 # ---- explore-4 -------------------------------
 ds %>% show_coverage("community")
-# to remove the outlier
-ds %>%   
-  dplyr::filter( !county %in% c("Orange") ) %>% 
-  show_coverage("community")
-# to remove another outlier
-ds %>%   
-  dplyr::filter( !county %in% c("Orange","Volusia") ) %>% 
-  show_coverage("community")
 
 # ---- basic-graph -------------------------------------------------------
 
@@ -398,7 +375,7 @@ ds %>%
 # ---- publish ---------------------------------
 rmarkdown::render(
   # input = "./analysis/gls-activity/gls-activity-1.Rmd"
-  input = "./analysis/gls-activity/gls-activity-2-detailed.Rmd"
+  input = "./analysis/gls-activity/gls-activity-2-coverage.Rmd"
   ,output_format = c(
     "html_document" 
     # "pdf_document"
