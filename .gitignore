@@ -108,7 +108,7 @@ Desktop.ini
 #     1. removed (because they were added unintentionally), or
 #     2. reorganized and moved above this chunk (so it won't be confused with files added unintentionally).
 .Rbuildignore
-analysis/0-greeter/0-greeter-gls-pivot.html
+
 analysis/0-greeter/0-greeter-gls-table.html
 analysis/0-greeter/0-greeter-gls.html
 analysis/0-greeter/0-greeter-gls-pivot.md
