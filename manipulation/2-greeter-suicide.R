@@ -20,17 +20,26 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-small.xlsx"
-# path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-full.xlsx"
-
+path_input       <- "./data-unshared/raw/FloridaDeathsReport/"
 
 # ---- load-data ---------------------------------------------------------------
 #
-ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 2)
+input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T)
+# when downloading the tables the interface couldn't handle all years at once
+ls_ds <- list(
+  "1" =  readxl::read_excel(input_files[1], col_names = FALSE, skip = 2)
+  ,"2" = readxl::read_excel(input_files[2], col_names = FALSE, skip = 2)
+  ,"3" = readxl::read_excel(input_files[3], col_names = FALSE, skip = 2)
+)
+# to bring all batches into the same dataframe:
+ds0 <- ls_ds %>% dplyr::bind_rows()
 
 # ---- tweak-data -----------------------------------------------------
-names(ds0) <- c("county","year","mortality_locus","mortality_cause", "age","sex","race","ethnicity","value")
-ds0 %>% dplyr::glimpse()
+# hardcoding, because cheaper and easy to check
+names(ds0) <- c(
+  "county","year","mortality_locus","mortality_cause", 
+  "age_group","sex","race","ethnicity","resident_deaths"
+)
 
 fill_last_seen <- function(
   column
@@ -39,7 +48,7 @@ fill_last_seen <- function(
   last_seen = column[[1]]
   count = 1L
   #fill rest of the cells with first non empty value
-    for(cell in column){
+  for(cell in column){
     if(is.na(cell)){
       cell            = last_seen
       column[[count]] = cell
@@ -52,13 +61,9 @@ fill_last_seen <- function(
   return(column)
 }
 
-ds1 <- ds0 %>%
+ds1 <- ds0 %>% 
   dplyr::mutate_all(fill_last_seen)
-names(ds1) <- names(ds0)
-
 # ---- save-to-disk ----------------------------
-
-
 ds1 %>% pryr::object_size()
 ds1 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
 ds1 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
