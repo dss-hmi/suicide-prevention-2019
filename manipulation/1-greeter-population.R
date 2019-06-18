@@ -29,7 +29,6 @@ ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) #%>% dp
 
 # ---- tweak-data -----------------------------------------------------
 # names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total") # small
-
 ds1 <- ds0
 names(ds1) <- c("county","year","sex","race","ethnicity",
                 "less_than_1", "1_4","5_9","10_14","15_19", "20_24",
@@ -58,24 +57,21 @@ fill_last_seen <- function(
   return(column)
 }
 
-# # replace with a apply function to do in one go
-ds1$county     <- fill_last_seen(column = ds1$county)
-ds1$race       <- fill_last_seen(column = ds1$race)
-ds1$year       <- fill_last_seen(column = ds1$year)
-ds1$sex        <- fill_last_seen(column = ds1$sex)
-ds1$ethnicity  <- fill_last_seen(column = ds1$ethnicity)
 
-ds1 %>% dplyr::glimpse(70)
-# ds2 <- ds1 %>%
-#   dplyr::mutate_all(fill_last_seen)
-# names(ds2) <- names(ds1)
+ds1 %>% head(20)
+ds2 <- ds1 %>%
+  dplyr::mutate_all(fill_last_seen)
+names(ds2) <- names(ds1)
+ds2 %>% head(20)
+
 var_stem <- c("county","year","sex","race","ethnicity")
-ds2 <- ds1 %>% 
+ds2 <- ds2 %>% 
   tidyr::gather(
     "age_group","count", setdiff(names(ds1), var_stem)
   )
 
 ds2 %>% dplyr::glimpse(80)
+
 # ---- save-to-disk ----------------------------
 
 
