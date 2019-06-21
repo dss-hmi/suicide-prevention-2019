@@ -75,12 +75,20 @@ ds1 <- ds1 %>%
 ds1 %>% 
   dplyr::distinct(age_group)
 
-
+ds2 <- ds1 %>% 
+  dplyr::filter(! county    == "Total") %>% 
+  dplyr::filter(! year      == "Total") %>% 
+  dplyr::filter(! mortality_locus      == "Total") %>% 
+  dplyr::filter(! mortality_cause      == "Total") %>% 
+  dplyr::filter(! sex       == "Total") %>% 
+  dplyr::filter(! race      == "Total") %>% 
+  dplyr::filter(! ethnicity == "Total") %>% 
+  dplyr::filter(! age_group == "total")  
 
 # ---- save-to-disk ----------------------------
-ds1 %>% pryr::object_size()
-ds1 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
-ds1 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
+ds2 %>% pryr::object_size()
+ds2 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
+ds2 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
 rmarkdown::render(

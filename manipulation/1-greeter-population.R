@@ -72,9 +72,18 @@ ds2 <- ds2 %>%
 
 ds2 %>% dplyr::glimpse(80)
 
+
+ds3 <- ds2 %>% 
+  dplyr::filter(! county    == "Total") %>% 
+  dplyr::filter(! year      == "Total") %>% 
+  dplyr::filter(! sex       == "Total") %>% 
+  dplyr::filter(! race      == "Total") %>% 
+  dplyr::filter(! ethnicity == "Total") %>% 
+  dplyr::filter(! age_group == "total") %>% 
+  dplyr::arrange(county, year, sex, race, ethnicity, age_group) 
+
+
 # ---- save-to-disk ----------------------------
-
-
 ds2 %>% pryr::object_size()
 ds2 %>%          saveRDS("./data-unshared/derived/1-greeted-population.rds")
 ds2 %>% readr::write_csv("./data-unshared/derived/1-greeted-population.csv") # for read-only inspection
