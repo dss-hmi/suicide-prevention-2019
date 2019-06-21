@@ -33,7 +33,7 @@ ls_ds <- list(
 )
 # to bring all batches into the same dataframe:
 ds0 <- ls_ds %>% dplyr::bind_rows()
-
+ds0 %>% head(30) %>% neat()
 # ---- tweak-data -----------------------------------------------------
 # hardcoding, because cheaper and easy to check
 names(ds0) <- c(
@@ -63,6 +63,20 @@ fill_last_seen <- function(
 
 ds1 <- ds0 %>% 
   dplyr::mutate_all(fill_last_seen)
+ds1 %>% dplyr::glimpse()
+
+ds1 <- ds1 %>% 
+  dplyr::mutate(
+    age_group = tolower(age_group)
+    ,age_group = gsub("-","_",age_group)
+    ,age_group = gsub("\\+","_plus",age_group)
+    ,age_group = gsub("'","",age_group)
+  )
+ds1 %>% 
+  dplyr::distinct(age_group)
+
+
+
 # ---- save-to-disk ----------------------------
 ds1 %>% pryr::object_size()
 ds1 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")

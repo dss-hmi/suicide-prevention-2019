@@ -62,7 +62,7 @@ ds1 %>% head(20)
 ds2 <- ds1 %>%
   dplyr::mutate_all(fill_last_seen)
 names(ds2) <- names(ds1)
-ds2 %>% head(20)
+ds2 %>% dplyr::glimpse()
 
 var_stem <- c("county","year","sex","race","ethnicity")
 ds2 <- ds2 %>% 
