@@ -1,5 +1,5 @@
 ---
-title: "GLS Activity: Coverage"
+title: "EDA combined"
 output:
   html_document:
     always_allow_html: yes
@@ -49,8 +49,10 @@ echoChunks <- TRUE
 warningChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./analysis/gls-activity/gls-activity.R") 
+read_chunk("./analysis/eda-combined/eda-combined.R") 
 ```
+
+This reports stores the drafts of the visualizations generated from the combined data set produced by `./manipulation/4-combiner.R` script.
 
 
 # Set the scene 
@@ -90,48 +92,33 @@ Describe the working environment.
 
 # I Exposition 
 
-<!-- Basic table view.   -->
-```{r county-reports, echo=FALSE, results='asis', message=FALSE,warning=warningChunks}
-```
-
-```{r county-reports-1, echo=TRUE, results='asis', message=FALSE,warning=warningChunks}
-```
-
-
-```{r save-to-disk, echo=TRUE, results='show', message=FALSE,warning=warningChunks}
-```
 
 
 # II. Development
 
-## 1 County scatter
+
 ```{r explore-1, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
 
-## 2 Coverage - DUAL
-
-```{r explore-2-define-function, echo=FALSE, results='show', message=FALSE, warning = F}
-```
 
 ```{r explore-2, echo=TRUE, results='show', message=FALSE, warning = F}
 ```
 
-## 3 Coverage - Professionals
+
 
 ```{r explore-3, echo=TRUE, results='show', message=FALSE}
 ```
 
-## 4 Coverage -  Community
+
 ```{r explore-4, echo=TRUE, results='show', message=FALSE}
 ```
 
 # III. Recapitulation
 
-- **Orange** county received the most of GLS programming (1-scatter](#1_county_scatter))
-  - The next cluser of counties with high programming:
-    - **Volusia** +  **St Lucie**
-    - **Palrm Beach** + **Brevard** + **Seminole**
-    - **Lake** 
+
+```{r save-to-disk, echo=TRUE, results='show', message=FALSE,warning=warningChunks}
+```
+
   
 
 
