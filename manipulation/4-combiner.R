@@ -24,160 +24,113 @@ path_file_input_0 <- "./data-unshared/derived/0-greeted-gls.rds"
 path_file_input_1 <- "./data-unshared/derived/1-greeted-population.rds"
 path_file_input_2 <- "./data-unshared/derived/2-greeted-suicide.rds"
 # path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-full.xlsx"
-
+output_format = "pandoc"
 # ---- load-data ---------------------------------------------------------------
-#
-ds0 <- readRDS(path_file_input_0) 
-ds1 <- readRDS(path_file_input_1)
-ds2 <- readRDS(path_file_input_2)
+ds_gls        <- readRDS(path_file_input_0) %>% dplyr::glimpse(80)
+ds_population <- readRDS(path_file_input_1) %>% dplyr::glimpse(80)
+ds_suicide    <- readRDS(path_file_input_2) %>% dplyr::glimpse(80)
 
-
-ds0 %>% glimpse()
-ds1 %>% glimpse()
-ds2 %>% glimpse()
-
-ds0 <- ds0 %>% 
+# ---- tweak-data -----------------------------------------------------
+ds_gls <- ds_gls %>% 
   dplyr::mutate(
-    year = lubridate::year(date) %>% as.character()
-  )
+    year = lubridate::year(date) %>% as.character() # for joining to other tables
+  ) 
 
-
-# there is too much temporal granularity in the GLS source
+# there is too much temporal granularity in the GLS source.
 # to reduce it, making it compatible with the FL health records:
-ds_gls_by_year <- ds0 %>% 
-  dplyr::group_by(region, county, audience, type_training, year) %>% 
+ds_gls_by_year <- ds_gls %>% 
+  dplyr::group_by(region, county, year, audience, type_training) %>% 
   dplyr::summarize(
     n_trained = sum(n_trained, na.rm = T)
   )
-ds_population_by_year <- ds1 %>% 
+# note that `audience` and `type_training` are more granular than county-by-year
+ds_population_by_year <- ds_population %>% 
   dplyr::rename(
-    "population_count" = "count"
+    "population_count" = "count" # to be more explicit and because a better label
   )
-ds_suicide_by_year <- ds2 %>% 
-  dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>% 
+ds_suicide_by_year <- ds_suicide %>% 
+  dplyr::group_by(county, year, sex, race, ethnicity, age_group, mortality_cause) %>% 
   dplyr::summarize(
     resident_deaths = sum(resident_deaths, na.rm = T)
   )
-
+# note that `mortality_cause` is more granulary than county-by-year
+# to help elementwise list operations:
 ls_ds <- list(
   "population" = ds_population_by_year
   ,"suicide"   = ds_suicide_by_year
   ,"gls"       = ds_gls_by_year
 )
+ls_ds %>% lapply(dplyr::glimpse,80) %>% invisible() 
+
+# ---- aggregate-1 ----------------------------------
 
 # use to limit the view during testing of the merger
-for(i in c("suicide","population")){
-  ls_ds[[i]] <- ls_ds[[i]] %>%
-    dplyr::filter(county == "Orange") %>%
-    dplyr::filter(year == 2016) %>%
-    dplyr::filter(age_group == "25_34") %>%
-    dplyr::filter(sex == "Female") %>%
-    dplyr::filter(race == "White") %>%
-    dplyr::filter(ethnicity == "Hispanic") %>%
-    dplyr::arrange(sex, race, ethnicity)
-}
+# for(i in c("suicide","population")){
+#   ls_ds[[i]] <- ls_ds[[i]] %>%
+#     dplyr::filter(county == "Orange") %>%
+#     dplyr::filter(year == 2016) %>%
+#     dplyr::filter(age_group == "25_34") %>%
+#     dplyr::filter(sex == "Female") %>%
+#     # dplyr::filter(sex == "Male") %>%
+#     dplyr::filter(race == "White") %>%
+#     dplyr::filter(ethnicity == "Hispanic") %>%
+#     # dplyr::filter(ethnicity == "Non-Hispanic") %>%
+#     dplyr::arrange(sex, race, ethnicity)
+# }
 ls_ds %>% lapply(names)
+# to join all elements of the list, one after another
+ds <- ls_ds %>% Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
+ds %>% dplyr::glimpse(80)
+# this join preserves the granularity in the GLS file (except year)
+# note, however, that  you cannot aggregate population and suicide measures
+# sums of `population_count` and `resident_deaths` are not meaningful
+# because these values repeat in row to accomodate granularity of GLS file
 
-ds <- ls_ds %>% 
-  Reduce(function(a,b) dplyr::left_join(a,b) , .) 
-
-
-# ---- tweak-data -----------------------------------------------------
+# let us create a list object to capture this useful data set
+ls_out <- list(
+  "highest_granularity" = ls_ds
+)
+# ---- aggregate-2 ------------------------------------
+# let us aggregate at the level of `population`
+# this means that we will provide a single measure for at the resolution:
+# county - year - sex - race - enthicity - age_group
+# for every unique combination of values on these six we want:
+# `population_count` - number of people alive 
+# `resident_deaths`  - number of registered deaths among residents
+# `community`        - number of people reached through community event
+# `professionals`    - number of professionals who recieved training
 
 ls_ds <- list(
-  "suicide"     =  ls_ds[["population"]]
-  ,"gls"        = ls_ds[["gls"]]
-  ,"population"  = ls_ds[["population"]]
-
+  "population" = ls_ds[["population"]] 
+  ,"suicide" = ls_ds[["suicide"]]  %>% 
+    dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>% 
+    # aggregating over `mortality_casue`
+    dplyr::summarize(
+      resident_deaths = sum(resident_deaths, na.rm = T)
+    )
+  ,"gls" = ls_ds[["gls"]]  %>% 
+    dplyr::group_by(region, county, year, audience) %>% 
+    # aggregating over `type_training`
+    dplyr::summarize(
+      n_trained = sum(n_trained, na.rm = T)
+    ) %>% 
+    tidyr::spread(audience,n_trained)
 )
+ls_ds %>% lapply(dplyr::glimpse,80) %>% invisible() 
+ds <- ls_ds %>% Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
+ds %>% dplyr::glimpse(80)
+# note that  you can
 
-ds <- ls_ds %>% 
-  Reduce(function(a,b) dplyr::full_join(a,b) , .) 
-
-
-
-
-
-print_distinct <- function(
-  d
-  ,group_by_variables
-){
-  # define values needed for testing and development inside the function:
-  # d <- ds0
-  # group_by_variables <- "area"
-  # group_by_variables <- c("area","age_group")
-  
-  d_out <- d %>%
-    dplyr::group_by(.dots = c(group_by_variables) ) %>%
-    dplyr::count() 
-  
-  return(d_out)
-}
-
-
-
-
-# d0 <- ds0 %>% print_distinct("county") %>% print(n = nrow(.))
-# d1 <- ds1 %>% print_distinct("county") %>% print(n = nrow(.))
-# d2 <- ds2 %>% print_distinct("county") %>% print(n = nrow(.))
-# 
-# ls_ds <- list(
-#   "gls"         = ds0 %>% print_distinct("county"), #dplyr::distinct(county) %>% tibble::as_tibble(),
-#   "population"  = ds1 %>% print_distinct("county"), #dplyr::distinct(county) %>% tibble::as_tibble(),
-#   "suicide"     = ds2 %>% print_distinct("county") #dplyr::distinct(county) %>% tibble::as_tibble()
-# )
-# 
-# ds <- ls_ds %>% 
-#   Reduce(function(a,b) dplyr::full_join(a,b, by = "county") , .) 
-# 
-
-# ----- --------
-# d1 <- ds1 %>% print_distinct("age_group") %>% print(n = nrow(.))
-# d2 <- ds2 %>% print_distinct("age_group") %>% print(n = nrow(.))
-# 
-# ls_ds <- list(
-#   "population"  = ds1 %>% print_distinct("age_group") %>% print(n = nrow(.))
-#   ,"suicide"     = ds2 %>% print_distinct("age_group") %>% print(n = nrow(.))
-# )
-# 
-# ds <- ls_ds %>% 
-#   Reduce(function(a,b) dplyr::full_join(a,b, by = "age_group") , .) 
-# 
-
-
-d0 <- ds0 %>% print_distinct("age_group") %>% print(n = nrow(.))
-d1 <- ds1 %>% print_distinct("age_group") %>% print(n = nrow(.))
-d2 <- ds2 %>% print_distinct("age_group") %>% print(n = nrow(.))
-
-common_variables <- c("county","age_group")
-ls_ds <- list(
-  "gls       "  = ds1 %>% print_distinct(common_variables) %>% print(n = nrow(.))
-  ,"population"  = ds1 %>% print_distinct(common_variables) %>% print(n = nrow(.))
-  ,"suicide"     = ds2 %>% print_distinct(common_variables) %>% print(n = nrow(.))
-)
-
-ds <- ls_ds %>% 
-  Reduce(function(a,b) dplyr::full_join(a,b, by = c("county","age_group") ) , .) 
-
-
-# ----- -------
-
-ds12 <- dplyr::left_join(
-  ds1,
-  ds2,
-  by = c("county", "year", "sex")
-)
-
+ls_out[["lowest_granularity"]] <- ls_ds
 # ---- save-to-disk ----------------------------
 
 
-ds1 %>% pryr::object_size()
-ds1 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
-ds1 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
+ls_out %>% pryr::object_size()
+ls_out %>%          saveRDS("./data-unshared/derived/4-combined.rds")
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/2-greeter/2-greeter-suicide.Rmd"
+  input = "./analysis/4-combiner/4-combiner.Rmd"
   ,output_format = c(
     "html_document" 
     # ,"pdf_document"

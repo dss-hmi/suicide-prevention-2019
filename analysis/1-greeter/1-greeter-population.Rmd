@@ -88,15 +88,15 @@ This document is the annotation layer to [`./manipulation/1-greeter-populaton.R`
 ```{r tweak-data, echo=echoChunks, results='show', message=FALSE}
 ```
 
-## 1
+
 ```{r tweak-1, echo=echoChunks, results='show', message=FALSE}
 ```
 
-## 2
+
 ```{r tweak-2, echo=echoChunks, results='show', message=FALSE}
 ```
 
-## 3
+
 ```{r tweak-3, echo=echoChunks, results='show', message=FALSE}
 ```
 

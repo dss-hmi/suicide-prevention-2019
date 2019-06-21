@@ -1,15 +1,15 @@
 ---
-title: "2-greeter-suicide"
+title: "4-combiner"
 output:
-  html_document:
+  html_document: 
     always_allow_html: yes
-    css: ../../libs/css/sidebar.css
-    df_print: kable
+    df_print: tibble
     highlight: tango
-    keep_md: yes
     theme: spacelab
     toc: yes
-    table: kable
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
 ---
 
 <!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
@@ -47,7 +47,7 @@ echoChunks <- TRUE
 warningChunk <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./manipulation/2-greeter-suicide.R") 
+read_chunk("./manipulation/4-combiner.R") 
 ```
 
 This document is the annotation layer to [`./manipulation/2-greeter-suicide.R`][path_greeter] script, which connects to data sources used in the study, imports them into RStudio environment and prepares them for analytic enquiry.
@@ -98,6 +98,14 @@ This document is the annotation layer to [`./manipulation/2-greeter-suicide.R`][
 
 
 ```{r tweak-3, echo=echoChunks, results='show', message=FALSE}
+```
+
+
+```{r aggregate-1, echo=echoChunks, results='show', message=FALSE}
+```
+
+
+```{r aggregate-2, echo=echoChunks, results='show', message=FALSE}
 ```
 
 # IV. Inspect

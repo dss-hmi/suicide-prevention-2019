@@ -1,15 +1,17 @@
 ---
-title: "2-greeter-suicide"
+title: "GLS Activity: Coverage"
 output:
   html_document:
     always_allow_html: yes
-    css: ../../libs/css/sidebar.css
     df_print: kable
     highlight: tango
     keep_md: yes
+    table: kable
     theme: spacelab
     toc: yes
-    table: kable
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
 ---
 
 <!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
@@ -44,93 +46,93 @@ opts_chunk$set(
   # dev.args=list(pdf = list(colormodel = 'cmyk'))
 )
 echoChunks <- TRUE
-warningChunk <- FALSE
+warningChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./manipulation/2-greeter-suicide.R") 
+read_chunk("./analysis/gls-activity/gls-activity.R") 
 ```
 
-This document is the annotation layer to [`./manipulation/2-greeter-suicide.R`][path_greeter] script, which connects to data sources used in the study, imports them into RStudio environment and prepares them for analytic enquiry.
 
-[path_greeter]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/1-greeter-population.R
+# Set the scene 
 
-# I. Environment
-
+Describe the working environment. 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
-```{r load-packages, echo=echoChunks, message=FALSE, warning = warningChunk}
+```{r load-packages, echo=echoChunks, message=FALSE,warning=warningChunks}
 ```
 
 
 <!-- Load the sources.  Suppress the output when loading sources. --> 
-```{r load-sources, echo=echoChunks, message=FALSE}
+```{r load-sources, echo=echoChunks, message=FALSE,warning=warningChunks}
 ```
 
 
 <!-- Load any Global functions and variables declared in the R file.  Suppress the output. --> 
-```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
+```{r declare-globals, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 <!-- Declare any global functions specific to a Rmd output.  Suppress the output. --> 
-```{r, echo=echoChunks, message=FALSE}
+```{r, echo=echoChunks, message=FALSE,warning=warningChunks}
+#Put code in here.  It doesn't call a chunk in the codebehind file.
 ```
 
-# II. Input
 <!-- Load the datasets.   -->
-```{r load-data, echo=echoChunks, results='show', message=FALSE, warning=FALSE}
+```{r load-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 <!-- Inspect the datasets.   -->
-```{r inspect-data, echo=echoChunks, results='show', message=FALSE}
+```{r inspect-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
-# III. Groom
 <!-- Tweak the datasets.   -->
-```{r tweak-data, echo=echoChunks, results='show', message=FALSE}
+```{r tweak-data, echo=echoChunks, results='show', message=FALSE,warning=warningChunks}
 ```
 
 
-```{r tweak-1, echo=echoChunks, results='show', message=FALSE}
-```
+# I Exposition 
 
-
-```{r tweak-2, echo=echoChunks, results='show', message=FALSE}
-```
-
-
-```{r tweak-3, echo=echoChunks, results='show', message=FALSE}
-```
-
-# IV. Inspect
-
-
-```{r inspect-1, echo=TRUE, results='show', message=FALSE}
-```
-
-
-```{r inspect-2, echo=TRUE, results='show', message=FALSE}
-```
-
-
-```{r inspect-3, echo=TRUE, results='show', message=FALSE}
-```
 <!-- Basic table view.   -->
-```{r basic-table, echo=TRUE, results='show', message=FALSE}
+```{r county-reports, echo=FALSE, results='asis', message=FALSE,warning=warningChunks}
 ```
 
-<!-- Basic graph view.   -->
-```{r basic-graph, echo=TRUE, results='show', message=FALSE}
+```{r county-reports-1, echo=TRUE, results='asis', message=FALSE,warning=warningChunks}
 ```
 
 
-
-# V. Save to Disk
-
-Let us create a `data transfer object` (dto), a list object that would store all three data components in this project. This object (dto) will be the point of departure for all subsequent analytic efforst. 
-
-
-```{r save-to-disk, echo=TRUE, results='show', message=FALSE}
+```{r save-to-disk, echo=TRUE, results='show', message=FALSE,warning=warningChunks}
 ```
 
+
+# II. Development
+
+## 1 County scatter
+```{r explore-1, echo=FALSE, results='show', message=FALSE, warning = F}
+```
+
+## 2 Coverage - DUAL
+
+```{r explore-2-define-function, echo=FALSE, results='show', message=FALSE, warning = F}
+```
+
+```{r explore-2, echo=TRUE, results='show', message=FALSE, warning = F}
+```
+
+## 3 Coverage - Professionals
+
+```{r explore-3, echo=TRUE, results='show', message=FALSE}
+```
+
+## 4 Coverage -  Community
+```{r explore-4, echo=TRUE, results='show', message=FALSE}
+```
+
+# III. Recapitulation
+
+- **Orange** county received the most of GLS programming (1-scatter](#1_county_scatter))
+  - The next cluser of counties with high programming:
+    - **Volusia** +  **St Lucie**
+    - **Palrm Beach** + **Brevard** + **Seminole**
+    - **Lake** 
+  
 
 
 Session Information {#session-info}

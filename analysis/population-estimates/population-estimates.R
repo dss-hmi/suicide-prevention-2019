@@ -19,16 +19,10 @@ library(ggplot2)  # graphs
 library(ggpubr)   # documents
   
 # ---- declare-globals ---------------------------------------------------------
-path_input_population <- "./data-unshared/derived/0-greeted-population.rds"
-path_input_gls <- "./data-unshared/derived/0-greeted-gls.rds"
+path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
+
 
 html_flip <- FALSE
-
-stem       <- c("county","year","sex","race","ethnicity")
-age_groups <- c("less_than_1", "1_4","5_9","10_14","15_19", "20_24",
-                "25_34","35_44","45_54","55_64","65_74","75_84","85_plus"
-                ,"total")
-
 
 # ----- custom-functions --------------------------------------
 get_a_sample <- function(
@@ -56,12 +50,7 @@ get_a_sample <- function(
 
 # ---- load-data ---------------------------------------------------------------
 ds_population  <- readRDS(path_input_population)
-ds_gls         <- readRDS(path_input_gls)
-
 ds_population %>% pryr::object_size(); ds_population %>% class(); ds_population %>% names()
-ds_gls %>% pryr::object_size(); ds_gls %>% class(); ds_gls %>% names()
-
-
 
 
 # ---- tweak-data ---------------------------------------------
