@@ -84,9 +84,9 @@ ds3 <- ds2 %>%
 
 
 # ---- save-to-disk ----------------------------
-ds2 %>% pryr::object_size()
-ds2 %>%          saveRDS("./data-unshared/derived/1-greeted-population.rds")
-ds2 %>% readr::write_csv("./data-unshared/derived/1-greeted-population.csv") # for read-only inspection
+ds3 %>% pryr::object_size()
+ds3 %>%          saveRDS("./data-unshared/derived/1-greeted-population.rds")
+ds3 %>% readr::write_csv("./data-unshared/derived/1-greeted-population.csv") # for read-only inspection
 
 # ---- publish ---------------------------------
 rmarkdown::render(
