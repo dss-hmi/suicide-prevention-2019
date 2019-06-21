@@ -165,8 +165,12 @@ ds_combined <- ds_combined %>%
   # manual correction of county name spelling
   dplyr::mutate(
     county = ifelse(county %in% c("Indian River County"), "Indian River", county)
-    ,county = ifelse(county %in% c("St John","St. John's","St. Johns"), "St Johns", county)
-    ,county = ifelse(county %in% c("St Luice","St. Lucie"), "St Lucie", county)
+    ,county = ifelse(county %in% c("St John","St. John's","St. Johns", "St Johns"), "Saint Johns", county)
+    ,county = ifelse(county %in% c("St Luice","St. Lucie","St Lucie"), "Saint Lucie", county)
+    ,county = ifelse(county %in% c("Fort Lauderdale"), "Palm Beach", county)
+    ,county = ifelse(county %in% c("Orlando"), "Orange", county)
+    ,county = ifelse(county %in% c("West Palm Beach"), "Palm Beach", county)
+ 
   )
 ds_combined %>% dplyr::glimpse(100)
 # ---- tweak-4 --------------------------------
@@ -184,6 +188,18 @@ ds_combined %>%
   # dplyr::distinct(type_training) %>% 
   dplyr::arrange() %>%
   print(n = nrow(.))
+
+ds_combined <- ds_combined %>% 
+  dplyr::select(c(
+     "region"
+    ,"county"
+    ,"zipcode"
+    ,"date"
+    ,"audience"
+    ,"type_training"
+    ,"n_trained"
+  )
+)
 
 # ---- basic-table ----------------------------
 ds_combined %>% 
