@@ -32,7 +32,47 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 # ---- tweak-data ---------------------------------------------------------------
 
 ds <- dto[["lowest_granularity"]] %>% 
-  Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
+  Reduce(function(a , b) dplyr::left_join( a, b ), . )
+
+ds %>% explore::describe_all()
+
+# to help us filter out those counties that had programming
+counties_gls <- ds %>% 
+  na.omit(region) %>% 
+  dplyr::distinct(county) %>% 
+  as.list() %>% unlist() %>% as.character()
+
+ds <- ds %>% 
+  dplyr::mutate(
+    ethnic = paste0(race," + ", ethnicity)
+  ) #%>% 
+  # dplyr::select(region, dplyr::everything()) %>% 
+  # dplyr::mutate(
+  #   region      = factor(region) # region of counties with programming
+  #   ,sex        = factor(sex)
+  #   ,race       = factor(race)
+  #   ,ethnicity  = factor(ethnicity)
+  #   ,age_group  = factor(age_group)
+  # )
+
+ds %>% explore::describe_all()
+
+# aggregate 
+g1 <- ds %>% 
+  dplyr::group_by(county, year,sex) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  dplyr::summarize(
+    population_count = sum(population_count, na.rm = T)
+    ,resident_deaths = sum(resident_deaths, na.rm = T)
+    ,professionals   = sum(professionals, na.rm =T)
+    ,community       = sum(community, na.rm =T)
+    ,suicide_rate    =  (resident_deaths / population_count)*1000
+  ) 
+
 
 # create auxilary variables
 ds <- ds %>% 
