@@ -58,10 +58,10 @@ ds %>% distinct(region)
 
 # create auxilary variables
 ds <- ds %>% 
-  dplyr::select(-county_zipcode) %>% 
+  # dplyr::select(-county_zipcode) %>% 
   dplyr::mutate(
     year = lubridate::year(date)
-    ,month = lubridate::month(date)
+    # ,month = lubridate::month(date)
     ,weekday = lubridate::wday(date)
     ,rgn = car::recode(
       region,
