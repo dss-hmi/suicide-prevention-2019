@@ -59,12 +59,12 @@ ds %>% explore::describe_all()
 
 # aggregate 
 g1 <- ds %>% 
-  dplyr::group_by(county, year,sex) %>% 
-  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
-  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
-  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
-  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
-  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>% 
+  # dplyr::group_by(county, year,sex) %>% 
+  dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>%
+  # dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>%
+  # dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>%
+  # dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>%
+  # dplyr::group_by(county, year,sex,race,ethnicity,age_group) %>%
   dplyr::summarize(
     population_count = sum(population_count, na.rm = T)
     ,resident_deaths = sum(resident_deaths, na.rm = T)
@@ -91,31 +91,113 @@ ds %>% glimpse(60)
 ds %>% explore::describe()
 
 # ---- explore-1 -------------------------------
+# g1 <- ds %>% 
+#   dplyr::group_by(county, year,sex) %>% 
+#   dplyr::summarize(
+#     population_count = sum(population_count, na.rm = T)
+#     ,resident_deaths = sum(resident_deaths, na.rm = T)
+#     ,professionals   = sum(professionals, na.rm =T)
+#     ,community       = sum(community, na.rm =T)
+#   ) %>% 
+#   # dplyr::filter(county == "Orange") %>% 
+#   # dplyr::filter(year == "2015")
+#   # ggplot(aes(x = year, y = population_count))+
+#   ggplot(aes(x = year, y = resident_deaths))+
+#   geom_bar(stat = "identity")+
+#   # geom_point()+
+#   # geom_line()+
+#   # facet_wrap("county")+
+#   theme_minimal()
+# g1
+# ---- explore-2 -------------------------------
+ds %>% dplyr::glimpse(70)
+
 g1 <- ds %>% 
-  dplyr::group_by(county, year,sex) %>% 
+  dplyr::group_by(county, year, sex) %>% 
+  dplyr::summarize(
+      population_count = sum(population_count, na.rm = T)
+      ,resident_deaths = sum(resident_deaths, na.rm = T)
+      ,professionals   = sum(professionals, na.rm =T)
+      ,community       = sum(community, na.rm =T)
+  ) %>%
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    year = as.numeric(year)
+    # ,sex = factor(sex, levels = c("Male","Female"))
+    ,sex = factor(sex, levels = c("Male","Female"))
+    ,suicide_rate_per10k = (resident_deaths / population_count) *10000
+  ) %>%
+  # dplyr::filter(county     == "Orange") %>%
+  # dplyr::filter(sex        == "Male") %>% 
+  # dplyr::filter(age_group  == "25_34") %>%
+  # dplyr::filter(age_group  == "20_24") %>% 
+  # dplyr::filter(race       == "White") %>%
+  # dplyr::filter(ethnicity  == "Hispanic") %>% 
+  # dplyr::filter(ethnicity  == "Non-Hispanic") %>%
+  ggplot(aes(x=year, y = resident_deaths, fill = sex))+
+  # ggplot(aes(x=year, y = suicide_rate_per10k, fill = sex))+
+  geom_area(alpha = 1, position = "identity")+ 
+  # geom_line(aes(group= sex))+
+  # geom_point(shape = 21, size = 3, fill = "white")+
+  scale_y_continuous(limits = c(0,NA))+
+  # scale_fill_manual(values = c("Female"="red","Male"="white"))+
+  scale_fill_viridis_d(end = .9, option = "plasma")+
+  # facet_grid(county ~ age_group)+
+  facet_wrap("county", scales = "free_y")+
+  theme_minimal()
+g1
+
+# ---- explore-3 -------------------------------
+g2 <- ds %>% 
+  dplyr::group_by(county, year, sex) %>% 
   dplyr::summarize(
     population_count = sum(population_count, na.rm = T)
     ,resident_deaths = sum(resident_deaths, na.rm = T)
     ,professionals   = sum(professionals, na.rm =T)
     ,community       = sum(community, na.rm =T)
-  ) %>% 
-  # dplyr::filter(county == "Orange") %>% 
-  # dplyr::filter(year == "2015")
-  # ggplot(aes(x = year, y = population_count))+
-  ggplot(aes(x = year, y = resident_deaths))+
-  geom_bar(stat = "identity")+
-  # geom_point()+
-  # geom_line()+
-  # facet_wrap("county")+
+  ) %>%
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    year = as.numeric(year)
+    # ,sex = factor(sex, levels = c("Male","Female"))
+    ,sex = factor(sex, levels = c("Male","Female"))
+    ,suicide_rate_per10k = (resident_deaths / population_count) *10000
+  ) %>%
+  # dplyr::filter(county     == "Orange") %>%
+  # dplyr::filter(sex        == "Male") %>% 
+  # dplyr::filter(age_group  == "25_34") %>%
+  # dplyr::filter(age_group  == "20_24") %>% 
+  # dplyr::filter(race       == "White") %>%
+  # dplyr::filter(ethnicity  == "Hispanic") %>% 
+  # dplyr::filter(ethnicity  == "Non-Hispanic") %>%
+  # ggplot(aes(x=year, y = resident_deaths, fill = sex))+
+  ggplot(aes(x=year, y = suicide_rate_per10k, fill = sex))+
+  geom_area(alpha = .4, position = "identity")+ 
+  geom_line(aes(group= sex), color="black")+
+  # geom_point(shape = 21, size = 3, fill = "white")+
+  scale_y_continuous(limits = c(0,NA))+
+  # scale_fill_manual(values = c("Female"="red","Male"="white"))+
+  scale_fill_viridis_d(end = .9, option = "plasma")+
+  # facet_grid(county ~ age_group)+
+  facet_wrap("county")+
   theme_minimal()
-g1
-# ---- explore-2 -------------------------------
-
-
-# ---- explore-3 -------------------------------
-
+g2
 # ---- explore-4 -------------------------------
-
+g3 <- ds %>% 
+  dplyr::group_by(county, year) %>% 
+  dplyr::summarise(
+    population_count = sum(population_count, na.rm = T)
+   ,resident_deaths = sum(resident_deaths, na.rm = T)
+  ) %>% 
+  ggplot(aes(x=year,y=population_count))+
+  geom_line(aes(group=county))+
+  scale_y_continuous(limits = c(0,NA))+
+  geom_point(aes(color=resident_deaths))+
+  geom_area(aes(color=resident_deaths))+
+  facet_wrap("county", scales="free_y")+
+  viridis::scale_color_viridis()+
+  theme_minimal()
+g3
 
 # ---- save-to-disk ----------------------------
 
