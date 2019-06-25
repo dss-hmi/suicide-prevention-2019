@@ -203,7 +203,7 @@ ds_combined <- ds_combined %>%
 
 # ---- basic-table ----------------------------
 ds_combined %>% 
-  dplyr::select(-county_zipcode) %>% 
+  # dplyr::select(-county_zipcode) %>% 
   dplyr::mutate(
     year   = lubridate::year(date) %>% as.character()
     ,month = lubridate::month(date) %>% as.character()
@@ -213,7 +213,7 @@ ds_combined %>%
 
 # ---- basic-pivot -----------------------------
 ds_combined %>% 
-  dplyr::select(-county_zipcode) %>% 
+  # dplyr::select(-county_zipcode) %>% 
   dplyr::mutate(
     year   = lubridate::year(date)
     ,month = lubridate::month(date)

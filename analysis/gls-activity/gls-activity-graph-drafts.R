@@ -29,7 +29,7 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 
 # assign aliases for this report
 ds <- dto
-
+# ds %>% head()
 # ----- custom-functions --------------------------------------
 get_a_sample <- function(
   d,
@@ -214,6 +214,67 @@ g7 <- ggplot(ds_plot_7, aes(x=n_trained_overall.x,y=n_trained_overall.y))+
   transition_states(year,state_length = 2)+ 
   exit_disappear()+
   theme_minimal()
+g7
+
+# ----- g8 ---------------------------
+ds %>% head()
+d8 <- ds %>% 
+  dplyr::mutate(
+    year   = lubridate::year(date)
+    ,month = lubridate::month(date)
+  ) %>% 
+  dplyr::arrange(year, month) %>% 
+# dplyr::group_by(county, audience, year, month ) %>% 
+  dplyr::summarize(
+    n_trained = sum(n_trained)
+  )
+d8 %>% head()
+
+ds_plot_6 <- ds %>% 
+  dplyr::mutate(
+    year = lubridate::year(date),
+    month = lubridate::month(date)
+  ) %>% 
+  dplyr::filter(county == "Brevard") %>% 
+  dplyr::filter(year == 2015) %>% 
+  tidyr::spread(key = audience, value = n_trained ) %>% 
+  dplyr::group_by(county,year, month) %>%
+  dplyr::summarize(
+    n_professionals = sum(professionals)
+    ,n_community     = sum(community)
+  ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::group_by(county, audience) %>% 
+  dplyr::mutate(
+    cumsum = cumsum(n_trained)
+  ) %>% 
+  dplyr::arrange(
+    audience, county, year, month
+  ) %>% 
+
+
+df <- data.frame(id = rep(1:3, each = 5),
+                 hour = rep(1:5, 3),
+                 value = sample(1:15))
+
+mutate(group_by(df,id), cumsum=cumsum(value))
+Or if you use the dplyr's piping operator:
+
+df %>% group_by(id) %>% mutate(cumsum = cumsum(value))
+
+  
+# graphical form to receive the data:
+g8 <- d8 %>% 
+  ggplot(aes(x=n_trained_overall.x,y=n_trained_overall.y))+
+  geom_point(aes(color=county, group=county, size=6))+
+  scale_x_log10()+
+  scale_y_log10()+
+  transition_states(year,state_length = 2)+ 
+  exit_disappear()+
+  theme_minimal()+
+  labs(
+    title= "Year: {closest_state}", x= "Professionals Trained", y="Community Trained"
+  )
 g7
   
 # ---- basic-graph -------------------------------------------------------
