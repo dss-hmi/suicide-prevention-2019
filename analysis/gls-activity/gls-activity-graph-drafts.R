@@ -217,38 +217,60 @@ g7 <- ggplot(ds_plot_7, aes(x=n_trained_overall.x,y=n_trained_overall.y))+
 g7
 
 # ----- g8 ---------------------------
-ds %>% head()
-d8 <- ds %>% 
+d8_1 <- ds %>% 
   dplyr::mutate(
     year = lubridate::year(date)
     ,month = lubridate::month(date)
-    ,yearmonth = zoo::as.yearmon(date)
   ) %>% 
-  # dplyr::filter(county %in% c("Orange","Brevard") ) %>%
-  # dplyr::filter(year %in% c(2015,2016) ) %>%
-  # tidyr::spread(key = audience, value = n_trained ) %>% 
-  dplyr::group_by(audience, county, year, month, yearmonth) %>%
+  dplyr::group_by(audience, county, year, month) %>%
   dplyr::summarize(
     n_trained     = sum(n_trained, na.rm = T)
   ) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::group_by(audience, county) %>% 
-  dplyr::mutate(
-    
-    cumsum = cumsum(n_trained)
-  ) %>% 
-  dplyr::arrange(
-    audience, county, year, month, yearmonth
-  ) %>% 
-  dplyr::select(-n_trained) %>%
-  tidyr::spread(key = audience, value = cumsum) %>% 
-  dplyr::mutate(
-    # year_month = paste0(year,"-", ifelse(month<10,paste0("0",month), month ))
-    
-  )
-d8 %>% head()
+  dplyr::ungroup() 
+d8_1 %>% head()
 
-g8 <- ggplot(d8, aes(x=professionals, y=community))+
+# to create all possible values for county - year - month 
+names_counties <- ds %>% 
+  dplyr::distinct(county) %>% 
+  dplyr::arrange(county) %>% 
+  na.omit() %>% 
+  as.list() %>% unlist() %>% as.character()
+names_years <- 2014:2019
+names_months <- 1:12
+# to unite into a single data frame
+d_stem <- tidyr::crossing(
+  county = names_counties
+  ,year = names_years
+  ,month = names_months
+)
+# attach to the stem
+d8_2 <- dplyr::left_join(
+  d_stem # first
+  ,d8_1 # second
+) %>% 
+  tidyr::spread(key = audience, value = n_trained) %>% 
+  dplyr::select(-`<NA>`) %>% 
+  dplyr::mutate(
+     community     = ifelse(is.na(community),0,community)
+    ,professionals = ifelse(is.na(professionals),0,professionals)
+  ) %>% 
+  # dplyr::arrange(county, year, month) %>% 
+  # dplyr::ungroup() %>% 
+  dplyr::group_by(county, year, month) %>% 
+  dplyr::summarize(
+    community = sum(community, na.rm = T)
+    ,professionals = sum(professionals, na.rm = T)
+  ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::group_by(county) %>% 
+  dplyr::mutate(
+    yearmonth = paste0(year,"-", ifelse(month<10, paste0("0",month),month))
+    ,cumsum_community     = cumsum(community)
+    ,cumsum_professionals = cumsum(professionals)
+  )
+  
+
+g8 <- ggplot(d8_2, aes(x=cumsum_professionals, y=cumsum_community))+
   geom_point(aes(color=county, group=county, size=6))+
   scale_x_log10()+
   scale_y_log10()+
@@ -263,6 +285,9 @@ g8 <- ggplot(d8, aes(x=professionals, y=community))+
   # gganimate::exit_disappear()+
   theme_minimal()
 g8
+
+
+
 
 
 # ---- 
