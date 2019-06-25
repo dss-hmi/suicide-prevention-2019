@@ -269,20 +269,33 @@ d8_2 <- dplyr::left_join(
     ,cumsum_professionals = cumsum(professionals)
   )
   
+d8_2 %>% explore::describe_all()
 
-g8 <- ggplot(d8_2, aes(x=cumsum_professionals, y=cumsum_community))+
-  geom_point(aes(color=county, group=county, size=6))+
-  scale_x_log10()+
-  scale_y_log10()+
+g8 <- d8_2 %>% 
+  dplyr::filter(!county %in% c("Orange")) %>% 
+  ggplot(aes(
+    x=cumsum_professionals
+    , y=cumsum_community
+  ))+
+  # geom_point(aes(group=county), shape = 21, fill = NA, size = 6)+
+  geom_text(aes(label = county))+
+  # scale_x_log10()+
+  # scale_y_log10()+
   # labs(title= "Year: {closest_state}", x= "Professionals Trained", y="Community Trained")+
+  # scale_x_continuous(breaks = seq(0, 200, 200))+
+  # scale_y_continuous(breaks = seq(0, 3000, 1000))+
   labs(
     title= "Year: {closest_state}"
     , x  = "Professionals Trained"
     , y  = "Community Trained"
-  )+
-  gganimate::transition_states(yearmonth, state_length = 2)+ 
+  )
+g8 
+
+g8 <- g8 +
+  gganimate::transition_states(yearmonth, state_length = 200)+ 
   gganimate::shadow_mark(alpha = 0.3, size = 0.5)+
   # gganimate::exit_disappear()+
+  gganimate::view_follow()+
   theme_minimal()
 g8
 
