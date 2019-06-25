@@ -220,13 +220,14 @@ g7
 ds %>% head()
 d8 <- ds %>% 
   dplyr::mutate(
-    year = lubridate::year(date),
-    month = lubridate::month(date)
+    year = lubridate::year(date)
+    ,month = lubridate::month(date)
+    ,yearmonth = zoo::as.yearmon(date)
   ) %>% 
   # dplyr::filter(county %in% c("Orange","Brevard") ) %>%
   # dplyr::filter(year %in% c(2015,2016) ) %>%
   # tidyr::spread(key = audience, value = n_trained ) %>% 
-  dplyr::group_by(audience, county, year, month) %>%
+  dplyr::group_by(audience, county, year, month, yearmonth) %>%
   dplyr::summarize(
     n_trained     = sum(n_trained, na.rm = T)
   ) %>% 
@@ -237,35 +238,56 @@ d8 <- ds %>%
     cumsum = cumsum(n_trained)
   ) %>% 
   dplyr::arrange(
-    audience, county, year, month
+    audience, county, year, month, yearmonth
   ) %>% 
   dplyr::select(-n_trained) %>%
-  tidyr::spread(key = audience, value = cumsum)
+  tidyr::spread(key = audience, value = cumsum) %>% 
+  dplyr::mutate(
+    # year_month = paste0(year,"-", ifelse(month<10,paste0("0",month), month ))
+    
+  )
 d8 %>% head()
 
+g8 <- ggplot(d8, aes(x=professionals, y=community))+
+  geom_point(aes(color=county, group=county, size=6))+
+  scale_x_log10()+
+  scale_y_log10()+
+  # labs(title= "Year: {closest_state}", x= "Professionals Trained", y="Community Trained")+
+  labs(
+    title= "Year: {closest_state}"
+    , x  = "Professionals Trained"
+    , y  = "Community Trained"
+  )+
+  gganimate::transition_states(yearmonth, state_length = 2)+ 
+  gganimate::shadow_mark(alpha = 0.3, size = 0.5)+
+  # gganimate::exit_disappear()+
+  theme_minimal()
+g8
+
+
 # ---- 
-ds_plot_6 <- ds %>% 
-  dplyr::mutate(
-    year = lubridate::year(date),
-    month = lubridate::month(date)
-  ) %>% 
-  dplyr::filter(county == "Brevard") %>%
-  dplyr::filter(year %in% c(2015,2016) ) %>%
-  tidyr::spread(key = audience, value = n_trained ) %>% 
-  dplyr::group_by(county, year, month) %>%
-  dplyr::summarize(
-    professionals = sum(professionals, na.rm = T)
-    ,community    = sum(community, na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::group_by(county) %>% 
-  dplyr::mutate(
-    cumsum_professionals = cumsum(professionals)
-    ,cumsum_community    = cumsum(community)
-  ) %>% 
-  dplyr::arrange(
-    county, year, month
-  ) 
+# ds_plot_6 <- ds %>% 
+#   dplyr::mutate(
+#     year = lubridate::year(date),
+#     month = lubridate::month(date)
+#   ) %>% 
+#   dplyr::filter(county == "Brevard") %>%
+#   dplyr::filter(year %in% c(2015,2016) ) %>%
+#   tidyr::spread(key = audience, value = n_trained ) %>% 
+#   dplyr::group_by(county, year, month) %>%
+#   dplyr::summarize(
+#     professionals = sum(professionals, na.rm = T)
+#     ,community    = sum(community, na.rm = T)
+#   ) %>% 
+#   dplyr::ungroup() %>% 
+#   dplyr::group_by(county) %>% 
+#   dplyr::mutate(
+#     cumsum_professionals = cumsum(professionals)
+#     ,cumsum_community    = cumsum(community)
+#   ) %>% 
+#   dplyr::arrange(
+#     county, year, month
+#   ) 
 
 
   
