@@ -235,22 +235,23 @@ ds_plot_6 <- ds %>%
     year = lubridate::year(date),
     month = lubridate::month(date)
   ) %>% 
-  dplyr::filter(county == "Brevard") %>% 
-  dplyr::filter(year == 2015) %>% 
+  dplyr::filter(county == "Brevard") %>%
+  dplyr::filter(year %in% c(2015,2016) ) %>%
   tidyr::spread(key = audience, value = n_trained ) %>% 
-  dplyr::group_by(county,year, month) %>%
+  dplyr::group_by(county, year, month) %>%
   dplyr::summarize(
-    n_professionals = sum(professionals)
-    ,n_community     = sum(community)
+    professionals = sum(professionals, na.rm = T)
+    ,community    = sum(community, na.rm = T)
   ) %>% 
   dplyr::ungroup() %>% 
-  dplyr::group_by(county, audience) %>% 
+  dplyr::group_by(county) %>% 
   dplyr::mutate(
-    cumsum = cumsum(n_trained)
+    cumsum_professionals = cumsum(professionals)
+    ,cumsum_community    = cumsum(community)
   ) %>% 
   dplyr::arrange(
-    audience, county, year, month
-  ) %>% 
+    county, year, month
+  ) 
 
 
 df <- data.frame(id = rep(1:3, each = 5),
