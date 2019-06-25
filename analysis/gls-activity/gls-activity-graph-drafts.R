@@ -155,6 +155,67 @@ g3 <- ds_plot_3 %>%
   theme_minimal()
 g3
 
+# ---- graph-4 -----------------------------------------------------------
+# graph showing professional cumulative traning provided over time in all counties
+ds_plot_4 <- ds %>% dplyr::filter(audience=="professionals") %>% 
+  dplyr::arrange(date) %>% 
+  dplyr::group_by(county) %>% 
+  dplyr::mutate(
+    n_trained_pro = cumsum(x = n_trained)
+  )
+g4 <- ggplot(ds_plot_4, aes(x=date,y=n_trained_pro))+
+  geom_bar(stat="identity")+
+  facet_wrap("county", scales="free")+
+  theme_minimal()
+g4
+
+# ---- graph-5 -----------------------------------------------------------
+# graph showing all traning provided over time in all counties
+ds_plot_5 <- ds %>%  
+  dplyr::arrange(date) %>% 
+  dplyr::group_by(audience,county) %>% 
+  dplyr::mutate(
+    n_trained_cum = cumsum(x = n_trained)
+  )
+g5 <- ggplot(ds_plot_5, aes(x=date,y=n_trained_cum))+
+  geom_point(aes(group = audience, color = audience))+
+  facet_wrap("county", scales="free")+
+  theme_minimal()
+g5
+
+# ---- graph-6 -----------------------------------------------------------
+# animation graph showing all traning provided over time in all counties
+ds_plot_6 <- ds %>%  
+  dplyr::mutate(
+    year = lubridate::year(date),
+    month = lubridate::month(date)
+  ) %>% 
+  dplyr::group_by(audience,year,county) %>% 
+  dplyr::mutate(
+    n_trained_year = cumsum(n_trained)
+  ) %>% 
+  dplyr::summarise(
+    n_trained_overall = sum(n_trained_year)
+  )
+
+ds_plot_6_pro <- ds_plot_6 %>% 
+  dplyr::filter(audience=="professionals")
+
+ds_plot_6_com <- ds_plot_6 %>% 
+  dplyr::filter(audience=="community")  
+
+ds_plot_7 <- merge(ds_plot_6_pro, ds_plot_6_com, by=c("year","county"))
+library(gganimate)
+g7 <- ggplot(ds_plot_7, aes(x=n_trained_overall.x,y=n_trained_overall.y))+
+  geom_point(aes(color=county, group=county, size=6))+
+  scale_x_log10()+
+  scale_y_log10()+
+  labs(title= "Year: {closest_state}", x= "Professionals Trained", y="Community Trained")+
+  transition_states(year,state_length = 2)+ 
+  exit_disappear()+
+  theme_minimal()
+g7
+  
 # ---- basic-graph -------------------------------------------------------
 
 
