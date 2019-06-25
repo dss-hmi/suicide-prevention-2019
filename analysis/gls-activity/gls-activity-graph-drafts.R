@@ -223,23 +223,24 @@ d8 <- ds %>%
     year = lubridate::year(date),
     month = lubridate::month(date)
   ) %>% 
-  dplyr::filter(county == "Brevard") %>%
-  dplyr::filter(year %in% c(2015,2016) ) %>%
-  tidyr::spread(key = audience, value = n_trained ) %>% 
-  dplyr::group_by(county, year, month) %>%
+  # dplyr::filter(county %in% c("Orange","Brevard") ) %>%
+  # dplyr::filter(year %in% c(2015,2016) ) %>%
+  # tidyr::spread(key = audience, value = n_trained ) %>% 
+  dplyr::group_by(audience, county, year, month) %>%
   dplyr::summarize(
-    professionals = sum(professionals, na.rm = T)
-    ,community    = sum(community, na.rm = T)
+    n_trained     = sum(n_trained, na.rm = T)
   ) %>% 
   dplyr::ungroup() %>% 
-  dplyr::group_by(county) %>% 
+  dplyr::group_by(audience, county) %>% 
   dplyr::mutate(
-    cumsum_professionals = cumsum(professionals)
-    ,cumsum_community    = cumsum(community)
+    
+    cumsum = cumsum(n_trained)
   ) %>% 
   dplyr::arrange(
-    county, year, month
-  ) 
+    audience, county, year, month
+  ) %>% 
+  dplyr::select(-n_trained) %>%
+  tidyr::spread(key = audience, value = cumsum)
 d8 %>% head()
 
 # ---- 
