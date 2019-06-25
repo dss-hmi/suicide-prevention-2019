@@ -168,16 +168,22 @@ g1 +
 d2 <- ds %>% 
   dplyr::filter(year %in% c(2006:2017)) %>% 
   dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
-  dplyr::group_by(county, year, sex) %>%
+  dplyr::group_by(county, year) %>% # excluded sex to get the total population counts
   dplyr::summarize(
-    population_count   = sum(population_count,   na.rm = T)
-    ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
     ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
-    ,professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  )
+  ) %>%
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    pop_less_3000 = ifelse(population_count < 3000, TRUE, FALSE)
+  ) %>% 
+  dplyr::arrange(desc(population_count))
 
+d2 %>% neat_DT()
 
+# g2 <- d2 %>% 
+  
 
 # ---- publish ---------------------------------
 rmarkdown::render(
