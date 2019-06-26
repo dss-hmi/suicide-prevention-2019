@@ -103,6 +103,154 @@ d1 <- ds %>%
 # d1 %>% glimpse(60)
 # d1 %>% explore::describe()
 
+# ----- new -----------------------
+d1 <- ds %>% 
+  dplyr::mutate(
+    tx = ifelse(county %in% counties_gls, TRUE, FALSE)
+  ) %>% 
+  dplyr::group_by(year, tx) %>% 
+  dplyr::summarize(
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+    ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+  ) %>% 
+  dplyr::ungroup()
+
+g1 <- d1 %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  geom_line(aes(color = tx, group = tx))+
+  geom_point(shape=21)+
+  theme_minimal()+
+  labs(color = "Counties with \n GLS programming")
+g1
+
+
+d2 <- ds %>% 
+  dplyr::mutate(
+    # tx_level = tx_level
+    tx_level = car::recode(
+      county,
+      "
+     'Orange'  ='high P high C'
+     ;'Saint Lucie'='high P mid C'
+     ;'Palm Beach'='mid P mid C  '
+     ;'Brevard'='mid P mid C  '
+     ;'Seminole'='mid P mid C  '
+     ;'Volusia'='mid P high C  '
+     ;'Lake'='mid P low C  '
+     "
+    )
+    ,tx_level = ifelse(tx_level %in% counties_gls, "low P low C", tx_level)
+    ,tx = ifelse(county %in% counties_gls, TRUE, FALSE)
+    ,tx_level = ifelse(
+      (!tx_level %in% counties_gls) & (tx == FALSE),"control", tx_level
+    )
+  ) %>% 
+  dplyr::group_by(year,tx, tx_level) %>% 
+  dplyr::summarize(
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+    ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+  ) %>% 
+  dplyr::ungroup()
+g2 <- d2 %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  geom_line(aes(color = tx_level, group = tx_level))+
+  geom_point(shape=21)+
+  theme_minimal()+
+  labs(color = "Counties with \n GLS programming")
+g2
+
+
+focal_counties <- c(
+   "Orange"  
+  ,"Saint Lucie" 
+  ,"Palm Beach"  
+  ,"Brevard" 
+  ,"Seminole"
+  ,"Volusia"
+  ,"Lake"        
+)
+d3 <- ds %>% 
+  dplyr::mutate(
+    tx_level = ifelse(county %in% focal_counties, county,
+                      ifelse((!county %in% focal_counties) & (county %in% counties_gls), "low GLS",
+                             "control"))
+                      
+    ) %>% 
+  dplyr::group_by(year,tx_level) %>% 
+  dplyr::summarize(
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+    ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+  ) %>% 
+  dplyr::ungroup()
+g3 <- d3 %>% 
+  dplyr::filter(year %in% 2013:2017) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  # ggplot(aes(x = year, y = deaths_by_suicide))+
+  geom_line(aes(color = tx_level, group = tx_level), size =1.5)+
+  geom_point(shape=21, size = 2)+
+  theme_minimal()+
+  labs(color = "Counties with \n GLS programming")
+g3
+
+focal_counties <- c(
+  "Broward"
+  ,"Brevard"
+  ,"Hillsborough" 
+  ,"Palm Beach"  
+  ,"Miami-Dade"
+  ,"Orange"
+  ,"Seminole"        
+  # ,"Brevard"
+  ,"Volusia"
+)
+d4 <- ds %>% 
+  dplyr::filter(county %in% focal_counties) %>% 
+   dplyr::group_by(county, year) %>% 
+  dplyr::summarize(
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+    ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+  ) %>% 
+  dplyr::ungroup()
+g4 <- d4 %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  # ggplot(aes(x = year, y = deaths_by_suicide))+
+  geom_line(aes(color = county, group = county), size =1.5)+
+  geom_point(shape=21, size = 2)+
+  theme_minimal()+
+  labs(color = "Focal Counties")
+g4
+
+
+d5 <- ds %>% 
+  dplyr::filter(county %in% c("Palm Beach")) %>% 
+  dplyr::group_by(county, year, racethnicity) %>% 
+  dplyr::summarize(
+    population_count      = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+    ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+  ) %>% 
+  dplyr::ungroup()
+g5 <- d5 %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  # ggplot(aes(x = year, y = deaths_by_suicide))+
+  geom_line(aes(color = racethnicity, group = racethnicity), size =1.5)+
+  geom_point(shape=21, size = 2)+
+  theme_minimal()+
+  labs(color = "Race Groups")
+g5
+
+
+# create a ration of population size to n_trained
+
+
 # ---- g0 -------------------------------
 #
 d1 <- ds %>% 
