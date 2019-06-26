@@ -106,7 +106,8 @@ d1 <- ds %>%
 # ---- g0 -------------------------------
 #
 d1 <- ds %>% 
-  dplyr::filter(county %in% c("Orange")) %>% 
+  # dplyr::filter(county %in% c("Orange")) %>% 
+  dplyr::filter(county %in% c("Lake")) %>%
   dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
   dplyr::filter(year %in% c(2011:2017)) %>% 
   # dplyr::filter(age_group %in% c("20_24")) %>%
@@ -129,13 +130,105 @@ d1 <- ds %>%
 d1 %>% explore::describe()
 
 g1 <- d1 %>% 
-  dplyr::filter(year == 2016) %>% 
-  ggplot(aes(x = year, y = suicide_rate_per100k))+
-  geom_point(aes(shape = sex, fill = racethnicity))+
-  theme_minimal()
+  # dplyr::filter(year == 2016) %>% 
+  dplyr::mutate(
+    sexracethnicity = paste0(sex,"+",racethnicity)
+  ) %>%
+  ggplot(aes(
+    x     = year
+    ,y    = suicide_rate_per100k
+    ,fill = racethnicity
+    ,color = racethnicity
+  ))+
+  geom_point(aes(shape = sex), size = 4, color = "black")+
+  geom_line(aes(group = sexracethnicity,color = racethnicity), alpha = 1, size =1.4)+
+  # geom_point(aes(shape = sex,color = racethnicity), size = 4)+
+  # geom_point(aes(shape = sex), size = 4, color = "black")+
+  # geom_line(aes(group = sex*racethnicity))+
+  scale_shape_manual(values = c("Male" = 25, "Female" = 24 ))+
+  # scale_fill_viridis_d()+
+  # scale_color_viridis_d()+
+  theme_minimal()+
+  guides(fill = "legend", color = "legend")
 g1
 
 # ---- g1 -------------------------------
+trend_summary <- function(
+  d
+  ,county_i
+){
+  
+  d1 <- d %>% 
+    # dplyr::filter(county %in% c("Orange")) %>% 
+    dplyr::filter(county %in% c(county_i)) %>%
+    dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
+    dplyr::filter(year %in% c(2006:2017)) %>% 
+    # dplyr::filter(age_group %in% c("20_24")) %>%
+    # dplyr::filter(age_group %in% c("15_19")) %>%
+    # dplyr::filter(age_group %in% c("10_14")) %>% 
+    dplyr::group_by(county, year, sex, race, ethnicity, racethnicity) %>%
+    dplyr::summarize(
+      population_count      = sum(population_count,   na.rm = T)
+      ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
+      ,suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+    ) %>% 
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      # produces the same results as within group_by() summarization
+      # suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+      years_since_2000 = as.integer(as.integer(year) - 2000) # for short label
+      # ,sex = factor(sex, levels = c("Male","Female") )
+      ,sex = factor(sex, levels = c("Female","Male") )
+    ) 
+  d1 %>% explore::describe()
+  
+  g_out <- d1 %>% 
+    # dplyr::filter(year == 2016) %>% 
+    dplyr::mutate(
+      sexracethnicity = paste0(sex,"+",racethnicity)
+    ) %>%
+    ggplot(aes(
+      x     = year
+      # ,y    = suicide_rate_per100k
+      ,y    = deaths_by_suicide
+      ,fill = racethnicity
+      ,color = racethnicity
+    ))+
+    # geom_point(aes(shape = sex), size = 4, color = "black")+
+    geom_line(aes(group = sexracethnicity,color = racethnicity), alpha = 1, size =1.4)+
+    # geom_point(aes(shape = sex,color = racethnicity), size = 4)+
+    # geom_point(aes(shape = sex), size = 4, color = "black")+
+    # geom_line(aes(group = sex*racethnicity))+
+    # scale_shape_manual(values = c("Male" = 25, "Female" = 24 ))+
+    # scale_fill_viridis_d()+
+    # scale_color_viridis_d(end = .8, option = "plasma")+
+    # scale_color_viridis_d(end = .8, option = "inferno")+
+    # scale_color_viridis_d(end = .8, option = "magma")+
+    geom_point(shape = 21, color = "black", size = 2)+
+    theme_minimal()+
+    facet_grid(sex ~ .)+
+    scale_y_continuous(breaks = seq(0,20,2),limits = c(0,15))+
+    guides(fill = "legend", color = "legend")+
+    labs(title = paste0(toupper(county_i),": Suicide rates per 100k among 10-24 yo"))
+  return(g_out)
+}
+ds %>% trend_summary("Broward")
+# how to use
+ds %>% trend_summary("Orange")
+ds %>% trend_summary("Saint Lucie")
+ds %>% trend_summary("Volusia")
+ds %>% trend_summary("Seminole")
+ds %>% trend_summary("Lake")
+ds %>% trend_summary("Palm Beach")
+ds %>% trend_summary("Brevard")
+ds %>% trend_summary("Martin")
+ds %>% trend_summary("Flagler")
+
+ds %>% trend_summary("Hillsborough")
+ds %>% trend_summary("Broward")
+ds %>% trend_summary("Duval")
+ds %>% trend_summary("Miami-Dade")
+
 
 # ---- g2 -------------------------------
 
