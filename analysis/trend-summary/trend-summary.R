@@ -128,6 +128,12 @@ d1 <- ds %>%
   ) 
 d1 %>% explore::describe()
 
+g1 <- d1 %>% 
+  dplyr::filter(year == 2016) %>% 
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  geom_point(aes(shape = sex, fill = racethnicity))+
+  theme_minimal()
+g1
 
 # ---- g1 -------------------------------
 
