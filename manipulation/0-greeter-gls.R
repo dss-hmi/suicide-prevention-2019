@@ -80,7 +80,7 @@ d0 %>% dplyr::glimpse(100)
 # all those needing special attention
 d1 <- ds %>% 
   dplyr::filter( ! grepl("^(\\d{5})$" , dates)| is.na(dates) ) 
-d0 %>% dplyr::glimpse(100)
+d1 %>% dplyr::glimpse(100)
 
 # dates stored as M/D/YY
 d2 <- ds %>% 
@@ -88,7 +88,7 @@ d2 <- ds %>%
   dplyr::mutate(
     date_char = gsub("(\\d{1,2})\\/(\\d{1,2})\\/(\\d{2,4})$", "\\1-\\2-\\3", dates)
   )
-d0 %>% dplyr::glimpse(100)
+d2 %>% dplyr::glimpse(100)
 
 # dates stored as  MMDDYY with a "C" prefix
 d3 <- ds %>% 
@@ -96,7 +96,7 @@ d3 <- ds %>%
   dplyr::mutate(
     date_char  =  gsub("^C(\\d+)\\/(\\d{2})(\\d{2})(\\d{2})$", "\\2-\\3-\\4", dates)
   )
-d0 %>% dplyr::glimpse(100)
+d3 %>% dplyr::glimpse(100)
 
 # dates stored as M/D/YY or M/D/YYYY with a "C" prefix
 d4 <- ds %>% 
@@ -104,7 +104,7 @@ d4 <- ds %>%
   dplyr::mutate(
       date_char  =  gsub("^C(\\d+)(: ?)(\\d{1,2})\\/(\\d{1,2})\\/(\\d{2,4})$", "\\3-\\4-\\5", dates)
   )
-d0 %>% dplyr::glimpse(100)
+d4 %>% dplyr::glimpse(100)
 
 # dates stored as M.D.YY 
 d5 <- ds %>% 
@@ -112,7 +112,7 @@ d5 <- ds %>%
   dplyr::mutate(
     date_char  =  gsub("^(\\d{1,2})\\.(\\d{1,2})\\.(\\d{2,4})$", "\\1-\\2-\\3", dates)
   )
-d0 %>% dplyr::glimpse(100)
+d5 %>% dplyr::glimpse(100)
 
 # combine all special cases into a singl df
 dd <- list(d2,d3,d4,d5) %>% 
@@ -130,7 +130,7 @@ dd <- list(d2,d3,d4,d5) %>%
     "region","audience","dates","county_zipcode","type_training","n_trained", "date"
     )
   )
-d0 %>% dplyr::glimpse(100)
+dd %>% dplyr::glimpse(100)
 # inspect what was not addressed 
 d <- d1 %>% dplyr::left_join(dd)# see what is yet to be adjusted, quick inspection
 d %>% dplyr::glimpse(100)
@@ -178,7 +178,6 @@ ds_combined %>% dplyr::glimpse(100)
 # ds_combined %>% dplyr::arrange(county) %>% dplyr::distinct(county) %>% print(n = nrow(.))
 # ds_combined %>% dplyr::arrange(zipcode) %>% dplyr::distinct(zipcode) %>% print(n = nrow(.))
 # ds_combined %>% dplyr::arrange(county,zipcode) %>% dplyr::distinct(county,zipcode) %>% print(n = nrow(.))
-
 
 ds_combined %>% 
   dplyr::group_by(audience, type_training) %>% 
@@ -229,10 +228,7 @@ ds_combined %>%
     # , height="400px"
   )
 
-
 # ---- save-to-disk ----------------------------
-
-
 ds_combined %>% pryr::object_size()
 ds_combined %>%          saveRDS("./data-unshared/derived/0-greeted-gls.rds")
 ds_combined %>% readr::write_csv("./data-unshared/derived/0-greeted-gls.csv") # for read-only inspection

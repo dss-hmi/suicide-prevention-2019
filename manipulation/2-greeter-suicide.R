@@ -37,8 +37,7 @@ ds0 %>% head(30) %>% neat()
 # ---- tweak-data -----------------------------------------------------
 # hardcoding, because cheaper and easy to check
 names(ds0) <- c(
-  "county","year","mortality_locus","mortality_cause", 
-  "age_group","sex","race","ethnicity","resident_deaths"
+  "county","year","mortality_locus","mortality_cause","age_group","sex","race","ethnicity","resident_deaths"
 )
 
 fill_last_seen <- function(
@@ -63,7 +62,7 @@ fill_last_seen <- function(
 
 ds1 <- ds0 %>% 
   dplyr::mutate_all(fill_last_seen)
-ds1 %>% dplyr::glimpse()
+ds1 %>% dplyr::glimpse(100)
 
 ds1 <- ds1 %>% 
   dplyr::mutate(
@@ -74,7 +73,7 @@ ds1 <- ds1 %>%
   )
 ds1 %>% 
   dplyr::distinct(age_group)
-
+# because it will be easier to compute on site + demonstration of summary logic
 ds2 <- ds1 %>% 
   dplyr::filter(! county    == "Total") %>% 
   dplyr::filter(! year      == "Total") %>% 

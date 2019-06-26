@@ -1,5 +1,5 @@
 ---
-title: "1-greeter-Population"
+title: "1-greeter-population"
 output:
   html_document:
     always_allow_html: yes

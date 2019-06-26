@@ -52,7 +52,7 @@ read_chunk("./manipulation/2-greeter-suicide.R")
 
 This document is the annotation layer to [`./manipulation/2-greeter-suicide.R`][path_greeter] script, which connects to data sources used in the study, imports them into RStudio environment and prepares them for analytic enquiry.
 
-[path_greeter]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/1-greeter-population.R
+[path_greeter]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/2-greeter-suicide.R
 
 # I. Environment
 

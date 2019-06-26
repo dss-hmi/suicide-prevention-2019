@@ -19,16 +19,16 @@ library(dplyr) # disable when temp lines are removed
 library(ggplot2)
 library(ggpubr)
 library(readxl)
-# -2--- declare-globals ---------------------------------------------------------
+# ---- declare-globals ---------------------------------------------------------
 path_file_input_0 <- "./data-unshared/derived/0-greeted-gls.rds"
 path_file_input_1 <- "./data-unshared/derived/1-greeted-population.rds"
 path_file_input_2 <- "./data-unshared/derived/2-greeted-suicide.rds"
 # path_file_input       <- "./data-unshared/raw/FloridaDeathsReport/FloridaDeathsReport-full.xlsx"
 output_format = "pandoc"
 # ---- load-data ---------------------------------------------------------------
-ds_gls        <- readRDS(path_file_input_0) %>% dplyr::glimpse(80)
-ds_population <- readRDS(path_file_input_1) %>% dplyr::glimpse(80)
-ds_suicide    <- readRDS(path_file_input_2) %>% dplyr::glimpse(80)
+ds_gls        <- readRDS(path_file_input_0) %>% dplyr::glimpse(100)
+ds_population <- readRDS(path_file_input_1) %>% dplyr::glimpse(100)
+ds_suicide    <- readRDS(path_file_input_2) %>% dplyr::glimpse(100)
 
 # ---- tweak-data -----------------------------------------------------
 ds_gls <- ds_gls %>% 
@@ -53,14 +53,14 @@ ds_suicide_by_year <- ds_suicide %>%
   dplyr::summarize(
     resident_deaths = sum(resident_deaths, na.rm = T)
   )
-# note that `mortality_cause` is more granulary than county-by-year
-# to help elementwise list operations:
+# note that `mortality_cause` is more granular than county-by-year
+# to help with elementwise list operations:
 ls_ds <- list(
-  "population" = ds_population_by_year
+  "population" = ds_population_by_year # first, because most complete
   ,"suicide"   = ds_suicide_by_year
-  ,"gls"       = ds_gls_by_year
+  ,"gls"       = ds_gls_by_year # last, because left join
 )
-ls_ds %>% lapply(dplyr::glimpse,80) %>% invisible() 
+ls_ds %>% lapply(dplyr::glimpse,100) %>% invisible() 
 
 # ---- aggregate-1 ----------------------------------
 
@@ -80,20 +80,21 @@ ls_ds %>% lapply(dplyr::glimpse,80) %>% invisible()
 ls_ds %>% lapply(names)
 # to join all elements of the list, one after another
 ds <- ls_ds %>% Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
-ds %>% dplyr::glimpse(80)
-# this join preserves the granularity in the GLS file (except year)
+ds %>% dplyr::glimpse(100)
+# this join preserves the granularity in the GLS file (except binning dates into years)
 # note, however, that  you cannot aggregate population and suicide measures
 # sums of `population_count` and `resident_deaths` are not meaningful
-# because these values repeat in row to accomodate granularity of GLS file
+# because these values repeat in row to accomodate 
+# a higher granularity of GLS file (audience, type_training)
 
 # let us create a list object to capture this useful data set
 ls_out <- list(
-  "highest_granularity" = ls_ds
+  "granularity_gls" = ls_ds
 )
 # ---- aggregate-2 ------------------------------------
 # let us aggregate at the level of `population`
-# this means that we will provide a single measure for at the resolution:
-# county - year - sex - race - enthicity - age_group
+# this means that we will provide a single measure at the resolution:
+# county - year - sex - age_group - race - enthicity 
 # for every unique combination of values on these six we want:
 # `population_count` - number of people alive 
 # `resident_deaths`  - number of registered deaths among residents
@@ -116,21 +117,21 @@ ls_ds <- list(
     ) %>% 
     tidyr::spread(audience,n_trained)
 )
-ls_ds %>% lapply(dplyr::glimpse,80) %>% invisible() 
+ls_ds %>% lapply(dplyr::glimpse,100) %>% invisible() 
 ds <- ls_ds %>% Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
-ds %>% dplyr::glimpse(80)
-# note that  you can
+ds %>% dplyr::glimpse(100)
 
-ls_out[["lowest_granularity"]] <- ls_ds
+# add a new level of granularity to the output `dto`
+ls_out[["granularity_population"]] <- ls_ds
 # ---- save-to-disk ----------------------------
 
 
 ls_out %>% pryr::object_size()
-ls_out %>%          saveRDS("./data-unshared/derived/4-combined.rds")
+ls_out %>%          saveRDS("./data-unshared/derived/9-combined.rds")
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/4-combiner/4-combiner.Rmd"
+  input = "./analysis/9-combiner/9-combiner.Rmd"
   ,output_format = c(
     "html_document" 
     # ,"pdf_document"

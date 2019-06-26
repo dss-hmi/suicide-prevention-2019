@@ -30,13 +30,13 @@ ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3) #%>% dp
 # ---- tweak-data -----------------------------------------------------
 # names(ds0) <- c("county","year","sex","race","ethnicity","10_14","15_19", "20_24","total") # small
 ds1 <- ds0
-names(ds1) <- c("county","year","sex","race","ethnicity",
-                "less_than_1", "1_4","5_9","10_14","15_19", "20_24",
-                "25_34","35_44","45_54","55_64","65_74","75_84","85_plus"
-                ,"total")
+names(ds1) <- c(
+  "county","year","sex","race","ethnicity",
+  "less_than_1", "1_4","5_9","10_14","15_19", "20_24","25_34",
+  "35_44","45_54","55_64","65_74","75_84","85_plus","total"
+)
 
-# function to fill last seen for given column
-
+# function to fill last seen for a given column
 fill_last_seen <- function(
   column
 ){
@@ -57,12 +57,11 @@ fill_last_seen <- function(
   return(column)
 }
 
-
 ds1 %>% head(20)
 ds2 <- ds1 %>%
   dplyr::mutate_all(fill_last_seen)
-names(ds2) <- names(ds1)
-ds2 %>% dplyr::glimpse()
+names(ds2) <- names(ds1) # because mutate_all messes up column names
+ds2 %>% dplyr::glimpse(100)
 
 var_stem <- c("county","year","sex","race","ethnicity")
 ds2 <- ds2 %>% 
@@ -70,9 +69,8 @@ ds2 <- ds2 %>%
     "age_group","count", setdiff(names(ds1), var_stem)
   )
 
-ds2 %>% dplyr::glimpse(80)
-
-
+ds2 %>% dplyr::glimpse(100)
+# because it will be easier to compute on site + demonstration of summary logic
 ds3 <- ds2 %>% 
   dplyr::filter(! county    == "Total") %>% 
   dplyr::filter(! year      == "Total") %>% 

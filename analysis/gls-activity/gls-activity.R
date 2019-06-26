@@ -22,6 +22,7 @@ library(ggpubr)   # documents
 # ---- declare-globals ---------------------------------------------------------
 path_file_input <- "./data-unshared/derived/0-greeted-gls.rds"
 html_flip <- FALSE
+output_format = "pandoc"
 baseSize <- 10
 # ---- load-data ---------------------------------------------------------------
 dto      <- readRDS(path_file_input)

@@ -1,5 +1,5 @@
 ---
-title: "0-greeter-GLS"
+title: "0-greeter-gls"
 output:
   html_document:
     always_allow_html: yes
