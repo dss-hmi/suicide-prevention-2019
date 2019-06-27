@@ -62,7 +62,8 @@ ds <- ds %>%
   # dplyr::select(-county_zipcode) %>% 
   dplyr::mutate(
     year = lubridate::year(date)
-    # ,month = lubridate::month(date)
+    ,month = lubridate::month(date)
+    ,yearmonth = zoo::as.yearmon(date)
     ,weekday = lubridate::wday(date)
     ,rgn = car::recode(
       region,
@@ -78,6 +79,86 @@ ds %>% glimpse(60)
 
 # ds %>% explore::explore( )
 ds %>% explore::describe()
+
+# ---- schedule-0 ---------------------
+gls_county_by_month <- function(
+  d
+  ,audience_i
+  ,ntile_groups = 5
+){
+  # d <- ds; audience_i = "community"; ntile_groups = 5
+  d1 <- d %>% 
+    dplyr::filter(audience==audience_i) %>% 
+    na.omit() %>%
+    dplyr::mutate(
+      month       = ifelse( month<=9, paste0("0",month), month)
+      ,year_month = paste0(substr(year,3,4),"\n",month)
+      # ,year_month = paste0(month,"\n",substr(year,3,4))
+      ,county     = paste0(county,"-",rgn)
+      # ,yearmonth = as.character(yearmonth)
+      # ,yearmonth = gsub(
+      #   "^(\\w+) (\\d+)", paste0("\\1","\n",substr(year,3,4), yearmonth)
+      # )
+      ,month = gsub("^(\\w+) (\\d+)$","\\1", yearmonth)
+      ,yearmonth = paste0(month,"\n",substr(year,3,4))
+    ) %>%  
+    dplyr::group_by(county, year, month) %>% 
+    dplyr::mutate(
+      n_trained_sum = sum(n_trained)
+    ) %>% 
+    dplyr::ungroup() %>% 
+    dplyr::arrange(county, year, month) %>% 
+    dplyr::mutate(
+      value_ntile_interval = Hmisc::cut2(n_trained_sum,g = ntile_groups )
+      ,value_ntile_interval = factor(value_ntile_interval, levels = rev(levels(value_ntile_interval)))
+    )
+  # d1 %>% glimpse()
+  county_levels <- d1 %>% 
+    dplyr::arrange(region, county) %>% 
+    dplyr::distinct(county ) %>% 
+    as.list() %>% unlist() %>% as.character()
+  
+  d2 <- d1 %>% 
+    dplyr::mutate(
+      county  = factor(county, levels = county_levels)
+      ,county = factor(county, levels = rev(levels(county)))
+    )
+  g1 <- d2 %>% 
+    # ggplot2::ggplot(aes(x = date, y = county))+
+    # ggplot2::ggplot(aes(x = yearmonth, y = county))+
+    ggplot2::ggplot(aes(x = year_month, y = county))+
+    # geom_tile(aes(fill = n_trained))+
+    geom_raster(aes(fill = value_ntile_interval))+
+    # geom_tile(aes(fill = value_ntile_interval))+
+    # geom_text(aes(label = n_trained_sum))+
+    # facet_grid(region ~ .)+
+    # scale_x_date(labels = date_format("%m-%y"), breaks = date_breaks("2 month") )+
+    theme_minimal()+
+    # scale_fill_viridis_d(end=.7)+
+    scale_fill_viridis_d(end=.85, option = "plasma")+
+    # scale_fill_viridis_d(end=.8, option = "magma")+
+    # scale_fill_viridis_d(end=.9, option = "inferno")+
+    # scale_fill_viridis_c()+
+    theme(axis.text.x = element_text(angle = 0, hjust = 1))+
+    labs(
+      title = paste0("Number of trained: ", toupper(audience_i))
+      ,x = "Month of administration (year / month)"
+      ,y = "County-REGION"
+      ,fill = paste0("percentile\ncategory\nwith ",ntile_groups, " groups")
+    )
+  return(g1)
+}
+
+# how to use
+# ds %>% gls_county_by_month("professionals")
+
+# ---- schedule-1 ---------------------
+ds %>% gls_county_by_month("community")
+# ---- schedule-2 ---------------------
+ds %>% gls_county_by_month("professionals")
+
+
+
 # ----- basic-questions -------------------------------------------------
 
 #How many counties and zipcodes were engaged by the program?
