@@ -58,6 +58,8 @@ ds %>% distinct(region)
 
 
 # ---- graph-2 ---------------------------------
+
+
 ds_plot_2 <- ds %>% 
   # dplyr::filter(audience=="professionals") %>% 
   dplyr::filter(audience=="community") %>% 
