@@ -407,7 +407,7 @@ g6 <- ds %>%
     ,age_group_i = c("10_14","15_19","20_24")
     # ,age_group_i = c("25_34","35_44","45_54","55_64")
     # ,age_group_i = c("65_74","75_84","85_plus")
-    ,measure     = "deaths_by_suicide" # population_count, deaths_by_suicide, suicide_rate_per100k
+    ,measure     = "suicide_rate_per100k" # population_count, deaths_by_suicide, suicide_rate_per100k
     ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
   )
 g6 %+% facet_wrap("county", ncol = 8)

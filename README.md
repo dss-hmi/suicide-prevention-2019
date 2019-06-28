@@ -13,6 +13,8 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 [gls_pivot]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/0-greeter/0-greeter-gls-pivot.html
 
+[counts_and_rates]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/counts-and-rates/counts-and-rates.html
+
 
 # Data Genesis
 - [`./manipulation/0-greeter-gls`][greeter_gls] - activity of GLS Suicide prevention program
