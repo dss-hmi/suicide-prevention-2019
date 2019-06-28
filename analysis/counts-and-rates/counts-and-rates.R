@@ -59,6 +59,9 @@ counties_gls <- ds %>%
   na.omit(region) %>% 
   dplyr::distinct(county) %>% 
   as.list() %>% unlist() %>% as.character()
+
+# counties_gls_sorted <- 
+
 # to view the total programming delivered (between 2015 and 2017)
 ds %>% 
   dplyr::filter(county %in% counties_gls) %>% 
@@ -128,12 +131,100 @@ d1 <- ds %>%
 # d1 %>% glimpse(60)
 # d1 %>% explore::describe()
 
-# ---- population-00 -------------------------------
-# let us see how populous each Florida county is
-ntile_groups = 10
-d1 <- ds %>% 
-  dplyr::filter(year == 2015) %>%
+# ---- declare-globals-2 --------------------------
+
+
+
+# ---- population-0 -------------------------------
+
+# create the order of counties according to population count of youth aged 10-24
+county_youth_size_2017 <- ds %>%
+  dplyr::filter(year == 2017) %>%
   dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+  dplyr::mutate(
+    county = ifelse(is.na(region),county, paste0(county," *"))
+    ,gls_present = ifelse(is.na(region),FALSE, TRUE)
+  )%>% 
+  dplyr::group_by(county, gls_present) %>% 
+  dplyr::summarize(
+    population_count   = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+    ,professionals     = sum(professionals,      na.rm = T)
+    ,community         = sum(community,          na.rm = T)
+  ) %>% 
+  dplyr::arrange(population_count) %>%
+  dplyr::distinct(county ) %>%
+  as.list() %>% unlist() %>% as.character()
+
+
+
+d0 <- ds %>%
+  # d2 <- d1 %>% 
+  dplyr::filter(year == 2017) %>%
+  dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+  # dplyr::filter(county == "Lake") %>%
+  dplyr::mutate(
+    county = ifelse(is.na(region),county, paste0(county," *"))
+    ,gls_present = ifelse(is.na(region),FALSE, TRUE)
+  ) %>% 
+  dplyr::group_by(county,gls_present) %>% 
+  dplyr::summarize(
+    n_residents = sum(population_count, na.rm= T)
+  ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::arrange(n_residents) %>% 
+  dplyr::mutate(
+    ntile_bin = Hmisc::cut2(n_residents, g = 5)
+  )
+# create the order of counties according to the total population count
+# county_levels <- d00 %>%
+#   # dplyr::arrange(desc(n_residents)) %>%
+#   dplyr::arrange(n_residents) %>%
+#   dplyr::distinct(county ) %>%
+#   as.list() %>% unlist() %>% as.character()
+
+g0 <- d0 %>% 
+  dplyr::mutate(
+    # county = factor(county, levels = county_levels)
+    county = factor(county, levels = county_youth_size_2017)
+    ,ntile_bin = factor(ntile_bin, levels= rev(levels(ntile_bin)))
+    # ,count_bin = factor(count_bin, levels= rev(levels(count_bin)))
+    # ,gls_mark = ifelse(gls_present," *","")
+    ,gls_mark = ifelse(gls_present,format(n_residents,big.mark=","),"") 
+    # ,gls_mark = scales::comma_format(as.numeric(gls_mark))
+    
+  ) %>% 
+  ggplot(aes(
+    x     = county
+    ,y    = n_residents
+    # ,fill = count_bin
+    ,fill = ntile_bin
+  ))+
+  geom_bar(stat="identity", alpha = .5)+
+  geom_text(stat="identity", aes(label = gls_mark), hjust = 0)+
+  coord_flip()+
+  facet_grid(ntile_bin ~ ., scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_fill_viridis_d(end=.75, option = "plasma")+
+  theme_minimal()+
+  labs(
+    title = "Population estimates of persons aged 10-24 in 2017"
+    ,y = "Number of residents"
+    ,x = "Florida county (* indicates presents of GLS programming between 2015-2018)"
+    ,fill = "Percentile categories with 5 groups"
+  )
+g0
+
+
+# ---- population-1 -------------------------------
+# let us see how populous each Florida county is
+# ntile_groups = 10
+d1 <- ds %>% 
+  dplyr::filter(year == 2017) %>%
+  dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+  dplyr::mutate(
+    county = ifelse(is.na(region),county, paste0(county," *"))
+  ) %>% 
   # dplyr::filter(county == "Lake") %>%
   dplyr::group_by(county,age_group, racethnicity) %>% 
   dplyr::summarize(
@@ -154,6 +245,7 @@ d1 <- ds %>%
      # ,labels = c(" < 100","1,000", "2,000","3,000", "5,000", "10,000","50,000","75,000", "100,000", "> 100,000" ))
      # ,breaks = c(-Inf,1000,5000,10000, Inf) 
      # ,labels = c("< 1000", "1k - 5k", "5k - 10k", "10k +")
+   
   )
 # length(unique(d1$value_ntile_interval))
 
@@ -166,7 +258,8 @@ county_levels <- d1 %>%
 
 g1 <- d1 %>% 
   dplyr::mutate(
-    county = factor(county, levels = county_levels)
+    # county = factor(county, levels = county_levels)
+    county = factor(county, levels = county_youth_size_2017)
     ,value_ntile_interval = factor(value_ntile_interval,levels = rev(levels(value_ntile_interval)))
   ) %>% 
   ggplot(aes(x = age_group, y = county))+
@@ -174,18 +267,24 @@ g1 <- d1 %>%
   theme_minimal()+
   scale_fill_viridis_d(end=.85, option = "plasma")+
   facet_grid(.~ racethnicity)+
-  theme(axis.text.x = element_text(angle = 0, hjust = .5))#+
-  # labs(
-  #   title = paste0("Number of trained: ", toupper(audience_i))
-  #   ,x = "Month of administration (year / month)"
-  #   ,y = "County-REGION"
-  #   ,fill = paste0("percentile\ncategory\nwith ",ntile_groups, " groups")
-  # )
+  theme(axis.text.x = element_text(angle = 0, hjust = .5))+
+  labs(
+    # title = paste0("Number of trained: ", toupper(audience_i))
+    title = "Population estimates of persons aged 10-24 in 2017 by race and ethnicity"
+    ,x = "Age group"
+    ,y = "Florida County (sorted by resident count among youth (10-24) in 2017) * - GLS present"
+    # ,fill = paste0("percentile\ncategory\nwith ",ntile_groups, " groups")
+    ,fill = "Number of residents"
+  )
 g1
-   
-# ---- population-0 -------------------------------
+
+
+
+
+
+# ---- population-02 -------------------------------
 display_pop_estimates <- function(
-  d
+   d
   ,year_i      = 2006:2017
   ,age_group_i = c("10_14","15_19","20_24")
   ,measure     = "population_count" # population_count, deaths_by_suicide, suicide_rate_per100k
@@ -194,6 +293,20 @@ display_pop_estimates <- function(
   group_by_variables <- c("county","year",grouping)
   title_derived <- paste0(
     toupper(measure)," for persons aged (",paste0(age_group_i, collapse = ", "),") grouped by ",toupper(grouping))
+  
+  county_levels <- d %>%
+    dplyr::filter(year == max(year_i)) %>%
+    dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+    # dplyr::mutate(
+    #   county = ifelse(is.na(region),county, paste0(county," *"))
+    # )%>%
+    dplyr::group_by(county) %>% 
+    dplyr::summarize(
+      population_count   = sum(population_count,   na.rm = T)
+    ) %>% 
+    dplyr::arrange(desc(population_count) )%>%
+    dplyr::distinct(county ) %>%
+    as.list() %>% unlist() %>% as.character() 
   
   # to understand how suicide rate varies across time and counties for youth regardless of race
   d1 <- d %>% 
@@ -204,7 +317,8 @@ display_pop_estimates <- function(
       ,race            = factor(race)
       ,ethnicity       = factor(ethnicity)
       ,racethnicity    = factor(racethnicity)
-    ) %>% 
+      # ,county          = ifelse(is.na(region),county, paste0(county," *"))
+     ) %>% 
     dplyr::group_by(.dots = group_by_variables) %>%
     dplyr::summarize(
       population_count      = sum(population_count,   na.rm = T)
@@ -216,7 +330,9 @@ display_pop_estimates <- function(
       # produces the same results as within group_by() summarization
       # suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
       years_since_2000 = as.integer(as.integer(year) - 2000) # for short label
-    )
+      # ,county = factor(county)
+      ,county = factor(county, levels = county_levels)
+    ) 
   # d1 %>% explore::describe()
   g1 <- d1 %>% 
     ggplot(aes_string(
@@ -254,52 +370,44 @@ age_bin <- list(
 )
 
 
-# ---- population-1 -------------------------------
-large <- c("Broward","Hillsborough","Miami-Dade","Orange", "Palm Beach")
-
-g <- ds %>% 
-  dplyr::filter(!county %in% large ) %>%
+# ---- population-2 -------------------------------
+# large <- c("Broward","Hillsborough","Miami-Dade","Orange", "Palm Beach")
+# 
+g2 <- ds %>%
+  # dplyr::filter(!county %in% large ) %>%
   display_pop_estimates(
     year_i      = 2006:2017
-    ,age_group_i = c("10_14","15_19","20_24")
-    # ,age_group_i = c("25_34","35_44","45_54","55_64")
-    # ,age_group_i = c("65_74","75_84","85_plus")
-    ,measure     = "population_count" # population_count, deaths_by_suicide, suicide_rate_per100k
-    ,grouping    = "sex" # sex, race, ethnicity, racethnicity
-  )
-g
-g <- ds %>% 
-  dplyr::filter(county %in% large ) %>% 
-  display_pop_estimates(
-    year_i      = 2006:2017
-    ,age_group_i = c("10_14","15_19","20_24")
-    # ,age_group_i = c("25_34","35_44","45_54","55_64")
-    # ,age_group_i = c("65_74","75_84","85_plus")
+    ,age_group_i = age_bin[["youth"]] # youth, adults, elderly
     ,measure     = "population_count" # population_count, deaths_by_suicide, suicide_rate_per100k
     ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
   )
-g %+% facet_wrap("county", scales = "free",ncol = 5)
+g2 %+% facet_wrap("county",ncol = 8)
+# ---- population-3 -------------------------------
+couties_drop_1 <- c("Miami-Dade","Broward", "Orange","Hillsborough","Palm Beach",
+                    "Duval", "Pinellas","Polk")
+g3 <- ds %>%
+  dplyr::filter(!county %in% couties_drop_1 ) %>%
+  display_pop_estimates(
+    year_i      = 2006:2017
+    ,age_group_i = age_bin[["youth"]] # youth, adults, elderly
+    ,measure     = "population_count" # population_count, deaths_by_suicide, suicide_rate_per100k
+    ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
+  )
+g3 %+% facet_wrap("county",ncol = 8)
 
-county_size <- list(
-  "large" = c("Broward","Hillsborough","Miami-Dade","Orange", "Palm Beach")
-  ""
-)
-
-# ---- g1 -------------------------------
-g1 %+% aes(y = population_count)+
-  labs(
-    title = "Population count for youth aged 10 - 24"
+# ---- population-4 -------------------------------
+g4 <- ds %>%
+  # dplyr::filter(!county %in% large ) %>%
+  display_pop_estimates(
+    year_i      = 2006:2017
+    ,age_group_i = c("10_14","15_19","20_24")
+    # ,age_group_i = c("25_34","35_44","45_54","55_64")
+    # ,age_group_i = c("65_74","75_84","85_plus")
+    ,measure     = "deaths_by_suicide" # population_count, deaths_by_suicide, suicide_rate_per100k
+    ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
   )
-# ---- g2 -------------------------------
-g1 %+% aes(y = deaths_by_suicide)+
-  labs(
-    title = "Death by suicide among youth aged 10 - 24"
-  )
-# ---- g3 -------------------------------
-g1 + 
-  labs(
-    title = "Suicide rates for youth aged 10 - 24"
-  )
+g4 %+% facet_wrap("county", scales = "free",ncol = 8)
+# ---- population-5 -------------------------------
 
 # ---- x1 -------------------------------
 

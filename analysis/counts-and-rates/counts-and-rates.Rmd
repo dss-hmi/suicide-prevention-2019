@@ -97,15 +97,39 @@ Describe the working environment.
 # II. Development
 
 
-```{r g0, echo=FALSE, results='show', message=FALSE, warning = F}
-```
 
 ## Population Counts
-```{r g1, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+
+### p0
+```{r population-0, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 11, fig.height = 10, out.width = "960px"}
 ```
 
+### p1
+```{r population-1, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+
+```{r population-02, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+### p2
+```{r population-2, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+### p3  
+```{r population-3, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+### p4  
+```{r population-4, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+### p5  
+```{r population-5, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+
 ## Suicides Counts
-```{r g2, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+```{r g2, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 8, fig.height = 12,out.width = "960px"}
 ```
 
 ## Suicide Rates 
