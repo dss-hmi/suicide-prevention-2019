@@ -11,7 +11,7 @@ output:
     toc: yes
     toc_float:
       collapsed: yes
-      smooth_scroll: yes
+      smooth_scroll: no
   word_document:
     highlight: haddock
     toc: yes
@@ -109,13 +109,15 @@ Describe the working environment.
 ```
 
 
-# II. Development
+# II Scatter
 
-## 1 County scatter
+## 1 County 
 ```{r explore-1, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
 
-## 2 Coverage - DUAL
+# III Coverage
+
+## Combined
 
 ```{r explore-2-define-function, echo=FALSE, results='show', message=FALSE, warning = F}
 ```
@@ -123,27 +125,65 @@ Describe the working environment.
 ```{r explore-2, echo=TRUE, results='show', message=FALSE, warning = F}
 ```
 
-## 3 Coverage - Professionals
+## Professionals
 
 ```{r explore-3, echo=TRUE, results='show', message=FALSE}
 ```
 
-## 4 Coverage -  Community
+## Community
 ```{r explore-4, echo=TRUE, results='show', message=FALSE}
 ```
 
+
+# IV Schedule
 
 ```{r schedule-0, echo=FALSE, results='show', message=FALSE}
 ```
 
 
-## 5 Schedule - Community
-```{r schedule-1, echo=TRUE, results='show', message=FALSE}
+## Professionals
+```{r schedule-2, echo=FALSE, results='show', message=FALSE, fig.width=11, fig.height=7, out.width="960px"}
 ```
 
-## 6 Schedule - Professionals
-```{r schedule-2, echo=TRUE, results='show', message=FALSE}
+## Community
+```{r schedule-1, echo=FALSE, results='show', message=FALSE,fig.width=11, fig.height=4.7, out.width="960px"}
 ```
+
+# V Accumulation
+
+```{r accumulation-0, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+## Community + Professionals
+
+### Raw
+```{r accumulation-1, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+### Free Scale
+```{r accumulation-2, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+## Community
+
+### Raw
+```{r accumulation-3, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+### Free Scale
+```{r accumulation-4, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+## Professionals
+
+### Raw
+```{r accumulation-5, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
+### Free Scale
+```{r accumulation-6, echo=FALSE, results='show', message=FALSE, warning=FALSE,fig.width=11, fig.height=7, out.width="960px"}
+```
+
 
 # III. Recapitulation
 

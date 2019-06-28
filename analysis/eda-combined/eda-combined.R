@@ -20,7 +20,7 @@ library(ggplot2)  # graphs
 library(ggpubr)   # documents
   
 # ---- declare-globals ---------------------------------------------------------
-path_file_input <- "./data-unshared/derived/3-combined.rds"
+path_file_input <- "./data-unshared/derived/9-combined.rds"
 html_flip <- FALSE
 baseSize <- 10
 # ---- load-data ---------------------------------------------------------------
@@ -31,7 +31,7 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 
 # ---- tweak-data ---------------------------------------------------------------
 # to collapse into a single data frame
-ds <- dto[["lowest_granularity"]] %>% 
+ds <- dto[["granularity_gls"]] %>% 
   Reduce(function(a , b) dplyr::left_join( a, b ), . )
 
 ds %>% explore::describe_all()

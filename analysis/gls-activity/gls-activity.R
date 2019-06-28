@@ -80,6 +80,69 @@ ds %>% glimpse(60)
 # ds %>% explore::explore( )
 ds %>% explore::describe()
 
+# ---- accumulation-0 -------------------------
+
+gls_accumulation <- function(
+  d
+  ,audience_i
+){
+  d1 <- ds %>%  
+    dplyr::filter(audience %in% audience_i) %>% 
+    dplyr::arrange(date) %>% 
+    dplyr::group_by(audience,county) %>% 
+    dplyr::mutate(
+      n_trained_cum = cumsum(x = n_trained)
+    )
+  g1 <- d1 %>% 
+    ggplot(aes(x=date,y=n_trained_cum))+
+    geom_point(aes(group = audience, color = audience))+
+    geom_area(aes(group=audience, fill = audience), alpha = .4)+
+    # facet_wrap("county", scales="free")+
+    facet_wrap("county")+
+    scale_fill_manual(values = c("professionals" = "#d95f02", "community" = "#1b9e77"))+
+    scale_color_manual(values = c("professionals" = "#d95f02", "community" = "#1b9e77"))+
+    theme_minimal()+
+    labs(
+      title = "Accumulation of GLS programming by counties"
+      ,y = "Amount of delivered programming (cumulative)"
+      ,x = "Date"
+    )
+  return(g1)
+}
+# how to use
+# g <- ds %>% gls_accumulation(c("community","professionals"))
+
+# ---- accumulation-1 -------------------------
+ds %>% 
+  gls_accumulation(c("community","professionals"))
+# ---- accumulation-2 -------------------------
+# g
+ds %>% 
+  gls_accumulation(c("community","professionals")) %+% 
+  facet_wrap("county", scales = "free")
+
+# ---- accumulation-3 -------------------------
+ds %>% 
+  gls_accumulation(c("community"))
+
+# ---- accumulation-4 -------------------------
+ds %>% 
+  gls_accumulation(c("community")) %+% 
+  facet_wrap("county", scales = "free")
+
+# ---- accumulation-5 -------------------------
+ds %>%
+  gls_accumulation(c("professionals"))
+
+# ---- accumulation-6 -------------------------
+ds %>% 
+  gls_accumulation(c("professionals")) %+%
+  facet_wrap("county", scales = "free")
+
+
+
+
+
 # ---- schedule-0 ---------------------
 gls_county_by_month <- function(
   d
