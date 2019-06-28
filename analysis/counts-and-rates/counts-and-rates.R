@@ -56,21 +56,21 @@ ds %>% explore::describe_all()
 
 # to help us filter out those counties that had programming
 counties_gls <- ds %>% 
-  na.omit(region) %>% 
+  distinct(county,region) %>% # those who have region had programming
+  na.omit() %>%
   dplyr::distinct(county) %>% 
   as.list() %>% unlist() %>% as.character()
 
-# counties_gls_sorted <- 
 
 # to view the total programming delivered (between 2015 and 2017)
 ds %>% 
   dplyr::filter(county %in% counties_gls) %>% 
   dplyr::distinct(county, year, community, professionals ) %>% 
-  na.omit() %>% 
+  # na.omit() %>% 
   dplyr::group_by(county) %>% 
   dplyr::summarize(
-    community      = sum(community)
-    ,professionals = sum(professionals)
+    community      = sum(community, na.rm= T)
+    ,professionals = sum(professionals, na.rm= T)
   ) %>% 
   dplyr::arrange(desc(professionals))
 
@@ -371,10 +371,8 @@ age_bin <- list(
 
 
 # ---- population-2 -------------------------------
-# large <- c("Broward","Hillsborough","Miami-Dade","Orange", "Palm Beach")
-# 
+
 g2 <- ds %>%
-  # dplyr::filter(!county %in% large ) %>%
   display_pop_estimates(
     year_i      = 2006:2017
     ,age_group_i = age_bin[["youth"]] # youth, adults, elderly
@@ -383,17 +381,7 @@ g2 <- ds %>%
   )
 g2 %+% facet_wrap("county",ncol = 8)
 # ---- population-3 -------------------------------
-couties_drop_1 <- c("Miami-Dade","Broward", "Orange","Hillsborough","Palm Beach",
-                    "Duval", "Pinellas","Polk")
-g3 <- ds %>%
-  dplyr::filter(!county %in% couties_drop_1 ) %>%
-  display_pop_estimates(
-    year_i      = 2006:2017
-    ,age_group_i = age_bin[["youth"]] # youth, adults, elderly
-    ,measure     = "population_count" # population_count, deaths_by_suicide, suicide_rate_per100k
-    ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
-  )
-g3 %+% facet_wrap("county",ncol = 8)
+g2 %+% facet_wrap("county",scales = "free", ncol = 8)
 
 # ---- population-4 -------------------------------
 g4 <- ds %>%
@@ -406,8 +394,28 @@ g4 <- ds %>%
     ,measure     = "deaths_by_suicide" # population_count, deaths_by_suicide, suicide_rate_per100k
     ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
   )
-g4 %+% facet_wrap("county", scales = "free",ncol = 8)
+g4 %+% facet_wrap("county", ncol = 8)
 # ---- population-5 -------------------------------
+g4 %+% facet_wrap("county", scales = "free",ncol = 8)
+
+
+# ---- population-6 -------------------------------
+g6 <- ds %>%
+  # dplyr::filter(!county %in% large ) %>%
+  display_pop_estimates(
+    year_i      = 2006:2017
+    ,age_group_i = c("10_14","15_19","20_24")
+    # ,age_group_i = c("25_34","35_44","45_54","55_64")
+    # ,age_group_i = c("65_74","75_84","85_plus")
+    ,measure     = "deaths_by_suicide" # population_count, deaths_by_suicide, suicide_rate_per100k
+    ,grouping    = "racethnicity" # sex, race, ethnicity, racethnicity
+  )
+g6 %+% facet_wrap("county", ncol = 8)
+# ---- population-7 -------------------------------
+g6 %+% facet_wrap("county", scales = "free",ncol = 8)
+
+
+
 
 # ---- x1 -------------------------------
 

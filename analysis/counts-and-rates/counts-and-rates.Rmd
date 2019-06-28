@@ -123,8 +123,18 @@ Describe the working environment.
 ### p4  
 ```{r population-4, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
+
 ### p5  
 ```{r population-5, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+
+### p6  
+```{r population-6, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
+```
+
+### p7  
+```{r population-7, echo=FALSE, results='show', message=FALSE, warning = F,fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
 
 
