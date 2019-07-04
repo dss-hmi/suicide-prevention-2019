@@ -24,6 +24,38 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 
 # ----- custom-functions --------------------------------------
 
+# to automate aggregation:
+compute_aggregate <- function(
+  d
+  ,age_group_i = c("10_14","15_19","20_24") # willcombine these, exclude others
+  ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+){
+  # d <- ds
+  # group_by_variables <- c("county","year")
+  group_by_variables <- c(group_by_variables, "professionals","community") # because cannot summarize
+  d1 <- d %>% 
+    dplyr::group_by(.dots = group_by_variables) %>%
+    dplyr::summarize(
+      population_count   = sum(population_count,   na.rm = T)
+      ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
+      ,community_reach_per100k     = (community/ population_count) * 100000
+      ,professionals_reach_per100k = (professionals/ population_count) * 100000
+    )
+  return(d1)
+  
+}
+# d1 <- ds %>% compute_aggregate(
+#   age_group_i         = c("10_14","15_19","20_24") # willcombine these, exclude others
+#   ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+#   ,group_by_variables  =  c("county","year","sex")
+#   ,group_by_variables  =  c("county","year","sex","racethnicity")
+#   ,group_by_variables  =  c("county","year","gls_programming")
+# )
+
 # ---- tweak-data ---------------------------------------------------------------
 # to collapse into a single data frame
 ds <- dto[["granularity_population"]] %>% 
@@ -57,8 +89,8 @@ ds <- ds %>%
     "deaths_by_suicide" = "resident_deaths" # to remind what we count
   ) %>% 
   dplyr::mutate(
-    # to have a standardized measure / put counties on the same scale
-    suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+    # dummy indicator for treatment condition
+    gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
     # to have a single variable describing racial background
     ,racethnicity = paste0(race," + ", ethnicity)
     # to aid in graph production ( note the spaces at the end of "NE  ")
@@ -70,48 +102,16 @@ ds <- ds %>%
       ;'northeast'='NE  '
       "
     )
-    ,gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
   ) %>% 
   dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
                 gls_programming, # was any programming administered?
                 region, rgn, # support for graphing and grouping
-                population_count, deaths_by_suicide, suicide_rate_per100k, #measures
+                population_count, deaths_by_suicide,#measures
                 community, professionals # treatment
   )
 
 ds %>% explore::describe_all()
 
-# to automate aggregation:
-compute_aggregate <- function(
-  d
-  ,age_group_i = c("10_14","15_19","20_24") # willcombine these, exclude others
-  ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
-){
-  # d <- ds
-  # group_by_variables <- c("county","year")
-  group_by_variables <- c(group_by_variables, "professionals","community") # because cannot summarize
-  d1 <- d %>% 
-    dplyr::group_by(.dots = group_by_variables) %>%
-    dplyr::summarize(
-      population_count   = sum(population_count,   na.rm = T)
-      ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(
-      suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
-      ,community_reach_per100k     = (community/ population_count) * 100000
-      ,professionals_reach_per100k = (professionals/ population_count) * 100000
-    )
-  return(d1)
-  
-}
-d1 <- ds %>% compute_aggregate(
-   age_group_i         = c("10_14","15_19","20_24") # willcombine these, exclude others
-  # ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
-  # ,group_by_variables  =  c("county","year","sex")
-  ,group_by_variables  =  c("county","year","sex","racethnicity")
-  # ,group_by_variables  =  c("county","year","gls_programming") 
-)
 
 # ----- new -----------------------
 d1 <- ds %>% 
