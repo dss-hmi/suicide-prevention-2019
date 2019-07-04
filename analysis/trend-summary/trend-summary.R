@@ -31,6 +31,10 @@ ds <- dto[["granularity_population"]] %>%
 
 ds %>% explore::describe_all()
 
+d1 <- ds %>% 
+  dplyr::filter(county == "Lake") %>% 
+  dplyr::filter(year == 2015)
+
 # to help us filter out those counties that had programming
 counties_gls <- ds %>% 
   na.omit(region) %>% 
@@ -66,8 +70,10 @@ ds <- ds %>%
       ;'northeast'='NE  '
       "
     )
+    ,gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
   ) %>% 
   dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
+                gls_programming, # was any programming administered?
                 region, rgn, # support for graphing and grouping
                 population_count, deaths_by_suicide, suicide_rate_per100k, #measures
                 community, professionals # treatment
@@ -75,33 +81,37 @@ ds <- ds %>%
 
 ds %>% explore::describe_all()
 
-# to remind out how to aggregate 
-# the most granular level includes (6):
-# county, year, sex, age_group, race, ethnicity
-d1 <- ds %>% 
-  # apply filters to better understand the structure of the data
-  # dplyr::filter(county     %in% c("Orange") ) %>%
-  # dplyr::filter(year       %in% c("2015")   ) %>%
-  # dplyr::filter(sex        %in% c("Male")   ) %>%
-  # dplyr::filter(age_group  %in% c("15_19")  ) %>%
-  # dplyr::filter(race       %in% c("White")  ) %>%
-  # dplyr::filter(ethnicity %in% c("Non-Hispanic") )%>%
-  # dplyr::filter(ethnicity %in% c("Hispanic","Non-Hispanic") )%>%
-  dplyr::group_by(county, year, sex, age_group, race, ethnicity) %>% # no aggregation
-  # to exemplify useful aggregates:
-  # dplyr::group_by(county, year                               ) %>%
-  # dplyr::group_by(county, year, sex                          ) %>%
-  # dplyr::group_by(county, year, sex, age_group               ) %>%
-  # dplyr::group_by(county, year, sex, racethnicity                  ) %>%
-  dplyr::summarize(
-    population_count   = sum(population_count,   na.rm = T)
-    ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
-    ,professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) 
-# use the code for preparing data for custom graphs
-# d1 %>% glimpse(60)
-# d1 %>% explore::describe()
+# to automate aggregation:
+compute_aggregate <- function(
+  d
+  ,age_group_i = c("10_14","15_19","20_24") # willcombine these, exclude others
+  ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+){
+  # d <- ds
+  # group_by_variables <- c("county","year")
+  group_by_variables <- c(group_by_variables, "professionals","community") # because cannot summarize
+  d1 <- d %>% 
+    dplyr::group_by(.dots = group_by_variables) %>%
+    dplyr::summarize(
+      population_count   = sum(population_count,   na.rm = T)
+      ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
+      ,community_reach_per100k     = (community/ population_count) * 100000
+      ,professionals_reach_per100k = (professionals/ population_count) * 100000
+    )
+  return(d1)
+  
+}
+d1 <- ds %>% compute_aggregate(
+   age_group_i         = c("10_14","15_19","20_24") # willcombine these, exclude others
+  # ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+  # ,group_by_variables  =  c("county","year","sex")
+  ,group_by_variables  =  c("county","year","sex","racethnicity")
+  # ,group_by_variables  =  c("county","year","gls_programming") 
+)
 
 # ----- new -----------------------
 d1 <- ds %>% 
