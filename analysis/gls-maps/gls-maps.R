@@ -8,8 +8,8 @@ cat("\f") # clear console when working in RStudio
 base::source("./scripts/common-functions.R")
 
 # ---- load-packages -----------------------------------------------------------
-install.packages(c("cowplot", "googleway", "ggrepel", 
-                   "ggspatial", "libwgeom", "sf", "rnaturalearth", "rnaturalearthdata"))
+# install.packages(c("cowplot", "googleway", "ggrepel", 
+#                    "ggspatial", "libwgeom", "sf", "rnaturalearth", "rnaturalearthdata"))
 # Attach these packages so their functions don't need to be qualified
 library(magrittr) # pipes
 library(dplyr)    # disable when temp lines are removed
