@@ -8,12 +8,17 @@ cat("\f") # clear console when working in RStudio
 base::source("./scripts/common-functions.R")
 
 # ---- load-packages -----------------------------------------------------------
+install.packages(c("cowplot", "googleway", "ggrepel", 
+                   "ggspatial", "libwgeom", "sf", "rnaturalearth", "rnaturalearthdata"))
 # Attach these packages so their functions don't need to be qualified
 library(magrittr) # pipes
 library(dplyr)    # disable when temp lines are removed
 library(ggplot2)  # graphs
 library(ggpubr)   # documents
-
+library(ggmap)
+library(maps)
+library(sf)
+library(mapdata)
 # ---- declare-globals ---------------------------------------------------------
 path_file_input <- "./data-unshared/derived/9-combined.rds"
 html_flip <- FALSE
@@ -79,8 +84,48 @@ ds %>% explore::describe_all()
 d1 <- ds %>% 
   dplyr::distinct(county, year, region, rgn, community, professionals) %>% 
   na.omit()
+# ---- Map-1 ----------------------------------
+# get florida county coordinates
+counties <- map_data("county")
+fl_counties <- subset(counties, region == "florida")
+head(fl_counties)
+#plot florida
+fl_base <- ggplot(data = fl_counties, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  geom_polygon(data = fl_counties, fill = NA, color = "white") +
+  geom_polygon(color = "black", fill = NA) +
+  theme_nothing()
+fl_base
+# create table for year=x and training_type = y
+year_var = 2015L
+pro = T
 
+create_map <- function(year_var=2015L, pro=T){
+  #function body
+  d1_2015 <- d1 %>% 
+    dplyr::filter(year == year_var) %>% 
+    dplyr::mutate(subregion = paste0(tolower(county)))
+  fl_counties_d1 <- dplyr::inner_join(fl_counties, d1_2015, by ="subregion")
+  if(pro){
+    m1 <- fl_base + 
+      geom_polygon(data = fl_counties_d1,aes(fill=professionals),color = "white")+
+      geom_polygon(color = "black", fill = NA) +
+      theme_bw()
+  }
+  if(pro==F){
+    m1 <- fl_base + 
+      geom_polygon(data = fl_counties_d1,aes(fill=community),color = "white")+
+      geom_polygon(color = "black", fill = NA) +
+      scale_fill_gradient(trans = "log10") +
+      theme_bw()  
+  }
+  m1
+}
+
+create_map(2016,T)
+create_map(2017,F)
 # ---- define-utility-functions ---------------
+
 
 # ---- save-to-disk ----------------------------
 
