@@ -1,6 +1,8 @@
 ---
 title: "Counts + Rates"
 output:
+  word_document:
+    toc: yes
   html_document:
     always_allow_html: yes
     df_print: kable

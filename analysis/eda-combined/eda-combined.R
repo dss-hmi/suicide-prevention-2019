@@ -31,7 +31,7 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 
 # ---- tweak-data ---------------------------------------------------------------
 # to collapse into a single data frame
-ds <- dto[["granularity_gls"]] %>% 
+ds <- dto[["granularity_population"]] %>% 
   Reduce(function(a , b) dplyr::left_join( a, b ), . )
 
 ds %>% explore::describe_all()

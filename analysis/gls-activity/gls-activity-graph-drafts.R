@@ -181,7 +181,9 @@ ds_plot_5 <- ds %>%
   )
 g5 <- ggplot(ds_plot_5, aes(x=date,y=n_trained_cum))+
   geom_point(aes(group = audience, color = audience))+
-  facet_wrap("county", scales="free")+
+  geom_area(aes(group=audience, fill = audience), alpha = .4)+
+  # facet_wrap("county", scales="free")+
+  facet_wrap("county")+
   theme_minimal()
 g5
 
@@ -272,6 +274,7 @@ d8_2 <- dplyr::left_join(
   )
   
 d8_2 %>% explore::describe_all()
+d8_2 %>% head()
 
 g8 <- d8_2 %>% 
   dplyr::filter(!county %in% c("Orange")) %>% 
