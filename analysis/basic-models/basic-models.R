@@ -105,6 +105,48 @@ d1 <- ds %>%
 
 
 # ---- x1 -------------------------------
+# find the match for selected counties
+# to help us filter out those counties that had programming
+counties_gls <- ds %>% 
+  distinct(county,region) %>% # those who have region had programming
+  na.omit() %>%
+  dplyr::distinct(county) %>% 
+  as.list() %>% unlist() %>% as.character()
+
+d1 <- ds %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  dplyr::mutate(
+    county_gls = ifelse(county %in% counties_gls, TRUE, FALSE)
+  ) %>% 
+  group_by(county, year, county_gls) %>% 
+  dplyr::summarize(
+    population_count   = sum(population_count,   na.rm = T)
+    ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+    ,professionals     = sum(professionals,      na.rm = T)
+    ,community         = sum(community,          na.rm = T)
+  ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
+    ,community_reach_per100k = (community/ population_count) * 100000
+    ,professionals_reach_per100k = (professionals/ population_count) * 100000
+  )
+
+# following https://rpsychologist.com/r-guide-longitudinal-lme-lmer
+
+dv <- "suicide_rate_per100k"
+# model_equation <-  paste0( dv, " ~ 1 + community + professionals + ( year | county)")
+model_equation <-  paste0( dv, " ~ 1 +  county_gls + ( year | county)")
+
+eq_formula <- as.formula(model_equation)
+# model_object <- lme4::lmer(eq_formula, data = ds)
+model_object <- lme4::lmer(eq_formula, data = d1)
+
+summary(model_object)
+
+# adjust the following custom models to work with lmer objects
+basic_model_info(model_object)
+make_result_table(model_object)
 
 
 # ---- publish ---------------------------------
