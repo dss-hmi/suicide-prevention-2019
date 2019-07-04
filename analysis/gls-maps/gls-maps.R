@@ -8,8 +8,8 @@ cat("\f") # clear console when working in RStudio
 base::source("./scripts/common-functions.R")
 
 # ---- load-packages -----------------------------------------------------------
-# install.packages(c("cowplot", "googleway", "ggrepel", 
-#                    "ggspatial", "libwgeom", "sf", "rnaturalearth", "rnaturalearthdata"))
+#install.packages(c("cowplot", "googleway", "ggrepel", 
+#                   "ggspatial", "libwgeom", "sf", "rnaturalearth", "rnaturalearthdata"))
 # Attach these packages so their functions don't need to be qualified
 library(magrittr) # pipes
 library(dplyr)    # disable when temp lines are removed
@@ -89,6 +89,12 @@ d1 <- ds %>%
 counties <- ggplot2::map_data("county")
 fl_counties <- subset(counties, region == "florida")
 head(fl_counties)
+#fix saint to st to match with our database
+fl_counties <- fl_counties %>% 
+  dplyr::mutate(
+    subregion = ifelse(subregion == "st johns", "saint johns", subregion),
+    subregion = ifelse(subregion == "st lucie", "saint lucie", subregion)
+  )
 #plot florida
 fl_base <- ggplot(data = fl_counties, mapping = aes(x = long, y = lat, group = group)) + 
   coord_fixed(1.3) + 
@@ -124,6 +130,16 @@ create_map <- function(year_var=2015L, pro=T){
 
 create_map(2016,T)
 create_map(2017,F)
+
+# ---- Match test -----------------------------
+d1_2015 <- d1 %>% 
+  dplyr::distinct(county) %>% 
+  #dplyr::filter(year == year_var) %>% 
+  dplyr::mutate(subregion = paste0(tolower(county)))
+  
+subset <- c(d1_2015$subregion)
+fl_counties_filtered <- dplyr::filter(fl_counties,subregion == subset) %>% 
+  dplyr::distinct(subregion)
 # ---- define-utility-functions ---------------
 
 
