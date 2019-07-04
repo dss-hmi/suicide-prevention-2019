@@ -44,6 +44,7 @@ compute_aggregate <- function(
       suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
       ,community_reach_per100k     = (community/ population_count) * 100000
       ,professionals_reach_per100k = (professionals/ population_count) * 100000
+      ,gls_programming = ifelse( is.na(community) & is.na(professionals),TRUE,FALSE)
     )
   return(d1)
   
@@ -55,6 +56,7 @@ compute_aggregate <- function(
 #   ,group_by_variables  =  c("county","year","sex","racethnicity")
 #   ,group_by_variables  =  c("county","year","gls_programming")
 # )
+
 
 # ---- tweak-data ---------------------------------------------------------------
 # to collapse into a single data frame
@@ -90,9 +92,9 @@ ds <- ds %>%
   ) %>% 
   dplyr::mutate(
     # dummy indicator for treatment condition
-    gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
+    # gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
     # to have a single variable describing racial background
-    ,racethnicity = paste0(race," + ", ethnicity)
+    racethnicity = paste0(race," + ", ethnicity)
     # to aid in graph production ( note the spaces at the end of "NE  ")
     ,rgn = car::recode(
       region,
@@ -104,13 +106,36 @@ ds <- ds %>%
     )
   ) %>% 
   dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
-                gls_programming, # was any programming administered?
+                # gls_programming, # was any programming administered?
                 region, rgn, # support for graphing and grouping
                 population_count, deaths_by_suicide,#measures
                 community, professionals # treatment
   )
 
 ds %>% explore::describe_all()
+
+
+# ---- a1 -------------------------------
+d1 <- ds %>% 
+  # dplyr::filter(county %in% c("Lake")) %>% 
+  # dplyr::filter(year == 2015) %>%
+  dplyr::filter(county %in% c("Lake","Orange","Miami-Dade") )  %>%
+  dplyr::filter(year %in% c(2005:2017) ) %>%
+
+  compute_aggregate(
+    age_group_i         = c("10_14","15_19","20_24") 
+    ,group_by_variables  =  c("year")
+  )
+
+g1 <- d1 %>% 
+  dplyr::filter(year %in% 2006:2017) %>%
+  ggplot(aes(x = year, y = suicide_rate_per100k))+
+  geom_line(aes(color = gls_programming, group = gls_programming))+
+  geom_point(shape=21)+
+  theme_minimal()+
+  labs(color = "Counties with \n GLS programming")
+g1
+
 
 
 # ----- new -----------------------
