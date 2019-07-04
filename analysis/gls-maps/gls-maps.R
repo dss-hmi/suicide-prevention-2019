@@ -86,7 +86,7 @@ d1 <- ds %>%
   na.omit()
 # ---- Map-1 ----------------------------------
 # get florida county coordinates
-counties <- map_data("county")
+counties <- ggplot2::map_data("county")
 fl_counties <- subset(counties, region == "florida")
 head(fl_counties)
 #plot florida
