@@ -31,6 +31,12 @@ ds <- dto[["granularity_population"]] %>%
 
 ds %>% explore::describe_all()
 
+d <- ds %>% 
+  dplyr::filter(county == "Lake") %>% 
+  dplyr::filter(year == 2015)
+
+
+
 # to help us filter out those counties that had programming
 counties_gls <- ds %>% 
   na.omit(region) %>% 
@@ -75,6 +81,9 @@ ds <- ds %>%
 
 ds %>% explore::describe_all()
 
+ds <- ds %>% 
+  dplyr::filter(county == "Lake") %>% 
+  dplyr::filter(year == 2015)
 # to remind out how to aggregate 
 # the most granular level includes (6):
 # county, year, sex, age_group, race, ethnicity
@@ -87,17 +96,17 @@ d1 <- ds %>%
   # dplyr::filter(race       %in% c("White")  ) %>%
   # dplyr::filter(ethnicity %in% c("Non-Hispanic") )%>%
   # dplyr::filter(ethnicity %in% c("Hispanic","Non-Hispanic") )%>%
-  dplyr::group_by(county, year, sex, age_group, race, ethnicity) %>% # no aggregation
+  # dplyr::group_by(county, year, sex, age_group, race, ethnicity) %>% # no aggregation
   # to exemplify useful aggregates:
-  # dplyr::group_by(county, year                               ) %>%
+  dplyr::group_by(county, year, professionals, community                            ) %>%
   # dplyr::group_by(county, year, sex                          ) %>%
   # dplyr::group_by(county, year, sex, age_group               ) %>%
   # dplyr::group_by(county, year, sex, racethnicity                  ) %>%
   dplyr::summarize(
     population_count   = sum(population_count,   na.rm = T)
     ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
-    ,professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
+    # ,professionals     = sum(professionals,      na.rm = T)
+    # ,community         = sum(community,          na.rm = T)
   ) 
 # use the code for preparing data for custom graphs
 # d1 %>% glimpse(60)
@@ -114,7 +123,9 @@ counties_gls <- ds %>%
   as.list() %>% unlist() %>% as.character()
 
 d1 <- ds %>% 
-  dplyr::filter(year %in% 2006:2017) %>% 
+  dplyr::filter(county == "Lake") %>% 
+  # dplyr::filter(year %in% 2015:2017) %>% 
+  dplyr::filter(year %in% 2015) %>%
   dplyr::mutate(
     county_gls = ifelse(county %in% counties_gls, TRUE, FALSE)
   ) %>% 
@@ -127,16 +138,18 @@ d1 <- ds %>%
   ) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(
-    suicide_rate_per100k = (deaths_by_suicide / population_count) *100000
-    ,community_reach_per100k = (community/ population_count) * 100000
+    suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
+    ,community_reach_per100k     = (community/ population_count) * 100000
     ,professionals_reach_per100k = (professionals/ population_count) * 100000
   )
 
 # following https://rpsychologist.com/r-guide-longitudinal-lme-lmer
 
 dv <- "suicide_rate_per100k"
+# dv <- "deaths_by_suicide"
 # model_equation <-  paste0( dv, " ~ 1 + community + professionals + ( year | county)")
-model_equation <-  paste0( dv, " ~ 1 +  county_gls + ( year | county)")
+# model_equation <-  paste0( dv, " ~ 1 +  county_gls + ( 1 | county)")
+model_equation <-  paste0( dv, " ~ 1 + year + ( year  | county)")
 
 eq_formula <- as.formula(model_equation)
 # model_object <- lme4::lmer(eq_formula, data = ds)
