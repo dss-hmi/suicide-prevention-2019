@@ -81,22 +81,13 @@ ds <- ds %>%
 ds %>% explore::describe_all()
 
 # to remind out how to aggregate 
-ds1 <- ds %>% 
-  # dplyr::filter(county == "Lake") %>% 
-  # dplyr::filter(year == "2015") %>% 
-  dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
-  dplyr::group_by(county, region, rgn) %>% 
-  dplyr::summarize(
-     professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::distinct(county,region, rgn, community, professionals) %>% 
+d1 <- ds %>% 
+  dplyr::distinct(county, year, region, rgn, community, professionals) %>% 
   na.omit()
 # ---- Map-1 ----------------------------------
 # get florida county coordinates
-usa_counties <- ggplot2::map_data("county")
-fl_counties  <- subset(usa_counties, region == "florida")
+counties <- ggplot2::map_data("county")
+fl_counties <- subset(counties, region == "florida")
 head(fl_counties)
 #fix saint to st to match with our database
 fl_counties <- fl_counties %>% 
@@ -115,77 +106,30 @@ fl_base
 year_var = 2015L
 pro = T
 
-create_map <- function(
-  d
-  ,measure_name 
-  ,ntile_groups = 5
-){
+create_map <- function(year_var=2015L, pro=T){
   #function body
-  # ntile_groups <- 5
-  # measure_name <- "professionals"
-  d1 <- ds1 %>% 
-    # dplyr::filter(year == year_var) %>% 
-    dplyr::mutate(subregion = paste0(tolower(county))) %>% 
-    dplyr::inner_join(fl_counties, d1, by ="subregion") %>% 
-    dplyr::rename(
-      "measure" = measure_name
-    ) %>% 
-    dplyr::mutate(
-      ntile_bin = Hmisc::cut2(measure, g = ntile_groups)
-    )
-    
-  # d1 %>% dplyr::glimpse()
-  g1 <- fl_base + 
-    geom_polygon(data = d1, aes_string(fill="ntile_bin"),color = "black")+
-    # geom_polygon(color = "black", fill = NA) +
-    # RColorBrewer::brewer.pal.info # to view options
-    # my_palette <- RColorBrewer::brewer.pal(5, "YlOrRd")
-    scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "YlOrRd"))+
-    # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "Greens"))+
-    # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "BuGn"))+
-    # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "YlGn"))+
-    theme_minimal()+
-    # theme_bw()+
-    labs(
-      title = paste0("Amount of training delivered to ",toupper(measure_name)," during 2015-2018")
-      ,fill = paste0("Number of persons trained \n by ntile groups")
-      # ,y = "", x = ""
-    )+
-    theme(
-      axis.title = element_blank()
-      ,axis.text = element_blank()
-      ,panel.grid.major = element_blank()
-      ,panel.grid.minor = element_blank()
-      )
-  g1
+  d1_2015 <- d1 %>% 
+    dplyr::filter(year == year_var) %>% 
+    dplyr::mutate(subregion = paste0(tolower(county)))
+  fl_counties_d1 <- dplyr::inner_join(fl_counties, d1_2015, by ="subregion")
+  if(pro){
+    m1 <- fl_base + 
+      geom_polygon(data = fl_counties_d1,aes(fill=professionals),color = "white")+
+      geom_polygon(color = "black", fill = NA) +
+      theme_bw()
+  }
+  if(pro==F){
+    m1 <- fl_base + 
+      geom_polygon(data = fl_counties_d1,aes(fill=community),color = "white")+
+      geom_polygon(color = "black", fill = NA) +
+      scale_fill_gradient(trans = "log10") +
+      theme_bw()  
+  }
+  m1
 }
-# how to use
-ds1 <- ds %>% 
-  dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
-  dplyr::group_by(county, region, rgn) %>% 
-  dplyr::summarize(
-    professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>% 
-  na.omit() 
 
-ds1 %>%   create_map("professionals")
-ds1 %>%   create_map("community")
-
-ds2 <- ds %>% 
-  dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
-  dplyr::group_by(county, region, rgn, year) %>% 
-  dplyr::summarize(
-    professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>%  
-  na.omit() 
-
-ds2 %>% dplyr::filter(year == 2015) %>% create_map("professionals")
-
-
+create_map(2016,T)
+create_map(2017,F)
 
 # ---- Match test -----------------------------
 d1_2015 <- d1 %>% 
