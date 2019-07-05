@@ -53,10 +53,36 @@ library(tibble)
 for(i in c(1:10)){
   ls_ds[[i]] <- ls_ds[[i]] %>% tibble::add_column(year = 2009+i)
 }
+library(data.table)
 ds <- rbindlist(ls_ds)
+#hard coding names for columns
+names(ds) <- c("FIPS","State","County","Health-Outcomes-Z-score",
+               "Health-Outcomes-Rank","Health-Factors-Z-score",
+               "Health-Factors-Rank","year")
+# remove na rows
+ds <- na.omit(ds)
+#remove non-sense header rows
+ds <- ds %>% dplyr::filter(!County == "County")
 
+head(ds)
+#---- future-tweaks-&-tables -----------------------------------------------------
 
+# ---- save-to-disk ----------------------------
+ds %>% pryr::object_size()
+ds %>%          saveRDS("./data-unshared/derived/3-greeter-rankings.rds")
+ds %>% readr::write_csv("./data-unshared/derived/3-greeted-rankings.csv") # for read-only inspection
 
+# ---- publish ---------------------------------
+rmarkdown::render(
+  input = "./analysis/3-greeter/3-greeter-rankings.Rmd"
+  ,output_format = c(
+    "html_document" 
+    # ,"pdf_document"
+    # ,"md_document"
+    # "word_document" 
+  )
+  ,clean=TRUE
+)
 
 
 
