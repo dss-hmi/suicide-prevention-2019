@@ -36,6 +36,10 @@ ds_gls <- ds_gls %>%
     year = lubridate::year(date) %>% as.character() # for joining to other tables
   ) 
 
+
+
+
+
 # there is too much temporal granularity in the GLS source.
 # to reduce it, making it compatible with the FL health records:
 ds_gls_by_year <- ds_gls %>% 
@@ -102,6 +106,49 @@ ls_out <- list(
 # `community`        - number of people reached through community event
 # `professionals`    - number of professionals who recieved training
 
+
+# Augment population estimate with peer groups
+# obtain peer groups for Florida counties from https://www.countyhealthrankings.org/peer-counties-tool
+ds_counties_peer <-  readxl::read_excel(
+  "data-unshared/raw/peer-counties-tool/CHSIpeers.xlsx"
+  ,sheet = "chsi_peer_2015"
+)
+names(ds_counties_peer)
+names(ds_counties_peer) <- c("county_code", "county_name","peer_group")
+ds_counties_peer <- ds_counties_peer %>%
+  dplyr::mutate(
+    state = gsub("^(.+),(.+)$","\\2",county_name)
+    ,state = substring(state, 2) # remove leading space
+    ,county = gsub("^(.+),(.+)$","\\1",county_name)
+    ,county = gsub("County","",county)
+    ,county = gsub(" $","",county)
+  ) %>%
+  # dplyr::filter(county == "Lake")
+  dplyr::filter(state == "Florida") %>%
+  dplyr::arrange(peer_group) %>%
+  dplyr::mutate(
+    county = ifelse(county %in% c("St. Johns"), "Saint Johns", county)
+    ,county = ifelse(county %in% c("St. Lucie"), "Saint Lucie", county)
+  )
+
+ls_ds[["population"]] %>% dplyr::distinct(county) %>% print(n = nrow(.))
+# # augment the gls with peer groups
+ls_ds[["population"]] <- ls_ds[["population"]] %>%
+  dplyr::left_join(ds_counties_peer %>% dplyr::distinct(county,peer_group))
+
+# inspect:
+peer_groups <- ls_ds[["population"]] %>% dplyr::distinct(peer_group) %>% 
+  dplyr::arrange(peer_group) %>% 
+  as.list() %>% unlist() %>% as.vector()
+for(peer_group_i in peer_groups){
+  ls_ds[["population"]] %>% 
+    dplyr::filter(peer_group == peer_group_i) %>% 
+    distinct(county,peer_group) %>%
+    dplyr::arrange(peer_group) %>%
+    print(n = nrow(.))
+}
+
+# store
 ls_ds <- list(
   "population" = ls_ds[["population"]] 
   ,"suicide" = ls_ds[["suicide"]]  %>% 
@@ -111,14 +158,17 @@ ls_ds <- list(
       resident_deaths = sum(resident_deaths, na.rm = T)
     ) %>% 
     dplyr::ungroup()
-  ,"gls" = ls_ds[["gls"]]  %>% 
+  ,"gls" = ls_ds[["gls"]]  %>%
+  # d <- ls_ds[["gls"]]  %>% 
     dplyr::group_by(region, county, year, audience) %>% 
     # aggregating over `type_training`
     dplyr::summarize(
       n_trained = sum(n_trained, na.rm = T)
     ) %>% 
     dplyr::ungroup() %>% 
-    tidyr::spread(audience,n_trained)
+    tidyr::spread(audience,n_trained) %>% 
+    dplyr::mutate(county_gls = TRUE)
+    
 )
 ls_ds %>% lapply(dplyr::glimpse,100) %>% invisible() 
 ds <- ls_ds %>% Reduce(function(a , b) dplyr::left_join( a, b ), . ) 

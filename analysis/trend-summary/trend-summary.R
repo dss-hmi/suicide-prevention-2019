@@ -21,118 +21,199 @@ baseSize <- 10
 # ---- load-data ---------------------------------------------------------------
 dto      <- readRDS(path_file_input)
 dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
+ls <- dto$granularity_population
+
+# ---- tweak-data ---------------------------------------------------------------
+# to collapse into a single data frame
+# ds <- dto[["granularity_population"]] %>% 
+#   Reduce(function(a , b) dplyr::left_join( a, b ), . )
+# 
+# ds %>% explore::describe_all()
+# 
+# d1 <- ds %>% 
+#   dplyr::filter(county == "Lake") %>% 
+#   dplyr::filter(year == 2015)
+# 
+# # to help us filter out those counties that had programming
+# counties_gls <- ds %>% 
+#   na.omit(region) %>% 
+#   dplyr::distinct(county) %>% 
+#   as.list() %>% unlist() %>% as.character()
+# # to view the total programming delivered (between 2015 and 2017)
+# ds %>% 
+#   dplyr::filter(county %in% counties_gls) %>% 
+#   dplyr::distinct(county, year, community, professionals ) %>% 
+#   na.omit() %>% 
+#   dplyr::group_by(county) %>% 
+#   dplyr::summarize(
+#     community      = sum(community)
+#     ,professionals = sum(professionals)
+#   ) %>% 
+#   dplyr::arrange(desc(professionals))
+# # to aid interpretation and graphing
+# ds <- ds %>% 
+#   dplyr::rename(
+#     "deaths_by_suicide" = "resident_deaths" # to remind what we count
+#   ) %>% 
+#   dplyr::mutate(
+#     # dummy indicator for treatment condition
+#     # gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
+#     # to have a single variable describing racial background
+#     racethnicity = paste0(race," + ", ethnicity)
+#     # to aid in graph production ( note the spaces at the end of "NE  ")
+#     ,rgn = car::recode(
+#       region,
+#       "
+#       'central'  ='CN'
+#       ;'southeast'='SE'
+#       ;'northeast'='NE  '
+#       "
+#     )
+#   ) %>% 
+#   dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
+#                 # gls_programming, # was any programming administered?
+#                 region, rgn, # support for graphing and grouping
+#                 population_count, deaths_by_suicide,#measures
+#                 community, professionals # treatment
+#   )
+# 
+# ds %>% explore::describe_all()
+
+
 
 # ----- custom-functions --------------------------------------
 
 # to automate aggregation:
 compute_aggregate <- function(
-  d
-  ,age_group_i = c("10_14","15_19","20_24") # willcombine these, exclude others
-  ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+  l
+  ,age_group_i = c("10_14","15_19","20_24") # will combine these, exclude others
+  ,group_by_variables  =  c("county","year") # will group by these, sum over others
 ){
-  # d <- ds
+  # l <- ls #dto$granularity_population
+  # l <- ls #dto$granularity_population
   # group_by_variables <- c("county","year")
-  group_by_variables <- c(group_by_variables, "professionals","community") # because cannot summarize
-  d1 <- d %>% 
-    dplyr::group_by(.dots = group_by_variables) %>%
+  # group_by_variables <- c("year")
+  d1 <- list(
+    "population" = l[["population"]]
+    ,"suicide"   = l[["suicide"]]
+  ) %>% 
+    Reduce(function(a , b) dplyr::left_join( a, b ), . ) 
+  # compute the aggregation at the chosen level
+  # must separate the treatment measure because cannot summarize
+  d2 <- d1 %>% 
+    dplyr::group_by(.dots = c(group_by_variables,"peer_group") ) %>%
     dplyr::summarize(
-      population_count   = sum(population_count,   na.rm = T)
-      ,deaths_by_suicide = sum(deaths_by_suicide,  na.rm = T)
+      population_count    = sum(population_count,   na.rm = T)
+      ,deaths_by_suicide  = sum(resident_deaths,  na.rm = T)
     ) %>%
-    dplyr::ungroup() %>%
+    dplyr::ungroup()
+  # now compute the metrics
+  counties_gls <- l[["gls"]] %>% 
+    dplyr::ungroup() %>% 
+    na.omit(region) %>% 
+    dplyr::distinct(county) %>% 
+    as.list() %>% unlist() %>% as.character()
+  
+  d3 <- d2 %>% 
+    # dplyr::mutate(
+    # ) %>% 
+    dplyr::left_join(l[["gls"]]) %>% 
     dplyr::mutate(
-      suicide_rate_per100k         = (deaths_by_suicide / population_count) *100000
-      ,community_reach_per100k     = (community/ population_count) * 100000
+      suicide_rate_per100k         = (deaths_by_suicide / population_count) * 100000
+      ,community_reach_per100k     = (community / population_count) * 100000
       ,professionals_reach_per100k = (professionals/ population_count) * 100000
-      ,gls_programming = ifelse( is.na(community) & is.na(professionals),TRUE,FALSE)
+      ,gls_programming             = ifelse( county %in% counties_gls,TRUE,FALSE)
+    
     )
-  return(d1)
+  d <- d3 %>% 
+    dplyr::distinct(gls_programming, professionals)
+  return(d3)
   
 }
-# d1 <- ds %>% compute_aggregate(
-#   age_group_i         = c("10_14","15_19","20_24") # willcombine these, exclude others
-#   ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
-#   ,group_by_variables  =  c("county","year","sex")
-#   ,group_by_variables  =  c("county","year","sex","racethnicity")
-#   ,group_by_variables  =  c("county","year","gls_programming")
-# )
+# d1 <- ds %>%
+#   dplyr::filter(county %in% c("Lake")) %>%
+#   dplyr::filter(year %in% 2015) %>%
+#   compute_aggregate(
+#     age_group_i         = c("10_14","15_19","20_24") # willcombine these, exclude others
+#     ,group_by_variables  =  c("county","year") # will aggregate over these, exclude others
+#     #   ,group_by_variables  =  c("county","year","sex")
+#     #   ,group_by_variables  =  c("county","year","sex","racethnicity")
+#   )
 
 
-# ---- tweak-data ---------------------------------------------------------------
-# to collapse into a single data frame
-ds <- dto[["granularity_population"]] %>% 
-  Reduce(function(a , b) dplyr::left_join( a, b ), . )
 
-ds %>% explore::describe_all()
-
-d1 <- ds %>% 
-  dplyr::filter(county == "Lake") %>% 
-  dplyr::filter(year == 2015)
-
-# to help us filter out those counties that had programming
-counties_gls <- ds %>% 
-  na.omit(region) %>% 
-  dplyr::distinct(county) %>% 
-  as.list() %>% unlist() %>% as.character()
-# to view the total programming delivered (between 2015 and 2017)
-ds %>% 
-  dplyr::filter(county %in% counties_gls) %>% 
-  dplyr::distinct(county, year, community, professionals ) %>% 
-  na.omit() %>% 
-  dplyr::group_by(county) %>% 
-  dplyr::summarize(
-    community      = sum(community)
-    ,professionals = sum(professionals)
-  ) %>% 
-  dplyr::arrange(desc(professionals))
-# to aid interpretation and graphing
-ds <- ds %>% 
-  dplyr::rename(
-    "deaths_by_suicide" = "resident_deaths" # to remind what we count
-  ) %>% 
+# ----- get-peer-counties ----------------------------------
+ds_counties_peer <-  readxl::read_excel(
+  "data-unshared/raw/peer-counties-tool/CHSIpeers.xlsx"
+  ,sheet = "chsi_peer_2015"
+)
+names(ds_counties_peer)
+names(ds_counties_peer) <- c("county_code", "county_name","peer_group")
+ds_counties_peer <- ds_counties_peer %>%
   dplyr::mutate(
-    # dummy indicator for treatment condition
-    # gls_programming = ifelse(county %in% counties_gls, TRUE, FALSE)
-    # to have a single variable describing racial background
-    racethnicity = paste0(race," + ", ethnicity)
-    # to aid in graph production ( note the spaces at the end of "NE  ")
-    ,rgn = car::recode(
-      region,
-      "
-      'central'  ='CN'
-      ;'southeast'='SE'
-      ;'northeast'='NE  '
-      "
-    )
-  ) %>% 
-  dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
-                # gls_programming, # was any programming administered?
-                region, rgn, # support for graphing and grouping
-                population_count, deaths_by_suicide,#measures
-                community, professionals # treatment
+    state = gsub("^(.+),(.+)$","\\2",county_name)
+    ,state = substring(state, 2) # remove leading space
+    ,county = gsub("^(.+),(.+)$","\\1",county_name)
+    ,county = gsub("County","",county)
+    ,county = gsub(" $","",county)
+  ) %>%
+  # dplyr::filter(county == "Lake")
+  dplyr::filter(state == "Florida") %>%
+  dplyr::arrange(peer_group) %>%
+  dplyr::mutate(
+    county = ifelse(county %in% c("St. Johns"), "Saint Johns", county)
+    ,county = ifelse(county %in% c("St. Lucie"), "Saint Lucie", county)
   )
-
-ds %>% explore::describe_all()
-
-
+# 
+# ds_counties_gls <- dto$granularity_population$gls %>% dplyr::ungroup()
+# ds_counties_gls %>% dplyr::distinct(county) %>% print(n = nrow(.))
+# # augment the gls with peer groups
+# ds_counties_gls <- ds_counties_gls %>% 
+#   dplyr::left_join(ds_counties_peer %>% dplyr::distinct(county,peer_group))
+# 
+# ds_counties_gls %>% 
+#   dplyr::distinct(county, peer_group) %>% 
+#   dplyr::arrange(peer_group) %>% 
+#   print(n = nrow(.))
+  
 # ---- a1 -------------------------------
-d1 <- ds %>% 
-  # dplyr::filter(county %in% c("Lake")) %>% 
-  # dplyr::filter(year == 2015) %>%
-  dplyr::filter(county %in% c("Lake","Orange","Miami-Dade") )  %>%
-  dplyr::filter(year %in% c(2005:2017) ) %>%
-
+d1 <- ls %>% 
   compute_aggregate(
     age_group_i         = c("10_14","15_19","20_24") 
-    ,group_by_variables  =  c("year")
-  )
+    ,group_by_variables  =  c("county","year")
+  ) 
 
 g1 <- d1 %>% 
-  dplyr::filter(year %in% 2006:2017) %>%
-  ggplot(aes(x = year, y = suicide_rate_per100k))+
-  geom_line(aes(color = gls_programming, group = gls_programming))+
+  dplyr::filter(peer_group %in% c(1,6,7,9,11,24,25)) %>% # only these have treatment
+  dplyr::filter(year %in% 2010:2019) %>% # treatment starts in2015
+  dplyr::mutate(
+    years_since_2000 = as.integer(as.integer(year) - 2000)
+  ) %>% 
+  tidyr::gather(measure,value,c(
+    # "population_count",
+    "deaths_by_suicide","suicide_rate_per100k"
+                                ,"community","professionals"
+                                # ,"community_reach_per100k"
+                                # ,"professionals_reach_per100k"
+                                )
+                ) %>% 
+  ggplot(aes(
+     y = value
+    ,x = years_since_2000
+    ,group = county
+    ,color = gls_programming
+  )) + 
+  geom_line(
+    aes(color = gls_programming, group = county)
+    ,alpha = .4
+  )+
   geom_point(shape=21)+
-  theme_minimal()+
+  geom_smooth(aes(group=peer_group), se=F, data =. %>% dplyr::filter(gls_programming == TRUE))+
+  geom_smooth(aes(group=peer_group), se=F, data =. %>% dplyr::filter(gls_programming == FALSE))+
+
+  facet_grid(measure ~ peer_group, scale = "free")+
+  scale_color_manual(values = c("TRUE" = "salmon", "FALSE" = "black"))+
+    theme_minimal()+
   labs(color = "Counties with \n GLS programming")
 g1
 
