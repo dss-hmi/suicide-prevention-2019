@@ -42,7 +42,8 @@ ds_gls_by_year <- ds_gls %>%
   dplyr::group_by(region, county, year, audience, type_training) %>% 
   dplyr::summarize(
     n_trained = sum(n_trained, na.rm = T)
-  )
+  ) %>% 
+  dplyr::ungroup()
 # note that `audience` and `type_training` are more granular than county-by-year
 ds_population_by_year <- ds_population %>% 
   dplyr::rename(
@@ -108,13 +109,15 @@ ls_ds <- list(
     # aggregating over `mortality_casue`
     dplyr::summarize(
       resident_deaths = sum(resident_deaths, na.rm = T)
-    )
+    ) %>% 
+    dplyr::ungroup()
   ,"gls" = ls_ds[["gls"]]  %>% 
     dplyr::group_by(region, county, year, audience) %>% 
     # aggregating over `type_training`
     dplyr::summarize(
       n_trained = sum(n_trained, na.rm = T)
     ) %>% 
+    dplyr::ungroup() %>% 
     tidyr::spread(audience,n_trained)
 )
 ls_ds %>% lapply(dplyr::glimpse,100) %>% invisible() 
@@ -128,7 +131,7 @@ ls_out[["granularity_population"]] <- ls_ds
 
 ls_out %>% pryr::object_size()
 ls_out %>%          saveRDS("./data-unshared/derived/9-combined.rds")
-
+ 
 # ---- publish ---------------------------------
 rmarkdown::render(
   input = "./analysis/9-combiner/9-combiner.Rmd"
