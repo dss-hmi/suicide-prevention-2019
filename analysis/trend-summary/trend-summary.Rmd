@@ -45,7 +45,7 @@ opts_chunk$set(
   # dev = "pdf"#,
   # dev.args=list(pdf = list(colormodel = 'cmyk'))
 )
-echoChunks <- TRUE
+echoChunks <- FALSE
 warningChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
@@ -94,28 +94,27 @@ Describe the working environment.
 
 
 
-# II. Development
+# II. Summary View
 
 
-```{r g0, echo=FALSE, results='show', message=FALSE, warning = F}
+```{r custom-functions, echo=echoChunks, results='show', message=FALSE, warning = F}
 ```
 
-## 1
-```{r g1, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+
+```{r get-peer-counties, echo=echoChunks, results='asis', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
 
-## 2
-```{r g2, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+
+```{r a1, echo=echoChunks, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
 
-## 3
-```{r g3, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+# III County View
+
+```{r g1-define, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
 
-```{r g4, echo=FALSE, results='show', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
+```{r g1, echo=FALSE, results='asis', message=FALSE, warning = F, fig.width = 17, fig.height = 11,out.width = "960px"}
 ```
-
-# III. Recapitulation
 
 
 ```{r save-to-disk, echo=TRUE, results='show', message=FALSE,warning=warningChunks}
