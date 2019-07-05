@@ -69,7 +69,7 @@ ds <- ds %>%
       ;'northeast'='NE  '
       "
     )
-  ) %>%
+    ) %>%
   dplyr::select(county, year, sex, age_group, race, ethnicity, racethnicity, # context
                 # gls_programming, # was any programming administered?
                 region, rgn, # support for graphing and grouping
@@ -133,11 +133,11 @@ compute_aggregate <- function(
       ,professionals_reach_per100k = (professionals/ population_count) * 100000
       # ,gls_programming             = ifelse( county %in% counties_gls,TRUE,FALSE)
       ,county_gls             = ifelse( county %in% counties_gls,TRUE,FALSE)
-     ) #%>% 
-    # dplyr::group_by(county) %>% 
-    # dplyr::mutate(
-    #   county_gls = ifelse(is.na(county_gls),FALSE,TRUE)
-    # )
+    ) #%>% 
+  # dplyr::group_by(county) %>% 
+  # dplyr::mutate(
+  #   county_gls = ifelse(is.na(county_gls),FALSE,TRUE)
+  # )
   # d <- d3 %>% 
   #   dplyr::distinct(county_gls, professionals)
   return(d3)
@@ -210,7 +210,7 @@ for(peer_group_i in peer_groups){
 #   dplyr::distinct(county, peer_group) %>% 
 #   dplyr::arrange(peer_group) %>% 
 #   print(n = nrow(.))
-  
+
 # ---- a1 -------------------------------
 d1 <- ls %>% 
   compute_aggregate(
@@ -241,7 +241,7 @@ g1 <- d1 %>%
     measure = factor(measure, levels = measure_levels, labels = measure_labels)
   ) %>% 
   ggplot(aes(
-     y = value
+    y = value
     ,x = years_since_2000
     ,group = county
     ,color = county_gls
@@ -253,10 +253,10 @@ g1 <- d1 %>%
   geom_point(shape=21)+
   geom_smooth(aes(group=peer_group), se=F, data =. %>% dplyr::filter(county_gls == TRUE))+
   geom_smooth(aes(group=peer_group), se=F, data =. %>% dplyr::filter(county_gls == FALSE))+
-
+  
   facet_grid(measure ~ peer_group, scale = "free")+
   scale_color_manual(values = c("TRUE" = "salmon", "FALSE" = "black"))+
-    theme_minimal()+
+  theme_minimal()+
   labs(color = "Counties with \n GLS programming")
 g1
 
@@ -291,21 +291,21 @@ d2 <- ds %>%
     tx_level = car::recode(
       county,
       "
-     'Orange'  ='high P high C'
-     ;'Saint Lucie'='high P mid C'
-     ;'Palm Beach'='mid P mid C  '
-     ;'Brevard'='mid P mid C  '
-     ;'Seminole'='mid P mid C  '
-     ;'Volusia'='mid P high C  '
-     ;'Lake'='mid P low C  '
-     "
+      'Orange'  ='high P high C'
+      ;'Saint Lucie'='high P mid C'
+      ;'Palm Beach'='mid P mid C  '
+      ;'Brevard'='mid P mid C  '
+      ;'Seminole'='mid P mid C  '
+      ;'Volusia'='mid P high C  '
+      ;'Lake'='mid P low C  '
+      "
     )
     ,tx_level = ifelse(tx_level %in% counties_gls, "low P low C", tx_level)
     ,tx = ifelse(county %in% counties_gls, TRUE, FALSE)
     ,tx_level = ifelse(
       (!tx_level %in% counties_gls) & (tx == FALSE),"control", tx_level
     )
-  ) %>% 
+    ) %>% 
   dplyr::group_by(year,tx, tx_level) %>% 
   dplyr::summarize(
     population_count      = sum(population_count,   na.rm = T)
@@ -324,7 +324,7 @@ g2
 
 
 focal_counties <- c(
-   "Orange"  
+  "Orange"  
   ,"Saint Lucie" 
   ,"Palm Beach"  
   ,"Brevard" 
@@ -337,8 +337,8 @@ d3 <- ds %>%
     tx_level = ifelse(county %in% focal_counties, county,
                       ifelse((!county %in% focal_counties) & (county %in% counties_gls), "low GLS",
                              "control"))
-                      
-    ) %>% 
+    
+  ) %>% 
   dplyr::group_by(year,tx_level) %>% 
   dplyr::summarize(
     population_count      = sum(population_count,   na.rm = T)
@@ -369,7 +369,7 @@ focal_counties <- c(
 )
 d4 <- ds %>% 
   dplyr::filter(county %in% focal_counties) %>% 
-   dplyr::group_by(county, year) %>% 
+  dplyr::group_by(county, year) %>% 
   dplyr::summarize(
     population_count      = sum(population_count,   na.rm = T)
     ,deaths_by_suicide    = sum(deaths_by_suicide,  na.rm = T)
