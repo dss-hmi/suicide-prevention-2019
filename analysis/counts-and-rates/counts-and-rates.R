@@ -158,7 +158,7 @@ county_youth_size_2017 <- ds %>%
 
 
 
-d0 <- ds %>%
+d00 <- ds %>%
   # d2 <- d1 %>% 
   dplyr::filter(year == 2017) %>%
   dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
@@ -183,7 +183,7 @@ d0 <- ds %>%
 #   dplyr::distinct(county ) %>%
 #   as.list() %>% unlist() %>% as.character()
 
-g0 <- d0 %>% 
+d0 <- d00 %>% 
   dplyr::mutate(
     # county = factor(county, levels = county_levels)
     county = factor(county, levels = county_youth_size_2017)
@@ -191,9 +191,11 @@ g0 <- d0 %>%
     # ,count_bin = factor(count_bin, levels= rev(levels(count_bin)))
     # ,gls_mark = ifelse(gls_present," *","")
     ,gls_mark = ifelse(gls_present,format(n_residents,big.mark=","),"") 
+    ,n_residents_mark = format(n_residents,big.mark=",") 
     # ,gls_mark = scales::comma_format(as.numeric(gls_mark))
     
-  ) %>% 
+  ) 
+g0 <- d0 %>% 
   ggplot(aes(
     x     = county
     ,y    = n_residents
@@ -215,6 +217,53 @@ g0 <- d0 %>%
   )
 g0
 
+
+d0 %>% 
+  dplyr::filter(gls_present == TRUE) %>%
+  # dplyr::filter(gls_present == FALSE) %>%
+  ggplot(aes(
+    x     = county
+    ,y    = n_residents
+    # ,fill = count_bin
+    ,fill = ntile_bin
+  ))+
+  geom_bar(stat="identity", alpha = .5)+
+  geom_text(stat="identity", aes(label = gls_mark), hjust = 0)+
+  coord_flip()+
+  facet_grid(ntile_bin ~ ., scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_fill_viridis_d(end=.75, option = "plasma")+
+  theme_minimal()+
+  labs(
+    title = "Population estimates of persons aged 10-24 in 2017\n(in counties with GLS programming)"
+    ,y = "Number of residents"
+    ,x = "Florida county (* indicates presents of GLS programming between 2015-2018)"
+    ,fill = "Percentile categories with 5 groups"
+  )
+
+
+d0 %>% 
+  # dplyr::filter(gls_present == TRUE) %>%
+  dplyr::filter(gls_present == FALSE) %>%
+  ggplot(aes(
+    x     = county
+    ,y    = n_residents
+    # ,fill = count_bin
+    ,fill = ntile_bin
+  ))+
+  geom_bar(stat="identity", alpha = .5)+
+  geom_text(stat="identity", aes(label = n_residents_mark), hjust = 0)+
+  coord_flip()+
+  facet_grid(ntile_bin ~ ., scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_fill_viridis_d(end=.75, option = "plasma")+
+  theme_minimal()+
+  labs(
+    title = "Population estimates of persons aged 10-24 in 2017\n (in counties without GLS programming)"
+    ,y = "Number of residents"
+    ,x = "Florida county (* indicates presents of GLS programming between 2015-2018)"
+    ,fill = "Percentile categories with 5 groups"
+  )
 
 # ---- population-1 -------------------------------
 # let us see how populous each Florida county is
@@ -265,7 +314,7 @@ g1 <- d1 %>%
   ggplot(aes(x = age_group, y = county))+
   geom_raster(aes(fill = value_ntile_interval))+
   theme_minimal()+
-  scale_fill_viridis_d(end=.85, option = "plasma")+
+  scale_fill_viridis_d(end=.95, option = "viridis")+
   facet_grid(.~ racethnicity)+
   theme(axis.text.x = element_text(angle = 0, hjust = .5))+
   labs(
