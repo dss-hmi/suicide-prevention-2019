@@ -185,6 +185,56 @@ ds2 <- ds %>%
 
 ds2 %>% dplyr::filter(year == 2015) %>% create_map("professionals")
 
+# ----- get-peer-counties ----------------------------------
+ds_counties_peer <-  readxl::read_excel(
+  "data-unshared/raw/peer-counties-tool/CHSIpeers.xlsx"
+  ,sheet = "chsi_peer_2015"
+)
+names(ds_counties_peer)
+names(ds_counties_peer) <- c("county_code", "county_name","peer_group")
+ds_counties_peer <- ds_counties_peer %>%
+  dplyr::mutate(
+    state = gsub("^(.+),(.+)$","\\2",county_name)
+    ,state = substring(state, 2) # remove leading space
+    ,county = gsub("^(.+),(.+)$","\\1",county_name)
+    ,county = gsub("County","",county)
+    ,county = gsub(" $","",county)
+  ) %>%
+  # dplyr::filter(county == "Lake")
+  dplyr::filter(state == "Florida") %>%
+  dplyr::arrange(peer_group) %>%
+  dplyr::mutate(
+    county = ifelse(county %in% c("St. Johns"), "Saint Johns", county)
+    ,county = ifelse(county %in% c("St. Lucie"), "Saint Lucie", county)
+  )
+
+ds3 <- ds_counties_peer %>% 
+  # dplyr::filter(year == year_var) %>% 
+  dplyr::mutate(subregion = paste0(tolower(county))) %>% 
+  dplyr::inner_join(fl_counties, ds_counties_peer, by ="subregion")# %>% 
+ # dplyr::mutate(
+  #  ntile_bin = Hmisc::cut2(peer_group, g = 24)
+  #) 
+# ---- peer-counties-map -------------------------------------
+g2 <- fl_base + 
+  geom_polygon(data = ds3, aes(fill=factor(peer_group)),color = "black")+
+  # geom_polygon(color = "black", fill = NA) +
+  # RColorBrewer::brewer.pal.info # to view options
+  # my_palette <- RColorBrewer::brewer.pal(5, "YlOrRd")
+  #scale_fill_manual(values = RColorBrewer::brewer.pal(24, "YlOrRd"))+
+  # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "Greens"))+
+  # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "BuGn"))+
+  # scale_fill_manual(values = RColorBrewer::brewer.pal(ntile_groups, "YlGn"))+
+  
+  theme_minimal()+
+  # theme_bw()+
+  theme(
+    axis.title = element_blank()
+    ,axis.text = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank()
+  )
+g2
 
 
 # ---- Match test -----------------------------
