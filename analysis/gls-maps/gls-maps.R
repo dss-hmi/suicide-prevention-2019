@@ -216,8 +216,17 @@ ds3 <- ds_counties_peer %>%
   #  ntile_bin = Hmisc::cut2(peer_group, g = 24)
   #) 
 # ---- peer-counties-map -------------------------------------
+ds3_distinct <- ds3 %>% 
+  dplyr::distinct(subregion, .keep_all = TRUE) %>% 
+  dplyr::filter(county %in% ds1$county)
+
+library(ggrepel)
+
 g2 <- fl_base + 
-  geom_polygon(data = ds3, aes(fill=factor(peer_group)),color = "black")+
+  geom_polygon(data = ds3, aes(fill=factor(peer_group),group=subregion),color = "black")+
+  #geom_text(data = ds3_distinct, aes(label = subregion),angle = 60)+
+  geom_label_repel(data = ds3_distinct, aes(x=long, y=lat, label = subregion), 
+             size = 3, fontface = "bold")+
   # geom_polygon(color = "black", fill = NA) +
   # RColorBrewer::brewer.pal.info # to view options
   # my_palette <- RColorBrewer::brewer.pal(5, "YlOrRd")
