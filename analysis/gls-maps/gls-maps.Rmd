@@ -52,7 +52,7 @@ opts_chunk$set(
   class.source = "numberLines lineAnchors", 
   class.output = c("numberLines lineAnchors chunkout")
 )
-echoChunks <- TRUE
+echoChunks <- FALSE
 warningChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
@@ -95,16 +95,19 @@ Describe the working environment.
 ```
 
 
-# I Exposition 
+# I Summary view
 
-```{r expo-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
+```{r define-map-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
+```
+## Prof
+```{r map-1-professionals , echo=echoChunks, results='show', message=T,warning=T, fig.width = 7, fig.height = 7, out.width = "960px"} 
 ```
 
-```{r expo-2 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
+## Comm
+```{r map-1-community , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 7, fig.height = 7, out.width = "960px"} 
 ```
 
 
-# II. Development
 
 ```{r dev-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
 ```
@@ -112,7 +115,6 @@ Describe the working environment.
 ```{r dev-2 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
 ```
 
-# III. Recapitulation
 
 ```{r recap-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
 ```

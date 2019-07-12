@@ -34,7 +34,7 @@ dto %>% pryr::object_size(); dto %>% class(); dto %>% names()
 ds <- dto[["granularity_population"]] %>% 
   Reduce(function(a , b) dplyr::left_join( a, b ), . )
 
-ds %>% explore::describe_all()
+# ds %>% explore::describe_all()
 
 # to help us filter out those counties that had programming
 counties_gls <- ds %>% 
@@ -78,7 +78,7 @@ ds <- ds %>%
                 community, professionals # treatment
   )
 
-ds %>% explore::describe_all()
+# ds %>% explore::describe_all()
 
 # to remind out how to aggregate 
 ds1 <- ds %>% 
@@ -93,7 +93,10 @@ ds1 <- ds %>%
   dplyr::ungroup() %>% 
   dplyr::distinct(county,region, rgn, community, professionals) %>% 
   na.omit()
-# ---- Map-1 ----------------------------------
+
+ds1 %>% explore::describe_all()
+
+# ---- define-map-1 ----------------------------------
 # get florida county coordinates
 usa_counties <- ggplot2::map_data("county")
 fl_counties  <- subset(usa_counties, region == "florida")
@@ -112,10 +115,10 @@ fl_base <- ggplot(data = fl_counties, mapping = aes(x = long, y = lat, group = g
   theme_nothing()
 fl_base
 # create table for year=x and training_type = y
-year_var = 2015L
+# year_var = 2015L
 pro = T
 
-create_map <- function(
+create_map_1 <- function(
   d
   ,measure_name 
   ,ntile_groups = 5
@@ -123,7 +126,8 @@ create_map <- function(
   #function body
   # ntile_groups <- 5
   # measure_name <- "professionals"
-  d1 <- ds1 %>% 
+  # d <- ds1 
+  d1 <- d %>% 
     # dplyr::filter(year == year_var) %>% 
     dplyr::mutate(subregion = paste0(tolower(county))) %>% 
     dplyr::inner_join(fl_counties, d1, by ="subregion") %>% 
@@ -132,8 +136,9 @@ create_map <- function(
     ) %>% 
     dplyr::mutate(
       ntile_bin = Hmisc::cut2(measure, g = ntile_groups)
+      ,ntile_bin = factor(ntile_bin, levels = rev(levels(ntile_bin)))
     )
-    
+
   # d1 %>% dplyr::glimpse()
   g1 <- fl_base + 
     geom_polygon(data = d1, aes_string(fill="ntile_bin"),color = "black")+
@@ -157,33 +162,38 @@ create_map <- function(
       ,panel.grid.major = element_blank()
       ,panel.grid.minor = element_blank()
       )
-  g1
+  return(g1)
 }
 # how to use
-ds1 <- ds %>% 
-  dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
-  dplyr::group_by(county, region, rgn) %>% 
-  dplyr::summarize(
-    professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>% 
-  na.omit() 
+# ds1 <- ds %>% 
+#   dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
+#   dplyr::group_by(county, region, rgn) %>% 
+#   dplyr::summarize(
+#     professionals     = sum(professionals,      na.rm = T)
+#     ,community         = sum(community,          na.rm = T)
+#   ) %>% 
+#   dplyr::ungroup() %>% 
+#   na.omit() 
+# 
+# ds1 %>%   create_map_1("professionals")
+# ds1 %>%   create_map_1("community")
+# 
+# ds2 <- ds %>% 
+#   dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
+#   dplyr::group_by(county, region, rgn, year) %>% 
+#   dplyr::summarize(
+#     professionals     = sum(professionals,      na.rm = T)
+#     ,community         = sum(community,          na.rm = T)
+#   ) %>% 
+#   dplyr::ungroup() %>%  
+#   na.omit() 
+# 
+# ds2 %>% dplyr::filter(year == 2015) %>% create_map_1("professionals")
 
-ds1 %>%   create_map("professionals")
-ds1 %>%   create_map("community")
-
-ds2 <- ds %>% 
-  dplyr::distinct(county,region, rgn, year, community, professionals) %>% 
-  dplyr::group_by(county, region, rgn, year) %>% 
-  dplyr::summarize(
-    professionals     = sum(professionals,      na.rm = T)
-    ,community         = sum(community,          na.rm = T)
-  ) %>% 
-  dplyr::ungroup() %>%  
-  na.omit() 
-
-ds2 %>% dplyr::filter(year == 2015) %>% create_map("professionals")
+# ---- map-1-professionals ---------------------------------
+ds1 %>%   create_map_1("professionals") %>% print()
+# ---- map-1-community ---------------------------------
+ds1 %>%   create_map_1("community") %>% print()
 
 # ----- get-peer-counties ----------------------------------
 ds_counties_peer <-  readxl::read_excel(
