@@ -7,7 +7,7 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 - [`./analysis/counts-and-rates/counts-and-rates.html`][counts_and_rates] - shows how population size, death counts, and suicide rates vary across counties. Addresses the issues of measurement. 
 
-- [`./analysis/trend-summary/trend-summary.html`][] - displays observed counts and rates of suicide by sex, race, and ethniciy.
+- [`./analysis/trend-summary/trend-summary.html`][trend_summary] - displays observed counts and rates of suicide by sex, race, and ethniciy.
 
 [gls_coverage]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/gls-activity/gls-activity-2-coverage.html
 
@@ -15,6 +15,7 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 [counts_and_rates]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/counts-and-rates/counts-and-rates.html
 
+[trend_summary]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/trend-summary/trend-summary.html
 
 # Data Genesis
 - [`./manipulation/0-greeter-gls`][greeter_gls] - activity of GLS Suicide prevention program
