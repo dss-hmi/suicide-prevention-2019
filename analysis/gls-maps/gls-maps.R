@@ -17,7 +17,8 @@ library(ggplot2)  # graphs
 library(ggpubr)   # documents
 library(ggmap)
 library(maps)
-library(sf)
+#library(sf)
+library(plotly)
 library(mapdata)
 # ---- declare-globals ---------------------------------------------------------
 path_file_input <- "./data-unshared/derived/9-combined.rds"
@@ -141,7 +142,7 @@ create_map_1 <- function(
 
   # d1 %>% dplyr::glimpse()
   g1 <- fl_base + 
-    geom_polygon(data = d1, aes_string(fill="ntile_bin"),color = "black")+
+    geom_polygon(data = d1, aes_string(fill="ntile_bin",group="subregion"),color = "black")+
     # geom_polygon(color = "black", fill = NA) +
     # RColorBrewer::brewer.pal.info # to view options
     # my_palette <- RColorBrewer::brewer.pal(5, "YlOrRd")
@@ -162,6 +163,8 @@ create_map_1 <- function(
       ,panel.grid.major = element_blank()
       ,panel.grid.minor = element_blank()
       )
+  g1 <- ggplotly(g1)
+  g1 %>% offline()
   return(g1)
 }
 # how to use
@@ -235,8 +238,8 @@ library(ggrepel)
 g2 <- fl_base + 
   geom_polygon(data = ds3, aes(fill=factor(peer_group),group=subregion),color = "black")+
   #geom_text(data = ds3_distinct, aes(label = subregion),angle = 60)+
-  geom_label_repel(data = ds3_distinct, aes(x=long, y=lat, label = subregion), 
-             size = 3, fontface = "bold")+
+  #geom_label_repel(data = ds3_distinct, aes(x=long, y=lat, label = subregion), 
+  #           size = 3, fontface = "bold")+
   # geom_polygon(color = "black", fill = NA) +
   # RColorBrewer::brewer.pal.info # to view options
   # my_palette <- RColorBrewer::brewer.pal(5, "YlOrRd")
@@ -253,8 +256,9 @@ g2 <- fl_base +
     ,panel.grid.major = element_blank()
     ,panel.grid.minor = element_blank()
   )
-g2
+g2 <- ggplotly(g2)
 
+g2 %>% offline()
 
 # ---- Match test -----------------------------
 d1_2015 <- d1 %>% 
@@ -273,7 +277,7 @@ fl_counties_filtered <- dplyr::filter(fl_counties,subregion == subset) %>%
 # ---- publish ---------------------------------
 rmarkdown::render(
   # input = "./analysis/gls-activity/gls-activity-1.Rmd"
-  input = "./analysis/gls-maps/gls-maps-1.Rmd"
+  input = "./analysis/gls-maps/gls-maps.Rmd"
   ,output_format = c(
     "html_document" 
     # "pdf_document"

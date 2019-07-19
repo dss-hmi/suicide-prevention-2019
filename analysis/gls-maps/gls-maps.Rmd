@@ -100,14 +100,15 @@ Describe the working environment.
 ```{r define-map-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
 ```
 ## Prof
-```{r map-1-professionals , echo=echoChunks, results='show', message=T,warning=T, fig.width = 7, fig.height = 7, out.width = "960px"} 
+```{r map-1-professionals , echo=echoChunks, results='show', message=T,warning=T, fig.width = 17, fig.height = 17, out.width = "960px"} 
 ```
 
 ## Comm
-```{r map-1-community , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 7, fig.height = 7, out.width = "960px"} 
+```{r map-1-community , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 17, out.width = "960px"} 
 ```
 
-
+```{r peer-counties-map , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 17, out.width = "960px"} 
+```
 
 ```{r dev-1 , echo=echoChunks, results='show', message=FALSE,warning=warningChunks, fig.width = 17, fig.height = 7, out.width = "960px"} 
 ```
