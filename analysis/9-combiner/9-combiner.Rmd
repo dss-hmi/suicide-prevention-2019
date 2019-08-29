@@ -50,12 +50,14 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./manipulation/9-combiner.R") 
 ```
 
-This document is the annotation layer to [`./manipulation/9-combiner.R`][path_combiner] script, which prepares a single flat data frame by combining data products of `greeter` scripts:  
-- [`./manipulation/0-greeter-gls.R`][path_greeter_0] GLS programming   
-- [`./manipulation/1-greeter-population.R`][path_greeter_1] Population Estimates  
-- [`./manipulation/2-greeter-suicide.R`][path_greeter_2] Death Counts   
+This document is the annotation layer to [`./manipulation/9-combiner.R`][path_combiner] script, which combines the products of `greeter` scripts:  
+- [`./manipulation/0-greeter-gls.R`][path_greeter_0] - records of GLS program activities
+- [`./manipulation/1-greeter-population.R`][path_greeter_1] Population Estimates as reported by [Florida Department of Health](http://www.flhealthcharts.com)  
+- [`./manipulation/2-greeter-suicide.R`][path_greeter_2] Counts of suicide mortality as reported by [Florida Department of Health](http://www.flhealthcharts.com)   
 
-The data frame produced by this report is the starting point for all subsequent analytic activity in the project. Any new additions **must be** incorportated into this producted and integrated in the `./manipulation` workflow.
+These elements form a "data transfer object" (`dto`) to supply a standatard data source to all analytic reports in the `dss-hmi/suicide-prevention-2019`project. 
+
+The __data transfer object__ produced by this report is the starting point for all subsequent analytic activities in the project. Any new additions **must be** incorportated into this producted and integrated in the `./manipulation` workflow.
 
 [path_combiner]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/3-combiner.R
 [path_greeter_0]:https://github.com/dss-hmi/suicide-prevention-2019/blob/master/manipulation/0-greeter-gls.R

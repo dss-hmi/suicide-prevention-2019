@@ -1,6 +1,9 @@
 ---
 title: 'GLS Activity: Coverage'
 output:
+  word_document:
+    highlight: haddock
+    toc: yes
   html_document:
     always_allow_html: yes
     df_print: kable
@@ -12,9 +15,6 @@ output:
     toc_float:
       collapsed: yes
       smooth_scroll: no
-  word_document:
-    highlight: haddock
-    toc: yes
   pdf_document:
     toc: yes
 ---

@@ -27,6 +27,10 @@ ls <- dto$granularity_population
 # to collapse into a single data frame
 ds <- dto[["granularity_population"]] %>%
   Reduce(function(a , b) dplyr::left_join( a, b ), . )
+# note that this data frame SHOULD NOT be used for any further aggregation
+# GLS records are reported on county-year frame level, whereas
+# Population estimates and death counts on county-year-DEMOGRAPHIC level
+# This is a good general purpose ds, expecting no futher aggregation
 
 ds %>% explore::describe_all()
 
@@ -182,6 +186,14 @@ peer_groups <- ls$population %>% dplyr::distinct(peer_group) %>%
   dplyr::filter(peer_group %in% c(1,6,7,9,11,24,25)) %>% # only these have treatment
   dplyr::arrange(peer_group) %>% 
   as.list() %>% unlist() %>% as.vector()
+peer_group_i <- 1
+
+ds_counties_peer <- dplyr::left_join(
+  ds_counties_peer,
+  dto$granularity_population$gls %>% 
+    dplyr::distinct(county, county_gls) %>% 
+    na.omit()
+)
 
 
 for(peer_group_i in peer_groups){
@@ -231,7 +243,8 @@ measure_labels <- c(
   ,"Professional reach (per 100k)"
 )
 g1 <- d1 %>% 
-  dplyr::filter(peer_group %in% c(1,6,7,9,11,24,25)) %>% # only these have treatment
+  # dplyr::filter(peer_group %in% c(1,6,7,9,11,24,25)) %>% # only these have treatment
+  dplyr::filter(peer_group %in% c(1)) %>% # only these have treatment
   dplyr::filter(year %in% 2010:2019) %>% # treatment starts in2015
   dplyr::mutate(
     years_since_2000 = as.integer(as.integer(year) - 2000)
