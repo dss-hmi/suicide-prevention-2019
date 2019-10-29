@@ -9,44 +9,63 @@ requireNamespace("dplyr") # Data wrangling, see https://r4ds.had.co.nz/transform
 # no exteral scripts are referenced, if there were, they would be typed here
 
 # ---- load-data -------------------------------------------------------------
-path_to_data <- "data-unshared/derived/1-greeted-population.csv" # because we might use it later
+path_to_data <- "data-unshared/derived/0-greeted-gls.csv" # because we might use it later
 ds <- readr::read_csv(file = path_to_data)
 
 # ---- inspect-data -------------------------------------------------------------
-print(x = ds, n = 20 ) # print the first 20 rows of object `ds` 
-# alternative way of inspecting an object:
-dplyr::glimpse(ds, width = 80)      # these two lines are equivalent, they demonstate "piping" 
-ds %>% dplyr::glimpse(width = 80)  # these two lines are equivalent, they demonstate "piping"
+ds %>% print() # because we want to view the first few rows
+ds %>% dplyr::glimpse(width = 50)   # because we want to inspect properties of the tibble
+# please study the data and notice that we have 4 groups of variables
+
+# 1) geography            : `region`, `county`,`zipcode` 
+# 2) date                 : `date`
+# 3) features of training : `audience`, `training_type`
+# 4) amount of training   : `n_trained`
+
+# note that there may be multiple zipcodes in a county
+# note that a county can belong to a single region
+# these threee measures (`region`, `county`,`zipcode`) are nested within in each other
+
+# ---- example-1 --------------------------------------------------------------
+# let us inspect the features of training
+
+# Garrett Lee Smith (GLS) suicide prevention program offers training to
+# counselors and caretakers (`professionals`)  as well conducts awareness events (`community`):
+ds %>% dplyr::distinct(audience)
+# Depending on the audience GLS, deliver a variety of different training events:
+ds %>% dplyr::distinct(audience, type_training)
+# note that there are only a handful of training for professionals:
+ds %>% dplyr::filter(audience=="professionals") %>% dplyr::distinct(type_training)
+# while almost every event for community would be unique
+ds %>% dplyr::filter(audience=="community") %>% dplyr::distinct(type_training) %>% print(n=nrow(.))
+# at least it would appear so from the long list of events, so let's verify this
+ds %>% 
+  dplyr::filter(audience=="community") %>% 
+  dplyr::group_by(type_training) %>% 
+  dplyr::summarize(n_occurences = dplyr::n()) %>% # number of rows
+  dplyr::arrange(desc(n_occurences)) %>% 
+  print(n=nrow(.))
+
+# ---- task-1 ------------------------------------------------------
+
+
+# ---- example-2 --------------------------------------------------------------
+# let us explore the geography of the observational unit
+ds %>% dplyr::distinct(region)
+ds %>% dplyr::distinct(region, county) %>% print(n=nrow(.))
+ds %>% dplyr::distinct(region, county, zipcode) %>% 
+  dplyr::arrange(region, county, zipcode) %>% 
+  print(n=nrow(.))
+
+# ---- task-2 -----------------------------------------------------------------
+
+
+
+# ---- example-3 -------------------------------------------------------------
+# let us explore the amount of training
+
 
 # ---- tweak-data --------------------------------------------------------------
-# this data set was pulled from the Population Estimates report by Florida Dept of Health
-# let us rename one of the columns to help us remember what we are counting
-ds <- ds %>% 
-  # one way to achieve this is to create a dublicate column with a new name and drop the original
-  dplyr::mutate(
-    n_population = count # create a duplicate with a new name
-  ) %>% 
-  dplyr::select(-count) # we drop the original column
-
-# we would also like to create a new variable that combines the categories of `race` and `ethnicity`
-ds <- ds %>% 
-  dplyr::mutate(
-    race_ethnicity  = paste0(race," + ", ethnicity)
-  )
-
-# ---- inspect-data-2 --------------------------------------------------------------
-# the unit of analysis of this dataframe is county-year-sex-race-ethnicity-age_group
-# this means that there is a distinct value of `n_population` (renamed `count`)
-# for each unique combination of values in colums `county`, `year`, `sex`,`race`,`ethnicity`, and `age_group`
-nrow(ds) # number of rows in the dataframe
-ds %>% dplyr::distinct(county, year, sex, race, ethnicity, age_group) # number of unique combinations of values on listed variables
-ds %>% dplyr::distinct(county, year, sex, race_ethnicity, age_group) # notice it produces the same count as the line above
-
-# population estimates for which years does this dataset provide? 
-# in other words:
-# whare are the distinct values in the column `year`
-ds %>% dplyr::distinct(year)
-ds %>% dplyr::distinct(county) %>% print(n=70)
 
 # ---- example-1 ------------------------------------
 # This example demonstrates the basics of `dplyr` operations, please read section 5.3.1 of https://r4ds.had.co.nz/transform.html
@@ -123,7 +142,7 @@ g2 <- d2 %>%
   geom_point(stat = "identity")+
   geom_line()
 g2
-
+  
 
 # let us crate a basic bar plot using the data from example 3 
 g3 <- d3 %>% 

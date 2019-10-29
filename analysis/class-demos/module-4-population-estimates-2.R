@@ -50,9 +50,7 @@ ds %>% dplyr::distinct(county) %>% print(n=70)
 
 # ---- example-1 ------------------------------------
 # This example demonstrates the basics of `dplyr` operations, please read section 5.3.1 of https://r4ds.had.co.nz/transform.html
-
 # Question: what is the total number residents of Orange county in 2017?
-
 # First, let us print all the rows that match this description
 ds %>% 
   dplyr::filter(county == "Orange", year == 2017) %>% 
@@ -60,7 +58,7 @@ ds %>%
 
 # Now, we need to add up all values in the column `n_population`
 ds %>% 
-  dplyr::filter(county == "Orange", year == 2017) %>% 
+  dplyr::filter(county == "Orange", year == 2017) %>%
   dplyr::summarize(
     n_total = sum(n_population)
   )
@@ -76,63 +74,121 @@ ds %>%
 # this way, we can add additional columns and break down the sum by them
 ds %>% 
   dplyr::filter(county == "Orange", year == 2017) %>%
-  dplyr::group_by(county, year, sex) %>%
+  # dplyr::group_by(county, year, sex) %>%
   # dplyr::group_by(county, year, sex, race) %>%
-  # dplyr::group_by(county, year, sex, race, ethnicity) %>% 
-  # dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>% 
+  # dplyr::group_by(county, year, sex, race, ethnicity) %>%
+  dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>%
   dplyr::summarize(
     n_total = sum(n_population)
   )
+# Note that we do note save the answer, but only print it into the console
 
 # ---- task-1 ---------------------------------------
-# adjust the script from example 1 to create a table that answers the following question:
-# Question:  How many men aged 15 to 19 lived in Dade county in 2015?
+# Please adjust the script from example 1 to create a table that answers the following 
+# Question: How many men aged 15 to 19 lived in Dade county in 2015?
+ds %>%  
+  dplyr::filter(sex == "Male", age_group == "15_19", county == "Miami-Dade", year == 2015) %>% 
+  dplyr::summarize(
+    n_total = sum(n_population)
+  )
+# alternatively, using `group_by` to display selected levels:
+ds %>% 
+  dplyr::filter(county == "Miami-Dade", year == 2015) %>% 
+  dplyr::group_by(sex, age_group) %>% 
+  dplyr::summarize(
+    n_total = sum(n_population)
+  ) %>% 
+  print( n = nrow(.))
 
 # ---- example-2 ------------------------------------
-# Question: How does the population in Orange county changes over the years?
-
-# we will use a combination of `filter` and `group_by` statements 
-d2 <- ds %>% 
+# Let us create a table that provides the answer to the following 
+# Question: How does the population in Orange county change over the years?
+# in other words
+# What is the total population of Orange county for each year?
+# we will use a combination of `filter` and `group_by` functions from `dplyr` package 
+e2 <- ds %>% 
   dplyr::filter(county == "Orange") %>% # only "Orange" county remains
-  dplyr::group_by(year) %>%  # for each year we will compute a value
+  dplyr::group_by(county, year) %>%  # for each year we will compute a value
   dplyr::summarize(
     n_total = sum(n_population) # this is the value we compute for each year
   )
-d2 %>% print()
-# ---- task-2 ---------------------------------------
-# How does the population of women in Dade county changes over the years?
+e2 %>% print()
 
+# ---- task-2 ---------------------------------------
+# Please adjust the script from example 2 to create a table that answers the following 
+# Question: How does the population of women in Dade county change over the years?
+# in other words
+# What is the number of female residents in Dade county for each year?
+t2 <- ds %>% 
+  dplyr::filter(county == "Miami-Dade", sex == "Female") %>%
+  dplyr::group_by(county, sex, year) %>%  # for each year we will compute a value
+  dplyr::summarize(
+    n_total = sum(n_population) # this is the value we compute for each year
+  )
+t2 %>% print()
 
 # ---- example-3 ------------------------------------
-# What what was the age composition of female residents of Orange county in 2016?
-d3 <- ds %>% 
-  dplyr::filter(county == "Orange", year == 2016) %>%
-  dplyr::group_by(county, year, age_group) %>%
+# Let us create a table that provides the answer to the following 
+# Question: What what was the age composition of female residents of Orange county in 2016?
+# in other words
+# How many women of each age group resided in Orange county in 2016?
+e3 <- ds %>% 
+  dplyr::filter(county == "Orange", year == 2016, sex == "Female") %>%
+  dplyr::group_by(county, year, sex, age_group) %>% 
   dplyr::summarize(
     n_total = sum(n_population)
   )
-d3 %>% print()
+e3 
 
 # ---- task-3 --------------------------------------
-# what was the age composition black men in Orange county in 2015?
+# Please adjust the script from example 3 to create a table that answers the following 
+# Question: what was the age composition of non-white men in Orange county in 2015?
+# in other words
+# How many non-white men of each age group resided in Orange county in 2015?
+t3 <- ds %>% 
+  dplyr::filter(county == "Orange", year == 2015, sex == "Male", race == "Black & Other") %>%
+  dplyr::group_by(county, year, sex, race, age_group) %>% 
+  dplyr::summarize(
+    n_total = sum(n_population)
+  )
+t3 
 
 # ---- example-4 --------------------------------------------------------------
 # let us crate a basic dot plot using the data from example 2 
-g2 <- d2 %>% 
-  ggplot2::ggplot(aes(x = year, y = n_total))+
+# Remember that data from example 2 (e2) answers the following question:
+# What is the total population of Orange county for each year?
+ge2 <- e2 %>% 
+  ggplot(aes(x = year, y = n_total))+
   geom_point(stat = "identity")+
-  geom_line()
-g2
-
+  geom_line()+
+  labs(title = "Total population in Orange county over the years")
+ge2
 
 # let us crate a basic bar plot using the data from example 3 
-g3 <- d3 %>% 
+# Remember that data from example 3 (e3) answers the following question:
+# How many women of each age group resided in Orange county in 2016?
+ge3 <- e3 %>% 
   ggplot(aes(x = age_group, y = n_total ))+
-  geom_bar(stat = "identity")
-g3
+  geom_bar(stat = "identity")+
+  labs(title = "Population of women in Dade county in 2016 by age group")
+ge3
 
 # ---- task-4 ---------------------------------------
-# using the script in example 4, create the graphs for tasks 2 and 3
+# Task: Study the script in example 4 and create the graphs for tasks 2 and 3
 
-
-# ---- publish ---------------------------------------
+# Remember that data from task 2 (t2) answers the following question:
+# What is the number of female residents in Dade county for each year?
+gt2 <- t2 %>% 
+  ggplot(aes(x = year, y = n_total))+
+  geom_point(stat = "identity")+
+  geom_line()+
+  labs(title = "Population of female residents of Dade county over the years")
+gt2
+  
+# Remember that data from task 3 (t3) answers the following question:
+# How many non-white men of each age group resided in Orange county in 2015?
+gt3 <- t3 %>% 
+  ggplot(aes(x = age_group, y = n_total ))+
+  geom_bar(stat = "identity")+
+  labs(title = "Distribution of age among non-white male residents of Orange county in 2015" )
+gt3
