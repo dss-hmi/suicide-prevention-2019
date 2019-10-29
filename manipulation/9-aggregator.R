@@ -11,9 +11,9 @@ library(dplyr) # disable when temp lines are removed
 library(ggplot2)
 
 # ---- declare-globals ---------------------------------------------------------
-path_file_input_0 <- "./data-public/raw/0-greeted-gls.rds"
-path_file_input_1 <- "./data-public/raw/1-greeted-population.rds"
-path_file_input_2 <- "./data-public/raw/2-greeted-suicide.rds"
+path_file_input_0 <- "./data-unshared/derived/0-greeted-gls.rds"
+path_file_input_1 <- "./data-unshared/derived/1-greeted-population.rds"
+path_file_input_2 <- "./data-unshared/derived/2-greeted-suicide.rds"
 # path_file_input_9 <- "./data-public/raw/9-combined.rds"
 
 
@@ -34,16 +34,18 @@ ds_gls <- ds_gls %>%
     year = lubridate::year(date) %>% as.character() # for joining to other tables
   ) 
 
+ds_population <- ds_population %>% 
+  dplyr::rename(
+    n_population = count
+  )
+
 ds_suicide    <- ds_suicide %>% 
   dplyr::mutate(
     mortality_cause = gsub("^Suicide: ","",mortality_cause),
     mortality_cause = gsub(" \\(.+\\)","",mortality_cause)
   ) %>% 
-  dplyr::mutate(
-    # to have a single variable describing racial background
-    race_ethnicity = paste0(race," + ", ethnicity)
-    # race_ethnic = paste0(race," + ", ethnicity)
-    # to aid in graph production ( note the spaces at the end of "NE  ")
+  dplyr::rename(
+    n_suicides = resident_deaths
   ) %>% 
   dplyr::select(-mortality_locus)
 ds_suicide %>% dplyr::distinct(mortality_cause)
@@ -57,6 +59,45 @@ ds_gls_by_year <- ds_gls %>%
   dplyr::summarize(
     n_trained = sum(n_trained, na.rm = T)
   )
+
+# join population and suicide tables
+d_suicide = ds_suicide  %>% 
+  dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>% 
+  # aggregating over `mortality_casue`, otherwise multiple rows per county-year-sex-race-ethnicity-age_group
+  dplyr::summarize(
+    n_suicides = sum(n_suicides, na.rm = T)
+  )
+d_suicide_wide = ds_suicide %>% 
+  tidyr::spread(mortality_cause, n_suicides)
+
+ds_suicide_wide <- dplyr::left_join(
+  d_suicide
+  ,d_suicide_wide
+)
+ds_suicide_wide %>% dplyr::glimpse()
+
+ds_population_suicide <- dplyr::left_join(
+  ds_population
+  ,ds_suicide_wide
+  ,by = c("county", "year", "sex", "race", "ethnicity", "age_group")
+  ) %>% 
+  dplyr::mutate(
+    # to have a single variable describing racial background
+    race_ethnicity = paste0(race," + ", ethnicity)
+  ) 
+ds_population_suicide %>% dplyr::glimpse()
+
+
+
+
+
+
+
+
+
+
+
+
 ds_gls_by_year %>% dplyr::glimpse()
 # note that `audience` and `type_training` are more granular than county-by-year
 ds_population_by_year <- ds_population %>% 
@@ -66,8 +107,9 @@ ds_population_by_year <- ds_population %>%
 ds_suicide_by_year <- ds_suicide %>% 
   dplyr::group_by(county, year, sex, race, ethnicity, age_group, mortality_cause) %>% 
   dplyr::summarize(
-    resident_deaths = sum(resident_deaths, na.rm = T)
+    n_suicides = sum(n_suicides, na.rm = T)
   )
+ds_suicide_by_year %>% dplyr::glimpse()
 # note that `mortality_cause` is more granular than county-by-year
 # to help with elementwise list operations:
 ls_ds <- list(
