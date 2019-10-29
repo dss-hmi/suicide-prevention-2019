@@ -48,3 +48,5 @@ testthat,TRUE,TRUE,r-lib,Heavier testing framework that's good for package devel
 tidyr,TRUE,TRUE,,Data manipulation; replaces much of reshape2; works w/ magrittr and dplyr well.
 xtable,FALSE,TRUE,,"Formats tables, especially for LaTeX output."
 yaml,TRUE,TRUE,,Needed for knitr and reports.
+zoo,TRUE,TRUE,,working with dates
+tidyverse,TRUE,TRUE,tidyverse,a family of packages by Rstudio
