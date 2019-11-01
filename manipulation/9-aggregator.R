@@ -16,7 +16,6 @@ path_file_input_1 <- "./data-unshared/derived/1-greeted-population.rds"
 path_file_input_2 <- "./data-unshared/derived/2-greeted-suicide.rds"
 # path_file_input_9 <- "./data-public/raw/9-combined.rds"
 
-
 # ---- load-data ---------------------------------------------------------------
 ds_gls        <- readRDS(path_file_input_0) %>% dplyr::glimpse(100)
 ds_population <- readRDS(path_file_input_1) %>% dplyr::glimpse(100)
@@ -33,6 +32,11 @@ ds_gls <- ds_gls %>%
   dplyr::mutate(
     year = lubridate::year(date) %>% as.character() # for joining to other tables
   ) 
+
+counties_gls <- ds_gls %>% 
+  na.omit(region) %>% 
+  dplyr::distinct(county) %>% 
+  as.list() %>% unlist() %>% as.character()
 
 ds_population <- ds_population %>% 
   dplyr::rename(
@@ -80,7 +84,7 @@ ds_population_suicide <- dplyr::left_join(
   ds_population
   ,ds_suicide_wide
   ,by = c("county", "year", "sex", "race", "ethnicity", "age_group")
-  ) %>% 
+) %>% 
   dplyr::mutate(
     # to have a single variable describing racial background
     race_ethnicity = paste0(race," + ", ethnicity)
@@ -93,51 +97,154 @@ compute_rate <- function(
   d,
   grouping_frame
 ){
-  d <- ds_population_suicide
-  grouping_frame <- c("county","year")
-  
-  d1 <- d %>%
+  # d <- ds_population_suicide
+  # grouping_frame <- c("county","year")
+  # 
+  d_wide <- d %>%
     dplyr::group_by_(.dots = grouping_frame) %>%
     dplyr::summarize(
       n_population = sum(n_population, na.rm = T)
-      ,n_suicides = sum(n_suicides, na.rm = T)
+      ,n_suicide  = sum(n_suicides, na.rm = T)
+      ,n_drug    = sum(`Drugs & Biological Substances`, na.rm=T)
+      ,n_gun     = sum(`Firearms Discharge`, na.rm=T)
+      ,n_hanging  = sum(`Hanging, Strangulation, Suffocation`, na.rm=T)
+      ,n_jump     = sum(`Jump From High Place`, na.rm=T)
     ) %>% 
     dplyr::ungroup() %>% 
     dplyr::mutate(
-      suicide_rate_per_100k  = (n_suicides/n_population)*100000
+      n_other = n_suicide - n_drug - n_gun -n_hanging - n_jump
+      
+      ,rate_suicide = (n_suicide/n_population)*100000
+      ,rate_drug   = (n_drug/n_population)*100000
+      ,rate_gun   = (n_gun/n_population)*100000
+      ,rate_hanging = (n_hanging/n_population)*100000
+      ,rate_jump    = (n_jump/n_population)*100000
+      ,rate_other   = (n_other/n_population)*100000
+      
     )
-  return(d1)
+  d_wide %>% glimpse()
+  d_n <- d_wide %>% dplyr::select_(.dots = c(grouping_frame
+                                             ,"n_suicide"
+                                             ,"n_drug"
+                                             ,"n_gun"
+                                             ,"n_hanging"
+                                             ,"n_jump"
+                                             ,"n_other")) %>% 
+    tidyr::gather("suicide_cause", "n_suicides", n_suicide, n_drug,n_gun, n_hanging, n_jump, n_other) %>% 
+    dplyr::mutate(
+      suicide_cause = gsub("^n_","",suicide_cause)
+    )
+  d_rate <- d_wide %>% dplyr::select_(.dots = c(grouping_frame
+                                                ,"rate_suicide"
+                                                ,"rate_drug"
+                                                ,"rate_gun"
+                                                ,"rate_hanging"
+                                                ,"rate_jump"
+                                                ,"rate_other")) %>% 
+    tidyr::gather("suicide_cause", "rate_per_100k", rate_suicide, rate_drug,rate_gun, rate_hanging, rate_jump, rate_other) %>% 
+    dplyr::mutate(
+      suicide_cause = gsub("^rate_","",suicide_cause)
+    )
+  
+  d_long <- d_wide %>% dplyr::select_(.dots = c(grouping_frame,"n_population")) %>% 
+    dplyr::left_join(d_n) %>% 
+    dplyr::left_join(d_rate)
+  
+  ls_out <- list("wide" = d_wide, "long" = d_long )
+  return(ls_out)
 }
 # how to use
-d_computed <- ds_population_suicide %>% compute_rate(grouping_frame = c("county","year"))
-d_computed %>% arrange(desc(suicide_rate_per_100k))
-
+ls_computed <-ds_population_suicide %>% compute_rate(grouping_frame = c("county","year"))
 
 # apply rate computation --------------------------------------------------
 
-grouping_frame <- c("county","year")
-path_to_folder <- "./data-unshared/derived/rate/"
-
-
-d_computed <- ds_population_suicide %>% compute_rate(grouping_frame = grouping_frame)
-
-file_name <- paste0(path_to_folder, paste0(grouping_frame,collapse = "-"),".csv")
-readr::write_csv(d_computed, file_name)
+# grouping_frame <- c("county","year")
+# path_to_folder <- "./data-public/derived/rate/"
+# 
+# 
+# d_computed <- ds_population_suicide %>% compute_rate(grouping_frame = grouping_frame)
+# 
+# file_name <- paste0(path_to_folder, paste0(grouping_frame,collapse = "-"),".csv")
+# readr::write_csv(d_computed, file_name)
 
 
 # create loop to apply the function
 
 ls_grouping_frame <- list(
-  c("county")
-  ,c("county","year")
-  ,c("county","year","sex")
+  c("county","year"                                   )
+  ,c("county","year","sex"                             )
+  ,c("county","year"      ,"race_ethnicity"            )
+  ,c("county","year"                       ,"age_group")
+  ,c("county","year","sex","race_ethnicity"            )
+  ,c("county","year"      ,"race_ethnicity","age_group")
+  ,c("county","year","sex"                 ,"age_group")
+  ,c("county","year","sex","race_ethnicity","age_group")
+  ,c(         "year"                                   )
+  ,c(         "year","sex"                             )
+  ,c(         "year",      "race_ethnicity"            )
+  ,c(         "year"                       ,"age_group")
+  ,c(         "year","sex","race_ethnicity"            )
+  ,c(         "year",      "race_ethnicity","age_group")
+  ,c(         "year","sex"                 ,"age_group")
+  ,c(         "year","sex","race_ethnicity","age_group")
+  
 )
-for (frame_i in ls_grouping_frame){
+# common filter
+ds_filtered <- ds_population_suicide %>% 
+  dplyr::filter(year %in% 2006:2017) %>% 
+  dplyr::filter(!age_group == "less_than_1")
+# common mutate
+ds_filtered <- ds_filtered %>% 
+  dplyr::mutate(
+    # age_group = ifelse(age_group == "85_plus","85+", age_group)
+    # ,age_group = gsub("_", " - ",age_group)
+    county = ifelse(county %in% counties_gls, toupper(county),county)
+  )
+
+ds_filtered %>% distinct(age_group) %>% arrange(age_group)
+
+for (i in seq_along(ls_grouping_frame)){
   # frame_i %>% print()
-  file_name_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),".csv")
-  d_computed <- ds_population_suicide %>% compute_rate(grouping_frame = frame_i)
-  d_computed %>% readr::write_csv(file_name_i)
+  # i <- 1
+  path_to_folder <- "./data-unshared/derived/rate/"
+  frame_i <- ls_grouping_frame[[i]]
+  file_name_wide_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-wide",".csv")
+  file_name_long_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-long",".csv")
+  l_computed <- ds_filtered %>% 
+    
+    compute_rate(grouping_frame = frame_i)
+  l_computed[["wide"]] %>% readr::write_csv(file_name_wide_i)
+  l_computed[["long"]] %>% readr::write_csv(file_name_long_i)
   
 }
 
+for (i in seq_along(ls_grouping_frame)){
+  # frame_i %>% print()
+  # i <- 1
+  path_to_folder <- "./data-unshared/derived/rate_10_24/"
+  frame_i <- ls_grouping_frame[[i]]
+  file_name_wide_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-wide-10-24",".csv")
+  file_name_long_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-long-10-24",".csv")
+  l_computed <- ds_filtered %>% 
+    dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+    compute_rate(grouping_frame = frame_i)
+  l_computed[["wide"]] %>% readr::write_csv(file_name_wide_i)
+  l_computed[["long"]] %>% readr::write_csv(file_name_long_i)
+  
+}
+
+for (i in seq_along(ls_grouping_frame)){
+  # frame_i %>% print()
+  # i <- 1
+  path_to_folder <- "./data-unshared/derived/rate_10_19/"
+  frame_i <- ls_grouping_frame[[i]]
+  file_name_wide_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-wide-10-24",".csv")
+  file_name_long_i  <- paste0(path_to_folder, paste0(frame_i,collapse = "-"),"-long-10-24",".csv")
+  l_computed <- ds_filtered %>% 
+    dplyr::filter(age_group %in% c("10_14","15_19")) %>% 
+    compute_rate(grouping_frame = frame_i)
+  l_computed[["wide"]] %>% readr::write_csv(file_name_wide_i)
+  l_computed[["long"]] %>% readr::write_csv(file_name_long_i)
+  
+}
 
