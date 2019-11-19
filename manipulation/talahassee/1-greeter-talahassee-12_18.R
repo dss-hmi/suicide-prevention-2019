@@ -88,35 +88,35 @@ input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursi
 
 ls_input_files <- list(
   "cause_sex"       = list(
-    "counts_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"
-    ,"rates_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx"
+    "count_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"
+    ,"rate_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx"
 
   )
   ,"cause_sex_race" = list(
-    "counts_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"counts_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"counts_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"counts_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-    ,"rates_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"rates_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"rates_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"rates_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    "count_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
+    ,"count_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
+    ,"count_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
+    ,"count_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    ,"rate_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
+    ,"rate_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
+    ,"rate_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
+    ,"rate_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
 
   )
   ,"sex_cause"      = list(
-    "counts_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18.xlsx"
-    ,"rates_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18.xlsx"
+    "count_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18.xlsx"
+    ,"rate_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18.xlsx"
 
   )
   ,"sex_cause_race" = list(
-    "counts_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"counts_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"counts_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"counts_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-    ,"rates_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"rates_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"rates_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"rates_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    "count_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
+    ,"count_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
+    ,"count_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
+    ,"count_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    ,"rate_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
+    ,"rate_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
+    ,"rate_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
+    ,"rate_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
 
   )
 )
@@ -161,23 +161,34 @@ for(i in seq_along(ls_input)){
   }
 }
 
-ls_ds_wide <- ls_input 
 
-for(i in seq_along(ls_ds_wide)){
-  ls_ds_wide[[i]] <- ls_ds_wide[[i]] %>% dplyr::bind_rows()
-  file_name <- names(ls_ds_wide)[[i]]
+ls_ds_wide <- ls_input
+ls_ds_long <- ls_ds_wide 
+ls_ds_long2 <- ls_ds_wide 
+
+for(i in seq_along(ls_input)){
+  
+  ls_ds_wide[[i]] <- ls_input[[i]] %>% dplyr::bind_rows()
+  file_name <- names(ls_input)[[i]]
   file_path <- paste0("./data-unshared/derived/talahassee/12_18/wide/",file_name,".csv")
   ls_ds_wide[[i]] %>% readr::write_csv(file_path) 
-} 
-
-ls_ds_long <- ls_ds_wide 
-for(i in seq_along(ls_ds_wide)){
+  
   ls_ds_long[[i]] <- ls_ds_wide[[i]] %>% 
-    tidyr::gather("year","value", 6:20)
+    tidyr::gather("year","value", 6:20) %>% 
+    dplyr::mutate(
+      year = as.integer(year)
+    )
   file_name <- names(ls_ds_long)[[i]]
   file_path <- paste0("./data-unshared/derived/talahassee/12_18/long/",file_name,".csv")
   ls_ds_long[[i]] %>% readr::write_csv(file_path) 
+  
+  # file_path <- paste0("./data-unshared/derived/talahassee/12_18/long2/",file_name,".csv")
+  # ls_ds_long2[[i]] <- ls_ds_long[[i]] %>% 
+  #   tidyr::spread(measure, value)
+  # ls_ds_long2[[i]] %>% readr::write_csv(file_path) 
+  
 } 
+
 
 
 
