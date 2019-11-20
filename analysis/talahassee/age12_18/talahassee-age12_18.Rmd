@@ -31,9 +31,9 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 5, 
-  fig.width = 7, 
-  out.width = "550px",
+  fig.height = 8, 
+  fig.width = 9, 
+  out.width = "700px",
   fig.path = 'figure_rmd/',     
   dev = "png",
   dpi = 400
@@ -44,8 +44,8 @@ opts_chunk$set(
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script
-# read_chunk("./analysis/talahassee/age12_18/talahassee-age12_18.R")
-read_chunk("../../../analysis/talahassee/age12_18/talahassee-age12_18.R")
+read_chunk("./analysis/talahassee/age12_18/talahassee-age12_18.R")
+# read_chunk("../../../analysis/talahassee/age12_18/talahassee-age12_18.R")
 ```
 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
@@ -63,6 +63,7 @@ read_chunk("../../../analysis/talahassee/age12_18/talahassee-age12_18.R")
 Review object definitions to assist you in reading the report. 
 <!-- Load any Global functions and variables declared in the R file.  Suppress the output. --> 
 ```{r declare-globals, echo=T, results='show', message=FALSE, warning=F}
+color_race
 ```
 
 Review functions definitions to assist you in reading the report.
@@ -102,7 +103,7 @@ ds_sex_cause %>% glimpse()
 # II. Without Race
 
 ## A1 - Sex-Cause
-```{r sex-cause, echo=T, message=FALSE, results='show'}
+```{r allrace-sex-cause, echo=T, message=FALSE, results='show'}
 g1 <- ds_sex %>% 
   ggplot(aes(x = year, y = value, color = sex) )+
   geom_point()+
@@ -117,7 +118,7 @@ g1 %>% print()
 ```
 
 ## A2 - Cause-Sex
-```{r cause-sex, echo=T, results='show', message=FALSE}
+```{r allrace-cause-sex, echo=T, results='show', message=FALSE}
 g2 <- ds_sex %>% 
   ggplot(aes(x = year, y = value, color = mortality_cause) )+
   geom_point()+
@@ -136,99 +137,110 @@ g2%>% print()
 # III. With Race
 
 ## B1 - Race-Sex-Cause
-```{r race-0-sex-cause, echo=T, results='show', message=FALSE}
-g1 <- ds_sex_race %>% 
-  dplyr::filter(race == "white") %>% 
-  ggplot(aes(x = year, y = value, color = sex) )+
-  geom_point()+
-  geom_line(aes(group=sex))+
-  facet_grid(measure ~ mortality_cause, scales = "free")+
-  theme_bw()+
-  labs(
-    title = "White-Non-Hispanics: Gender differences within each mortality cause"
-  )
-g1 %>% print()
+```{r race-sex-cause, echo=T, results='show', message=FALSE}
+
+for(i in names(color_race) ){
+  g1 <- ds_sex_race %>%
+    dplyr::filter(race == i) %>%
+    ggplot(aes(x = year, y = value, color = sex) )+
+    geom_point()+
+    geom_line(aes(group=sex))+
+    facet_grid(measure ~ mortality_cause, scales = "free")+
+    theme_bw()+
+    labs(
+      title = paste0(toupper(i),": Gender differences within each mortality cause")
+    )
+  g1 %>% print()
+
+}
+
 ```
 
 ## B2 - Race-Cause-Sex
-```{r race-0-cause-sex, echo=F, results='show', message=FALSE}
+```{r race-cause-sex, echo=F, results='show', message=FALSE}
+for(i in names(color_race) ){
 g1 <- ds_sex_race %>% 
-  dplyr::filter(race == "white") %>% 
+  dplyr::filter(race == i) %>% 
   ggplot(aes(x = year, y = value, color = mortality_cause) )+
   geom_point()+
   geom_line(aes(group=mortality_cause))+
   facet_grid(measure ~ sex, scales = "free")+
   theme_bw()+
   labs(
-    title = "White-Hispanics: Mortality cause within each gender"
+    title = paste0(toupper(i),": Mortality cause within each gender")
   )
 g1 %>% print()
+}
 ```
 
-## - 
 
 ## C1 - Sex-Cause-Race
-```{r sex-0-cause-race echo=T, results='show', message=FALSE}
-g1 <- ds_sex_race %>% 
-  dplyr::filter(sex == "Male") %>% 
-  ggplot(aes(x = year, y = value, color = mortality_cause) )+
-  geom_point()+
-  geom_line(aes(group=mortality_cause))+
-  facet_grid(measure ~ race, scales = "free")+
-  theme_bw()+
-  labs(
-    title = "Males: Mortality causes for each race"
-  )
-g1 %>% print()
+```{r sex-cause-race, echo=T, results='show', message=FALSE}
+for(i in names(color_sex) ){
+  g1 <- ds_sex_race %>% 
+    dplyr::filter(sex == i) %>% 
+    ggplot(aes(x = year, y = value, color = mortality_cause) )+
+    geom_point()+
+    geom_line(aes(group=mortality_cause))+
+    facet_grid(measure ~ race, scales = "free")+
+    theme_bw()+
+    labs(
+      title =  paste0("Sex = ",toupper(i),": Mortality causes for each race")
+    )
+  g1 %>% print()
+}
 ```
 
 ## C2 - Sex-Race-Cause
-```{r sex-0-race-cause, echo=T, results='show', message=FALSE}
-g1 <- ds_sex_race %>% 
-  dplyr::filter(sex == "Male") %>% 
-  ggplot(aes(x = year, y = value, color = race) )+
-  geom_point()+
-  geom_line(aes(group=race))+
-  facet_grid(measure ~ mortality_cause , scales = "free")+
-  theme_bw()+
-  labs(
-    title = "Males: Race differences for each mortality cause"
-  )
-g1 %>% print()
+```{r sex-race-cause, echo=T, results='show', message=FALSE}
+for(i in names(color_sex) ){
+  g1 <- ds_sex_race %>% 
+    dplyr::filter(sex == i) %>% 
+    ggplot(aes(x = year, y = value, color = race) )+
+    geom_point()+
+    geom_line(aes(group=race))+
+    facet_grid(measure ~ mortality_cause , scales = "free")+
+    theme_bw()+
+    labs(
+      title = paste0("Sex = ",toupper(i),": Race differences for each mortality cause")
+    )
+  g1 %>% print()
+}
 ```
 
-## - 
 
 ## D1 - Cause-Sex-Race
-```{r dev-d-0, echo=T, results='show', message=FALSE}
-
-g1 <- ds_sex_race %>% 
-  dplyr::filter(mortality_cause == "Firearms") %>% 
-  ggplot(aes(x = year, y = value, color = sex) )+
-  geom_point()+
-  geom_line(aes(group=sex))+
-  facet_grid(measure ~ race, scales = "free")+
-  theme_bw()+
-  labs(
-    title = "Firearms: Gender differences in each race"
-  )
-g1 %>% print()
+```{r cause-sex-race, echo=T, results='show', message=FALSE}
+for( i in names(color_cause) ){
+  g1 <- ds_sex_race %>% 
+    dplyr::filter(mortality_cause == i) %>% 
+    ggplot(aes(x = year, y = value, color = sex) )+
+    geom_point()+
+    geom_line(aes(group=sex))+
+    facet_grid(measure ~ race, scales = "free")+
+    theme_bw()+
+    labs(
+      title = paste0("Cause = ",toupper(i),": Gender differences in each race")
+    )
+  g1 %>% print()
+}
 ```
 
 ## D2 - Cause-Race-Sex
-```{r dev-d-1, echo=T, results='show', message=FALSE}
-
-g1 <- ds_sex_race %>% 
-  dplyr::filter(mortality_cause == "Firearms") %>% 
-  ggplot(aes(x = year, y = value, color = race) )+
-  geom_point()+
-  geom_line(aes(group=race))+
-  facet_grid(measure ~ sex, scales = "free")+
-  theme_bw()+
-  labs(
-    title = "Firearms: Race differences for each gender"
-  )
-g1 %>% print()
+```{r cause-race-sex, echo=T, results='show', message=FALSE}
+for( i in names(color_cause) ){
+  g1 <- ds_sex_race %>% 
+    dplyr::filter(mortality_cause == i) %>% 
+    ggplot(aes(x = year, y = value, color = race) )+
+    geom_point()+
+    geom_line(aes(group=race))+
+    facet_grid(measure ~ sex, scales = "free")+
+    theme_bw()+
+    labs(
+      title =  paste0("Cause = ",toupper(i),": Race differences for each gender")
+    )
+  g1 %>% print()
+}
 ```
 
 # IV. Recap

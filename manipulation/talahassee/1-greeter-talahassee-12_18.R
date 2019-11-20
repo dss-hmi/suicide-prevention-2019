@@ -232,7 +232,11 @@ for(j in seq_along(ls_ds_long2) ){
       compute_change()
   }
   d_temp <- ls_temp %>% dplyr::bind_rows()
-  ls_ds_long3[[j]] <- d_temp
+  ls_ds_long3[[j]] <- d_temp %>% 
+    dplyr::mutate(
+      pct_change_rate = ifelse(count < 5, NA, pct_change_rate)
+      ,pct_change_count = ifelse(count < 5, NA, pct_change_count)
+    )
   
   file_name <- names(ls_ds_long3)[[j]]
   file_path <- paste0("./data-unshared/derived/talahassee/12_18/long3/",file_name,".csv")
