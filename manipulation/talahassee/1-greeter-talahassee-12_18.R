@@ -182,19 +182,70 @@ for(i in seq_along(ls_input)){
   file_path <- paste0("./data-unshared/derived/talahassee/12_18/long/",file_name,".csv")
   ls_ds_long[[i]] %>% readr::write_csv(file_path) 
   
-  # file_path <- paste0("./data-unshared/derived/talahassee/12_18/long2/",file_name,".csv")
-  # ls_ds_long2[[i]] <- ls_ds_long[[i]] %>% 
-  #   tidyr::spread(measure, value)
-  # ls_ds_long2[[i]] %>% readr::write_csv(file_path) 
+  file_path <- paste0("./data-unshared/derived/talahassee/12_18/long2/",file_name,".csv")
+  ls_ds_long2[[i]] <- ls_ds_long[[i]] %>%
+    tidyr::spread(measure, value)
+  ls_ds_long2[[i]] %>% readr::write_csv(file_path)
   
 } 
 
+
+
+# compute change function -------------------------------------------------
+
+compute_change <- function(
+  d
+){
+  d1 <- d %>% 
+    dplyr::mutate(
+      count_ref = filter(., year == 2018) %>% dplyr::select(count) %>% as.list() %>% unlist() %>% as.vector()
+      ,rate_ref = filter(., year == 2018) %>% dplyr::select(rate) %>% as.list() %>% unlist() %>% as.vector()
+    ) %>% 
+    dplyr::mutate(
+      pct_change_count = (count_ref - count)/count * 100
+      ,pct_change_rate  = (rate_ref - rate)/rate * 100
+    ) %>% 
+    dplyr::select(-count_ref, -rate_ref)
+  
+  return(d1)
+}
+
+
+# ---- tweak-data-2 --------------------------------------------------------------
+
+ls_ds_long3 <- ls_ds_long2
+for(j in seq_along(ls_ds_long2) ){
+  # j <- 2
+  
+  l_comb <- ls_ds_long2[[j]] %>% 
+    dplyr::distinct(order, race, mortality_cause,sex) %>% 
+    as.list()
+  
+  ls_temp <- list()
+  for(i in seq_along( l_comb[[1]] ) ){
+    # i <- 1
+    ls_temp[[i]] <- ls_ds_long2[[j]] %>% 
+      dplyr::filter(order == l_comb[["order"]][[i]] ) %>% 
+      dplyr::filter(race == l_comb[["race"]][[i]] ) %>% 
+      dplyr::filter(mortality_cause == l_comb[["mortality_cause"]][[i]] ) %>% 
+      dplyr::filter(sex == l_comb[["sex"]][[i]] ) %>% 
+      compute_change()
+  }
+  d_temp <- ls_temp %>% dplyr::bind_rows()
+  ls_ds_long3[[j]] <- d_temp
+  
+  file_name <- names(ls_ds_long3)[[j]]
+  file_path <- paste0("./data-unshared/derived/talahassee/12_18/long3/",file_name,".csv")
+  ls_ds_long3[[j]] %>% readr::write_csv(file_path) 
+}
 
 
 
 # save-to-disk ------------------------------------------------------------
 ls_ds_wide %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_wide.rds") 
 ls_ds_long %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long.rds") 
+ls_ds_long2 %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long2.rds") 
+ls_ds_long3 %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long3.rds") 
 
 
 
