@@ -19,7 +19,7 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 [trend_summary]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/trend-summary/trend-summary.html
 
-[tallahassee](https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/talahassee/age12_18/talahassee-age12_18.html)
+[tallahassee]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/talahassee/age12_18/talahassee-age12_18.html
 
 # Data Genesis
 - [`./manipulation/0-greeter-gls`][greeter_gls] - activity of GLS Suicide prevention program
