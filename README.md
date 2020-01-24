@@ -3,6 +3,8 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 
 # Analytic Products
 
+- [`./analysis/tallahassee/age12_18/`][tallahassee] - Gender and race differences in suicides among adolescent Floridians (12 to 18 year of age) in the period between 2004 and 2017.   
+
 - [`./analysis/gls-activity/gls-activity-2-coverage.html`][gls_coverage] - Summary tables and graphs describing the delivery of GLS programming in the state of Florida for 2014-2018. 
 
 - [`./analysis/counts-and-rates/counts-and-rates.html`][counts_and_rates] - shows how population size, death counts, and suicide rates vary across counties. Addresses the issues of measurement. 
@@ -16,6 +18,8 @@ Projects evaluates change in suicide morbidity and mortality rates among youth (
 [counts_and_rates]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/counts-and-rates/counts-and-rates.html
 
 [trend_summary]:https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/trend-summary/trend-summary.html
+
+[tallahassee](https://raw.githack.com/dss-hmi/suicide-prevention-2019/master/analysis/talahassee/age12_18/talahassee-age12_18.html)
 
 # Data Genesis
 - [`./manipulation/0-greeter-gls`][greeter_gls] - activity of GLS Suicide prevention program
