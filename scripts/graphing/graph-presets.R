@@ -24,10 +24,10 @@ library(RColorBrewer)
 # Documentation for modifiable theme elements can be found at http://docs.ggplot2.org/current/theme.html
 baseSize <- 10
 main_theme <- theme_bw() +
-  theme(axis.text = element_text(colour="gray40")) +
-  theme(axis.title = element_text(colour="gray40")) +
-  theme(panel.border = element_rect(colour="gray80")) +
-  theme(axis.ticks = element_line(colour="gray80"))
+  theme(axis.text = element_text(colour="gray40", size = baseSize)) +
+  theme(axis.title = element_text(colour="gray40", size = baseSize)) +
+  theme(panel.border = element_rect(colour="gray80", size = baseSize)) +
+  theme(axis.ticks = element_line(colour="gray80", size = baseSize))
 
 # NoGridOrYLabelsTheme <- main_theme  +
 #   theme(axis.ticks.y = element_blank()) +
