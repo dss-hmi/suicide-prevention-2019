@@ -1,0 +1,1334 @@
+<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Resident Death Counts by Year by 113 Causes of Death by Sex by Age</x:Name><x:WorksheetOptions><x:Print><x:ValidPrinterInfo/></x:Print></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--> </head><body><b>Resident Death Counts by Year by 113 Causes of Death by Sex by Age<table cellSpacing='5' cellPadding='0' width='100%' align='center' border='1'>
+	<thead oncontextmenu="processMenuctl00_ContentPlaceHolder1_olapgdDeaths(event, I_ctl00_ContentPlaceHolder1_olapgdDeaths,0)">
+		<tr>
+			<td rowspan="2" colspan="6"><div style='font-weight:bold'>
+
+			</div></td><td colspan="14" rowspan="1"><div style='font-weight:bold' title="Measures, MeasuresLevel" dmn="0">
+				Resident Deaths
+			</div></td>
+		</tr><tr>
+			<td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2006
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2007
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2008
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2009
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2010
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2011
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2012
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2013
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2014
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2015
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2016
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2017
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2018
+			</div></td><td colspan="1" rowspan="1"  style='font-weight:bold' total="1"><div style='font-weight:bold' title="Year, (All)" dmn="1">
+				Total
+			</div></td>
+		</tr>
+	</thead><tbody>
+		<tr>
+			<th colspan="1" rowspan="359">External Causes (V01-Y89)</th><th colspan="1" rowspan="358">All Injuries (V01-Y89)</th><th colspan="1" rowspan="176">Suicide By Firearms Discharge (X72-X74)</th><th colspan="1" rowspan="85">Female</th><th colspan="1" rowspan="4">'10-14'</th><th colspan="1" rowspan="1">12</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">13</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>2</td><td>0
+			</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">14</th><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>3</td><td>2</td><td>0
+			</td><td>1</td><td>10</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">0
+			</td><td  style='font-weight:bold' total="1">0
+			</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">0
+			</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">0
+			</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">0
+			</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">16</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">15-19</th><th colspan="1" rowspan="1">15</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>2</td><td>1</td><td>7</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">16</th><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>2</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>7</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">17</th><td>1</td><td>0
+			</td><td>2</td><td>4</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>3</td><td>0
+			</td><td>2</td><td>1</td><td>0
+			</td><td>15</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">18</th><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>3</td><td>0
+			</td><td>1</td><td>2</td><td>5</td><td>1</td><td>4</td><td>1</td><td>1</td><td>21</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">19</th><td>0
+			</td><td>1</td><td>3</td><td>3</td><td>1</td><td>1</td><td>3</td><td>2</td><td>0
+			</td><td>4</td><td>2</td><td>2</td><td>1</td><td>23</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">73</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">20-24</th><th colspan="1" rowspan="1">20</th><td>3</td><td>2</td><td>2</td><td>3</td><td>1</td><td>1</td><td>4</td><td>2</td><td>1</td><td>3</td><td>2</td><td>1</td><td>0
+			</td><td>25</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">21</th><td>1</td><td>5</td><td>1</td><td>2</td><td>5</td><td>2</td><td>2</td><td>3</td><td>1</td><td>5</td><td>1</td><td>3</td><td>5</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">22</th><td>3</td><td>2</td><td>2</td><td>4</td><td>5</td><td>2</td><td>1</td><td>3</td><td>3</td><td>6</td><td>2</td><td>2</td><td>1</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">23</th><td>0
+			</td><td>2</td><td>4</td><td>1</td><td>2</td><td>3</td><td>2</td><td>4</td><td>2</td><td>2</td><td>0
+			</td><td>2</td><td>6</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">24</th><td>0
+			</td><td>1</td><td>2</td><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>2</td><td>0
+			</td><td>1</td><td>5</td><td>7</td><td>28</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">16</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">19</td><td  style='font-weight:bold' total="1">155</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">25-34</th><th colspan="1" rowspan="1">25</th><td>3</td><td>3</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>3</td><td>6</td><td>2</td><td>8</td><td>2</td><td>35</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">26</th><td>0
+			</td><td>2</td><td>4</td><td>2</td><td>2</td><td>2</td><td>4</td><td>2</td><td>4</td><td>2</td><td>4</td><td>1</td><td>1</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">27</th><td>3</td><td>2</td><td>2</td><td>1</td><td>2</td><td>4</td><td>2</td><td>4</td><td>1</td><td>3</td><td>7</td><td>3</td><td>2</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">28</th><td>2</td><td>1</td><td>2</td><td>5</td><td>0
+			</td><td>2</td><td>2</td><td>3</td><td>2</td><td>0
+			</td><td>5</td><td>4</td><td>1</td><td>29</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">29</th><td>1</td><td>3</td><td>1</td><td>2</td><td>5</td><td>3</td><td>4</td><td>6</td><td>1</td><td>4</td><td>3</td><td>4</td><td>2</td><td>39</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">30</th><td>2</td><td>5</td><td>3</td><td>2</td><td>2</td><td>4</td><td>2</td><td>1</td><td>3</td><td>4</td><td>1</td><td>5</td><td>6</td><td>40</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">31</th><td>3</td><td>0
+			</td><td>5</td><td>3</td><td>1</td><td>0
+			</td><td>2</td><td>4</td><td>2</td><td>5</td><td>5</td><td>1</td><td>6</td><td>37</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">32</th><td>1</td><td>2</td><td>2</td><td>4</td><td>3</td><td>1</td><td>2</td><td>5</td><td>5</td><td>1</td><td>3</td><td>5</td><td>2</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">33</th><td>3</td><td>3</td><td>6</td><td>2</td><td>2</td><td>1</td><td>5</td><td>2</td><td>6</td><td>2</td><td>1</td><td>4</td><td>5</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">34</th><td>2</td><td>3</td><td>5</td><td>3</td><td>2</td><td>3</td><td>5</td><td>4</td><td>1</td><td>4</td><td>4</td><td>5</td><td>1</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">24</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">21</td><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">32</td><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">40</td><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">366</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">35-44</th><th colspan="1" rowspan="1">35</th><td>5</td><td>1</td><td>2</td><td>2</td><td>2</td><td>1</td><td>4</td><td>4</td><td>0
+			</td><td>3</td><td>6</td><td>6</td><td>5</td><td>41</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">36</th><td>4</td><td>6</td><td>3</td><td>1</td><td>1</td><td>3</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>2</td><td>3</td><td>41</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">37</th><td>2</td><td>4</td><td>3</td><td>4</td><td>2</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>4</td><td>1</td><td>5</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">38</th><td>4</td><td>3</td><td>2</td><td>0
+			</td><td>2</td><td>2</td><td>8</td><td>5</td><td>2</td><td>3</td><td>8</td><td>3</td><td>6</td><td>48</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">39</th><td>3</td><td>2</td><td>5</td><td>2</td><td>7</td><td>5</td><td>5</td><td>3</td><td>3</td><td>1</td><td>3</td><td>2</td><td>4</td><td>45</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">40</th><td>5</td><td>3</td><td>9</td><td>2</td><td>4</td><td>6</td><td>3</td><td>3</td><td>2</td><td>2</td><td>8</td><td>2</td><td>0
+			</td><td>49</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">41</th><td>1</td><td>2</td><td>5</td><td>4</td><td>3</td><td>3</td><td>5</td><td>5</td><td>4</td><td>8</td><td>2</td><td>2</td><td>1</td><td>45</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">42</th><td>2</td><td>3</td><td>6</td><td>3</td><td>5</td><td>4</td><td>4</td><td>4</td><td>6</td><td>2</td><td>6</td><td>1</td><td>4</td><td>50</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">43</th><td>5</td><td>7</td><td>5</td><td>11</td><td>3</td><td>4</td><td>5</td><td>4</td><td>7</td><td>5</td><td>10</td><td>2</td><td>4</td><td>72</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">44</th><td>3</td><td>4</td><td>2</td><td>6</td><td>6</td><td>5</td><td>2</td><td>6</td><td>5</td><td>2</td><td>0
+			</td><td>6</td><td>3</td><td>50</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">34</td><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">42</td><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">36</td><td  style='font-weight:bold' total="1">43</td><td  style='font-weight:bold' total="1">40</td><td  style='font-weight:bold' total="1">33</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">51</td><td  style='font-weight:bold' total="1">27</td><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">477</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">45-54</th><th colspan="1" rowspan="1">45</th><td>4</td><td>9</td><td>5</td><td>5</td><td>3</td><td>5</td><td>6</td><td>9</td><td>4</td><td>2</td><td>2</td><td>5</td><td>4</td><td>63</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">46</th><td>4</td><td>8</td><td>6</td><td>5</td><td>2</td><td>7</td><td>8</td><td>3</td><td>5</td><td>6</td><td>3</td><td>6</td><td>3</td><td>66</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">47</th><td>8</td><td>2</td><td>6</td><td>3</td><td>2</td><td>7</td><td>4</td><td>5</td><td>5</td><td>5</td><td>7</td><td>9</td><td>4</td><td>67</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">48</th><td>7</td><td>6</td><td>8</td><td>6</td><td>4</td><td>8</td><td>11</td><td>2</td><td>4</td><td>8</td><td>6</td><td>3</td><td>4</td><td>77</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">49</th><td>5</td><td>2</td><td>2</td><td>5</td><td>5</td><td>10</td><td>7</td><td>11</td><td>5</td><td>5</td><td>4</td><td>3</td><td>4</td><td>68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">50</th><td>3</td><td>1</td><td>1</td><td>6</td><td>10</td><td>2</td><td>10</td><td>4</td><td>5</td><td>7</td><td>4</td><td>7</td><td>1</td><td>61</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">51</th><td>6</td><td>6</td><td>6</td><td>5</td><td>11</td><td>8</td><td>5</td><td>9</td><td>6</td><td>4</td><td>8</td><td>5</td><td>4</td><td>83</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">52</th><td>4</td><td>6</td><td>7</td><td>6</td><td>6</td><td>4</td><td>4</td><td>9</td><td>5</td><td>8</td><td>4</td><td>11</td><td>6</td><td>80</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">53</th><td>6</td><td>6</td><td>10</td><td>3</td><td>8</td><td>6</td><td>8</td><td>8</td><td>4</td><td>5</td><td>7</td><td>11</td><td>8</td><td>90</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">54</th><td>0
+			</td><td>8</td><td>5</td><td>8</td><td>3</td><td>2</td><td>2</td><td>12</td><td>7</td><td>9</td><td>6</td><td>10</td><td>4</td><td>76</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">47</td><td  style='font-weight:bold' total="1">54</td><td  style='font-weight:bold' total="1">56</td><td  style='font-weight:bold' total="1">52</td><td  style='font-weight:bold' total="1">54</td><td  style='font-weight:bold' total="1">59</td><td  style='font-weight:bold' total="1">65</td><td  style='font-weight:bold' total="1">72</td><td  style='font-weight:bold' total="1">50</td><td  style='font-weight:bold' total="1">59</td><td  style='font-weight:bold' total="1">51</td><td  style='font-weight:bold' total="1">70</td><td  style='font-weight:bold' total="1">42</td><td  style='font-weight:bold' total="1">731</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">65-74</th><th colspan="1" rowspan="1">65</th><td>2</td><td>3</td><td>5</td><td>5</td><td>4</td><td>3</td><td>5</td><td>2</td><td>5</td><td>4</td><td>2</td><td>1</td><td>3</td><td>44</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">66</th><td>2</td><td>1</td><td>0
+			</td><td>4</td><td>5</td><td>4</td><td>4</td><td>7</td><td>3</td><td>6</td><td>3</td><td>5</td><td>4</td><td>48</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">67</th><td>3</td><td>2</td><td>1</td><td>3</td><td>4</td><td>4</td><td>5</td><td>6</td><td>3</td><td>3</td><td>2</td><td>7</td><td>6</td><td>49</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">68</th><td>3</td><td>1</td><td>2</td><td>5</td><td>3</td><td>2</td><td>4</td><td>5</td><td>1</td><td>3</td><td>7</td><td>4</td><td>2</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">69</th><td>4</td><td>0
+			</td><td>0
+			</td><td>2</td><td>1</td><td>3</td><td>4</td><td>6</td><td>5</td><td>1</td><td>8</td><td>3</td><td>5</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">70</th><td>2</td><td>1</td><td>1</td><td>0
+			</td><td>3</td><td>3</td><td>1</td><td>2</td><td>1</td><td>2</td><td>4</td><td>2</td><td>5</td><td>27</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">71</th><td>0
+			</td><td>1</td><td>1</td><td>3</td><td>0
+			</td><td>4</td><td>4</td><td>0
+			</td><td>2</td><td>2</td><td>3</td><td>2</td><td>4</td><td>26</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">72</th><td>3</td><td>1</td><td>3</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>3</td><td>3</td><td>6</td><td>3</td><td>4</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">73</th><td>3</td><td>4</td><td>2</td><td>1</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>4</td><td>2</td><td>4</td><td>27</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">74</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>0
+			</td><td>3</td><td>1</td><td>0
+			</td><td>1</td><td>4</td><td>4</td><td>5</td><td>21</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">14</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">32</td><td  style='font-weight:bold' total="1">24</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">43</td><td  style='font-weight:bold' total="1">33</td><td  style='font-weight:bold' total="1">42</td><td  style='font-weight:bold' total="1">356</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">75-84</th><th colspan="1" rowspan="1">75</th><td>3</td><td>0
+			</td><td>0
+			</td><td>3</td><td>1</td><td>2</td><td>1</td><td>3</td><td>0
+			</td><td>2</td><td>4</td><td>3</td><td>1</td><td>23</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">76</th><td>5</td><td>0
+			</td><td>1</td><td>3</td><td>1</td><td>0
+			</td><td>2</td><td>3</td><td>1</td><td>0
+			</td><td>2</td><td>0
+			</td><td>2</td><td>20</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">77</th><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>2</td><td>1</td><td>3</td><td>1</td><td>1</td><td>13</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">78</th><td>0
+			</td><td>0
+			</td><td>1</td><td>3</td><td>0
+			</td><td>1</td><td>2</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>2</td><td>12</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">79</th><td>1</td><td>1</td><td>0
+			</td><td>2</td><td>2</td><td>2</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>1</td><td>1</td><td>14</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">80</th><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>2</td><td>9</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">81</th><td>2</td><td>1</td><td>2</td><td>1</td><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>2</td><td>0
+			</td><td>1</td><td>15</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">82</th><td>1</td><td>3</td><td>3</td><td>1</td><td>2</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td><td>18</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">83</th><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>2</td><td>0
+			</td><td>5</td><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>15</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">84</th><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>6</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">16</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">9</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">18</td><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">145</td>
+		</tr><tr>
+			<th colspan="1" rowspan="13">85+</th><th colspan="1" rowspan="1">85</th><td>2</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>12</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">86</th><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>6</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">87</th><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>6</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">88</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>4</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">89</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>0
+			</td><td>0
+			</td><td>4</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">90</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>3</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">91</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>3</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">92</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">93</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>2</td><td>0
+			</td><td>0
+			</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">94</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">95</th><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">96</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">48</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">152</td><td  style='font-weight:bold' total="1">147</td><td  style='font-weight:bold' total="1">173</td><td  style='font-weight:bold' total="1">175</td><td  style='font-weight:bold' total="1">171</td><td  style='font-weight:bold' total="1">168</td><td  style='font-weight:bold' total="1">201</td><td  style='font-weight:bold' total="1">213</td><td  style='font-weight:bold' total="1">172</td><td  style='font-weight:bold' total="1">184</td><td  style='font-weight:bold' total="1">223</td><td  style='font-weight:bold' total="1">200</td><td  style='font-weight:bold' total="1">188</td><td  style='font-weight:bold' total="1">2,367</td>
+		</tr><tr>
+			<th colspan="1" rowspan="90">Male</th><th colspan="1" rowspan="6">'10-14'</th><th colspan="1" rowspan="1">10</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">11</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">12</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>2</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">13</th><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>2</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>1</td><td>1</td><td>9</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">14</th><td>0
+			</td><td>2</td><td>0
+			</td><td>1</td><td>2</td><td>1</td><td>1</td><td>2</td><td>4</td><td>5</td><td>2</td><td>6</td><td>3</td><td>29</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">8</td><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">45</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">15-19</th><th colspan="1" rowspan="1">15</th><td>4</td><td>2</td><td>1</td><td>1</td><td>3</td><td>4</td><td>3</td><td>2</td><td>5</td><td>5</td><td>5</td><td>7</td><td>3</td><td>45</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">16</th><td>3</td><td>2</td><td>3</td><td>2</td><td>4</td><td>3</td><td>3</td><td>7</td><td>5</td><td>5</td><td>5</td><td>8</td><td>7</td><td>57</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">17</th><td>9</td><td>3</td><td>7</td><td>10</td><td>3</td><td>4</td><td>12</td><td>6</td><td>6</td><td>2</td><td>5</td><td>12</td><td>8</td><td>87</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">18</th><td>10</td><td>9</td><td>4</td><td>15</td><td>3</td><td>7</td><td>14</td><td>7</td><td>8</td><td>7</td><td>8</td><td>12</td><td>22</td><td>126</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">19</th><td>7</td><td>10</td><td>11</td><td>11</td><td>7</td><td>9</td><td>14</td><td>9</td><td>7</td><td>8</td><td>8</td><td>16</td><td>9</td><td>126</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">33</td><td  style='font-weight:bold' total="1">26</td><td  style='font-weight:bold' total="1">26</td><td  style='font-weight:bold' total="1">39</td><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">27</td><td  style='font-weight:bold' total="1">46</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">27</td><td  style='font-weight:bold' total="1">31</td><td  style='font-weight:bold' total="1">55</td><td  style='font-weight:bold' total="1">49</td><td  style='font-weight:bold' total="1">441</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">20-24</th><th colspan="1" rowspan="1">20</th><td>17</td><td>11</td><td>8</td><td>5</td><td>10</td><td>9</td><td>7</td><td>7</td><td>6</td><td>11</td><td>12</td><td>17</td><td>14</td><td>134</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">21</th><td>10</td><td>10</td><td>13</td><td>15</td><td>8</td><td>18</td><td>16</td><td>14</td><td>18</td><td>15</td><td>17</td><td>14</td><td>17</td><td>185</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">22</th><td>15</td><td>16</td><td>17</td><td>11</td><td>12</td><td>15</td><td>24</td><td>14</td><td>17</td><td>13</td><td>8</td><td>18</td><td>11</td><td>191</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">23</th><td>13</td><td>14</td><td>12</td><td>19</td><td>20</td><td>16</td><td>15</td><td>19</td><td>19</td><td>16</td><td>20</td><td>13</td><td>22</td><td>218</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">24</th><td>9</td><td>9</td><td>13</td><td>2</td><td>19</td><td>11</td><td>9</td><td>11</td><td>10</td><td>27</td><td>13</td><td>15</td><td>13</td><td>161</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">64</td><td  style='font-weight:bold' total="1">60</td><td  style='font-weight:bold' total="1">63</td><td  style='font-weight:bold' total="1">52</td><td  style='font-weight:bold' total="1">69</td><td  style='font-weight:bold' total="1">69</td><td  style='font-weight:bold' total="1">71</td><td  style='font-weight:bold' total="1">65</td><td  style='font-weight:bold' total="1">70</td><td  style='font-weight:bold' total="1">82</td><td  style='font-weight:bold' total="1">70</td><td  style='font-weight:bold' total="1">77</td><td  style='font-weight:bold' total="1">77</td><td  style='font-weight:bold' total="1">889</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">25-34</th><th colspan="1" rowspan="1">25</th><td>15</td><td>14</td><td>18</td><td>15</td><td>14</td><td>14</td><td>14</td><td>11</td><td>11</td><td>23</td><td>19</td><td>18</td><td>16</td><td>202</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">26</th><td>13</td><td>11</td><td>14</td><td>19</td><td>15</td><td>15</td><td>15</td><td>22</td><td>19</td><td>17</td><td>11</td><td>13</td><td>25</td><td>209</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">27</th><td>8</td><td>11</td><td>13</td><td>10</td><td>12</td><td>16</td><td>16</td><td>11</td><td>13</td><td>14</td><td>17</td><td>23</td><td>17</td><td>181</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">28</th><td>12</td><td>7</td><td>18</td><td>13</td><td>9</td><td>15</td><td>11</td><td>22</td><td>14</td><td>16</td><td>13</td><td>22</td><td>11</td><td>183</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">29</th><td>8</td><td>13</td><td>9</td><td>14</td><td>15</td><td>18</td><td>7</td><td>8</td><td>14</td><td>19</td><td>18</td><td>14</td><td>14</td><td>171</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">30</th><td>9</td><td>11</td><td>8</td><td>14</td><td>13</td><td>11</td><td>10</td><td>15</td><td>14</td><td>18</td><td>20</td><td>21</td><td>18</td><td>182</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">31</th><td>6</td><td>10</td><td>18</td><td>9</td><td>10</td><td>15</td><td>11</td><td>12</td><td>16</td><td>14</td><td>11</td><td>9</td><td>17</td><td>158</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">32</th><td>8</td><td>11</td><td>12</td><td>6</td><td>5</td><td>17</td><td>9</td><td>14</td><td>8</td><td>20</td><td>21</td><td>15</td><td>17</td><td>163</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">33</th><td>14</td><td>17</td><td>12</td><td>19</td><td>10</td><td>13</td><td>13</td><td>14</td><td>16</td><td>16</td><td>25</td><td>19</td><td>9</td><td>197</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">34</th><td>14</td><td>17</td><td>7</td><td>18</td><td>8</td><td>15</td><td>11</td><td>12</td><td>8</td><td>16</td><td>14</td><td>11</td><td>17</td><td>168</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">107</td><td  style='font-weight:bold' total="1">122</td><td  style='font-weight:bold' total="1">129</td><td  style='font-weight:bold' total="1">137</td><td  style='font-weight:bold' total="1">111</td><td  style='font-weight:bold' total="1">149</td><td  style='font-weight:bold' total="1">117</td><td  style='font-weight:bold' total="1">141</td><td  style='font-weight:bold' total="1">133</td><td  style='font-weight:bold' total="1">173</td><td  style='font-weight:bold' total="1">169</td><td  style='font-weight:bold' total="1">165</td><td  style='font-weight:bold' total="1">161</td><td  style='font-weight:bold' total="1">1,814</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">35-44</th><th colspan="1" rowspan="1">35</th><td>10</td><td>6</td><td>9</td><td>10</td><td>8</td><td>11</td><td>12</td><td>7</td><td>10</td><td>6</td><td>15</td><td>19</td><td>20</td><td>143</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">36</th><td>8</td><td>15</td><td>11</td><td>15</td><td>12</td><td>8</td><td>12</td><td>15</td><td>17</td><td>20</td><td>15</td><td>12</td><td>16</td><td>176</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">37</th><td>15</td><td>12</td><td>15</td><td>12</td><td>13</td><td>17</td><td>18</td><td>13</td><td>18</td><td>11</td><td>9</td><td>11</td><td>24</td><td>188</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">38</th><td>15</td><td>13</td><td>19</td><td>17</td><td>13</td><td>18</td><td>19</td><td>16</td><td>9</td><td>13</td><td>18</td><td>17</td><td>16</td><td>203</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">39</th><td>15</td><td>10</td><td>16</td><td>19</td><td>13</td><td>10</td><td>14</td><td>14</td><td>12</td><td>12</td><td>12</td><td>7</td><td>17</td><td>171</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">40</th><td>13</td><td>16</td><td>12</td><td>8</td><td>26</td><td>17</td><td>10</td><td>15</td><td>12</td><td>16</td><td>19</td><td>12</td><td>14</td><td>190</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">41</th><td>15</td><td>18</td><td>17</td><td>13</td><td>16</td><td>15</td><td>17</td><td>15</td><td>22</td><td>12</td><td>14</td><td>13</td><td>22</td><td>209</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">42</th><td>17</td><td>19</td><td>16</td><td>24</td><td>13</td><td>18</td><td>11</td><td>19</td><td>9</td><td>16</td><td>14</td><td>12</td><td>22</td><td>210</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">43</th><td>17</td><td>15</td><td>18</td><td>25</td><td>19</td><td>15</td><td>15</td><td>22</td><td>16</td><td>19</td><td>17</td><td>18</td><td>22</td><td>238</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">44</th><td>16</td><td>20</td><td>20</td><td>32</td><td>13</td><td>18</td><td>15</td><td>15</td><td>25</td><td>20</td><td>14</td><td>15</td><td>16</td><td>239</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">141</td><td  style='font-weight:bold' total="1">144</td><td  style='font-weight:bold' total="1">153</td><td  style='font-weight:bold' total="1">175</td><td  style='font-weight:bold' total="1">146</td><td  style='font-weight:bold' total="1">147</td><td  style='font-weight:bold' total="1">143</td><td  style='font-weight:bold' total="1">151</td><td  style='font-weight:bold' total="1">150</td><td  style='font-weight:bold' total="1">145</td><td  style='font-weight:bold' total="1">147</td><td  style='font-weight:bold' total="1">136</td><td  style='font-weight:bold' total="1">189</td><td  style='font-weight:bold' total="1">1,967</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">45-54</th><th colspan="1" rowspan="1">45</th><td>17</td><td>18</td><td>28</td><td>23</td><td>23</td><td>17</td><td>11</td><td>24</td><td>15</td><td>19</td><td>24</td><td>20</td><td>21</td><td>260</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">46</th><td>21</td><td>24</td><td>22</td><td>18</td><td>26</td><td>20</td><td>17</td><td>17</td><td>19</td><td>11</td><td>18</td><td>26</td><td>12</td><td>251</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">47</th><td>16</td><td>24</td><td>26</td><td>24</td><td>31</td><td>18</td><td>17</td><td>14</td><td>13</td><td>20</td><td>21</td><td>23</td><td>29</td><td>276</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">48</th><td>17</td><td>25</td><td>22</td><td>19</td><td>28</td><td>20</td><td>24</td><td>20</td><td>23</td><td>19</td><td>24</td><td>20</td><td>27</td><td>288</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">49</th><td>15</td><td>17</td><td>18</td><td>27</td><td>19</td><td>26</td><td>24</td><td>30</td><td>27</td><td>15</td><td>21</td><td>19</td><td>19</td><td>277</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">50</th><td>17</td><td>16</td><td>23</td><td>29</td><td>19</td><td>22</td><td>28</td><td>22</td><td>19</td><td>20</td><td>20</td><td>18</td><td>20</td><td>273</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">51</th><td>21</td><td>22</td><td>19</td><td>24</td><td>24</td><td>35</td><td>25</td><td>19</td><td>29</td><td>33</td><td>15</td><td>25</td><td>20</td><td>311</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">52</th><td>14</td><td>23</td><td>25</td><td>24</td><td>32</td><td>30</td><td>32</td><td>25</td><td>20</td><td>23</td><td>23</td><td>23</td><td>16</td><td>310</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">53</th><td>14</td><td>20</td><td>15</td><td>28</td><td>35</td><td>29</td><td>33</td><td>24</td><td>22</td><td>23</td><td>24</td><td>33</td><td>20</td><td>320</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">54</th><td>18</td><td>23</td><td>23</td><td>19</td><td>28</td><td>23</td><td>25</td><td>30</td><td>23</td><td>31</td><td>22</td><td>25</td><td>26</td><td>316</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">170</td><td  style='font-weight:bold' total="1">212</td><td  style='font-weight:bold' total="1">221</td><td  style='font-weight:bold' total="1">235</td><td  style='font-weight:bold' total="1">265</td><td  style='font-weight:bold' total="1">240</td><td  style='font-weight:bold' total="1">236</td><td  style='font-weight:bold' total="1">225</td><td  style='font-weight:bold' total="1">210</td><td  style='font-weight:bold' total="1">214</td><td  style='font-weight:bold' total="1">212</td><td  style='font-weight:bold' total="1">232</td><td  style='font-weight:bold' total="1">210</td><td  style='font-weight:bold' total="1">2,882</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">65-74</th><th colspan="1" rowspan="1">65</th><td>11</td><td>15</td><td>22</td><td>18</td><td>12</td><td>19</td><td>32</td><td>19</td><td>20</td><td>22</td><td>34</td><td>19</td><td>20</td><td>263</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">66</th><td>16</td><td>8</td><td>22</td><td>18</td><td>15</td><td>18</td><td>18</td><td>28</td><td>21</td><td>25</td><td>26</td><td>23</td><td>20</td><td>258</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">67</th><td>15</td><td>14</td><td>13</td><td>16</td><td>14</td><td>16</td><td>14</td><td>18</td><td>25</td><td>26</td><td>15</td><td>27</td><td>24</td><td>237</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">68</th><td>13</td><td>19</td><td>14</td><td>13</td><td>19</td><td>24</td><td>20</td><td>19</td><td>15</td><td>21</td><td>26</td><td>21</td><td>22</td><td>246</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">69</th><td>11</td><td>16</td><td>11</td><td>16</td><td>17</td><td>16</td><td>20</td><td>15</td><td>32</td><td>26</td><td>33</td><td>29</td><td>34</td><td>276</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">70</th><td>12</td><td>14</td><td>20</td><td>12</td><td>14</td><td>21</td><td>19</td><td>30</td><td>20</td><td>18</td><td>14</td><td>32</td><td>34</td><td>260</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">71</th><td>14</td><td>17</td><td>15</td><td>18</td><td>14</td><td>18</td><td>12</td><td>16</td><td>22</td><td>20</td><td>21</td><td>15</td><td>30</td><td>232</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">72</th><td>16</td><td>16</td><td>13</td><td>6</td><td>13</td><td>13</td><td>16</td><td>13</td><td>22</td><td>16</td><td>22</td><td>18</td><td>23</td><td>207</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">73</th><td>10</td><td>20</td><td>15</td><td>13</td><td>17</td><td>17</td><td>15</td><td>22</td><td>16</td><td>20</td><td>33</td><td>26</td><td>23</td><td>247</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">74</th><td>12</td><td>13</td><td>11</td><td>12</td><td>15</td><td>14</td><td>16</td><td>15</td><td>12</td><td>16</td><td>21</td><td>25</td><td>22</td><td>204</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">130</td><td  style='font-weight:bold' total="1">152</td><td  style='font-weight:bold' total="1">156</td><td  style='font-weight:bold' total="1">142</td><td  style='font-weight:bold' total="1">150</td><td  style='font-weight:bold' total="1">176</td><td  style='font-weight:bold' total="1">182</td><td  style='font-weight:bold' total="1">195</td><td  style='font-weight:bold' total="1">205</td><td  style='font-weight:bold' total="1">210</td><td  style='font-weight:bold' total="1">245</td><td  style='font-weight:bold' total="1">235</td><td  style='font-weight:bold' total="1">252</td><td  style='font-weight:bold' total="1">2,430</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">75-84</th><th colspan="1" rowspan="1">75</th><td>17</td><td>15</td><td>9</td><td>17</td><td>11</td><td>17</td><td>27</td><td>21</td><td>14</td><td>16</td><td>24</td><td>22</td><td>31</td><td>241</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">76</th><td>18</td><td>11</td><td>16</td><td>22</td><td>17</td><td>19</td><td>9</td><td>13</td><td>16</td><td>25</td><td>13</td><td>20</td><td>27</td><td>226</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">77</th><td>15</td><td>20</td><td>16</td><td>20</td><td>18</td><td>12</td><td>15</td><td>16</td><td>19</td><td>25</td><td>15</td><td>21</td><td>23</td><td>235</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">78</th><td>25</td><td>19</td><td>17</td><td>22</td><td>12</td><td>15</td><td>16</td><td>11</td><td>17</td><td>23</td><td>14</td><td>23</td><td>28</td><td>242</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">79</th><td>19</td><td>10</td><td>17</td><td>19</td><td>12</td><td>14</td><td>15</td><td>25</td><td>16</td><td>17</td><td>22</td><td>22</td><td>27</td><td>235</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">80</th><td>8</td><td>15</td><td>21</td><td>11</td><td>17</td><td>21</td><td>12</td><td>20</td><td>16</td><td>16</td><td>13</td><td>18</td><td>20</td><td>208</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">81</th><td>17</td><td>18</td><td>18</td><td>13</td><td>12</td><td>13</td><td>16</td><td>17</td><td>15</td><td>19</td><td>16</td><td>8</td><td>23</td><td>205</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">82</th><td>13</td><td>10</td><td>11</td><td>15</td><td>12</td><td>11</td><td>16</td><td>11</td><td>17</td><td>23</td><td>17</td><td>23</td><td>17</td><td>196</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">83</th><td>10</td><td>9</td><td>17</td><td>11</td><td>11</td><td>12</td><td>10</td><td>14</td><td>18</td><td>11</td><td>15</td><td>14</td><td>22</td><td>174</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">84</th><td>10</td><td>12</td><td>13</td><td>18</td><td>25</td><td>15</td><td>17</td><td>16</td><td>19</td><td>15</td><td>17</td><td>22</td><td>19</td><td>218</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">152</td><td  style='font-weight:bold' total="1">139</td><td  style='font-weight:bold' total="1">155</td><td  style='font-weight:bold' total="1">168</td><td  style='font-weight:bold' total="1">147</td><td  style='font-weight:bold' total="1">149</td><td  style='font-weight:bold' total="1">153</td><td  style='font-weight:bold' total="1">164</td><td  style='font-weight:bold' total="1">167</td><td  style='font-weight:bold' total="1">190</td><td  style='font-weight:bold' total="1">166</td><td  style='font-weight:bold' total="1">193</td><td  style='font-weight:bold' total="1">237</td><td  style='font-weight:bold' total="1">2,180</td>
+		</tr><tr>
+			<th colspan="1" rowspan="16">85+</th><th colspan="1" rowspan="1">85</th><td>14</td><td>14</td><td>16</td><td>11</td><td>18</td><td>11</td><td>18</td><td>17</td><td>17</td><td>17</td><td>12</td><td>18</td><td>19</td><td>202</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">86</th><td>6</td><td>13</td><td>9</td><td>7</td><td>14</td><td>14</td><td>12</td><td>13</td><td>15</td><td>16</td><td>22</td><td>15</td><td>14</td><td>170</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">87</th><td>9</td><td>9</td><td>9</td><td>5</td><td>13</td><td>11</td><td>10</td><td>8</td><td>6</td><td>20</td><td>13</td><td>11</td><td>13</td><td>137</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">88</th><td>6</td><td>4</td><td>8</td><td>12</td><td>8</td><td>5</td><td>14</td><td>8</td><td>12</td><td>7</td><td>13</td><td>10</td><td>16</td><td>123</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">89</th><td>8</td><td>5</td><td>7</td><td>5</td><td>7</td><td>5</td><td>4</td><td>11</td><td>5</td><td>6</td><td>10</td><td>11</td><td>9</td><td>93</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">90</th><td>3</td><td>5</td><td>4</td><td>9</td><td>6</td><td>6</td><td>6</td><td>4</td><td>9</td><td>10</td><td>10</td><td>6</td><td>5</td><td>83</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">91</th><td>6</td><td>3</td><td>3</td><td>7</td><td>2</td><td>1</td><td>5</td><td>6</td><td>5</td><td>6</td><td>3</td><td>6</td><td>11</td><td>64</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">92</th><td>2</td><td>4</td><td>3</td><td>4</td><td>3</td><td>7</td><td>4</td><td>8</td><td>3</td><td>7</td><td>6</td><td>6</td><td>7</td><td>64</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">93</th><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>3</td><td>2</td><td>2</td><td>3</td><td>3</td><td>5</td><td>7</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">94</th><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>4</td><td>2</td><td>2</td><td>1</td><td>2</td><td>4</td><td>3</td><td>4</td><td>23</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">95</th><td>0
+			</td><td>0
+			</td><td>2</td><td>1</td><td>2</td><td>1</td><td>3</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>19</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">96</th><td>0
+			</td><td>0
+			</td><td>1</td><td>3</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>3</td><td>1</td><td>0
+			</td><td>3</td><td>0
+			</td><td>14</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">97</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>6</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">98</th><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>3</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">99</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">57</td><td  style='font-weight:bold' total="1">61</td><td  style='font-weight:bold' total="1">65</td><td  style='font-weight:bold' total="1">65</td><td  style='font-weight:bold' total="1">75</td><td  style='font-weight:bold' total="1">66</td><td  style='font-weight:bold' total="1">84</td><td  style='font-weight:bold' total="1">83</td><td  style='font-weight:bold' total="1">81</td><td  style='font-weight:bold' total="1">99</td><td  style='font-weight:bold' total="1">100</td><td  style='font-weight:bold' total="1">97</td><td  style='font-weight:bold' total="1">106</td><td  style='font-weight:bold' total="1">1,039</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">855</td><td  style='font-weight:bold' total="1">918</td><td  style='font-weight:bold' total="1">969</td><td  style='font-weight:bold' total="1">1,014</td><td  style='font-weight:bold' total="1">985</td><td  style='font-weight:bold' total="1">1,026</td><td  style='font-weight:bold' total="1">1,033</td><td  style='font-weight:bold' total="1">1,058</td><td  style='font-weight:bold' total="1">1,053</td><td  style='font-weight:bold' total="1">1,146</td><td  style='font-weight:bold' total="1">1,144</td><td  style='font-weight:bold' total="1">1,198</td><td  style='font-weight:bold' total="1">1,288</td><td  style='font-weight:bold' total="1">13,687</td>
+		</tr><tr>
+			<th colspan="3" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1,007</td><td  style='font-weight:bold' total="1">1,065</td><td  style='font-weight:bold' total="1">1,142</td><td  style='font-weight:bold' total="1">1,189</td><td  style='font-weight:bold' total="1">1,156</td><td  style='font-weight:bold' total="1">1,194</td><td  style='font-weight:bold' total="1">1,234</td><td  style='font-weight:bold' total="1">1,271</td><td  style='font-weight:bold' total="1">1,225</td><td  style='font-weight:bold' total="1">1,330</td><td  style='font-weight:bold' total="1">1,367</td><td  style='font-weight:bold' total="1">1,398</td><td  style='font-weight:bold' total="1">1,476</td><td  style='font-weight:bold' total="1">16,054</td>
+		</tr><tr>
+			<th colspan="1" rowspan="181">Suicide By Other &amp; Unspecified Means &amp; Sequelae (X60-X71, X75-X84, Y87.0)</th><th colspan="1" rowspan="90">Female</th><th colspan="1" rowspan="6">'10-14'</th><th colspan="1" rowspan="1">10</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">11</th><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>4</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">12</th><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>2</td><td>0
+			</td><td>0
+			</td><td>1</td><td>8</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">13</th><td>0
+			</td><td>1</td><td>0
+			</td><td>3</td><td>3</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>4</td><td>1</td><td>3</td><td>16</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">14</th><td>1</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>1</td><td>2</td><td>1</td><td>3</td><td>5</td><td>1</td><td>2</td><td>23</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">52</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">15-19</th><th colspan="1" rowspan="1">15</th><td>1</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>4</td><td>1</td><td>2</td><td>2</td><td>4</td><td>4</td><td>4</td><td>29</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">16</th><td>6</td><td>1</td><td>3</td><td>1</td><td>0
+			</td><td>2</td><td>5</td><td>3</td><td>3</td><td>4</td><td>4</td><td>5</td><td>4</td><td>41</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">17</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>2</td><td>3</td><td>1</td><td>4</td><td>3</td><td>2</td><td>6</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">18</th><td>1</td><td>1</td><td>4</td><td>2</td><td>0
+			</td><td>2</td><td>1</td><td>3</td><td>6</td><td>6</td><td>7</td><td>4</td><td>4</td><td>41</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">19</th><td>6</td><td>1</td><td>2</td><td>1</td><td>2</td><td>5</td><td>1</td><td>2</td><td>3</td><td>4</td><td>3</td><td>3</td><td>9</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">7</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">21</td><td  style='font-weight:bold' total="1">18</td><td  style='font-weight:bold' total="1">27</td><td  style='font-weight:bold' total="1">183</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">20-24</th><th colspan="1" rowspan="1">20</th><td>5</td><td>6</td><td>2</td><td>0
+			</td><td>2</td><td>1</td><td>3</td><td>3</td><td>6</td><td>4</td><td>5</td><td>4</td><td>1</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">21</th><td>1</td><td>4</td><td>4</td><td>5</td><td>0
+			</td><td>2</td><td>4</td><td>3</td><td>6</td><td>6</td><td>2</td><td>2</td><td>4</td><td>43</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">22</th><td>2</td><td>2</td><td>2</td><td>3</td><td>6</td><td>1</td><td>3</td><td>4</td><td>6</td><td>4</td><td>3</td><td>6</td><td>6</td><td>48</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">23</th><td>1</td><td>3</td><td>1</td><td>0
+			</td><td>3</td><td>5</td><td>3</td><td>6</td><td>2</td><td>8</td><td>6</td><td>6</td><td>8</td><td>52</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">24</th><td>1</td><td>2</td><td>4</td><td>4</td><td>3</td><td>3</td><td>6</td><td>4</td><td>0
+			</td><td>3</td><td>6</td><td>4</td><td>4</td><td>44</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">17</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">14</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">19</td><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">23</td><td  style='font-weight:bold' total="1">229</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">25-34</th><th colspan="1" rowspan="1">25</th><td>5</td><td>3</td><td>4</td><td>3</td><td>6</td><td>3</td><td>3</td><td>2</td><td>2</td><td>7</td><td>2</td><td>6</td><td>5</td><td>51</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">26</th><td>4</td><td>3</td><td>4</td><td>12</td><td>4</td><td>2</td><td>3</td><td>3</td><td>5</td><td>1</td><td>2</td><td>2</td><td>9</td><td>54</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">27</th><td>3</td><td>2</td><td>2</td><td>3</td><td>5</td><td>7</td><td>5</td><td>5</td><td>4</td><td>3</td><td>7</td><td>5</td><td>6</td><td>57</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">28</th><td>4</td><td>6</td><td>6</td><td>7</td><td>2</td><td>6</td><td>3</td><td>3</td><td>3</td><td>4</td><td>7</td><td>4</td><td>7</td><td>62</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">29</th><td>6</td><td>3</td><td>3</td><td>3</td><td>2</td><td>6</td><td>5</td><td>6</td><td>4</td><td>3</td><td>10</td><td>8</td><td>8</td><td>67</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">30</th><td>1</td><td>4</td><td>4</td><td>5</td><td>7</td><td>4</td><td>5</td><td>1</td><td>9</td><td>6</td><td>3</td><td>4</td><td>3</td><td>56</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">31</th><td>5</td><td>7</td><td>6</td><td>6</td><td>1</td><td>5</td><td>3</td><td>6</td><td>7</td><td>5</td><td>4</td><td>2</td><td>5</td><td>62</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">32</th><td>2</td><td>6</td><td>4</td><td>5</td><td>4</td><td>3</td><td>7</td><td>6</td><td>7</td><td>8</td><td>3</td><td>9</td><td>13</td><td>77</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">33</th><td>3</td><td>6</td><td>3</td><td>4</td><td>4</td><td>4</td><td>2</td><td>2</td><td>4</td><td>7</td><td>5</td><td>8</td><td>10</td><td>62</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">34</th><td>3</td><td>6</td><td>4</td><td>4</td><td>5</td><td>5</td><td>6</td><td>4</td><td>5</td><td>10</td><td>6</td><td>5</td><td>5</td><td>68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">36</td><td  style='font-weight:bold' total="1">46</td><td  style='font-weight:bold' total="1">40</td><td  style='font-weight:bold' total="1">52</td><td  style='font-weight:bold' total="1">40</td><td  style='font-weight:bold' total="1">45</td><td  style='font-weight:bold' total="1">42</td><td  style='font-weight:bold' total="1">38</td><td  style='font-weight:bold' total="1">50</td><td  style='font-weight:bold' total="1">54</td><td  style='font-weight:bold' total="1">49</td><td  style='font-weight:bold' total="1">53</td><td  style='font-weight:bold' total="1">71</td><td  style='font-weight:bold' total="1">616</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">35-44</th><th colspan="1" rowspan="1">35</th><td>2</td><td>9</td><td>4</td><td>8</td><td>4</td><td>3</td><td>6</td><td>3</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">36</th><td>4</td><td>8</td><td>5</td><td>6</td><td>5</td><td>6</td><td>8</td><td>6</td><td>3</td><td>14</td><td>6</td><td>12</td><td>7</td><td>90</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">37</th><td>4</td><td>3</td><td>10</td><td>6</td><td>3</td><td>3</td><td>5</td><td>7</td><td>2</td><td>6</td><td>11</td><td>5</td><td>4</td><td>69</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">38</th><td>11</td><td>5</td><td>7</td><td>6</td><td>6</td><td>7</td><td>10</td><td>6</td><td>4</td><td>8</td><td>10</td><td>8</td><td>3</td><td>91</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">39</th><td>9</td><td>6</td><td>6</td><td>10</td><td>5</td><td>4</td><td>7</td><td>12</td><td>8</td><td>5</td><td>6</td><td>4</td><td>5</td><td>87</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">40</th><td>5</td><td>6</td><td>5</td><td>8</td><td>8</td><td>3</td><td>7</td><td>2</td><td>7</td><td>11</td><td>9</td><td>7</td><td>10</td><td>88</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">41</th><td>7</td><td>12</td><td>6</td><td>7</td><td>13</td><td>5</td><td>12</td><td>7</td><td>5</td><td>7</td><td>5</td><td>6</td><td>4</td><td>96</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">42</th><td>7</td><td>14</td><td>9</td><td>9</td><td>6</td><td>4</td><td>10</td><td>10</td><td>2</td><td>6</td><td>9</td><td>8</td><td>10</td><td>104</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">43</th><td>10</td><td>9</td><td>8</td><td>12</td><td>9</td><td>14</td><td>10</td><td>11</td><td>16</td><td>7</td><td>11</td><td>8</td><td>8</td><td>133</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">44</th><td>12</td><td>12</td><td>17</td><td>9</td><td>13</td><td>12</td><td>11</td><td>13</td><td>7</td><td>8</td><td>10</td><td>9</td><td>7</td><td>140</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">71</td><td  style='font-weight:bold' total="1">84</td><td  style='font-weight:bold' total="1">77</td><td  style='font-weight:bold' total="1">81</td><td  style='font-weight:bold' total="1">72</td><td  style='font-weight:bold' total="1">61</td><td  style='font-weight:bold' total="1">86</td><td  style='font-weight:bold' total="1">77</td><td  style='font-weight:bold' total="1">59</td><td  style='font-weight:bold' total="1">78</td><td  style='font-weight:bold' total="1">83</td><td  style='font-weight:bold' total="1">73</td><td  style='font-weight:bold' total="1">64</td><td  style='font-weight:bold' total="1">966</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">45-54</th><th colspan="1" rowspan="1">45</th><td>12</td><td>10</td><td>15</td><td>10</td><td>6</td><td>10</td><td>8</td><td>21</td><td>12</td><td>12</td><td>13</td><td>4</td><td>13</td><td>146</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">46</th><td>10</td><td>10</td><td>5</td><td>9</td><td>7</td><td>8</td><td>12</td><td>6</td><td>13</td><td>11</td><td>11</td><td>8</td><td>9</td><td>119</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">47</th><td>12</td><td>13</td><td>16</td><td>5</td><td>6</td><td>7</td><td>9</td><td>8</td><td>10</td><td>15</td><td>8</td><td>13</td><td>12</td><td>134</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">48</th><td>11</td><td>11</td><td>12</td><td>7</td><td>16</td><td>8</td><td>14</td><td>10</td><td>12</td><td>17</td><td>11</td><td>7</td><td>11</td><td>147</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">49</th><td>11</td><td>11</td><td>8</td><td>15</td><td>5</td><td>20</td><td>23</td><td>17</td><td>11</td><td>9</td><td>10</td><td>10</td><td>8</td><td>158</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">50</th><td>11</td><td>11</td><td>16</td><td>7</td><td>15</td><td>16</td><td>7</td><td>11</td><td>7</td><td>7</td><td>8</td><td>4</td><td>8</td><td>128</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">51</th><td>13</td><td>11</td><td>12</td><td>8</td><td>8</td><td>14</td><td>12</td><td>13</td><td>13</td><td>9</td><td>14</td><td>10</td><td>11</td><td>148</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">52</th><td>9</td><td>13</td><td>11</td><td>15</td><td>11</td><td>9</td><td>11</td><td>15</td><td>11</td><td>17</td><td>16</td><td>13</td><td>13</td><td>164</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">53</th><td>11</td><td>18</td><td>6</td><td>14</td><td>13</td><td>11</td><td>6</td><td>9</td><td>13</td><td>8</td><td>7</td><td>11</td><td>10</td><td>137</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">54</th><td>7</td><td>11</td><td>15</td><td>10</td><td>10</td><td>16</td><td>20</td><td>14</td><td>16</td><td>8</td><td>10</td><td>11</td><td>21</td><td>169</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">107</td><td  style='font-weight:bold' total="1">119</td><td  style='font-weight:bold' total="1">116</td><td  style='font-weight:bold' total="1">100</td><td  style='font-weight:bold' total="1">97</td><td  style='font-weight:bold' total="1">119</td><td  style='font-weight:bold' total="1">122</td><td  style='font-weight:bold' total="1">124</td><td  style='font-weight:bold' total="1">118</td><td  style='font-weight:bold' total="1">113</td><td  style='font-weight:bold' total="1">108</td><td  style='font-weight:bold' total="1">91</td><td  style='font-weight:bold' total="1">116</td><td  style='font-weight:bold' total="1">1,450</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">65-74</th><th colspan="1" rowspan="1">65</th><td>2</td><td>4</td><td>5</td><td>3</td><td>6</td><td>3</td><td>6</td><td>6</td><td>10</td><td>8</td><td>6</td><td>8</td><td>7</td><td>74</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">66</th><td>1</td><td>4</td><td>6</td><td>9</td><td>4</td><td>3</td><td>5</td><td>5</td><td>4</td><td>8</td><td>8</td><td>4</td><td>7</td><td>68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">67</th><td>3</td><td>4</td><td>4</td><td>4</td><td>5</td><td>1</td><td>3</td><td>3</td><td>10</td><td>6</td><td>3</td><td>2</td><td>11</td><td>59</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">68</th><td>3</td><td>5</td><td>2</td><td>5</td><td>4</td><td>4</td><td>3</td><td>7</td><td>11</td><td>7</td><td>5</td><td>8</td><td>5</td><td>69</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">69</th><td>1</td><td>2</td><td>2</td><td>5</td><td>3</td><td>3</td><td>4</td><td>6</td><td>8</td><td>11</td><td>10</td><td>7</td><td>8</td><td>70</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">70</th><td>4</td><td>3</td><td>1</td><td>2</td><td>2</td><td>3</td><td>4</td><td>5</td><td>7</td><td>1</td><td>5</td><td>5</td><td>7</td><td>49</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">71</th><td>3</td><td>1</td><td>2</td><td>4</td><td>3</td><td>2</td><td>5</td><td>7</td><td>7</td><td>4</td><td>6</td><td>6</td><td>6</td><td>56</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">72</th><td>2</td><td>0
+			</td><td>2</td><td>2</td><td>2</td><td>3</td><td>4</td><td>4</td><td>1</td><td>5</td><td>3</td><td>6</td><td>3</td><td>37</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">73</th><td>4</td><td>3</td><td>1</td><td>8</td><td>4</td><td>2</td><td>1</td><td>4</td><td>3</td><td>4</td><td>6</td><td>4</td><td>5</td><td>49</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">74</th><td>5</td><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>4</td><td>1</td><td>0
+			</td><td>1</td><td>7</td><td>5</td><td>7</td><td>35</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">26</td><td  style='font-weight:bold' total="1">42</td><td  style='font-weight:bold' total="1">34</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">39</td><td  style='font-weight:bold' total="1">48</td><td  style='font-weight:bold' total="1">61</td><td  style='font-weight:bold' total="1">55</td><td  style='font-weight:bold' total="1">59</td><td  style='font-weight:bold' total="1">55</td><td  style='font-weight:bold' total="1">66</td><td  style='font-weight:bold' total="1">566</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">75-84</th><th colspan="1" rowspan="1">75</th><td>2</td><td>3</td><td>1</td><td>1</td><td>0
+			</td><td>2</td><td>5</td><td>0
+			</td><td>4</td><td>4</td><td>2</td><td>6</td><td>5</td><td>35</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">76</th><td>1</td><td>3</td><td>5</td><td>5</td><td>1</td><td>3</td><td>3</td><td>0
+			</td><td>3</td><td>3</td><td>2</td><td>3</td><td>4</td><td>36</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">77</th><td>5</td><td>2</td><td>4</td><td>2</td><td>4</td><td>2</td><td>2</td><td>1</td><td>3</td><td>2</td><td>6</td><td>3</td><td>1</td><td>37</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">78</th><td>2</td><td>3</td><td>3</td><td>3</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>5</td><td>5</td><td>3</td><td>0
+			</td><td>2</td><td>29</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">79</th><td>3</td><td>4</td><td>4</td><td>2</td><td>3</td><td>3</td><td>4</td><td>1</td><td>2</td><td>1</td><td>2</td><td>3</td><td>2</td><td>34</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">80</th><td>0
+			</td><td>3</td><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td><td>2</td><td>1</td><td>0
+			</td><td>4</td><td>3</td><td>1</td><td>25</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">81</th><td>1</td><td>0
+			</td><td>1</td><td>3</td><td>1</td><td>2</td><td>5</td><td>3</td><td>0
+			</td><td>7</td><td>3</td><td>2</td><td>2</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">82</th><td>7</td><td>1</td><td>2</td><td>0
+			</td><td>1</td><td>0
+			</td><td>4</td><td>2</td><td>3</td><td>3</td><td>1</td><td>3</td><td>2</td><td>29</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">83</th><td>2</td><td>3</td><td>1</td><td>4</td><td>2</td><td>3</td><td>1</td><td>4</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>4</td><td>27</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">84</th><td>1</td><td>0
+			</td><td>2</td><td>7</td><td>2</td><td>2</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>3</td><td>24</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">24</td><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">19</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">16</td><td  style='font-weight:bold' total="1">23</td><td  style='font-weight:bold' total="1">27</td><td  style='font-weight:bold' total="1">26</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">26</td><td  style='font-weight:bold' total="1">306</td>
+		</tr><tr>
+			<th colspan="1" rowspan="16">85+</th><th colspan="1" rowspan="1">85</th><td>1</td><td>2</td><td>3</td><td>0
+			</td><td>2</td><td>0
+			</td><td>2</td><td>2</td><td>2</td><td>0
+			</td><td>1</td><td>8</td><td>2</td><td>25</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">86</th><td>0
+			</td><td>2</td><td>0
+			</td><td>2</td><td>3</td><td>1</td><td>2</td><td>1</td><td>4</td><td>4</td><td>2</td><td>4</td><td>2</td><td>27</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">87</th><td>2</td><td>1</td><td>3</td><td>2</td><td>0
+			</td><td>1</td><td>3</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>22</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">88</th><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>4</td><td>2</td><td>0
+			</td><td>2</td><td>1</td><td>2</td><td>1</td><td>0
+			</td><td>3</td><td>18</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">89</th><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>5</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>14</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">90</th><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>2</td><td>11</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">91</th><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>3</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>12</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">92</th><td>2</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>6</td><td>2</td><td>0
+			</td><td>0
+			</td><td>14</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">93</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>0
+			</td><td>1</td><td>4</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">94</th><td>0
+			</td><td>3</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>3</td><td>0
+			</td><td>0
+			</td><td>9</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">95</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">96</th><td>0
+			</td><td>2</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">97</th><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>2</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>6</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">98</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">99</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>3</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">14</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">8</td><td  style='font-weight:bold' total="1">16</td><td  style='font-weight:bold' total="1">11</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">12</td><td  style='font-weight:bold' total="1">21</td><td  style='font-weight:bold' total="1">16</td><td  style='font-weight:bold' total="1">13</td><td  style='font-weight:bold' total="1">14</td><td  style='font-weight:bold' total="1">172</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">303</td><td  style='font-weight:bold' total="1">338</td><td  style='font-weight:bold' total="1">327</td><td  style='font-weight:bold' total="1">336</td><td  style='font-weight:bold' total="1">298</td><td  style='font-weight:bold' total="1">310</td><td  style='font-weight:bold' total="1">360</td><td  style='font-weight:bold' total="1">349</td><td  style='font-weight:bold' total="1">361</td><td  style='font-weight:bold' total="1">398</td><td  style='font-weight:bold' total="1">394</td><td  style='font-weight:bold' total="1">352</td><td  style='font-weight:bold' total="1">414</td><td  style='font-weight:bold' total="1">4,540</td>
+		</tr><tr>
+			<th colspan="1" rowspan="90">Male</th><th colspan="1" rowspan="6">'10-14'</th><th colspan="1" rowspan="1">10</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">11</th><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">12</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>1</td><td>0
+			</td><td>2</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>3</td><td>12</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">13</th><td>0
+			</td><td>1</td><td>3</td><td>2</td><td>0
+			</td><td>0
+			</td><td>4</td><td>2</td><td>3</td><td>2</td><td>1</td><td>3</td><td>1</td><td>22</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">14</th><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>5</td><td>5</td><td>2</td><td>5</td><td>2</td><td>1</td><td>0
+			</td><td>1</td><td>24</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">2</td><td  style='font-weight:bold' total="1">1</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">4</td><td  style='font-weight:bold' total="1">8</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">10</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">3</td><td  style='font-weight:bold' total="1">5</td><td  style='font-weight:bold' total="1">6</td><td  style='font-weight:bold' total="1">68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">15-19</th><th colspan="1" rowspan="1">15</th><td>3</td><td>4</td><td>2</td><td>3</td><td>0
+			</td><td>4</td><td>7</td><td>4</td><td>2</td><td>8</td><td>5</td><td>4</td><td>5</td><td>51</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">16</th><td>5</td><td>4</td><td>6</td><td>2</td><td>5</td><td>4</td><td>4</td><td>3</td><td>4</td><td>3</td><td>8</td><td>4</td><td>4</td><td>56</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">17</th><td>1</td><td>6</td><td>5</td><td>4</td><td>5</td><td>8</td><td>3</td><td>5</td><td>6</td><td>5</td><td>2</td><td>7</td><td>11</td><td>68</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">18</th><td>4</td><td>12</td><td>5</td><td>7</td><td>9</td><td>6</td><td>12</td><td>11</td><td>7</td><td>9</td><td>4</td><td>3</td><td>11</td><td>100</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">19</th><td>5</td><td>11</td><td>10</td><td>13</td><td>5</td><td>12</td><td>10</td><td>6</td><td>11</td><td>15</td><td>15</td><td>10</td><td>5</td><td>128</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">18</td><td  style='font-weight:bold' total="1">37</td><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">24</td><td  style='font-weight:bold' total="1">34</td><td  style='font-weight:bold' total="1">36</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">30</td><td  style='font-weight:bold' total="1">40</td><td  style='font-weight:bold' total="1">34</td><td  style='font-weight:bold' total="1">28</td><td  style='font-weight:bold' total="1">36</td><td  style='font-weight:bold' total="1">403</td>
+		</tr><tr>
+			<th colspan="1" rowspan="6">20-24</th><th colspan="1" rowspan="1">20</th><td>13</td><td>14</td><td>17</td><td>19</td><td>11</td><td>8</td><td>11</td><td>12</td><td>14</td><td>11</td><td>10</td><td>14</td><td>15</td><td>169</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">21</th><td>9</td><td>8</td><td>8</td><td>9</td><td>7</td><td>10</td><td>12</td><td>9</td><td>17</td><td>8</td><td>14</td><td>13</td><td>14</td><td>138</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">22</th><td>11</td><td>10</td><td>12</td><td>15</td><td>11</td><td>17</td><td>9</td><td>12</td><td>18</td><td>14</td><td>14</td><td>14</td><td>9</td><td>166</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">23</th><td>6</td><td>11</td><td>15</td><td>14</td><td>18</td><td>17</td><td>15</td><td>11</td><td>10</td><td>15</td><td>16</td><td>12</td><td>11</td><td>171</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">24</th><td>11</td><td>23</td><td>14</td><td>13</td><td>10</td><td>10</td><td>12</td><td>11</td><td>16</td><td>13</td><td>15</td><td>14</td><td>11</td><td>173</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">50</td><td  style='font-weight:bold' total="1">66</td><td  style='font-weight:bold' total="1">66</td><td  style='font-weight:bold' total="1">70</td><td  style='font-weight:bold' total="1">57</td><td  style='font-weight:bold' total="1">62</td><td  style='font-weight:bold' total="1">59</td><td  style='font-weight:bold' total="1">55</td><td  style='font-weight:bold' total="1">75</td><td  style='font-weight:bold' total="1">61</td><td  style='font-weight:bold' total="1">69</td><td  style='font-weight:bold' total="1">67</td><td  style='font-weight:bold' total="1">60</td><td  style='font-weight:bold' total="1">817</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">25-34</th><th colspan="1" rowspan="1">25</th><td>9</td><td>18</td><td>13</td><td>11</td><td>14</td><td>10</td><td>7</td><td>13</td><td>17</td><td>9</td><td>13</td><td>15</td><td>14</td><td>163</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">26</th><td>19</td><td>10</td><td>12</td><td>12</td><td>8</td><td>11</td><td>14</td><td>14</td><td>14</td><td>11</td><td>17</td><td>11</td><td>14</td><td>167</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">27</th><td>11</td><td>12</td><td>16</td><td>9</td><td>12</td><td>13</td><td>17</td><td>10</td><td>18</td><td>20</td><td>16</td><td>18</td><td>19</td><td>191</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">28</th><td>14</td><td>9</td><td>13</td><td>13</td><td>15</td><td>13</td><td>5</td><td>17</td><td>14</td><td>11</td><td>17</td><td>18</td><td>16</td><td>175</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">29</th><td>13</td><td>9</td><td>12</td><td>14</td><td>12</td><td>18</td><td>16</td><td>18</td><td>13</td><td>18</td><td>19</td><td>14</td><td>15</td><td>191</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">30</th><td>16</td><td>15</td><td>20</td><td>17</td><td>10</td><td>15</td><td>10</td><td>16</td><td>15</td><td>14</td><td>13</td><td>16</td><td>24</td><td>201</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">31</th><td>14</td><td>15</td><td>15</td><td>20</td><td>14</td><td>18</td><td>17</td><td>9</td><td>23</td><td>16</td><td>17</td><td>20</td><td>10</td><td>208</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">32</th><td>9</td><td>15</td><td>8</td><td>14</td><td>14</td><td>10</td><td>11</td><td>14</td><td>17</td><td>16</td><td>13</td><td>18</td><td>18</td><td>177</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">33</th><td>10</td><td>10</td><td>11</td><td>15</td><td>22</td><td>14</td><td>11</td><td>10</td><td>9</td><td>9</td><td>17</td><td>23</td><td>20</td><td>181</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">34</th><td>15</td><td>12</td><td>12</td><td>12</td><td>15</td><td>13</td><td>12</td><td>11</td><td>18</td><td>16</td><td>18</td><td>19</td><td>17</td><td>190</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">130</td><td  style='font-weight:bold' total="1">125</td><td  style='font-weight:bold' total="1">132</td><td  style='font-weight:bold' total="1">137</td><td  style='font-weight:bold' total="1">136</td><td  style='font-weight:bold' total="1">135</td><td  style='font-weight:bold' total="1">120</td><td  style='font-weight:bold' total="1">132</td><td  style='font-weight:bold' total="1">158</td><td  style='font-weight:bold' total="1">140</td><td  style='font-weight:bold' total="1">160</td><td  style='font-weight:bold' total="1">172</td><td  style='font-weight:bold' total="1">167</td><td  style='font-weight:bold' total="1">1,844</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">35-44</th><th colspan="1" rowspan="1">35</th><td>14</td><td>20</td><td>16</td><td>12</td><td>13</td><td>19</td><td>13</td><td>12</td><td>15</td><td>9</td><td>18</td><td>21</td><td>25</td><td>207</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">36</th><td>22</td><td>18</td><td>13</td><td>12</td><td>14</td><td>9</td><td>11</td><td>17</td><td>15</td><td>18</td><td>16</td><td>14</td><td>24</td><td>203</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">37</th><td>6</td><td>9</td><td>15</td><td>23</td><td>14</td><td>13</td><td>20</td><td>9</td><td>18</td><td>13</td><td>16</td><td>14</td><td>22</td><td>192</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">38</th><td>14</td><td>19</td><td>24</td><td>21</td><td>20</td><td>8</td><td>13</td><td>11</td><td>10</td><td>19</td><td>17</td><td>23</td><td>26</td><td>225</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">39</th><td>16</td><td>23</td><td>16</td><td>21</td><td>14</td><td>6</td><td>22</td><td>19</td><td>15</td><td>14</td><td>11</td><td>8</td><td>11</td><td>196</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">40</th><td>13</td><td>19</td><td>16</td><td>26</td><td>17</td><td>15</td><td>18</td><td>19</td><td>22</td><td>16</td><td>12</td><td>9</td><td>21</td><td>223</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">41</th><td>22</td><td>11</td><td>26</td><td>23</td><td>17</td><td>15</td><td>32</td><td>14</td><td>15</td><td>14</td><td>10</td><td>17</td><td>28</td><td>244</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">42</th><td>17</td><td>20</td><td>14</td><td>27</td><td>12</td><td>21</td><td>24</td><td>21</td><td>12</td><td>18</td><td>20</td><td>21</td><td>19</td><td>246</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">43</th><td>27</td><td>16</td><td>28</td><td>34</td><td>17</td><td>16</td><td>15</td><td>15</td><td>13</td><td>17</td><td>18</td><td>17</td><td>25</td><td>258</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">44</th><td>25</td><td>21</td><td>27</td><td>24</td><td>32</td><td>15</td><td>20</td><td>18</td><td>14</td><td>23</td><td>20</td><td>19</td><td>15</td><td>273</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">176</td><td  style='font-weight:bold' total="1">176</td><td  style='font-weight:bold' total="1">195</td><td  style='font-weight:bold' total="1">223</td><td  style='font-weight:bold' total="1">170</td><td  style='font-weight:bold' total="1">137</td><td  style='font-weight:bold' total="1">188</td><td  style='font-weight:bold' total="1">155</td><td  style='font-weight:bold' total="1">149</td><td  style='font-weight:bold' total="1">161</td><td  style='font-weight:bold' total="1">158</td><td  style='font-weight:bold' total="1">163</td><td  style='font-weight:bold' total="1">216</td><td  style='font-weight:bold' total="1">2,267</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">45-54</th><th colspan="1" rowspan="1">45</th><td>22</td><td>23</td><td>20</td><td>29</td><td>28</td><td>22</td><td>23</td><td>18</td><td>14</td><td>17</td><td>16</td><td>19</td><td>13</td><td>264</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">46</th><td>27</td><td>23</td><td>21</td><td>20</td><td>22</td><td>30</td><td>21</td><td>20</td><td>16</td><td>25</td><td>19</td><td>16</td><td>23</td><td>283</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">47</th><td>22</td><td>26</td><td>23</td><td>28</td><td>31</td><td>29</td><td>24</td><td>29</td><td>21</td><td>21</td><td>12</td><td>26</td><td>28</td><td>320</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">48</th><td>19</td><td>32</td><td>32</td><td>25</td><td>21</td><td>29</td><td>22</td><td>28</td><td>17</td><td>21</td><td>23</td><td>18</td><td>27</td><td>314</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">49</th><td>21</td><td>25</td><td>30</td><td>29</td><td>29</td><td>22</td><td>23</td><td>23</td><td>29</td><td>31</td><td>19</td><td>22</td><td>24</td><td>327</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">50</th><td>17</td><td>19</td><td>17</td><td>29</td><td>16</td><td>18</td><td>23</td><td>16</td><td>29</td><td>25</td><td>22</td><td>15</td><td>21</td><td>267</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">51</th><td>28</td><td>22</td><td>29</td><td>27</td><td>29</td><td>29</td><td>19</td><td>26</td><td>24</td><td>37</td><td>30</td><td>20</td><td>28</td><td>348</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">52</th><td>16</td><td>19</td><td>28</td><td>29</td><td>26</td><td>32</td><td>23</td><td>16</td><td>17</td><td>23</td><td>26</td><td>25</td><td>22</td><td>302</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">53</th><td>23</td><td>19</td><td>29</td><td>21</td><td>19</td><td>25</td><td>24</td><td>18</td><td>19</td><td>25</td><td>27</td><td>19</td><td>17</td><td>285</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">54</th><td>19</td><td>18</td><td>20</td><td>24</td><td>24</td><td>24</td><td>24</td><td>23</td><td>22</td><td>31</td><td>23</td><td>28</td><td>32</td><td>312</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">214</td><td  style='font-weight:bold' total="1">226</td><td  style='font-weight:bold' total="1">249</td><td  style='font-weight:bold' total="1">261</td><td  style='font-weight:bold' total="1">245</td><td  style='font-weight:bold' total="1">260</td><td  style='font-weight:bold' total="1">226</td><td  style='font-weight:bold' total="1">217</td><td  style='font-weight:bold' total="1">208</td><td  style='font-weight:bold' total="1">256</td><td  style='font-weight:bold' total="1">217</td><td  style='font-weight:bold' total="1">208</td><td  style='font-weight:bold' total="1">235</td><td  style='font-weight:bold' total="1">3,022</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">65-74</th><th colspan="1" rowspan="1">65</th><td>5</td><td>3</td><td>2</td><td>8</td><td>6</td><td>10</td><td>10</td><td>6</td><td>9</td><td>12</td><td>9</td><td>12</td><td>19</td><td>111</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">66</th><td>8</td><td>9</td><td>10</td><td>10</td><td>6</td><td>5</td><td>8</td><td>10</td><td>11</td><td>9</td><td>11</td><td>11</td><td>17</td><td>125</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">67</th><td>8</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>6</td><td>11</td><td>16</td><td>8</td><td>17</td><td>9</td><td>16</td><td>120</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">68</th><td>7</td><td>6</td><td>5</td><td>2</td><td>12</td><td>9</td><td>10</td><td>10</td><td>10</td><td>10</td><td>6</td><td>11</td><td>13</td><td>111</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">69</th><td>2</td><td>10</td><td>6</td><td>4</td><td>2</td><td>7</td><td>7</td><td>10</td><td>4</td><td>15</td><td>3</td><td>6</td><td>8</td><td>84</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">70</th><td>7</td><td>3</td><td>7</td><td>5</td><td>3</td><td>6</td><td>10</td><td>9</td><td>9</td><td>13</td><td>7</td><td>11</td><td>12</td><td>102</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">71</th><td>7</td><td>3</td><td>8</td><td>8</td><td>5</td><td>9</td><td>4</td><td>4</td><td>11</td><td>5</td><td>4</td><td>7</td><td>9</td><td>84</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">72</th><td>2</td><td>3</td><td>5</td><td>4</td><td>4</td><td>7</td><td>3</td><td>4</td><td>8</td><td>5</td><td>4</td><td>5</td><td>9</td><td>63</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">73</th><td>4</td><td>5</td><td>2</td><td>6</td><td>2</td><td>4</td><td>3</td><td>7</td><td>5</td><td>11</td><td>7</td><td>4</td><td>7</td><td>67</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">74</th><td>2</td><td>4</td><td>2</td><td>5</td><td>5</td><td>1</td><td>9</td><td>10</td><td>6</td><td>4</td><td>5</td><td>7</td><td>3</td><td>63</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">52</td><td  style='font-weight:bold' total="1">52</td><td  style='font-weight:bold' total="1">53</td><td  style='font-weight:bold' total="1">57</td><td  style='font-weight:bold' total="1">50</td><td  style='font-weight:bold' total="1">65</td><td  style='font-weight:bold' total="1">70</td><td  style='font-weight:bold' total="1">81</td><td  style='font-weight:bold' total="1">89</td><td  style='font-weight:bold' total="1">92</td><td  style='font-weight:bold' total="1">73</td><td  style='font-weight:bold' total="1">83</td><td  style='font-weight:bold' total="1">113</td><td  style='font-weight:bold' total="1">930</td>
+		</tr><tr>
+			<th colspan="1" rowspan="11">75-84</th><th colspan="1" rowspan="1">75</th><td>5</td><td>4</td><td>1</td><td>5</td><td>6</td><td>1</td><td>1</td><td>4</td><td>8</td><td>6</td><td>2</td><td>10</td><td>5</td><td>58</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">76</th><td>6</td><td>6</td><td>5</td><td>5</td><td>1</td><td>6</td><td>5</td><td>2</td><td>4</td><td>4</td><td>2</td><td>1</td><td>8</td><td>55</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">77</th><td>2</td><td>1</td><td>3</td><td>1</td><td>6</td><td>3</td><td>4</td><td>5</td><td>2</td><td>5</td><td>4</td><td>9</td><td>7</td><td>52</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">78</th><td>5</td><td>2</td><td>9</td><td>4</td><td>3</td><td>2</td><td>3</td><td>4</td><td>2</td><td>6</td><td>13</td><td>4</td><td>12</td><td>69</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">79</th><td>5</td><td>10</td><td>2</td><td>2</td><td>2</td><td>3</td><td>5</td><td>1</td><td>1</td><td>3</td><td>4</td><td>5</td><td>10</td><td>53</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">80</th><td>4</td><td>8</td><td>3</td><td>3</td><td>5</td><td>4</td><td>2</td><td>6</td><td>4</td><td>4</td><td>4</td><td>2</td><td>7</td><td>56</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">81</th><td>1</td><td>5</td><td>4</td><td>4</td><td>4</td><td>3</td><td>1</td><td>4</td><td>6</td><td>1</td><td>4</td><td>4</td><td>3</td><td>44</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">82</th><td>1</td><td>6</td><td>5</td><td>5</td><td>1</td><td>4</td><td>4</td><td>7</td><td>3</td><td>5</td><td>4</td><td>5</td><td>2</td><td>52</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">83</th><td>3</td><td>2</td><td>5</td><td>2</td><td>2</td><td>1</td><td>4</td><td>8</td><td>3</td><td>1</td><td>5</td><td>5</td><td>4</td><td>45</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">84</th><td>3</td><td>5</td><td>0
+			</td><td>2</td><td>2</td><td>5</td><td>3</td><td>3</td><td>4</td><td>4</td><td>3</td><td>2</td><td>4</td><td>40</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">35</td><td  style='font-weight:bold' total="1">49</td><td  style='font-weight:bold' total="1">37</td><td  style='font-weight:bold' total="1">33</td><td  style='font-weight:bold' total="1">32</td><td  style='font-weight:bold' total="1">32</td><td  style='font-weight:bold' total="1">32</td><td  style='font-weight:bold' total="1">44</td><td  style='font-weight:bold' total="1">37</td><td  style='font-weight:bold' total="1">39</td><td  style='font-weight:bold' total="1">45</td><td  style='font-weight:bold' total="1">47</td><td  style='font-weight:bold' total="1">62</td><td  style='font-weight:bold' total="1">524</td>
+		</tr><tr>
+			<th colspan="1" rowspan="16">85+</th><th colspan="1" rowspan="1">85</th><td>2</td><td>1</td><td>2</td><td>4</td><td>2</td><td>3</td><td>5</td><td>9</td><td>1</td><td>0
+			</td><td>2</td><td>3</td><td>6</td><td>40</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">86</th><td>6</td><td>6</td><td>2</td><td>6</td><td>4</td><td>2</td><td>1</td><td>0
+			</td><td>4</td><td>4</td><td>2</td><td>4</td><td>1</td><td>42</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">87</th><td>1</td><td>2</td><td>1</td><td>1</td><td>5</td><td>0
+			</td><td>1</td><td>2</td><td>3</td><td>6</td><td>4</td><td>4</td><td>4</td><td>34</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">88</th><td>4</td><td>0
+			</td><td>1</td><td>2</td><td>2</td><td>3</td><td>2</td><td>1</td><td>4</td><td>5</td><td>2</td><td>1</td><td>4</td><td>31</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">89</th><td>3</td><td>3</td><td>2</td><td>1</td><td>2</td><td>1</td><td>6</td><td>3</td><td>3</td><td>2</td><td>1</td><td>2</td><td>1</td><td>30</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">90</th><td>2</td><td>1</td><td>2</td><td>0
+			</td><td>1</td><td>1</td><td>1</td><td>5</td><td>4</td><td>3</td><td>0
+			</td><td>3</td><td>3</td><td>26</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">91</th><td>1</td><td>0
+			</td><td>1</td><td>3</td><td>1</td><td>3</td><td>2</td><td>3</td><td>1</td><td>2</td><td>2</td><td>3</td><td>5</td><td>27</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">92</th><td>0
+			</td><td>2</td><td>2</td><td>1</td><td>1</td><td>1</td><td>3</td><td>2</td><td>1</td><td>1</td><td>3</td><td>2</td><td>1</td><td>20</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">93</th><td>0
+			</td><td>6</td><td>1</td><td>0
+			</td><td>2</td><td>0
+			</td><td>2</td><td>0
+			</td><td>3</td><td>5</td><td>1</td><td>3</td><td>1</td><td>24</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">94</th><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>1</td><td>2</td><td>0
+			</td><td>1</td><td>0
+			</td><td>8</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">95</th><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>2</td><td>1</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td><td>0
+			</td><td>0
+			</td><td>7</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">96</th><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>1</td><td>5</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">97</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>0
+			</td><td>3</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">98</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>2</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">99</th><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>0
+			</td><td>1</td><td>0
+			</td><td>1</td><td>1</td><td>4</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">21</td><td  style='font-weight:bold' total="1">22</td><td  style='font-weight:bold' total="1">15</td><td  style='font-weight:bold' total="1">20</td><td  style='font-weight:bold' total="1">23</td><td  style='font-weight:bold' total="1">17</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">25</td><td  style='font-weight:bold' total="1">33</td><td  style='font-weight:bold' total="1">19</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">29</td><td  style='font-weight:bold' total="1">303</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">698</td><td  style='font-weight:bold' total="1">754</td><td  style='font-weight:bold' total="1">778</td><td  style='font-weight:bold' total="1">834</td><td  style='font-weight:bold' total="1">741</td><td  style='font-weight:bold' total="1">750</td><td  style='font-weight:bold' total="1">766</td><td  style='font-weight:bold' total="1">744</td><td  style='font-weight:bold' total="1">781</td><td  style='font-weight:bold' total="1">828</td><td  style='font-weight:bold' total="1">778</td><td  style='font-weight:bold' total="1">802</td><td  style='font-weight:bold' total="1">924</td><td  style='font-weight:bold' total="1">10,178</td>
+		</tr><tr>
+			<th colspan="3" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1,001</td><td  style='font-weight:bold' total="1">1,092</td><td  style='font-weight:bold' total="1">1,105</td><td  style='font-weight:bold' total="1">1,170</td><td  style='font-weight:bold' total="1">1,039</td><td  style='font-weight:bold' total="1">1,060</td><td  style='font-weight:bold' total="1">1,126</td><td  style='font-weight:bold' total="1">1,093</td><td  style='font-weight:bold' total="1">1,142</td><td  style='font-weight:bold' total="1">1,226</td><td  style='font-weight:bold' total="1">1,172</td><td  style='font-weight:bold' total="1">1,154</td><td  style='font-weight:bold' total="1">1,338</td><td  style='font-weight:bold' total="1">14,718</td>
+		</tr><tr>
+			<th colspan="4" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">2,008</td><td  style='font-weight:bold' total="1">2,157</td><td  style='font-weight:bold' total="1">2,247</td><td  style='font-weight:bold' total="1">2,359</td><td  style='font-weight:bold' total="1">2,195</td><td  style='font-weight:bold' total="1">2,254</td><td  style='font-weight:bold' total="1">2,360</td><td  style='font-weight:bold' total="1">2,364</td><td  style='font-weight:bold' total="1">2,367</td><td  style='font-weight:bold' total="1">2,556</td><td  style='font-weight:bold' total="1">2,539</td><td  style='font-weight:bold' total="1">2,552</td><td  style='font-weight:bold' total="1">2,814</td><td  style='font-weight:bold' total="1">30,772</td>
+		</tr><tr>
+			<th colspan="5" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">2,008</td><td  style='font-weight:bold' total="1">2,157</td><td  style='font-weight:bold' total="1">2,247</td><td  style='font-weight:bold' total="1">2,359</td><td  style='font-weight:bold' total="1">2,195</td><td  style='font-weight:bold' total="1">2,254</td><td  style='font-weight:bold' total="1">2,360</td><td  style='font-weight:bold' total="1">2,364</td><td  style='font-weight:bold' total="1">2,367</td><td  style='font-weight:bold' total="1">2,556</td><td  style='font-weight:bold' total="1">2,539</td><td  style='font-weight:bold' total="1">2,552</td><td  style='font-weight:bold' total="1">2,814</td><td  style='font-weight:bold' total="1">30,772</td>
+		</tr><tr>
+			<th colspan="6" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">2,008</td><td  style='font-weight:bold' total="1">2,157</td><td  style='font-weight:bold' total="1">2,247</td><td  style='font-weight:bold' total="1">2,359</td><td  style='font-weight:bold' total="1">2,195</td><td  style='font-weight:bold' total="1">2,254</td><td  style='font-weight:bold' total="1">2,360</td><td  style='font-weight:bold' total="1">2,364</td><td  style='font-weight:bold' total="1">2,367</td><td  style='font-weight:bold' total="1">2,556</td><td  style='font-weight:bold' total="1">2,539</td><td  style='font-weight:bold' total="1">2,552</td><td  style='font-weight:bold' total="1">2,814</td><td  style='font-weight:bold' total="1">30,772</td>
+		</tr>
+	</tbody>
+</table>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </body></html>
