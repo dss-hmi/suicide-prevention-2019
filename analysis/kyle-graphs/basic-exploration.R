@@ -33,14 +33,38 @@ ds_only_total <- ds0 %>% filter(age == "Total")
 
 # graph-data --------------------------------------------------------------
 
-#static line
+#static line  all age groups
 ages <- c(65,75,20,15)
 
 g1 <- ds_no_total %>% 
   filter(race == "white", mortality_cause == "Firearms")%>% 
-  ggplot(aes(x = year, y = count, group = age, color = age_group)) +
-  geom_line() +
+  group_by(age) %>% 
+  ggplot(aes(x = year, y = count, group = age, color = age)) +
+  geom_line(show.legend = FALSE, na.rm = TRUE) +
   gghighlight(age %in% ages , use_direct_label = FALSE) +
-  facet_wrap(~ sex) +
+  facet_grid(sex ~ .) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 g1
+
+#static line, 1 age group, ploted by race
+g2 <- ds_no_total %>% 
+  filter(mortality_cause == "Other", age_group == "25-34") %>% 
+  group_by(race, year) %>% 
+  summarise_at(c("rate"),sum, na.rm = TRUE) %>% 
+  ggplot(aes(x = year, y = rate, group = race, color = race)) +
+  geom_line() +
+  geom_point()
+g2
+
+test <- ds_no_total %>% group_by(race, year) %>%   summarise_at(c("count"),sum, na.rm = TRUE)
+
+# static histogram
+g3 <- ds_no_total %>% 
+  filter(race == "black") %>%  # could filter for year as well
+  ggplot(aes(x = age_group, y = count)) +
+  geom_col(na.rm = TRUE) +
+  facet_grid(sex ~ .) +
+  gghighlight(mortality_cause == "Firearms")
+g3
+
+
