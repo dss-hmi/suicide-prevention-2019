@@ -38,8 +38,7 @@ ages <- c(65,75,20,15)
 
 g1 <- ds_no_total %>% 
   filter(race == "white", mortality_cause == "Firearms")%>% 
-  group_by(age) %>% 
-  ggplot(aes(x = year, y = count, group = age, color = age)) +
+  ggplot(aes(x = year, y = count, color = age, group =interaction(age,sex))) +
   geom_line(show.legend = FALSE, na.rm = TRUE) +
   gghighlight(age %in% ages , use_direct_label = FALSE) +
   facet_grid(sex ~ .) +
