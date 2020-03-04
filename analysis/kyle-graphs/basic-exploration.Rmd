@@ -150,7 +150,7 @@ g3 <- ds_no_total %>%
   mutate(year = as.numeric(year)) %>% 
   ggplot(aes(x = age_group, y = count)) +
   geom_col(na.rm = TRUE) +
-  facet_grid(sex ~ .) 
+  facet_grid(sex ~ .) +
   gghighlight(mortality_cause == "Firearms")
 g3
 
