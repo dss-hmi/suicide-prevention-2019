@@ -1,0 +1,113 @@
+---
+title: "Basic Exploration - Comments"
+author: "Andriy Koval"
+date: "3/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r declare-globals}
+path_to_input <- "../../data-unshared/derived/cause113-age10-age99/cause113-age10-age99.rds"
+
+```
+
+```{r load-packages, warning=F, message=F}
+
+library(magrittr) #Pipes
+library(dplyr) # manipulation
+library(ggplot2) #graphing
+library(gghighlight)
+
+```
+
+
+```{r load-data, warning=F, message=F}
+
+ds0 <- readRDS(path_to_input) 
+
+```
+
+```{r tweak-data, warning=F, message=F}
+ds_no_total <- ds0 %>% filter(!age == "Total", !race == "Total")
+
+ds_only_total <- ds0 %>% filter(age == "Total")
+
+purrr::map(ds_no_total %>% select(-age,-rate), unique)
+
+```
+
+# g1
+
+```{r g1, warning=F, message=F}
+#static line  all age groups
+ages <- c(65,75,20,15)
+
+g1 <- ds_no_total %>% 
+  filter(race == "white", mortality_cause == "Firearms")%>% 
+  ggplot(aes(x = year, y = count, color = age, group =interaction(age,sex))) +
+  geom_line(show.legend = FALSE, na.rm = TRUE) +
+  gghighlight(age %in% ages , use_direct_label = FALSE) +
+  facet_grid(sex ~ .) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+g1
+
+```
+
+Interesting perspective. It does put things in perspective and help understand the reference plane. I wonder if smoothing the lines with a linear model would work better to see the overall trend, something like this
+
+```{r g1a}
+g1a <- ds_no_total %>%
+  filter(race == "white", mortality_cause == "Firearms")%>%
+  ggplot(aes(x = year, y = count, color = age, group = interaction(age,sex))) +
+  geom_smooth(method = "lm", se = F, na.rm = TRUE )+
+  # geom_line(show.legend = FALSE, na.rm = TRUE) +
+  gghighlight(age %in% ages , use_direct_label = FALSE) +
+  facet_grid(sex ~ .) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme_bw()
+g1a
+
+
+```
+
+However, instead of a given age (which a nice features), I wonder if this would be more usefull if the lines with the largest slope are highlighted. In this way, we'll see what groups have increased the most in the last years. 
+
+
+# g2 
+
+```{r g2, warning=F, message=F}
+#static line, 1 age group, ploted by race
+g2 <- ds_no_total %>% 
+  filter(mortality_cause == "Other", age_group == "25-34") %>% 
+  group_by(race, year) %>% 
+  summarise_at(c("rate"),sum, na.rm = TRUE) %>% 
+  ggplot(aes(x = year, y = rate, group = race, color = race)) +
+  geom_line() +
+  geom_point()
+g2
+```
+Yes, I think these will be the staple of our explorations. Consider making the colors consistent across visualizations (i.e. Lation will always show up in a specific color, which would be the same in other graphs). When choosing colors, think of both color and fill applications.
+
+I think the trick would be to find a nice faceting recepie that exhausts all relevant dimensions (race, age, measure, mortality). But we will definitely need something that has year on the x-asis to show the passing of time. 
+
+# g3 
+```{r g3, warning=F, message=F}
+test <- ds_no_total %>% group_by(race, year) %>%   summarise_at(c("count"),sum, na.rm = TRUE)
+
+# static histogram
+g3 <- ds_no_total %>% 
+  filter(race == "black") %>%  # could filter for year as well
+  ggplot(aes(x = age_group, y = count)) +
+  geom_col(na.rm = TRUE) +
+  facet_grid(sex ~ .) +
+  gghighlight(mortality_cause == "Firearms")
+g3
+
+```
+
+These are good descriptives. What if we turn these into animated gifs ( see something like https://www.datanovia.com/en/blog/gganimate-how-to-create-plots-with-beautiful-animation-in-r/) to show how this distribution is changing over time. 
+
+I like how you show both mortality causes here!
