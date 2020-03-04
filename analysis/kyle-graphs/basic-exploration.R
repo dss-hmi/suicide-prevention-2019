@@ -57,7 +57,7 @@ g2
 
 test <- ds_no_total %>% group_by(race, year) %>%   summarise_at(c("count"),sum, na.rm = TRUE)
 
-# static histogram
+# static bar graph
 g3 <- ds_no_total %>% 
   filter(race == "black") %>%  # could filter for year as well
   ggplot(aes(x = age_group, y = count)) +
