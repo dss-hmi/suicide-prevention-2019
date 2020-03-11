@@ -54,52 +54,102 @@ ds_population %>% pryr::object_size(); ds_population %>% class(); ds_population 
 
 
 # ---- tweak-data ---------------------------------------------
-ds_gls %>% dplyr::glimpse()
 
-target_areas <- ds_gls %>% 
-  dplyr::group_by(region, county) %>% 
-  dplyr::summarize()
+lvl_age_group <- c(
+  "less_than_1"         =   "<1"          
+  ,"1_4"                =   "1-4"  
+  ,"5_9"                =   "5-9"  
+  ,"10_14"              =   "10-14"    
+  ,"15_19"              =   "15-19"    
+  ,"20_24"              =   "20-24"    
+  ,"25_34"              =   "25-34"    
+  ,"35_44"              =   "35-44"    
+  ,"45_54"              =   "45-54"    
+  ,"55_64"              =   "55-64"    
+  ,"65_74"              =   "65-74"    
+  ,"75_84"              =   "75-84"    
+  ,"85_plus"            =   "85+"      
+)
 
-ds <- target_areas %>% 
-  dplyr::left_join(ds_population)
+ds1 <-  ds_population %>% 
+  filter(year >= 2006 ) %>% 
+  mutate(
+    racethnicity = paste0(race, " + ", ethnicity)
+    ,age_group   = factor(
+      age_group
+      ,levels = names(lvl_age_group)
+      ,labels = lvl_age_group)
+    )
 
-target_areas <- ds_gls %>% 
-  dplyr::distinct(region, county) 
-  
-ds_long <- ds %>% 
-  tidyr::gather("age_group", "count", age_groups) %>% 
-  dplyr::filter(age_group %in% c ("10_14","15_19","20_24")) %>% 
-  dplyr::mutate(
-    county_region = paste0(county,"-",toupper(region))
-    ,region_county = paste0(toupper(region),"-",county)
-  ) 
+ds1 %>% count(racethnicity)
+
+ds_grouped_totals <- ds1 %>% 
+  group_by(year,sex,racethnicity,age_group) %>% 
+  summarise(
+    n_people = sum(count, na.rm = TRUE)
+  ) %>% 
+  ungroup()
 
 
-cr_levels <- ds_long %>% 
-  dplyr::arrange(region, county) %>%
-  dplyr::ungroup() %>%
-  dplyr::distinct(county_region ) %>% 
-  as.list() %>% unlist() %>% as.character()
 
-g1 <- ds_long %>% 
-  
-# ds_long %>% 
-#   dplyr::group_by_(.dots = stem) %>% 
-#   dplyr::summarize(
-#     n_people = sum(na.omit(count))
-#   )
-
-d1 <- ds_long %>% 
-  dplyr::group_by(race, ethnicity) %>% 
-  dplyr::summarize(
-    n_people = sum(na.omit(count))
-  )
 # ----- basic-questions -------------------------------------------------
 
-# ---- basic-graph -------------------------------------------------------
+# ---- g1  --------------------------------------------------------------
+# 
+# ds1 %>% 
+#   group_by(year,racethnicity,age_group) %>% 
+#   summarise(
+#     n_people = sum(count, na.rm = TRUE)
+#   ) %>% 
+#   ggplot(aes(x = year, y = n_people, group = racethnicity, color = racethnicity)) +
+#   geom_line() +
+#   geom_point() +
+#   facet_wrap(~age_group, scales = "free_y") 
 
-g1 <- ds %>% 
-  ggplot2::ggplot(aes(x = date, y = ))
+
+g1 <- ds1 %>% 
+  group_by(year,sex,racethnicity,age_group) %>% 
+  summarise(
+    n_people = sum(count, na.rm = TRUE)
+  ) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = year, y = n_people, color = sex, group = interaction(racethnicity, sex))) +
+  geom_line() +
+  facet_grid(racethnicity ~ age_group, scales = "free_y")
+g1
+
+
+
+# g2 ----------------------------------------------------------------------
+
+#User would choose age group to examine
+
+
+g2 <- ds_grouped_totals %>% 
+  filter(age_group == "20-24") %>%   #filter will be user determined
+#could also have more then one group
+  ggplot(aes(x = year, y = n_people, color = racethnicity, group = racethnicity)) +
+  geom_line() +
+  facet_grid(sex ~ .) 
+
+g2
+
+
+
+# g3 ----------------------------------------------------------------------
+
+# bar graph by year, user can select year to disply
+
+
+g3 <- ds_grouped_totals %>% 
+  filter(year == 2017) %>% 
+  ggplot(aes(x = age_group, y = n_people)) +
+  geom_col() +
+  facet_grid(sex ~ racethnicity)
+g3
+  
+  
+
 
 # ---- define-utility-functions ---------------
 
@@ -107,7 +157,7 @@ g1 <- ds %>%
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/gls-activity/gls-activity-1.Rmd"
+  input = "./analysis/population-estimates/population-estimates.Rmd"
   ,output_format = c(
     "html_document" 
     # "pdf_document"
