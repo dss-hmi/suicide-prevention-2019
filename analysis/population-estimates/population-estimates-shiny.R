@@ -10,7 +10,7 @@ cat("\f") # clear console when working in RStudio
 
 # ---- load-sources ------------------------------------------------------------
 # Call `base::source()` on any repo file that defines functions needed below. 
-base::source("./scripts/common-functions.R")
+base::source("../../scripts/common-functions.R")
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified
 library(magrittr) # pipes
@@ -20,7 +20,7 @@ library(ggpubr)   # documents
 library(shiny)
   
 # ---- declare-globals ---------------------------------------------------------
-path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
+path_input_population <- "../../data-unshared/derived/1-greeted-population.rds"
 
 
 html_flip <- FALSE
@@ -79,8 +79,15 @@ ds1 <-  ds_population %>%
     ,age_group   = factor(
       age_group
       ,levels = names(lvl_age_group)
-      ,labels = lvl_age_group)
+      ,labels = lvl_age_group
+      )
+    ,year        = factor(
+      year
+      ,levels = year
+      ,labels = year
     )
+  )
+    
 
 ds1 %>% count(racethnicity)
 
@@ -121,23 +128,33 @@ g1
 
 
 
-# g2 ----------------------------------------------------------------------
+# ---- g2 ----------------------------------------------------------------------
 
 #User would choose age group to examine
 
 
-g2 <- ds_grouped_totals %>% 
-  filter(age_group == "20-24") %>%   #filter will be user determined
+selectInput("age_group", label = "Select Age Group"
+            ,choices = ds_grouped_totals$age_group
+            ,selected = "less_than_1" )
+
+
+renderPlot({ 
+
+g2 <-  ds_grouped_totals %>% 
+  filter(age_group == input$age_group) %>%   #filter will be user determined
 #could also have more then one group
   ggplot(aes(x = year, y = n_people, color = racethnicity, group = racethnicity)) +
   geom_line() +
   facet_grid(sex ~ .) 
-
+  
 g2
+  
+})
 
 
 
-# g3 ----------------------------------------------------------------------
+
+# ---- g3 ----------------------------------------------------------------------
 
 # bar graph by year, user can select year to disply
 
@@ -148,13 +165,19 @@ g2
 #   ) %>% 
 #   ungroup()
 
+selectInput("year", label = "Select Year"
+            ,choices  = levels(ds_grouped_totals$year)
+            ,selected = levels(ds_grouped_totals$year[1]) )
+
+renderPlot({
+
 g3 <- ds_grouped_totals %>% 
-  filter(year == 2017) %>% 
+  filter(year == input$year) %>% 
   ggplot(aes(x = age_group, y = n_people)) +
   geom_col(color = "red") +
   facet_grid(sex ~ racethnicity)
 g3
-  
+})
   
 
 

@@ -1,20 +1,16 @@
 ---
-title: "Title"
-output:
-  html_document:
-    keep_md: yes
-    toc: yes
+title: "Pop Estimates"
+author: "Kyle Belanger"
+date: "3/12/2020"
+output: html_document
+runtime: shiny
 ---
-
-<!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
-<!--  The 1st mandatory chunck  -->
-<!--  Set the working directory to the repository's base directory -->
 ```{r, echo=F, message=F} 
 #Don't combine this call with any other chunk 
 # cat("Working directory: ", getwd()) # check where you are
   library(knitr)
 # Rmd is in "./reports/reportA/reportA.Rmd", but now the root is "./"
-  knitr::opts_knit$set(root.dir='../../')
+  # knitr::opts_knit$set(root.dir='../../')
   
 ```
 
@@ -40,10 +36,8 @@ opts_chunk$set(
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./analysis/population-estimates/population-estimates.R")
+read_chunk("../../analysis/population-estimates/population-estimates-shiny.R")
 ```
-
-
 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
 ```{r load-packages, echo=echoChunks, message=FALSE}
@@ -63,7 +57,6 @@ read_chunk("./analysis/population-estimates/population-estimates.R")
 ```{r, echo=echoChunks, message=FALSE}
 #Put code in here.  It doesn't call a chunk in the codebehind file.
 ```
-
 # Load Data
 
 <!-- Load the datasets.   -->
@@ -93,4 +86,14 @@ read_chunk("./analysis/population-estimates/population-estimates.R")
 ```{r g1, echo=TRUE, results='show', message=FALSE}
 ```
 
+
+<!-- G2 -->
+```{r g2, echo = TRUE, results='show'}
+
+```
+
+<!-- G3 -->
+```{r g3, echo = TRUE, results='show'}
+
+```
 

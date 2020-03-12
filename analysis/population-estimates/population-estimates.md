@@ -58,10 +58,10 @@ output:
 # A tibble: 4 x 2
   racethnicity                     n
   <chr>                        <int>
-1 Black & Other + Hispanic     19162
-2 Black & Other + Non-Hispanic 19162
-3 White + Hispanic             19162
-4 White + Non-Hispanic         19162
+1 Black & Other + Hispanic     20904
+2 Black & Other + Non-Hispanic 20904
+3 White + Hispanic             20904
+4 White + Non-Hispanic         20904
 ```
 
 
@@ -101,23 +101,44 @@ g1
 
 <img src="figure_rmd/g1-1.png" width="550px" />
 
-
-
-
 ```r
-g1
+# g2 ----------------------------------------------------------------------
+
+#User would choose age group to examine
+
+
+g2 <- ds_grouped_totals %>% 
+  filter(age_group == "20-24") %>%   #filter will be user determined
+#could also have more then one group
+  ggplot(aes(x = year, y = n_people, color = racethnicity, group = racethnicity)) +
+  geom_line() +
+  facet_grid(sex ~ .) 
+
+g2
 ```
 
-<img src="figure_rmd/g1a-1.png" width="400px" />
-
-
-
+<img src="figure_rmd/g1-2.png" width="550px" />
 
 ```r
-g1
+# g3 ----------------------------------------------------------------------
+
+# bar graph by year, user can select year to disply
+
+# ds_totals <- ds_grouped_totals %>% 
+#   group_by(year, sex) %>% 
+#   mutate(
+#     t_people = sum(n_people)
+#   ) %>% 
+#   ungroup()
+
+g3 <- ds_grouped_totals %>% 
+  filter(year == 2017) %>% 
+  ggplot(aes(x = age_group, y = n_people)) +
+  geom_col(color = "red") +
+  facet_grid(sex ~ racethnicity)
+g3
 ```
 
-<img src="figure_rmd/g1b-1.png" width="900px" />
-
+<img src="figure_rmd/g1-3.png" width="550px" />
 
 
