@@ -1,6 +1,6 @@
 # Lines before the first chunk are invisible to Rmd/Rnw callers
 # Run to stitch a tech report of this script (used only in RStudio)
-# knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./stitched-output/manipulation/0-greeter.md", figure)
+knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./stitched-output/manipulation/0-greeter.md", figure)
 # knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./manipulation/stitched-output/0-greeter.md", )
 # this command is typically executed by the ./manipulation/governor.R
 
