@@ -5,14 +5,18 @@
 library(shiny)
 library(magrittr) # pipes
 library(dplyr)    # manipulation
-library(ggplot2)  # graphs
+library(ggplot2)# graphs
+library(lubridate) # dates
 
 # ---- declare-globals ---------------------------------------------------------
 # Used for Runing App
-path_input_population <- "../../data-unshared/derived/1-greeted-population.rds"
-#Used for testing script
-# path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
 
+if (isRunning()) {
+    path_input_population <- "../../data-unshared/derived/1-greeted-population.rds"
+} else {
+#Used for testing script
+    path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
+}
 
 # ---- load-data ---------------------------------------------------------------
 ds_population  <- readRDS(path_input_population)
@@ -45,6 +49,7 @@ ds_population1 <-  ds_population %>%
             ,levels = names(lvl_age_group)
             ,labels = lvl_age_group
         )
+        
         ,year        = factor(
             year
             ,levels = year
@@ -64,7 +69,6 @@ ds_population_totals <- ds_population1 %>%
 
 # ui ----------------------------------------------------------------------
 
-# Define UI for application that draws a histogram
 ui <- 
     navbarPage(""  #Nav Bar Title
         #Begin Population Panel
@@ -83,25 +87,31 @@ ui <-
                         ,choices  = levels(ds_population_totals$year)
                         ,selected = levels(ds_population_totals$year[1])
                     )
+                    ,radioButtons(
+                        "plot_choice"
+                        ,label = "Choose Plot"
+                        ,choices = c("Total Population" = "total_population"
+                                     ,"Age Breakdown"   = "age_breakdown"
+                                    )
+                    )
+                    ,downloadButton(
+                        "downloadplot"
+                        ,label = "Download Plot"
+                    )
                     
                 )
                 ,mainPanel(
-                    tabsetPanel(
-                        tabPanel(
-                            "Count"
-                            ,plotOutput("population_count")
-                                )
-                        ,tabPanel(
-                            "Distribution"
+                    
+                            plotOutput("population_count")
+                             
                             ,plotOutput("age_distro")
                             )
                         
                     )
                 )
-            )
-        ) 
+            
         # End Population
-        # Begin Suicide
+        # Begin Suicide Panel
         ,tabPanel("Suicide Counts and Rates")
     )
 
@@ -111,42 +121,84 @@ ui <-
 
 # server ------------------------------------------------------------------
 
-# Define server logic required to draw a histogram
 server <- function(input, output) {
-
-    output$population_count <-  renderPlot({ 
-        
-        g2 <-  ds_population_totals %>% 
-            filter(age_group == input$age_group) %>%   
+    #define graphing functions to allow saving plots
+    g2 <-function(){
+            ds_population_totals %>% 
+            filter(age_group == input$age_group) %>%  
             ggplot(
                 aes(
                     x      = year
                     ,y     = n_people
                     ,color = racethnicity
                     ,group = racethnicity
-                    )
-                ) +
+                )
+            ) +
             geom_line() +
             geom_point(
                 shape = 1
                 ,size = 2) +
             theme_bw() +
+            # subtracting 2005 lines input up with factor levels
+            geom_vline(
+                xintercept = (as.numeric(input$year) - 2005)
+                ,linetype  = "dashed"
+                ,alpha     = 0.2
+            ) +
             scale_y_continuous(labels = scales::comma) +
-            facet_grid(sex ~ .) 
-        
-        g2
-        
+            facet_grid(sex ~ .) +
+            labs(
+                x      = NULL
+                ,y     = "Total Persons"
+                ,color = "Race + Ethnicity"
+            )
+        }
+
+    g3 <- function(){
+        ds_population_totals %>% 
+        filter(year == input$year) %>% 
+        ggplot(aes(x = age_group, y = n_people)) +
+        geom_col(
+            aes(fill = input$age_group == age_group)
+            ,show.legend = FALSE
+        ) +
+        facet_grid(sex ~ racethnicity) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 270)) +
+        scale_fill_brewer(palette = "Dark2") +
+        labs(
+            x  = NULL
+            ,y = "Total Persons"
+        )
+    }
+    
+
+    output$population_count <-  renderPlot({ 
+       g2()
     })
     
     output$age_distro <- renderPlot({
-        
-        g3 <- ds_population_totals %>% 
-            filter(year == input$year) %>% 
-            ggplot(aes(x = age_group, y = n_people)) +
-            geom_col() +
-            facet_grid(sex ~ racethnicity)
-        g3
+        g3()
     })
+    
+    plotInput <- reactive({
+        switch(
+            input$plot_choice
+            ,"total_population" = g2()
+            ,"age_breakdown"    = g3()
+        )
+    })
+    
+    
+    output$downloadplot <- downloadHandler(
+        filename = function() {
+            paste(input$plot_choice, ".png", sep = "")
+        }
+        ,content = function(file) {
+            ggsave(file, plot = plotInput() , device = "png")
+        }
+    )
+    
 }
 
 # run app -----------------------------------------------------------------

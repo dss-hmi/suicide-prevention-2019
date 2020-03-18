@@ -120,12 +120,11 @@ g2 <- ds_lm %>%
     aes(
       group = interaction(age_group, sex, race, mortality_cause)
     ), se = F
-    
   )+
   theme_bw()
 g2
 g3 <- plotly::ggplotly(g2)
-
+g3
 
 # ---- basic-graph --------------------------------------------------------------
 g1b <-  ds_lm %>% 
