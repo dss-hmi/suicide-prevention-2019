@@ -9,14 +9,8 @@ library(ggplot2)# graphs
 library(lubridate) # dates
 
 # ---- declare-globals ---------------------------------------------------------
-# Used for Runing App
+path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
 
-if (isRunning()) {
-    path_input_population <- "../../data-unshared/derived/1-greeted-population.rds"
-} else {
-#Used for testing script
-    path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
-}
 
 # ---- load-data ---------------------------------------------------------------
 ds_population  <- readRDS(path_input_population)
