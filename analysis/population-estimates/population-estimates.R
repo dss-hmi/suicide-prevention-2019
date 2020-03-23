@@ -116,9 +116,32 @@ g1 <- ds1 %>%
   ungroup() %>% 
   ggplot(aes(x = year, y = n_people, color = sex, group = interaction(racethnicity, sex))) +
   geom_line() +
-  facet_grid(racethnicity ~ age_group, scales = "free_y")
+  # facet_grid(racethnicity ~ age_group, scales = "free_y") +
+  facet_grid(age_group ~racethnicity, scales = "free_y")
 g1
 
+#Use for Shiny App
+
+g1a <- ds_grouped_totals %>% 
+  filter(!age_group %in% c("<1", "85+", "1-4", "5-9")) %>% 
+  # filter(racethnicity == 'White + Non-Hispanic') %>%
+  # filter(racethnicity == 'White + Hispanic') %>%
+  # filter(racethnicity == 'Black & Other + Hispanic') %>% 
+  # filter(racethnicity == 'Black & Other + Non-Hispanic') %>% 
+  # filter(sex == 'Male') %>%
+  # filter(sex == 'Female') %>%
+  ggplot(
+    aes(
+      x      = year
+      ,y     = n_people
+      ,color = sex
+      ,group = interaction(racethnicity, sex)
+    )
+  ) +
+  geom_line() +
+  facet_wrap(~age_group, ncol = 5)
+g1a
+  
 
 
 # g2 ----------------------------------------------------------------------
