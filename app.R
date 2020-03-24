@@ -66,48 +66,83 @@ ds_population_totals <- ds_population1 %>%
 ui <- 
     navbarPage(""  #Nav Bar Title
         #Begin Population Panel
-        ,tabPanel("Population",  
-            sidebarLayout(
-                sidebarPanel(
-                    selectInput(
-                        "age_group"
-                        ,label    = "Select Age Group"
-                        ,choices  = ds_population_totals$age_group
-                        ,selected = "less_than_1"
-                    )
-                    ,selectInput(
-                        "year"
-                        ,label    = "Select Year"
-                        ,choices  = levels(ds_population_totals$year)
-                        ,selected = levels(ds_population_totals$year[1])
-                    )
-                    ,radioButtons(
-                        "plot_choice"
-                        ,label = "Choose Plot"
-                        ,choices = c("Total Population" = "total_population"
-                                     ,"Age Breakdown"   = "age_breakdown"
-                                    )
-                    )
-                    ,downloadButton(
-                        "downloadplot"
-                        ,label = "Download Plot"
-                    )
-                    
-                )
-                ,mainPanel(
-                    
-                            plotOutput("population_count")
-                             
-                            ,plotOutput("age_distro")
+        ,tabPanel(
+            "Population",
+            tabsetPanel(
+                type = "tabs"
+                ,tabPanel(
+                    "Panel 1"
+                    ,sidebarLayout(
+                        sidebarPanel(
+                            selectInput(
+                                "age_group"
+                                ,label    = "Select Age Group"
+                                ,choices  = ds_population_totals$age_group
+                                ,selected = "less_than_1"
                             )
-                        
+                            ,selectInput(
+                                "year"
+                                ,label    = "Select Year"
+                                ,choices  = levels(ds_population_totals$year)
+                                ,selected = levels(ds_population_totals$year[1])
+                            )
+                            ,radioButtons(
+                                "plot_choice"
+                                ,label = "Choose Plot"
+                                ,choices = c(
+                                    "Total Population" = "total_population"
+                                    ,"Age Breakdown"   = "age_breakdown"
+                                )
+                            )
+                            ,downloadButton(
+                                "downloadplot"
+                                ,label = "Download Plot"
+                            )
+                        ) #close side bar panel 1
+                        ,mainPanel(
+                            plotOutput("population_count")
+                            ,plotOutput("age_distro")
+                        )
+                    )
+                )  #close Panel 1
+                ,tabPanel(
+                    "Panel 2"
+                    ,verticalLayout(
+                        titlePanel(
+                            h1("Title", align = "center")
+                        )
+                        ,wellPanel(
+                            fluidRow(
+                                column(
+                                    width = 6
+                                    ,selectInput(
+                                        "panel_2_sex"
+                                        ,label    = "Choose Sex"
+                                        ,choices  = ds_population_totals$sex
+                                        ,multiple = TRUE
+                                    )
+                                )
+                                ,column(
+                                    width = 6
+                                    ,selectInput(
+                                        "panel_2_racethnicity"
+                                        ,label    = "Choose Race + Ethnicity"
+                                        ,choices  = ds_population_totals$racethnicity
+                                        ,multiple = TRUE
+                                    )
+                                )
+                            )
+                        )
+                        ,plotOutput(
+                            NULL  #working on Plot
+                        )
                     )
                 )
-            
-        # End Population
+            )# close Tabset for Population
+        ) # Close Population Navbar
         # Begin Suicide Panel
-        ,tabPanel("Suicide Counts and Rates")
-    )
+        ,tabPanel("Suicide Counts and Rates")  # In Progress
+    ) # close NavBar
 
     
 
