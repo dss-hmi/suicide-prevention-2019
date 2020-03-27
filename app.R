@@ -3,10 +3,11 @@
 
 # load libraries ----------------------------------------------------------
 library(shiny)
-library(magrittr) # pipes
-library(dplyr)    # manipulation
-library(ggplot2)# graphs
+library(magrittr)  # pipes
+library(dplyr)     # manipulation
+library(ggplot2)   # graphs
 library(lubridate) # dates
+library(plotly)    # interactive charts
 
 # ---- declare-globals ---------------------------------------------------------
 path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
@@ -100,7 +101,7 @@ ui <-
                             )
                         ) #close side bar panel 1
                         ,mainPanel(
-                            plotOutput("population_count")
+                            plotlyOutput("population_count")
                             ,plotOutput("age_distro")
                         )
                     )
@@ -153,7 +154,7 @@ ui <-
 server <- function(input, output) {
     #define graphing functions to allow saving plots
     g2 <-function(){
-            ds_population_totals %>% 
+            g <- ds_population_totals %>% 
             filter(age_group == input$age_group) %>%  
             ggplot(
                 aes(
@@ -179,8 +180,16 @@ server <- function(input, output) {
             labs(
                 x      = NULL
                 ,y     = "Total Persons"
-                ,color = "Race + Ethnicity"
+                ,color = NULL
             )
+            fig <- ggplotly(g) %>%
+                layout(
+                    legend = list(
+                        orientation = "h"
+                        ,y = -0.2
+                    )
+                )
+            
         }
 
     g3 <- function(){
@@ -202,8 +211,8 @@ server <- function(input, output) {
     }
     
 
-    output$population_count <-  renderPlot({ 
-       g2()
+    output$population_count <-  renderPlotly({ 
+          g2()
     })
     
     output$age_distro <- renderPlot({
