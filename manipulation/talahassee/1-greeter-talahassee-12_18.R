@@ -45,47 +45,6 @@ fill_last_seen <- function(
 #
 input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursive = T)
 
-# input_files <- c(
-#  "count_black"   = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"      
-# ,"count_blother" = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-# ,"count_latino"  = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"          
-# ,"count_white"   = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"      
-# ,"count_Total"   = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"                         
-# 
-# ,"rate_black"    =   "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"        
-# ,"rate_blother"  =   "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"  
-# ,"rate_latino"   =   "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"            
-# ,"rate_white"    =   "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"        
-# ,"rate_Total"    =   "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx"                         
-# )  
-# 
-# input_files <- list(
-#    "counts_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"
-#   ,"rates_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx"
-# 
-#   ,"counts_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-#   ,"counts_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-#   ,"counts_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-#   ,"counts_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-#   ,"rates_cause_sex_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-#   ,"rates_cause_sex_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-#   ,"rates_cause_sex_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-#   ,"rates_cause_sex_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-# 
-#   ,"counts_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18.xlsx"
-#   ,"rates_sex_cause_allrace"         =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18.xlsx"
-# 
-#   ,"counts_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-#   ,"counts_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-#   ,"counts_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-#   ,"counts_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-#   ,"rates_sex_cause_black"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-#   ,"rates_sex_cause_blother" =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-#   ,"rates_sex_cause_latino"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-#   ,"rates_sex_cause_white"   =  "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-# 
-# )
-
 ls_input_files <- list(
   "cause_sex"       = list(
     "count_cause_sex_allrace"         =  "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"
