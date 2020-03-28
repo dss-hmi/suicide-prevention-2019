@@ -1,6 +1,6 @@
 # Lines before the first chunk are invisible to Rmd/Rnw callers
 # Run to stitch a tech report of this script (used only in RStudio)
-# knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./stitched-output/manipulation/0-greeter.md")
+# knitr::stitch_rmd(script = "./manipulation/tallahassee/1-greeter-tallahassee-12_18.R", output = "./analysis/tallahassee/1-greeter-tallahasee-12_18.md")
 # this command is typically executed by the ./manipulation/governor.R
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
@@ -19,7 +19,7 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_input       <- "./data-unshared/raw/talahassee/12_18/"
+path_input       <- "./data-public/raw/talahassee/12_18/"
 
 # carry observations forward to fill cells missing due to Excel structure
 fill_last_seen <- function(
@@ -42,44 +42,44 @@ fill_last_seen <- function(
   return(column)
 }
 
-# Note: this is an older solution which can be replaced with tidyr::fill
+# Note: this is an older solution which can be replaced with a more modern tidyr::fill
 # however, tidyr::fill() requires to spell out the names of the columsn,
 # wheares as fill_last_seen() could be used with dplyr::mutate_all()
 # Example:
 # tidyr::fill(race, ethnicity,sex,age_group, age)%>%
 
 # ---- load-data ---------------------------------------------------------------
-input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursive = T)
+# input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursive = T)
 
 # arrange into a list to use the structure later for data import
 ls_input_files <- list(
   "cause_sex"       = list(
-    "count_cause_sex_allrace" = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx"
-    ,"rate_cause_sex_allrace" = "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx"
+    "count_cause_sex_allrace" = paste0(path_input,"counts/counts-cause(113)-sex-year(2004-2018)-12_18.xlsx")
+    ,"rate_cause_sex_allrace" = paste0(path_input,"rates/rates-cause(113)-sex-year(2004-2018)-12_18.xlsx")
   )
   ,"cause_sex_race" = list(
-    "count_cause_sex_black"    = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"count_cause_sex_blother" = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"count_cause_sex_latino"  = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"count_cause_sex_white"   = "./data-unshared/raw/talahassee/12_18/counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-    ,"rate_cause_sex_black"    = "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"rate_cause_sex_blother"  = "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"rate_cause_sex_latino"   = "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"rate_cause_sex_white"    = "./data-unshared/raw/talahassee/12_18/rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    "count_cause_sex_black"    = paste0(path_input,"counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx")
+    ,"count_cause_sex_blother" = paste0(path_input,"counts/counts-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx")
+    ,"count_cause_sex_latino"  = paste0(path_input,"counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx")
+    ,"count_cause_sex_white"   = paste0(path_input,"counts/counts-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx")
+    ,"rate_cause_sex_black"    = paste0(path_input,"rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-non-hispanic.xlsx")
+    ,"rate_cause_sex_blother"  = paste0(path_input,"rates/rates-cause(113)-sex-year(2004-2018)-12_18-black-other-non-hispanic.xlsx")
+    ,"rate_cause_sex_latino"   = paste0(path_input,"rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-hispanic.xlsx")
+    ,"rate_cause_sex_white"    = paste0(path_input,"rates/rates-cause(113)-sex-year(2004-2018)-12_18-white-non-hispanic.xlsx")
   )
   ,"sex_cause"      = list(
-    "count_sex_cause_allrace" = "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18.xlsx"
-    ,"rate_sex_cause_allrace" = "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18.xlsx"
+    "count_sex_cause_allrace" = paste0(path_input,"counts/counts-sex-cause(113)-year(2004-2018)-12_18.xlsx")
+    ,"rate_sex_cause_allrace" = paste0(path_input,"rates/rates-sex-cause(113)-year(2004-2018)-12_18.xlsx")
   )
   ,"sex_cause_race" = list(
-    "count_sex_cause_black"    = "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"count_sex_cause_blother" = "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"count_sex_cause_latino"  = "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"count_sex_cause_white"   = "./data-unshared/raw/talahassee/12_18/counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
-    ,"rate_sex_cause_black"    = "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx"
-    ,"rate_sex_cause_blother"  = "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx"
-    ,"rate_sex_cause_latino"   = "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx"
-    ,"rate_sex_cause_white"    = "./data-unshared/raw/talahassee/12_18/rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx"
+    "count_sex_cause_black"    = paste0(path_input,"counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx")
+    ,"count_sex_cause_blother" = paste0(path_input,"counts/counts-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx")
+    ,"count_sex_cause_latino"  = paste0(path_input,"counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx")
+    ,"count_sex_cause_white"   = paste0(path_input,"counts/counts-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx")
+    ,"rate_sex_cause_black"    = paste0(path_input,"rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-non-hispanic.xlsx")
+    ,"rate_sex_cause_blother"  = paste0(path_input,"rates/rates-sex-cause(113)-year(2004-2018)-12_18-black-other-non-hispanic.xlsx")
+    ,"rate_sex_cause_latino"   = paste0(path_input,"rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-hispanic.xlsx")
+    ,"rate_sex_cause_white"    = paste0(path_input,"rates/rates-sex-cause(113)-year(2004-2018)-12_18-white-non-hispanic.xlsx")
   )
 )
 
@@ -171,9 +171,7 @@ compute_change <- function(
   return(d1)
 }
 
-
 # ---- tweak-data-2 --------------------------------------------------------------
-
 ls_ds_long3 <- ls_ds_long2 # adding `pct_change` for both measures of `count` and `rate`
 for(j in seq_along(ls_ds_long2) ){
   # j <- 2
