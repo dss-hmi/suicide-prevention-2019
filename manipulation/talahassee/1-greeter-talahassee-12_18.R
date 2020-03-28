@@ -1,7 +1,6 @@
 # Lines before the first chunk are invisible to Rmd/Rnw callers
 # Run to stitch a tech report of this script (used only in RStudio)
 # knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./stitched-output/manipulation/0-greeter.md")
-# knitr::stitch_rmd(script = "./manipulation/0-greeter.R", output = "./manipulation/stitched-output/0-greeter.md", )
 # this command is typically executed by the ./manipulation/governor.R
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
@@ -150,7 +149,7 @@ for(i in seq_along(ls_input)){
 
 
 
-# compute change function -------------------------------------------------
+# ---- compute change function -------------------------------------------------
 
 compute_change <- function(
   d
