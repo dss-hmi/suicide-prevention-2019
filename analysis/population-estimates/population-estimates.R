@@ -18,6 +18,7 @@ library(dplyr)    # disable when temp lines are removed
 library(ggplot2)  # graphs
 library(ggpubr)   # documents
 library(shiny)
+library(plotly)
   
 # ---- declare-globals ---------------------------------------------------------
 path_input_population <- "./data-unshared/derived/1-greeted-population.rds"
@@ -134,14 +135,15 @@ g1a <- ds_grouped_totals %>%
     aes(
       x      = year
       ,y     = n_people
-      ,color = sex
+      ,color = racethnicity
       ,group = interaction(racethnicity, sex)
     )
   ) +
-  geom_line() +
+  geom_line(aes(linetype = sex)) +
   facet_wrap(~age_group, ncol = 5)
 g1a
   
+ggplotly(g1a)  #testing for shiny
 
 
 # g2 ----------------------------------------------------------------------
