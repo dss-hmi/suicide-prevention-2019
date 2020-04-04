@@ -16,6 +16,7 @@ library(ggplot2)  # graphs
 library(ggpubr)   # documents
 library(shiny)
 library(plotly)
+library(rlang)
 
 # ---- declare-globals ---------------------------------------------------------
 path_input_population <- "./data-unshared/derived/clean_data.rds"
@@ -29,26 +30,36 @@ ds_population5 <- ds_population[["ds_age_group3"]]
 
 
 
+#--- graphing functions ------------------------------------------------------
+
+
+make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
+  x <- enquo(x)
+  y <- enquo(y)
+  group <- enquo(group)
+  color <- enquo(color)
+  
+  g <- ds %>%
+  ggplot(
+    aes(
+      x = !!x
+      ,y = !!y
+      ,group = !!group
+      ,color = !!color
+      )
+    ) +
+    geom_line(...)
+  return(g)
+}
+
+ds_test <- ds_population5 %>% 
+  filter(age_group5 == "20-24")
+
+make_line_graph(ds_test,year,count, group = race_ethnicity, color = race_ethnicity)
+
+
+
 # ---- total population --------------------------------------------------------
-
-sex <- c("Male", "Female")
-
-
-plots <- ds_population5 %>% 
-  filter(age_group5 == "20-24") %>% 
-  {lapply(sex, function(x){
-    filter(.,sex == x) %>% 
-    plot_ly(.,x =~year, y = ~count, color = ~race_ethnicity, showlegend = FALSE) %>% 
-      add_lines() 
-  })}
-
-fig <- subplot(plots, nrows = 2, shareX = TRUE)
-
-fig
-
-
-# ---- ggplot total population -------------------------------------------------
-
 g <- ds_population5 %>% 
   filter(age_group5 == "20-24") %>%   #filter would be user input  
   ggplot(
@@ -69,19 +80,13 @@ g <- ds_population5 %>%
   ) +
   scale_y_continuous(labels = scales::comma) +
   scale_x_continuous(breaks = seq(min(ds_population5$year),max(ds_population5$year),1)) +
-  facet_grid(sex ~ .) +
+  # facet_grid(sex ~ .) +
+  facet_wrap(sex ~ ., nrow = 2) +
   labs(
     x      = NULL
     ,y     = "Total Persons"
     ,color = NULL
   )
-fig <- ggplotly(g) %>%
-  layout(
-    legend = list(
-      orientation = "h"
-      ,y = -0.2
-    )
-  )
-  
-fig
+g
+
 
