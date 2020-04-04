@@ -34,6 +34,7 @@ ds_population5 <- ds_population[["ds_age_group3"]]
 
 
 make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
+  # browser()
   x <- enquo(x)
   y <- enquo(y)
   group <- enquo(group)
