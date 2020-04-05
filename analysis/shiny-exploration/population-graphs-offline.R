@@ -30,6 +30,15 @@ ds_population5 <- ds_population[["ds_age_group3"]]
 
 
 
+# color vars --------------------------------------------------------------
+
+race_ethnicity_colors = c(
+  "Black & Other + Hispanic"       = "#e66101"
+  ,"Black & Other + Non-Hispanic"  = "#fdb863"
+  ,"White + Hispanic"              = "#b2abd2"
+  ,"White + Non-Hispanic"          = "#5e3c99"
+  )
+                          
 #--- graphing functions ------------------------------------------------------
 
 
@@ -38,7 +47,6 @@ make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
   y <- enquo(y)
   group <- enquo(group)
   color <- enquo(color)
-  
   g <- ds %>%
   ggplot(
     aes(
@@ -48,14 +56,32 @@ make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
       ,color = !!color
       )
     ) +
-    geom_line(...)
+    geom_line(aes(...)) 
   return(g)
 }
+
+
+
+add_facets <- function(..., ncol = 1, scale = NULL  ){
+  facet_wrap(vars(...),ncol = ncol, scales = scale)
+}
+
+
+
 
 ds_test <- ds_population5 %>% 
   filter(age_group5 == "20-24")
 
-make_line_graph(ds_test,year,count, group = race_ethnicity, color = race_ethnicity)
+make_line_graph(ds_test,year,count, group = race_ethnicity, color = race_ethnicity) +
+  add_facets(sex) +
+  scale_color_manual(values = race_ethnicity_colors)
+
+make_line_graph(ds_population5,year,count
+                ,group = interaction(race_ethnicity,sex)
+                ,color = race_ethnicity
+                ,linetype = sex) +
+  add_facets(age_group5, ncol = 4) +
+  scale_color_manual(values = race_ethnicity_colors)
 
 
 
