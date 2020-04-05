@@ -11,17 +11,17 @@ cat("\f") # clear console when working in RStudio
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified
 # see http://r-pkgs.had.co.nz/namespace.html#search-path
-library(magrittr) #Pipes
+library(magrittr) # pipes %>% 
 library(ggplot2)  # graphs
-library(dplyr)
-requireNamespace("tidyr")    # data tidying
-requireNamespace("ggpubr")   # publication plots
-requireNamespace("readxl")   # data import
+library(dplyr)    # data wrangling
+requireNamespace("tidyr")  # data tidying
+requireNamespace("readxl") # data import
 
 # ---- declare-globals ---------------------------------------------------------
 # you will need to replace this path to the location where you stored your data file
-# path_file_input <- "./analysis/blogposts/florida-demographic-growth/data/FloridaPopulation.xlsx"
 path_file_input <- "./data-unshared/raw/FloridaPopulation/race-ethnicity-sex-age_group-age/FloridaPopulation-2006-2020.xlsx"
+# a copy was saved along with the blogpost report for greater reproducibility
+# path_file_input <- "./analysis/blogposts/florida-demographic-growth/data/FloridaPopulation.xlsx"
 
 # ---- load-data ---------------------------------------------------------------
 ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3)
@@ -38,7 +38,7 @@ ds1 %>% dplyr::glimpse(90)
 ds1 <- ds1 %>%
   # carry observations forward to fill cells missing due to Excel structure ()
   tidyr::fill(race, ethnicity,sex,age_group, age) %>% 
-  dplyr::filter(!age == "Total")  # because makes data untidy, we'll compute later
+  dplyr::filter(age != "Total")  # because makes data untidy, we'll compute totals later
 ds1 %>% dplyr::glimpse(90)
 
 # ---- tweak-data-4 -------------------------------------
@@ -79,7 +79,8 @@ ds1 <- ds1 %>%
       ,age %in% c(80:84) ~ "80-84"
       ,age > 85          ~ "85+"
     )
-  )
+  ) %>% 
+  dplyr::select(race,ethnicity,sex,age_group,age,age_group5, dplyr::everything())
 
 ds1 %>% dplyr::distinct(age_group, age_group5) # to inspect the result
 
@@ -138,7 +139,7 @@ ds2 <- ds2 %>%
     ,sex           = factor(sex)
     ,year          = as.integer(year)
   ) %>% 
-  dplyr::select(race, ethnicity, age_group, age_group5, dplyr::everything())
+  dplyr::select(race, ethnicity, sex, age_group,age, age_group5, dplyr::everything())
 ds2 %>% dplyr::glimpse(90)
 
 
@@ -170,9 +171,11 @@ list(
   "ds_wide"        = ds1
   ,"ds_long"       = ds2
   ,"ds_age_group"  = ds_age_group
-  ,"ds_age_group3" = ds_age_group5
-) %>% 
-  saveRDS("./analysis/blogposts/florida-demographic-growth/data/clean_data.rds")
+  ,"ds_age_group5" = ds_age_group5
+) %>%
+  readr::write_rds("./analysis/blogposts/florida-demographic-growth/data/clean_data.rds")
+  # a copy is saved to the native github/dss-hmi/suicide-prevention-2019/ repository  
+# readr::write_rds("./data-unshared/derived/FloridaPopulation/race-ethnicity-sex-age_group-age/FlordiaPopulation-2006-2020.rds")
 # ---- g0 -----------------------------
 # Total population of Florida over the years
 ds_age_group5 %>% 
@@ -199,10 +202,6 @@ g1 <- d1 %>%
   geom_point(shape = 21, fill = NA, size =2)+
   scale_y_continuous(labels = scales::comma)+
   theme_bw()+
-  theme(
-    axis.text.x = element_text(angle = - 90,vjust =.5, hjust = -0)
-    #https://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
-  )+
   labs(
     title = "Population growth in Florida over last 15 years \n  broken down by ethnic groups"
     ,color = "Ethnic Group"
@@ -229,6 +228,7 @@ g2 <- ds_age_group5 %>%
   theme(
     axis.text.x = element_text(angle = - 90,vjust =.5, hjust = -0)
     #https://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
+    ,legend.position = "none"
   )+
   labs(
     title = "Population in Florida in 2019 broken down by age groups and gender"
@@ -249,6 +249,7 @@ g2a <- ds_age_group %>%
   theme(
     axis.text.x = element_text(angle = - 90,vjust =.5, hjust = -0)
     #https://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
+    ,legend.position = "none"
   )+
   labs(
     title = "Population in Florida in 2019 broken down by age groups and gender"
