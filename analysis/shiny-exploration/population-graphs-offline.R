@@ -43,6 +43,7 @@ race_ethnicity_colors = c(
 
 
 make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
+  # browser()
   x <- enquo(x)
   y <- enquo(y)
   group <- enquo(group)
