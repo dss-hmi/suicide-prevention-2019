@@ -20,7 +20,8 @@ requireNamespace("readxl")   # data import
 
 # ---- declare-globals ---------------------------------------------------------
 # you will need to replace this path to the location where you stored your data file
-path_file_input <- "./analysis/blogposts/florida-demographic-growth/data/FloridaPopulation.xlsx"
+# path_file_input <- "./analysis/blogposts/florida-demographic-growth/data/FloridaPopulation.xlsx"
+path_file_input <- "./data-unshared/raw/FloridaPopulation/race-ethnicity-sex-age_group-age/FloridaPopulation-2006-2020.xlsx"
 
 # ---- load-data ---------------------------------------------------------------
 ds0 <-  readxl::read_excel(path_file_input, col_names = FALSE, skip = 3)
@@ -54,22 +55,31 @@ ds1 <- ds1 %>%
   ) %>%
   dplyr::select(-total) # because it makes no sense in this context (adds up across the rows)
 ds1 %>% glimpse(90)
-  
+
 # ---- tweak-data-5 ---------------
-ds1$age_group5 <- ds1$age_group # because we want to keep the original for quality check
-ds1$age_group5[ds1$age %in% c(0:4)]   <- "0-4"
-ds1$age_group5[ds1$age %in% c(25:29)] <- "25-29"
-ds1$age_group5[ds1$age %in% c(30:34)] <- "30-34"
-ds1$age_group5[ds1$age %in% c(35:39)] <- "35-39"
-ds1$age_group5[ds1$age %in% c(40:44)] <- "40-44"
-ds1$age_group5[ds1$age %in% c(45:49)] <- "45-49"
-ds1$age_group5[ds1$age %in% c(50:54)] <- "50-54"
-ds1$age_group5[ds1$age %in% c(55:59)] <- "55-59"
-ds1$age_group5[ds1$age %in% c(60:64)] <- "60-64"
-ds1$age_group5[ds1$age %in% c(65:69)] <- "65-69"
-ds1$age_group5[ds1$age %in% c(70:74)] <- "70-74"
-ds1$age_group5[ds1$age %in% c(75:79)] <- "75-79"
-ds1$age_group5[ds1$age %in% c(80:84)] <- "80-84"
+ds1 <- ds1 %>% 
+  dplyr::mutate(
+    age_group5 = dplyr::case_when(
+      age %in% c(0:4)    ~ "00-04"
+      ,age %in% c(5:9)   ~ "05-09"
+      ,age %in% c(10:14) ~ "10-14"
+      ,age %in% c(15:19) ~ "15-19"
+      ,age %in% c(20:24) ~ "20-24"
+      ,age %in% c(25:29) ~ "25-29"
+      ,age %in% c(30:34) ~ "30-34"
+      ,age %in% c(35:39) ~ "35-39"
+      ,age %in% c(40:44) ~ "40-44"
+      ,age %in% c(45:49) ~ "45-49"
+      ,age %in% c(50:54) ~ "50-54"
+      ,age %in% c(55:59) ~ "55-59"
+      ,age %in% c(60:64) ~ "60-64"
+      ,age %in% c(65:69) ~ "65-69"
+      ,age %in% c(70:74) ~ "70-74"
+      ,age %in% c(75:79) ~ "75-79"
+      ,age %in% c(80:84) ~ "80-84"
+      ,age > 85          ~ "85+"
+    )
+  )
 
 ds1 %>% dplyr::distinct(age_group, age_group5) # to inspect the result
 
@@ -98,8 +108,8 @@ lvl_age_groups <-c(
 )
 
 lvl_age_groups5 <- c(
-  "0-4"
-  ,"5-9"
+  "00-04"
+  ,"05-09"
   ,"10-14"
   ,"15-19"
   ,"20-24"
@@ -217,8 +227,8 @@ g2 <- ds_age_group5 %>%
   # https://stackoverflow.com/questions/14563989/force-r-to-stop-plotting-abbreviated-axis-labels-e-g-1e00-in-ggplot2 also https://r-graphics.org/recipe-axes-tick-label
   theme_bw()+
   theme(
-     axis.text.x = element_text(angle = - 90,vjust =.5, hjust = -0)
-     #https://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
+    axis.text.x = element_text(angle = - 90,vjust =.5, hjust = -0)
+    #https://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
   )+
   labs(
     title = "Population in Florida in 2019 broken down by age groups and gender"
