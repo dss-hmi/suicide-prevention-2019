@@ -70,7 +70,8 @@ ds2 <- ds1 %>%
   dplyr::filter(! sex       == "Total") %>% 
   dplyr::filter(! race      == "Total") %>% 
   dplyr::filter(! ethnicity == "Total") %>% 
-  dplyr::filter(! age_group == "total")  
+  dplyr::filter(! age_group == "total") %>% 
+  dplyr::select(-mortality_locus) # because it adds nothing
 
 # ---- save-to-disk ----------------------------
 ds2 %>% pryr::object_size()
