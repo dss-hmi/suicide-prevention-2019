@@ -50,8 +50,7 @@ ds_suicide    <- ds_suicide %>%
   ) %>% 
   dplyr::rename(
     n_suicides = resident_deaths
-  ) %>% 
-  dplyr::select(-mortality_locus)
+  ) 
 ds_suicide %>% dplyr::distinct(mortality_cause)
 
 # ---- aggregate-0 --------------------------------------------------------------
