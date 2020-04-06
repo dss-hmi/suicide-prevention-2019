@@ -37,32 +37,20 @@ ds0 %>% head(30) %>% neat()
 # ---- tweak-data -----------------------------------------------------
 # hardcoding, because cheaper and easy to check
 names(ds0) <- c(
-  "county","year","mortality_locus","mortality_cause","age_group","sex","race","ethnicity","resident_deaths"
+  "county"
+  ,"year"
+  ,"mortality_locus"
+  ,"mortality_cause"
+  ,"age_group"
+  ,"sex"
+  ,"race"
+  ,"ethnicity"
+  ,"resident_deaths"
 )
 
-fill_last_seen <- function(
-  column
-){
-  # first value is non-empty
-  last_seen = column[[1]]
-  count = 1L
-  #fill rest of the cells with first non empty value
-  for(cell in column){
-    if(is.na(cell)){
-      cell            = last_seen
-      column[[count]] = cell
-    }
-    else{
-      last_seen = cell
-    }
-    count = count +1
-  }
-  return(column)
-}
-
 ds1 <- ds0 %>% 
-  dplyr::mutate_all(fill_last_seen)
-ds1 %>% dplyr::glimpse(100)
+  tidyr::fill(county, year, mortality_locus, mortality_cause, age_group, sex, race, ethnicity) 
+ds1 %>% dplyr::glimpse(60)
 
 ds1 <- ds1 %>% 
   dplyr::mutate(
@@ -82,7 +70,8 @@ ds2 <- ds1 %>%
   dplyr::filter(! sex       == "Total") %>% 
   dplyr::filter(! race      == "Total") %>% 
   dplyr::filter(! ethnicity == "Total") %>% 
-  dplyr::filter(! age_group == "total")  
+  dplyr::filter(! age_group == "total") %>% 
+  dplyr::select(-mortality_locus) # because it adds nothing
 
 # ---- save-to-disk ----------------------------
 ds2 %>% pryr::object_size()

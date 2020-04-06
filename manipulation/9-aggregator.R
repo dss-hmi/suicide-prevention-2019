@@ -41,7 +41,10 @@ counties_gls <- ds_gls %>%
 ds_population <- ds_population %>% 
   dplyr::rename(
     n_population = count
-  )
+  ) %>% 
+  dplyr::select(
+    "county", "year", "sex", "race", "ethnicity", "age_group", dplyr::everything()
+  ) # because we want the same order of columns in both datasets
 
 ds_suicide    <- ds_suicide %>% 
   dplyr::mutate(
@@ -51,8 +54,12 @@ ds_suicide    <- ds_suicide %>%
   dplyr::rename(
     n_suicides = resident_deaths
   ) %>% 
-  dplyr::select(-mortality_locus)
-ds_suicide %>% dplyr::distinct(mortality_cause)
+  dplyr::select(
+    "county", "year", "sex", "race", "ethnicity", "age_group",dplyr::everything()
+  ) # because we want the same order of columns in both datasets
+
+# ---- inspect-data  ---------------------------
+ds_suicide %>% dplyr::distinct(mortality_cause) 
 
 # ---- aggregate-0 --------------------------------------------------------------
 
@@ -65,40 +72,73 @@ ds_gls_by_year <- ds_gls %>%
   )
 
 # join population and suicide tables
+# to compute the total numbe of suicides across mortality cause
 d_suicide = ds_suicide  %>% 
   dplyr::group_by(county, year, sex, race, ethnicity, age_group) %>% 
   # aggregating over `mortality_casue`, otherwise multiple rows per county-year-sex-race-ethnicity-age_group
   dplyr::summarize(
     n_suicides = sum(n_suicides, na.rm = T)
   )
+d_suicide %>% glimpse()
+# to separate mortality causes into individual columns
 d_suicide_wide = ds_suicide %>% 
-  tidyr::spread(mortality_cause, n_suicides)
-
+  tidyr::pivot_wider(names_from = "mortality_cause", values_from = "n_suicides")
+# to have both the total of suicides and broken by mortality cause
 ds_suicide_wide <- dplyr::left_join(
   d_suicide
   ,d_suicide_wide
+  ,by = c("county", "year", "sex", "race", "ethnicity", "age_group")
 )
 ds_suicide_wide %>% dplyr::glimpse()
+rm(d_suicide, d_suicide_wide)
+
 
 ds_population_suicide <- dplyr::left_join(
-  ds_population
+  ds_population %>% dplyr::filter(year %in% unique(ds_suicide_wide$year)) # only for available counts
   ,ds_suicide_wide
   ,by = c("county", "year", "sex", "race", "ethnicity", "age_group")
-) %>% 
-  dplyr::mutate(
-    # to have a single variable describing racial background
-    race_ethnicity = paste0(race," + ", ethnicity)
-  ) 
+)
+# NOTE: the order of dfs in join is correct. Otherwise, not complete population count
 ds_population_suicide %>% dplyr::glimpse()
 
+# Save to disk
+# This data product (`ds_population_suicide`) is most generic that combines
+# suicide counts and population estimates. Rates can be computes from its data.
+ds_population_suicide %>% 
+  # readr::write_rds("./data-unshared/derived/9-population-suicide.rds")
+  readr::write_csv("./data-unshared/derived/9-population-suicide.csv")
+
+ds <- readr::read_csv("./data-unshared/derived/9-population-suicide.csv")
+
 # function-to-aggregate ---------------------------------------------------
+
+# this is why we need to combine some suicide categories:
+# g <- ds_suicide %>% 
+#   # filter(year == 2015) %>% 
+#   filter(!age_group %in% c("1_4","5_9","85_plus","unknown")) %>%
+#   # filter(!mortality_cause %in% "Firearms Discharge") %>% 
+#   # filter(!mortality_cause %in% c("Firearms Discharge","Hanging, Strangulation, Suffocation") ) %>% 
+#   # filter(age_group %in% c("10_14","15_19","20_24")) %>% 
+#   group_by(mortality_cause, year, age_group) %>% 
+#   summarize(
+#     n =  sum(n_suicides, na.rm=T)
+#   ) %>% 
+#   ungroup()%>% 
+#   ggplot(aes(x = year, y = n, group = mortality_cause, color = mortality_cause))+
+#   facet_wrap(~age_group, scales = "free")+
+#   geom_point(shape=21) + geom_line()+ theme_minimal() +
+#   theme(legend.position = "bottom")
+# g <- plotly::ggplotly(g)     
+# g  
+  
+
 
 compute_rate <- function(
   d,
   grouping_frame
 ){
-  # d <- ds_population_suicide
-  # grouping_frame <- c("county","year")
+  d <- ds_population_suicide
+  grouping_frame <- c("county","year")
   # 
   d_wide <- d %>%
     dplyr::group_by_(.dots = grouping_frame) %>%
@@ -115,9 +155,9 @@ compute_rate <- function(
       n_other = n_suicide - n_drug - n_gun -n_hanging - n_jump
       
       ,rate_suicide = (n_suicide/n_population)*100000
-      ,rate_drug   = (n_drug/n_population)*100000
       ,rate_gun   = (n_gun/n_population)*100000
       ,rate_hanging = (n_hanging/n_population)*100000
+      ,rate_drug   = (n_drug/n_population)*100000
       ,rate_jump    = (n_jump/n_population)*100000
       ,rate_other   = (n_other/n_population)*100000
       
