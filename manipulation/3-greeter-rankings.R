@@ -20,7 +20,7 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_input       <- "./data-unshared/raw/FloridaRankings/"
+path_input       <- "./data-unshared/raw/county-health-rankings/"
 
 # ---- load-data ---------------------------------------------------------------
 #
