@@ -33,17 +33,17 @@ ds_population5 <- ds_population[["ds_age_group3"]]
 # color vars --------------------------------------------------------------
 
 race_ethnicity_colors = c(
-  "Black & Other + Hispanic"       = "#e66101"
-  ,"Black & Other + Non-Hispanic"  = "#fdb863"
-  ,"White + Hispanic"              = "#b2abd2"
-  ,"White + Non-Hispanic"          = "#5e3c99"
+  "Black & Other + Hispanic"       = "#a6611a"
+  ,"Black & Other + Non-Hispanic"  = "#dfc27d"
+  ,"White + Hispanic"              = "#80cdc1"
+  ,"White + Non-Hispanic"          = "#018571"
   )
                           
 #--- graphing functions ------------------------------------------------------
 
 
 make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
-  # browser()
+  # browser()    #Thanks for this!  This is really really helpful
   x <- enquo(x)
   y <- enquo(y)
   group <- enquo(group)
@@ -57,7 +57,12 @@ make_line_graph <- function(ds,x,y,..., group = NULL, color = NULL){
       ,color = !!color
       )
     ) +
-    geom_line(aes(...)) 
+    geom_line(aes(...)) +
+    geom_point()
+  if(!is.null(color)){
+    g <- g + scale_color_manual(values = race_ethnicity_colors)
+  }
+  
   return(g)
 }
 
@@ -74,15 +79,13 @@ ds_test <- ds_population5 %>%
   filter(age_group5 == "20-24")
 
 make_line_graph(ds_test,year,count, group = race_ethnicity, color = race_ethnicity) +
-  add_facets(sex) +
-  scale_color_manual(values = race_ethnicity_colors)
+  add_facets(sex) 
 
 make_line_graph(ds_population5,year,count
                 ,group = interaction(race_ethnicity,sex)
                 ,color = race_ethnicity
                 ,linetype = sex) +
-  add_facets(age_group5, ncol = 4) +
-  scale_color_manual(values = race_ethnicity_colors)
+  add_facets(age_group5, ncol = 4)
 
 
 
