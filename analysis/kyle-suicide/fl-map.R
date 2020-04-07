@@ -140,7 +140,28 @@ g_youth_total_map
 
 # ---- youth suicides by Race + Ethnicity --------------------------------------
 
+youth_race_ethnicity_map_data <- florida_counties_map %>% 
+  dplyr::left_join(ds_youth_county_race_totals, by = c("subregion" = "county"))
 
+g_youth_race_map <-  youth_race_ethnicity_map_data %>% 
+  dplyr::filter(year == 2017) %>% 
+  ggplot(aes(x = long, y = lat, group = group, fill = n_suicides)) +
+  geom_polygon(color = "black") +
+  coord_map() +
+  theme_void() +
+  scale_fill_gradient2(
+    low   = "#fcfbfd" 
+    ,mid  = "#9e9ac8"
+    ,high = "#3f007d"
+    ,midpoint = median(youth_race_ethnicity_map_data$n_suicides)
+  ) +
+  labs(
+    title = "Total Youth (10-24) Suicides in Florida for 2017"
+    ,fill = "Number of Suicides"
+  ) +
+  facet_wrap(~race_ethnicity)
+
+g_youth_race_map
 
 
 
