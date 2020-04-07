@@ -5,8 +5,8 @@ cat("\f") # clear console
 
 # ---- load-sources ------------------------------------------------------------
 # Call `base::source()` on any repo file that defines functions needed below.  Ideally, no real operations are performed.
-source("./scripts/common-functions.R") # used in multiple reports
-source("./scripts/graphing/graph-presets.R") # fonts, colors, themes 
+# source("./scripts/common-functions.R") # used in multiple reports
+# source("./scripts/graphing/graph-presets.R") # fonts, colors, themes 
 
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
@@ -113,7 +113,7 @@ county_map <- florida_counties_map %>%
 county_map
 
 
-# total-youth-suicides ----------------------------------------------------
+# ---- total-youth-suicides ----------------------------------------------------
 
 youth_total_map_data <- florida_counties_map %>% 
   dplyr::left_join(ds_youth_county_totals, by = c("subregion" = "county"))
@@ -125,10 +125,22 @@ g_youth_total_map <-  youth_total_map_data %>%
   coord_map() +
   theme_void() +
   scale_fill_gradient2(
-    low =  "#edf8e9"
-    ,mid = "#74c476"
-    ,high = "#006d2c"
-    ,midpoint = mean(youth_total_map_data$n_suicides)
-  ) 
+    low   = "#fcfbfd" 
+    ,mid  = "#9e9ac8"
+    ,high = "#3f007d"
+    ,midpoint = median(youth_total_map_data$n_suicides)
+  ) +
+  labs(
+    title = "Total Youth (10-24) Suicides in Florida for 2017"
+    ,fill = "Number of Suicides"
+  )
 g_youth_total_map  
+
+
+
+# ---- youth suicides by Race + Ethnicity --------------------------------------
+
+
+
+
 
