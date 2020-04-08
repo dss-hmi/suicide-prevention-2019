@@ -20,7 +20,7 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_input       <- "./data-unshared/raw/cause113-age7-age99"
+path_input       <- "./data-public/raw/cause113-age10-age99"
 
 fill_last_seen <- function(
   column
@@ -46,16 +46,16 @@ fill_last_seen <- function(
 # input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursive = T)
 
 input_files <- c(
- "count_black"    = "./data-unshared/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-black-non-hispanic.xlsx"
-,"count_blother"  = "./data-unshared/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-black-other-non-hispanic.xlsx"
-,"count_latino"   = "./data-unshared/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-white-hispanic.xlsx"
-,"count_white"    = "./data-unshared/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-white-non-hispanic.xlsx"
-,"count_Total"    = "./data-unshared/raw/cause113-age10-age99/counts/counts-cause113-age10-age99.xlsx"
-,"rate_black"     = "./data-unshared/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-black-non-hispanic.xlsx"
-,"rate_blother"   = "./data-unshared/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-black-other-non-hispanic.xlsx"
-,"rate_latino"    = "./data-unshared/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-white-hispanic.xlsx"
-,"rate_white"     = "./data-unshared/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-white-non-hispanic.xlsx"
-,"rate_Total"     = "./data-unshared/raw/cause113-age10-age99/rates/rates-cause113-age10-age99.xlsx"
+ "count_black"    = "./data-public/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-black-non-hispanic.xlsx"
+,"count_blother"  = "./data-public/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-black-other-non-hispanic.xlsx"
+,"count_latino"   = "./data-public/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-white-hispanic.xlsx"
+,"count_white"    = "./data-public/raw/cause113-age10-age99/counts/counts-cause113-age10-age99-white-non-hispanic.xlsx"
+,"count_Total"    = "./data-public/raw/cause113-age10-age99/counts/counts-cause113-age10-age99.xlsx"
+,"rate_black"     = "./data-public/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-black-non-hispanic.xlsx"
+,"rate_blother"   = "./data-public/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-black-other-non-hispanic.xlsx"
+,"rate_latino"    = "./data-public/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-white-hispanic.xlsx"
+,"rate_white"     = "./data-public/raw/cause113-age10-age99/rates/rates-cause113-age10-age99-white-non-hispanic.xlsx"
+,"rate_Total"     = "./data-public/raw/cause113-age10-age99/rates/rates-cause113-age10-age99.xlsx"
 )
 
 # d <- readxl::read_xlsx("./data-unshared/raw/cause113-age7-age99/counts/counts-cause113-age7-age99.xlsx")
