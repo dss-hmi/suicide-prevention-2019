@@ -19,7 +19,7 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_input       <- "./data-public/raw/talahassee/12_18/"
+path_input       <- "./data-public/raw/tallahassee/12_18/"
 
 # carry observations forward to fill cells missing due to Excel structure
 fill_last_seen <- function(
@@ -49,8 +49,6 @@ fill_last_seen <- function(
 # tidyr::fill(race, ethnicity,sex,age_group, age)%>%
 
 # ---- load-data ---------------------------------------------------------------
-# input_files <- list.files(path_input,pattern = ".xlsx$", full.names = T, recursive = T)
-
 # arrange into a list to use the structure later for data import
 ls_input_files <- list(
   "cause_sex"       = list(
@@ -91,8 +89,19 @@ for(i in seq_along(ls_input_files)){
     ls_input[[i]][[j]] <- readxl::read_excel(ls_input_files[[i]][[j]], col_names = FALSE, skip = 4)
   }
 }
-
+ds_population <-  readxl::read_excel(paste0(path_input,"FloridaPopulation.xlsx"), col_names = FALSE, skip = 4)
 # ---- tweak-data -----------------------------------------------------
+# Population
+names(ds_population) <- c("race","ethnicity","sex", c(2004:2018), "total")
+ds_population <- ds_population %>% 
+  # carry observations forward to fill cells missing due to Excel structure
+  tidyr::fill(race, ethnicity,sex)%>%
+  # adjust for automatic encoding of certain character strings by Excel
+  dplyr::select(-total) %>%  # because it makes no sense in this context (adds up across the rows)
+  tidyr::pivot_longer(cols = as.character(2004:2018),names_to = "year", values_to = "n_people")
+ds_population %>% glimpse()
+
+# Suicide
 for(i in seq_along(ls_input)){
   # i <- ls_input[1] %>% names()
   # i <- 1; j <- 1
@@ -122,18 +131,18 @@ for(i in seq_along(ls_input)){
     dplyr::select(-total)
   }
 }
-purrr::map(ls_input, names)
+purrr::map(ls_input, names) 
 
 # because need to ensure the same source to be restructured during  for-loops
-ls_ds_wide <- ls_input    # wide with respect to `year`
-ls_ds_long <- ls_ds_wide  # single column `measure` for both `count` and `rate`
+ls_ds_wide  <- ls_input    # wide with respect to `year`
+ls_ds_long  <- ls_ds_wide  # single column `measure` for both `count` and `rate`
 ls_ds_long2 <- ls_ds_wide # two column for `count` and `rate`
 
 for(i in seq_along(ls_input)){
-  
+  # i <- 4
   ls_ds_wide[[i]] <- ls_input[[i]] %>% dplyr::bind_rows()
   file_name <- names(ls_input)[[i]]
-  file_path <- paste0("./data-unshared/derived/talahassee/12_18/wide/",file_name,".csv")
+  file_path <- paste0("./data-unshared/derived/tallahassee/12_18/wide/",file_name,".csv")
   ls_ds_wide[[i]] %>% readr::write_csv(file_path) 
   
   ls_ds_long[[i]] <- ls_ds_wide[[i]] %>% 
@@ -142,14 +151,13 @@ for(i in seq_along(ls_input)){
       year = as.integer(year)
     )
   file_name <- names(ls_ds_long)[[i]]
-  file_path <- paste0("./data-unshared/derived/talahassee/12_18/long/",file_name,".csv")
+  file_path <- paste0("./data-unshared/derived/tallahassee/12_18/long/",file_name,".csv")
   ls_ds_long[[i]] %>% readr::write_csv(file_path) 
   
-  file_path <- paste0("./data-unshared/derived/talahassee/12_18/long2/",file_name,".csv")
+  file_path <- paste0("./data-unshared/derived/tallahassee/12_18/long2/",file_name,".csv")
   ls_ds_long2[[i]] <- ls_ds_long[[i]] %>%
     tidyr::spread(measure, value)
   ls_ds_long2[[i]] %>% readr::write_csv(file_path)
-  
 } 
 
 # ---- compute change function -------------------------------------------------
@@ -167,19 +175,18 @@ compute_change <- function(
       ,pct_change_rate  = (rate_ref - rate)/rate * 100
     ) %>% 
     dplyr::select(-count_ref, -rate_ref)
-  
   return(d1)
 }
 
 # ---- tweak-data-2 --------------------------------------------------------------
 ls_ds_long3 <- ls_ds_long2 # adding `pct_change` for both measures of `count` and `rate`
 for(j in seq_along(ls_ds_long2) ){
-  # j <- 2
+  # j <- 4
   
   l_comb <- ls_ds_long2[[j]] %>% 
     dplyr::distinct(order, race, mortality_cause,sex) %>% 
     as.list()
-  
+  # l_comb
   ls_temp <- list()
   for(i in seq_along( l_comb[[1]] ) ){
     # i <- 1
@@ -195,34 +202,27 @@ for(j in seq_along(ls_ds_long2) ){
     dplyr::mutate(
       pct_change_rate = ifelse(count < 5, NA, pct_change_rate)
       ,pct_change_count = ifelse(count < 5, NA, pct_change_count)
-    )
+    ) #%>%
+    # dplyr::select(-order)
   
   file_name <- names(ls_ds_long3)[[j]]
-  file_path <- paste0("./data-unshared/derived/talahassee/12_18/long3/",file_name,".csv")
+  file_path <- paste0("./data-unshared/derived/tallahassee/12_18/long3/",file_name,".csv")
   ls_ds_long3[[j]] %>% readr::write_csv(file_path) 
 }
 
-
-
 # save-to-disk ------------------------------------------------------------
-ls_ds_wide %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_wide.rds") 
-ls_ds_long %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long.rds") 
-ls_ds_long2 %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long2.rds") 
-ls_ds_long3 %>% saveRDS("./data-unshared/derived/talahassee/12_18/ls_ds_long3.rds") 
+ls_ds_wide %>% saveRDS("./data-unshared/derived/tallahassee/12_18/ls_ds_wide.rds") 
+ls_ds_long %>% saveRDS("./data-unshared/derived/tallahassee/12_18/ls_ds_long.rds") 
+ls_ds_long2 %>% saveRDS("./data-unshared/derived/tallahassee/12_18/ls_ds_long2.rds") 
+ls_ds_long3 %>% saveRDS("./data-unshared/derived/tallahassee/12_18/ls_ds_long3.rds") 
 
-
-
-# ---- publish ---------------------------------
-rmarkdown::render(
-  input = "./analysis/2-greeter/2-greeter-suicide.Rmd"
-  ,output_format = c(
-    "html_document" 
-    # ,"pdf_document"
-    # ,"md_document"
-    # "word_document" 
+list(
+  "population" = ds_population
+  ,"suicide" = list(
+    "wide"   = ls_ds_wide
+    ,"long"  = ls_ds_long
+    ,"long2" = ls_ds_long2
+    ,"long3" = ls_ds_long3
   )
-  ,clean=TRUE
-)
-
-
-
+) %>% 
+  saveRDS("./data-public/derived/tallahassee/12_18/ls_ds.rds")
