@@ -33,7 +33,24 @@ lvl_age_groups <-c(
 age_groups_in_focus <-   lvl_age_groups[4:12]
 
 # ---- load-data ---------------------------------------------------------------
+# data prepared by "./manipulation/9-aggregator.R" combining population estimates and suicide counts
 ds_population_suicide <-   readr::read_csv(path_file_input)
+
+# map of florida counties
+florida_counties_map <- ggplot2::map_data("county") %>% 
+  dplyr::filter(region == "florida") %>% 
+  dplyr::mutate_at(
+    "subregion"
+    , ~stringr::str_replace_all(
+      .
+      ,c(
+        "de soto" = "desoto"
+        ,"st johns" ="saint johns"
+        ,"st lucie" = "saint lucie"
+      )
+    )
+  ) %>% tibble::as_tibble()
+
 # ---- tweak-data-1 -----------------------------------------------------
 ds0 <- ds_population_suicide %>%
   dplyr::mutate(
@@ -104,6 +121,165 @@ ds0 %>%
   scale_y_continuous(labels = scales::comma)+
   scale_x_continuous(breaks = seq(2007, 2017,5))+
   theme_bw()
+
+
+
+
+# ----- compute-rate-function --------------------
+compute_rate <- function(
+  d,
+  grouping_frame
+){
+  d <- ds_population_suicide
+  grouping_frame <- c("county","year")
+  # 
+  d_wide <- d %>%
+    dplyr::group_by_(.dots = grouping_frame) %>%
+    dplyr::summarize(
+      n_population = sum(n_population, na.rm = T)
+      ,n_suicide  = sum(n_suicides, na.rm = T)
+      ,n_drug    = sum(`Drugs & Biological Substances`, na.rm=T)
+      ,n_gun     = sum(`Firearms Discharge`, na.rm=T)
+      ,n_hanging  = sum(`Hanging, Strangulation, Suffocation`, na.rm=T)
+      ,n_jump     = sum(`Jump From High Place`, na.rm=T)
+    ) %>% 
+    dplyr::ungroup() %>% 
+    dplyr::mutate(
+      n_other = n_suicide - n_drug - n_gun -n_hanging - n_jump
+      
+      ,rate_suicide = (n_suicide/n_population)*100000
+      ,rate_gun   = (n_gun/n_population)*100000
+      ,rate_hanging = (n_hanging/n_population)*100000
+      ,rate_drug   = (n_drug/n_population)*100000
+      ,rate_jump    = (n_jump/n_population)*100000
+      ,rate_other   = (n_other/n_population)*100000
+      
+    )
+  d_wide %>% glimpse()
+  d_n <- d_wide %>% dplyr::select_(.dots = c(grouping_frame
+                                             ,"n_suicide"
+                                             ,"n_drug"
+                                             ,"n_gun"
+                                             ,"n_hanging"
+                                             ,"n_jump"
+                                             ,"n_other")) %>% 
+    tidyr::gather("suicide_cause", "n_suicides", n_suicide, n_drug,n_gun, n_hanging, n_jump, n_other) %>% 
+    dplyr::mutate(
+      suicide_cause = gsub("^n_","",suicide_cause)
+    )
+  d_rate <- d_wide %>% dplyr::select_(.dots = c(grouping_frame
+                                                ,"rate_suicide"
+                                                ,"rate_drug"
+                                                ,"rate_gun"
+                                                ,"rate_hanging"
+                                                ,"rate_jump"
+                                                ,"rate_other")) %>% 
+    tidyr::gather("suicide_cause", "rate_per_100k", rate_suicide, rate_drug,rate_gun, rate_hanging, rate_jump, rate_other) %>% 
+    dplyr::mutate(
+      suicide_cause = gsub("^rate_","",suicide_cause)
+    )
+  
+  d_long <- d_wide %>% dplyr::select_(.dots = c(grouping_frame,"n_population")) %>% 
+    dplyr::left_join(d_n) %>% 
+    dplyr::left_join(d_rate)
+  
+  ls_out <- list("wide" = d_wide, "long" = d_long )
+  return(ls_out)
+}
+# how to use
+ls_computed <-ds_population_suicide %>% compute_rate(grouping_frame = c("county","year"))
+
+
+
+# ---- g1 ----------------------------
+# What is the trajectory of suicides in FL between 2006 and 2017? 
+my.formula <- y ~ + x 
+d <- ds0 %>% 
+  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::group_by(year, sex, age_group) %>% 
+  dplyr::summarize(
+    # count = sum(n_suicides, na.rm = T)
+    count = sum(n_population, na.rm = T)
+  ) %>% dplyr::ungroup()
+d %>% 
+  ggplot(aes(x=year, y = count, color = sex, fill= sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_color_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  facet_wrap(~age_group)+
+  # facet_wrap(~age_group, scales = "free")+
+  ggpmisc::stat_poly_eq(formula = my.formula, 
+               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+               parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017)), aes(label = count), vjust =-0)+
+  theme_bw()
+
+# What was the trajectory of growth for each age group?
+ds0 %>% 
+  dplyr::group_by(year, age_group) %>% 
+  dplyr::summarize(
+    count = sum(n_population, na.rm = T)
+  ) %>% 
+  ggplot(aes(x=year, y = count, group = age_group))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~age_group, scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007, 2017,5))+
+  theme_bw()
+
+# What was the trajectory of growth for each age group by sex? Now only for 10-84
+ds0 %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:12]) %>% 
+  dplyr::group_by(year, age_group, sex) %>% 
+  dplyr::summarize(
+    count = sum(n_population, na.rm = T)
+  ) %>% 
+  ggplot(aes(x=year, y = count, group = interaction(age_group,sex), color = sex))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~age_group, scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007, 2017,5))+
+  theme_bw()
+
+# What was the trajectory of growth for each ethnic group? Now only for 10-84
+ds0 %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:12]) %>% 
+  dplyr::group_by(year, age_group, race_ethnicity) %>% 
+  dplyr::summarize(
+    count = sum(n_population, na.rm = T)
+  ) %>% 
+  ggplot(aes(x=year, y = count, group = interaction(age_group,race_ethnicity), color = race_ethnicity))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~age_group, scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007, 2017,5))+
+  theme_bw()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ---- g1 -----------------------------
