@@ -10,6 +10,9 @@ library(ggplot2)  # graphs
 library(dplyr)    # data wrangling
 requireNamespace("tidyr")  # data tidying
 
+#----- load-sources -------------------------------
+source("./scripts/modeling/model-basic.R")  
+source("./scripts/common-functions.R")
 # ---- declare-globals ---------------------------------------------------------
 # you will need to replace this path to the location where you stored your data file
 path_file_input <- "data-unshared/derived/9-population-suicide.csv"
@@ -193,13 +196,12 @@ ls_computed <-ds_population_suicide %>% compute_rate(grouping_frame = c("county"
 
 # ---- g1 ----------------------------
 # What is the trajectory of suicides in FL between 2006 and 2017? 
-my.formula <- y ~ + x 
 d <- ds0 %>% 
   dplyr::filter(age_group %in% age_groups_in_focus) %>%
   dplyr::group_by(year, sex, age_group) %>% 
   dplyr::summarize(
-    # count = sum(n_suicides, na.rm = T)
-    count = sum(n_population, na.rm = T)
+    count = sum(n_suicides, na.rm = T)
+    # count = sum(n_population, na.rm = T)/1000
   ) %>% dplyr::ungroup()
 d %>% 
   ggplot(aes(x=year, y = count, color = sex, fill= sex))+
@@ -210,29 +212,196 @@ d %>%
   scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
   scale_y_continuous(labels = scales::comma)+
   scale_x_continuous(breaks = seq(2007,2017,5))+
-  facet_wrap(~age_group)+
-  # facet_wrap(~age_group, scales = "free")+
-  ggpmisc::stat_poly_eq(formula = my.formula, 
-               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
-               parse = TRUE, vjust = 7) +   
+  # facet_wrap(~age_group)+
+  facet_wrap(~age_group, scales = "free")+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, vjust = 7
+  ) +   
   geom_text(
     data = d %>% dplyr::filter(year %in% c(2006, 2017)), aes(label = count), vjust =-0)+
   theme_bw()
 
-# What was the trajectory of growth for each age group?
-ds0 %>% 
-  dplyr::group_by(year, age_group) %>% 
+# What is the overall trajectory of suicides in FL between 2006 and 2017? 
+d <- ds0 %>% 
+  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::group_by(year) %>% 
   dplyr::summarize(
-    count = sum(n_population, na.rm = T)
-  ) %>% 
-  ggplot(aes(x=year, y = count, group = age_group))+
-  geom_point()+
-  geom_line()+
-  facet_wrap(~age_group, scales = "free")+
+    count = sum(n_suicides, na.rm = T)
+  ) %>% dplyr::ungroup()
+d %>% 
+  ggplot(aes(x=year, y = count))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
   scale_y_continuous(labels = scales::comma)+
-  scale_x_continuous(breaks = seq(2007, 2017,5))+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  ggpmisc::stat_poly_eq(formula = y ~ + x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017)), aes(label = count), vjust =-0)+
   theme_bw()
 
+# How does the overall trajectory of suicides counts differ by gender?
+d <- ds0 %>% 
+  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::group_by(year, sex) %>% 
+  dplyr::summarize(
+    n_population = sum(n_population, na.rm = T)
+    ,n_suicides = sum(n_suicides, na.rm = T) 
+  ) %>% dplyr::ungroup()
+d %>% 
+  ggplot(aes(x=year, y = n_suicides, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  ggpmisc::stat_poly_eq(formula = y ~ + x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017)), aes(label = n_suicides), vjust =-0
+  )+
+  theme_bw()
+
+# How does the overall trajectory of suicide RATE PER 100,000 differ by gender?
+d <- ds0 %>% 
+  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::group_by(year, sex) %>% 
+  dplyr::summarize(
+    n_population = sum(n_population, na.rm = T)
+    ,n_suicides = sum(n_suicides, na.rm = T) 
+  ) %>% dplyr::ungroup() %>% 
+  dplyr::mutate(
+    rate_per100k_suicide = n_suicides/ n_population * 100000
+  )
+d %>% 
+  ggplot(aes(x=year, y = rate_per100k_suicide, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  ggpmisc::stat_poly_eq(formula = y ~ + x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017)), aes(label = round(rate_per100k_suicide,2) ), vjust =-0
+  )+
+  theme_bw()
+
+ # (1)How does the overall trajectory of suicide RATE PER 100,000 differ by gender, age, and ethicity within the age group of interest?
+d <- ds0 %>% 
+  # dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
+  dplyr::group_by(year, sex, age_group, race_ethnicity) %>% 
+  dplyr::summarize(
+    n_population = sum(n_population, na.rm = T)
+    ,n_suicides = sum(n_suicides, na.rm = T) 
+  ) %>% dplyr::ungroup() %>% 
+  dplyr::mutate(
+    rate_per100k_suicide = n_suicides/ n_population * 100000
+  )
+d %>% 
+  ggplot(aes(x=year, y = rate_per100k_suicide, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  ggpmisc::stat_poly_eq(formula = y ~  x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017))
+    , aes(label = round(rate_per100k_suicide,2) )
+    # , vjust =-0
+  )+
+  # facet_wrap(~race_ethnicity, scales = "free")+
+  # facet_grid(age_group ~race_ethnicity, scales = "free")+
+  facet_grid(race_ethnicity ~ age_group, scales = "free")+
+  theme_bw() 
+
+# How does the overall trajectory of suicide COUNTS differ by gender, age, and ethicity within the age group of interest? 
+d <- ds0 %>% 
+  # dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
+  dplyr::group_by(year, sex, age_group, race_ethnicity) %>% 
+  dplyr::summarize(
+    n_population = sum(n_population, na.rm = T)
+    ,n_suicides = sum(n_suicides, na.rm = T) 
+  ) %>% dplyr::ungroup() %>% 
+  dplyr::mutate(
+    rate_per100k_suicide = n_suicides/ n_population * 100000
+  )
+d %>% 
+  ggplot(aes(x=year, y = n_population, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  ggpmisc::stat_poly_eq(formula = y ~  x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017))
+    , aes(label = round(n_population,2) )
+    # , vjust =-0
+  )+
+  # facet_wrap(~race_ethnicity, scales = "free")+
+  facet_grid(age_group ~race_ethnicity, scales = "free")+
+  theme_bw() 
+
+ 
+get_linear_model <- function(d, model_equation){
+  # eq_formula <- as.formula("count ~ year")
+  # eq_formula <- as.formula(model_equation)
+  m <- stats::glm(
+    formula = as.formula(model_equation)
+    ,family = "gaussian"
+    ,data = d
+  )
+  eq <- substitute(
+      italic(y) == x0 + x1 %.% italic(x)*","~~italic(r)^2~"="~r2,
+      list(
+        # x0  = format(unname(coef(m)[1]), digits = 2),
+        x0  = format(unname(coef(m)[1] + coef(m)[2]*x_at_intercept) , digits = 2,big.mark = ","),
+        x1  = format(unname(coef(m)[2]), digits = 2),
+        r2 = format((1 - (summary(m)$deviance/summary(m)$null.deviance)), digits = 3)
+        # https://stats.stackexchange.com/questions/46345/how-to-calculate-goodness-of-fit-in-glm-r
+      )
+    )
+  return(
+    list("model" = m, "equation" = eq)
+  )
+}
+m <- d %>% get_linear_model("count ~ year")
+m$equation
+
+
+lm_eqn <- function(df, model_equation){
+  # model_equation <- "count ~ year"
+  
+  m <- lm(, df);
+  eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                   list(a = format(unname(coef(m)[1]), digits = 2),
+                        b = format(unname(coef(m)[2]), digits = 2),
+                        r2 = format(summary(m)$r.squared, digits = 3)))
+  as.character(as.expression(eq));
+  return(out <- list(
+    "model" = m, "equation" = as.character(as.expression(eq))
+  ))
+}
+m <- d %>% lm_eqn()
+
+p1 <- p + geom_text(x = 25, y = 300, label = lm_eqn(df), parse = TRUE)
+
+
+  
 # What was the trajectory of growth for each age group by sex? Now only for 10-84
 ds0 %>% 
   dplyr::filter(age_group %in% lvl_age_groups[4:12]) %>% 
