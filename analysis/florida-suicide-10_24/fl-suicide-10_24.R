@@ -217,6 +217,68 @@ g
 #mortality from gun (+0.1) per year is simaliar to average 
 #increase from non-gun means (+0.105)
 
+d <- ds0 %>% 
+  filter(age_group %in% age_groups_10_24) %>% 
+  compute_rate(c("year","sex","race_ethnicity"))
+  
+d <- d$long  
+  
+
+g <- d %>% 
+  filter(suicide_cause %in% c("gun","non_gun")) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = sex)) +
+  geom_line() +
+  geom_point(shape = 21) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  facet_grid(suicide_cause ~race_ethnicity
+             # , scales = "free"
+  ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) 
+g
+
+g <- d %>% 
+  filter(suicide_cause %in% c("gun","non_gun")) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+  geom_line() +
+  geom_point(shape = 21) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  facet_grid(sex ~race_ethnicity
+             # , scales = "free"
+  ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) 
+g
+
+g <- d %>% 
+  filter(suicide_cause %in% c("gun","non_gun","suicide")) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+  geom_line() +
+  geom_point(shape = 21) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  facet_grid(sex ~race_ethnicity
+             # , scales = "free"
+  ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) 
+g
+
+
 # ---- publish ---------------------------------
 rmarkdown::render(
   input = "./analysis/blogposts/florida-demographic-growth/fl-demo-growth.Rmd"
