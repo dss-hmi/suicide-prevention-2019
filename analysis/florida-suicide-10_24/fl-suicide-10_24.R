@@ -80,16 +80,16 @@ compute_rate <- function(
   d,
   grouping_frame
 ){
-  d <- ds_population_suicide
-  grouping_frame <- c("year")
+  # d <- ds_population_suicide
+  # grouping_frame <- c("year")
   # 
   d_wide <- d %>%
     dplyr::group_by_(.dots = grouping_frame) %>%
     dplyr::summarize(
       n_population      = sum(n_population, na.rm = T)
       ,n_suicide        = sum(n_suicides, na.rm = T)
-      ,n_drug           = sum(`Drugs & Biological Substances`, na.rm=T)
       ,n_gun            = sum(`Firearms Discharge`, na.rm=T)
+      ,n_drug           = sum(`Drugs & Biological Substances`, na.rm=T)
       ,n_hanging        = sum(`Hanging, Strangulation, Suffocation`, na.rm=T)
       ,n_jump           = sum(`Jump From High Place`, na.rm=T)
       ,n_other_seq      = sum(`Other & Unspec & Sequelae`, na.rm = T)
@@ -100,17 +100,19 @@ compute_rate <- function(
     dplyr::mutate(
       # n_other = n_suicide - n_drug - n_gun -n_hanging - n_jump
       n_non_gun = n_suicide - n_gun
+      ,n_non_gun_hang_drug   = n_suicide - n_gun - n_drug - n_hanging 
       
-      ,rate_suicide     = (n_suicide/n_population)*100000
-      ,rate_gun         = (n_gun/n_population)*100000
-      ,rate_hanging     = (n_hanging/n_population)*100000
-      ,rate_drug        = (n_drug/n_population)*100000
-      ,rate_jump        = (n_jump/n_population)*100000
-      # ,rate_other     = (n_other/n_population)*100000
-      ,rate_other_seq   = (n_other_seq/n_population)*100000
-      ,rate_other_liq   = (n_other_liq/n_population)*100000
-      ,rate_other_gas   = (n_other_gas/n_population)*100000
-      ,rate_non_gun     = (n_non_gun/n_population)*100000
+      ,rate_suicide                 = (n_suicide/n_population)*100000
+      ,rate_gun                     = (n_gun/n_population)*100000
+      ,rate_drug                    = (n_drug/n_population)*100000
+      ,rate_hanging                 = (n_hanging/n_population)*100000
+      ,rate_jump                    = (n_jump/n_population)*100000
+      # ,rate_other                 = (n_other/n_population)*100000
+      ,rate_other_seq               = (n_other_seq/n_population)*100000
+      ,rate_other_liq               = (n_other_liq/n_population)*100000
+      ,rate_other_gas               = (n_other_gas/n_population)*100000
+      ,rate_non_gun                 = (n_non_gun/n_population)*100000
+      ,rate_non_gun_hang_drug       = (n_non_gun_hang_drug/n_population)*100000
       
     )
   d_wide %>% glimpse()
@@ -122,7 +124,8 @@ compute_rate <- function(
                   ,"n_other_seq" 
                   ,"n_other_liq" 
                   ,"n_other_gas"
-                  ,"n_non_gun")
+                  ,"n_non_gun"
+                  ,"n_non_gun_hang_drug")
   d_n <- d_wide %>% dplyr::select_(.dots = c(grouping_frame , col_select)) %>% 
     tidyr::pivot_longer(
       cols = col_select
@@ -157,7 +160,62 @@ compute_rate <- function(
 ls_compute_rate <- ds0 %>% compute_rate("year")
 
 
+# ---- suicide cause -----------------------------------------------------------
+major_causes <- c("gun","hanging","drug","non_gun","non_gun_hang_drug")
+d <- ds0 %>% 
+  filter(age_group %in% age_groups_10_24) %>%
+  # filter(year == 2017) %>% 
+  compute_rate("year")
+d <- d$long
 
+
+g <- d %>%  
+  filter(suicide_cause %in% major_causes) %>% 
+  ggplot(aes(x = reorder(suicide_cause,-n_suicides), y = n_suicides)) +
+  geom_col(alpha = 0.4) +
+  geom_text(aes(label = n_suicides)) +
+  coord_flip() +
+  facet_wrap(~year)
+g
+
+g <- d %>%  
+  filter(suicide_cause %in% major_causes) %>% 
+  ggplot(aes(x = reorder(suicide_cause, rate_suicides), y = rate_suicides)) +
+  geom_col(alpha = 0.4) +
+  geom_text(aes(label = round(rate_suicides,1))) +
+  coord_flip() +
+  facet_wrap(~year)
+g
+
+g <- d %>% 
+  filter(suicide_cause %in% major_causes) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+  geom_line() +
+  geom_point(shape = 21)
+g
+
+
+g <- d %>% 
+  filter(suicide_cause %in% major_causes) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+  geom_line() +
+  geom_point(shape = 21) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  facet_wrap(~suicide_cause
+             # , scales = "free"
+             ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) 
+g
+
+#when ignoring race and ethnicity for age group 10-24 average increase of suicide
+#mortality from gun (+0.1) per year is simaliar to average 
+#increase from non-gun means (+0.105)
 
 # ---- publish ---------------------------------
 rmarkdown::render(
