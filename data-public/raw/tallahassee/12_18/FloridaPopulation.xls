@@ -1,0 +1,77 @@
+<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Population by Year by Race by Ethnicity by Sex</x:Name><x:WorksheetOptions><x:Print><x:ValidPrinterInfo/></x:Print></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--> </head><body><b>Population by Year by Race by Ethnicity by Sex<br />Age=12, 13, 14, 15, 16, 17, 18<br /></b><table cellSpacing='5' cellPadding='0' width='100%' align='center' border='1'>
+	<thead oncontextmenu="processMenuctl00_ContentPlaceHolder1_olapgdPopulation(event, I_ctl00_ContentPlaceHolder1_olapgdPopulation,0)">
+		<tr>
+			<td rowspan="2" colspan="3"><div style='font-weight:bold'>
+
+			</div></td><td colspan="16" rowspan="1"><div style='font-weight:bold' title="Measures, MeasuresLevel" dmn="0">
+				Population
+			</div></td>
+		</tr><tr>
+			<td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2004
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2005
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2006
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2007
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2008
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2009
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2010
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2011
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2012
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2013
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2014
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2015
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2016
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2017
+			</div></td><td colspan="1" rowspan="1"><div style='font-weight:bold' title="Year, Year" dmn="1">
+				2018
+			</div></td><td colspan="1" rowspan="1"  style='font-weight:bold' total="1"><div style='font-weight:bold' title="Year, (All)" dmn="1">
+				Total
+			</div></td>
+		</tr>
+	</thead><tbody>
+		<tr>
+			<th colspan="1" rowspan="7">White</th><th colspan="1" rowspan="3">Hispanic</th><th colspan="1" rowspan="1">Female</th><td>165,753</td><td>163,168</td><td>171,702</td><td>178,555</td><td>183,321</td><td>186,871</td><td>188,379</td><td>193,195</td><td>194,054</td><td>194,937</td><td>198,111</td><td>201,674</td><td>206,570</td><td>212,014</td><td>221,825</td><td>2,860,130</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">Male</th><td>169,828</td><td>168,899</td><td>177,646</td><td>183,557</td><td>187,687</td><td>190,785</td><td>202,334</td><td>205,009</td><td>205,979</td><td>206,213</td><td>208,781</td><td>211,538</td><td>216,629</td><td>221,611</td><td>231,688</td><td>2,988,185</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">335,581</td><td  style='font-weight:bold' total="1">332,067</td><td  style='font-weight:bold' total="1">349,348</td><td  style='font-weight:bold' total="1">362,112</td><td  style='font-weight:bold' total="1">371,008</td><td  style='font-weight:bold' total="1">377,656</td><td  style='font-weight:bold' total="1">390,713</td><td  style='font-weight:bold' total="1">398,205</td><td  style='font-weight:bold' total="1">400,034</td><td  style='font-weight:bold' total="1">401,151</td><td  style='font-weight:bold' total="1">406,892</td><td  style='font-weight:bold' total="1">413,212</td><td  style='font-weight:bold' total="1">423,198</td><td  style='font-weight:bold' total="1">433,625</td><td  style='font-weight:bold' total="1">453,514</td><td  style='font-weight:bold' total="1">5,848,315</td>
+		</tr><tr>
+			<th colspan="1" rowspan="3">Non-Hispanic</th><th colspan="1" rowspan="1">Female</th><td>416,388</td><td>421,860</td><td>418,066</td><td>414,212</td><td>407,309</td><td>400,641</td><td>383,075</td><td>384,463</td><td>372,964</td><td>364,703</td><td>361,297</td><td>357,811</td><td>355,268</td><td>353,225</td><td>352,637</td><td>5,763,920</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">Male</th><td>437,387</td><td>446,592</td><td>442,844</td><td>439,809</td><td>431,608</td><td>424,038</td><td>406,737</td><td>408,657</td><td>397,895</td><td>390,370</td><td>386,327</td><td>382,126</td><td>378,587</td><td>375,112</td><td>373,754</td><td>6,121,842</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">853,775</td><td  style='font-weight:bold' total="1">868,452</td><td  style='font-weight:bold' total="1">860,910</td><td  style='font-weight:bold' total="1">854,021</td><td  style='font-weight:bold' total="1">838,917</td><td  style='font-weight:bold' total="1">824,679</td><td  style='font-weight:bold' total="1">789,812</td><td  style='font-weight:bold' total="1">793,120</td><td  style='font-weight:bold' total="1">770,859</td><td  style='font-weight:bold' total="1">755,073</td><td  style='font-weight:bold' total="1">747,625</td><td  style='font-weight:bold' total="1">739,937</td><td  style='font-weight:bold' total="1">733,855</td><td  style='font-weight:bold' total="1">728,337</td><td  style='font-weight:bold' total="1">726,391</td><td  style='font-weight:bold' total="1">11,885,762</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1,189,356</td><td  style='font-weight:bold' total="1">1,200,519</td><td  style='font-weight:bold' total="1">1,210,258</td><td  style='font-weight:bold' total="1">1,216,133</td><td  style='font-weight:bold' total="1">1,209,925</td><td  style='font-weight:bold' total="1">1,202,335</td><td  style='font-weight:bold' total="1">1,180,526</td><td  style='font-weight:bold' total="1">1,191,324</td><td  style='font-weight:bold' total="1">1,170,892</td><td  style='font-weight:bold' total="1">1,156,224</td><td  style='font-weight:bold' total="1">1,154,517</td><td  style='font-weight:bold' total="1">1,153,149</td><td  style='font-weight:bold' total="1">1,157,054</td><td  style='font-weight:bold' total="1">1,161,961</td><td  style='font-weight:bold' total="1">1,179,904</td><td  style='font-weight:bold' total="1">17,734,077</td>
+		</tr><tr>
+			<th colspan="1" rowspan="7">Black &amp; Other</th><th colspan="1" rowspan="3">Hispanic</th><th colspan="1" rowspan="1">Female</th><td>12,975</td><td>13,189</td><td>14,400</td><td>15,550</td><td>16,379</td><td>17,237</td><td>19,929</td><td>20,744</td><td>20,910</td><td>21,327</td><td>22,049</td><td>22,807</td><td>23,762</td><td>24,707</td><td>26,256</td><td>292,222</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">Male</th><td>13,316</td><td>13,628</td><td>15,135</td><td>16,024</td><td>16,882</td><td>17,681</td><td>21,152</td><td>22,147</td><td>22,310</td><td>22,558</td><td>23,122</td><td>23,744</td><td>24,820</td><td>26,042</td><td>27,361</td><td>305,922</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">26,291</td><td  style='font-weight:bold' total="1">26,817</td><td  style='font-weight:bold' total="1">29,535</td><td  style='font-weight:bold' total="1">31,574</td><td  style='font-weight:bold' total="1">33,261</td><td  style='font-weight:bold' total="1">34,918</td><td  style='font-weight:bold' total="1">41,081</td><td  style='font-weight:bold' total="1">42,891</td><td  style='font-weight:bold' total="1">43,220</td><td  style='font-weight:bold' total="1">43,885</td><td  style='font-weight:bold' total="1">45,171</td><td  style='font-weight:bold' total="1">46,550</td><td  style='font-weight:bold' total="1">48,582</td><td  style='font-weight:bold' total="1">50,749</td><td  style='font-weight:bold' total="1">53,617</td><td  style='font-weight:bold' total="1">598,144</td>
+		</tr><tr>
+			<th colspan="1" rowspan="3">Non-Hispanic</th><th colspan="1" rowspan="1">Female</th><td>199,328</td><td>204,368</td><td>207,076</td><td>209,151</td><td>209,406</td><td>208,363</td><td>211,977</td><td>212,314</td><td>209,624</td><td>207,118</td><td>207,566</td><td>207,963</td><td>209,741</td><td>211,986</td><td>216,314</td><td>3,132,294</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1">Male</th><td>200,899</td><td>209,050</td><td>211,757</td><td>214,484</td><td>214,177</td><td>213,189</td><td>218,794</td><td>219,734</td><td>217,273</td><td>213,844</td><td>213,826</td><td>213,849</td><td>215,332</td><td>217,671</td><td>222,282</td><td>3,216,161</td>
+		</tr><tr>
+			<th colspan="1" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">400,227</td><td  style='font-weight:bold' total="1">413,418</td><td  style='font-weight:bold' total="1">418,833</td><td  style='font-weight:bold' total="1">423,635</td><td  style='font-weight:bold' total="1">423,583</td><td  style='font-weight:bold' total="1">421,552</td><td  style='font-weight:bold' total="1">430,771</td><td  style='font-weight:bold' total="1">432,048</td><td  style='font-weight:bold' total="1">426,897</td><td  style='font-weight:bold' total="1">420,961</td><td  style='font-weight:bold' total="1">421,391</td><td  style='font-weight:bold' total="1">421,812</td><td  style='font-weight:bold' total="1">425,072</td><td  style='font-weight:bold' total="1">429,657</td><td  style='font-weight:bold' total="1">438,596</td><td  style='font-weight:bold' total="1">6,348,455</td>
+		</tr><tr>
+			<th colspan="2" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">426,518</td><td  style='font-weight:bold' total="1">440,235</td><td  style='font-weight:bold' total="1">448,368</td><td  style='font-weight:bold' total="1">455,209</td><td  style='font-weight:bold' total="1">456,844</td><td  style='font-weight:bold' total="1">456,470</td><td  style='font-weight:bold' total="1">471,853</td><td  style='font-weight:bold' total="1">474,939</td><td  style='font-weight:bold' total="1">470,117</td><td  style='font-weight:bold' total="1">464,847</td><td  style='font-weight:bold' total="1">466,562</td><td  style='font-weight:bold' total="1">468,362</td><td  style='font-weight:bold' total="1">473,654</td><td  style='font-weight:bold' total="1">480,406</td><td  style='font-weight:bold' total="1">492,214</td><td  style='font-weight:bold' total="1">6,946,599</td>
+		</tr><tr>
+			<th colspan="3" rowspan="1"  style='font-weight:bold' total="1">Total</th><td  style='font-weight:bold' total="1">1,615,874</td><td  style='font-weight:bold' total="1">1,640,754</td><td  style='font-weight:bold' total="1">1,658,626</td><td  style='font-weight:bold' total="1">1,671,342</td><td  style='font-weight:bold' total="1">1,666,769</td><td  style='font-weight:bold' total="1">1,658,805</td><td  style='font-weight:bold' total="1">1,652,379</td><td  style='font-weight:bold' total="1">1,666,263</td><td  style='font-weight:bold' total="1">1,641,010</td><td  style='font-weight:bold' total="1">1,621,071</td><td  style='font-weight:bold' total="1">1,621,079</td><td  style='font-weight:bold' total="1">1,621,511</td><td  style='font-weight:bold' total="1">1,630,708</td><td  style='font-weight:bold' total="1">1,642,368</td><td  style='font-weight:bold' total="1">1,672,118</td><td  style='font-weight:bold' total="1">24,680,676</td>
+		</tr>
+	</tbody>
+</table>                                                                                                                                                      </body></html>
