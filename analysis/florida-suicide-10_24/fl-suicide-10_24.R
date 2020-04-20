@@ -279,6 +279,61 @@ g <- d %>%
 g
 
 
+
+# ---- graphing function --------------------------------------------------
+library(rlang)
+
+ds_test <- d %>% 
+  filter(suicide_cause %in% c("gun","non_gun","suicide"))
+
+make_facet_graph <- function(
+  ds
+  ,x
+  ,y
+  ,color
+  ,facet_row = NULL
+  ,facet_col = NULL
+  ,smooth = FALSE
+  ){
+  #testing variables 
+  # ds <- ds_test
+  # x  <- "year"
+  # y  <- "rate_suicides"
+  # color <- "suicide_cause"
+  # smooth <- TRUE
+  # facet_row <- "sex"
+  # facet_col <- "race_ethnicity"
+  browser()
+  
+  # start of function
+  x <- enquo(x)
+  y <- enquo(y)
+  color <- enquo(color)
+  facet_row <- enquo(facet_row)
+  facet_col <- enquo(facet_col)
+ 
+  
+  g <- ds %>% 
+    ggplot(aes(x = !!x, y = !!y, color = !!color)) +
+    geom_line() +
+    geom_point(shape = 21) 
+    # scale_x_continuous(breaks = seq(2007,2017,5))
+  
+  if(smooth){
+    g <- g +
+      geom_smooth(method = "lm", se = FALSE)
+  }
+  
+  
+      
+  
+ 
+  
+}
+
+
+
+
 # ---- publish ---------------------------------
 rmarkdown::render(
   input = "./analysis/blogposts/florida-demographic-growth/fl-demo-growth.Rmd"
