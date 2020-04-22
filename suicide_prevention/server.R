@@ -10,6 +10,8 @@
 
 source("./data-prep.R")
 source("./functions.R")
+# source("./suicide_prevention/data-prep.R")
+# source("./suicide_prevention/functions.R")
 
 
 
@@ -28,20 +30,22 @@ shinyServer(function(input, output) {
     
 
     output$aPlot <- renderPlot({
-        major_causes <- c("gun","hanging","drug","non_gun","non_gun_hang_drug")
         d <- ds0 %>% 
-            filter(age_group %in% age_groups_10_24) %>%
-            # filter(year == 2017) %>% 
-            compute_rate("year")
-        d <- d$long
+            filter(age_group %in% age_groups_10_24) %>% 
+            compute_rate(c("year","sex","race_ethnicity"))
+        
+        d <- d$long %>% 
+            filter(suicide_cause == "suicide") 
+        
         g <- d %>%  
-            filter(suicide_cause %in% major_causes) %>% 
-            ggplot(aes(x = reorder(suicide_cause,-n_suicides), y = n_suicides)) +
-            geom_col(alpha = 0.4) +
-            geom_text(aes(label = n_suicides)) +
-            coord_flip() +
-            facet_wrap(~year)
+            make_facet_graph(
+                x_aes       = "year"
+                ,y_aes      = "rate_suicides"
+                ,color_aes  = "suicide_cause"
+                ,facet_expr = "sex ~ race_ethnicity"
+                ,smooth     = TRUE)
         g
+        
         
        
     })

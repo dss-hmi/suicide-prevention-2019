@@ -84,21 +84,21 @@ compute_rate <- function(
 # ---- graphing function -----
 
 make_facet_graph <- function(
-  ds
-  ,x
-  ,y
-  ,color
+  d
+  ,x_aes
+  ,y_aes
+  ,color_aes
   ,facet_expr = NULL
   ,smooth = FALSE
 ){
-  
+  # browser()
   # use of ensym, allows user to either provided quoted strings or unqouted strings
-  g_out <- ds %>% 
+  g_out <- d %>% 
     ggplot(
       aes(
-        x      = !!ensym(x)
-        ,y     = !!ensym(y)
-        ,color = !!ensym(color)
+        x      = !!ensym(x_aes)
+        ,y     = !!ensym(y_aes)
+        ,color = !!ensym(color_aes)
       )
     ) +
     geom_line() +
@@ -114,9 +114,9 @@ make_facet_graph <- function(
     
     facet_formula <- enexpr(facet_expr)
     
-    g <- g +
+    g_out <- g_out +
       facet_grid(facet_formula)
   }
   
-  return(g)
+  return(g_out)
 } 

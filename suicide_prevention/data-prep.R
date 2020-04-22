@@ -16,6 +16,7 @@ requireNamespace("tidyr")  # data tidying
 # ---- declare-globals ---------------------------------------------------------
 # you will need to replace this path to the location where you stored your data file
 path_file_input <- "../data-unshared/derived/9-population-suicide.csv"
+# path_file_input <- "./data-unshared/derived/9-population-suicide.csv"
 
 # to help with sorting the levels of the `age_group` factor
 lvl_age_groups <-c(
