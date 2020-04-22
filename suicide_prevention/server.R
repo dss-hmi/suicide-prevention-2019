@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
 
     output$aPlot <- renderPlot({
         x_value     <- "year"
-        y_value     <- "rate_suicides"
+        y_value     <- input$y_value_select
         facet_col   <- "race_ethnicity"
         facet_row   <- "sex"
         color_value <- "suicide_cause"

@@ -13,21 +13,21 @@ library(shiny)
 shinyUI(fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Suicide Prevention"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            selectInput(inputId  = "y_value_select"
+                        ,label   = "Y Axis"
+                        ,choices = c("rate_suicides"
+                                     ,"n_suicides")
+                        ,selected = "n_suicides")
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("aPlot")
+            plotOutput("aPlot",width = 900, height = 500)
         )
     )
 ))
