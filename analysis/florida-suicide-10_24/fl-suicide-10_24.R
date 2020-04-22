@@ -291,61 +291,35 @@ make_facet_graph <- function(
   ,x
   ,y
   ,color
-  # ,facet_row = NULL
-  # ,facet_col = NULL
   ,facet_expr = NULL
   ,smooth = FALSE
   ){
-  #testing variables 
-  # ds <- ds_test
-  # x  <- "year"
-  # y  <- "rate_suicides"
-  # color <- "suicide_cause"
-  # smooth <- TRUE
-  # facet_row <- "sex"
-  # facet_col <- "race_ethnicity
-  # browser()
-  
-  
   
   # use of ensym, allows user to either provided quoted strings or unqouted strings
-  g <- ds %>% 
-    ggplot(aes(x = !!ensym(x), y = !!ensym(y), color = !!ensym(color))) +
+  g_out <- ds %>% 
+    ggplot(
+      aes(
+        x      = !!ensym(x)
+        ,y     = !!ensym(y)
+        ,color = !!ensym(color)
+        )
+      ) +
     geom_line() +
     geom_point(shape = 21) 
     # scale_x_continuous(breaks = seq(2007,2017,5))
   
   if(smooth){
-    g <- g +
+    g_out <- g_out +
       geom_smooth(method = "lm", se = FALSE)
   }
   
   if(!is.null(facet_expr)){
+    
     facet_formula <- enexpr(facet_expr)
     
     g <- g +
       facet_grid(facet_formula)
     }
-  
-  # if(!is.na(ensym(facet_row)) && is.null(facet_col)){
-  #   # g <- g +
-  #   #   facet_grid(reformulate(".",facet_row))
-  #   g <- g +
-  #     facet_grid(eval(expr(!!ensym(facet_row) ~ .)))
-  # }else if(is.null(facet_row) && !is.null(ensym(facet_col))){
-  #   # g <- g +
-  #   #   facet_grid(reformulate(facet_col,"."))
-  #   g <- g +
-  #     facet_grid(eval(expr(. ~ !!ensym(facet_col))))
-  # }else if(!is.null(facet_row) && !is.null(facet_col)){
-  #   # g <- g +
-  #   #   facet_grid(reformulate(facet_col,facet_row))
-  #   g <- g +
-  #     facet_grid(eval(expr(!!ensym(facet_row) ~ !!ensym(facet_col))))
-  # }else{
-  #   g <- g
-  # }
-  # 
   
 return(g)
 }      
