@@ -101,7 +101,7 @@ ui <-
                             )
                         ) #close side bar panel 1
                         ,mainPanel(
-                            plotlyOutput("population_count")
+                            plotOutput("population_count")
                             ,plotOutput("age_distro")
                         )
                     )
@@ -182,13 +182,7 @@ server <- function(input, output) {
                 ,y     = "Total Persons"
                 ,color = NULL
             )
-            fig <- ggplotly(g) %>%
-                layout(
-                    legend = list(
-                        orientation = "h"
-                        ,y = -0.2
-                    )
-                )
+            return(g)
             
         }
 
@@ -211,8 +205,8 @@ server <- function(input, output) {
     }
     
 
-    output$population_count <-  renderPlotly({ 
-          g2()
+    output$population_count <-  renderPlot({ 
+         g2()
     })
     
     output$age_distro <- renderPlot({
