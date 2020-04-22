@@ -30,19 +30,31 @@ shinyServer(function(input, output) {
     
 
     output$aPlot <- renderPlot({
+        x_value     <- "year"
+        y_value     <- "rate_suicides"
+        facet_col   <- "race_ethnicity"
+        facet_row   <- "sex"
+        color_value <- "suicide_cause"
+        age_group_filter <- c("10_14", "15_19", "20_24")
+        
+        facet_row_col <- paste0(facet_row,"~",facet_col)
+        
+        
         d <- ds0 %>% 
-            filter(age_group %in% age_groups_10_24) %>% 
-            compute_rate(c("year","sex","race_ethnicity"))
+            filter(age_group %in% age_group_filter) %>% 
+            compute_rate(
+                grouping_frame = c(x_value,facet_row,facet_col)
+            )
         
         d <- d$long %>% 
             filter(suicide_cause == "suicide") 
         
         g <- d %>%  
             make_facet_graph(
-                x_aes       = "year"
-                ,y_aes      = "rate_suicides"
-                ,color_aes  = "suicide_cause"
-                ,facet_expr = "sex ~ race_ethnicity"
+                x_aes       = x_value
+                ,y_aes      = y_value
+                ,color_aes  = color_value
+                ,facet_expr = facet_row_col
                 ,smooth     = TRUE)
         g
         

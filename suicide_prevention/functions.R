@@ -95,10 +95,10 @@ make_facet_graph <- function(
   # use of ensym, allows user to either provided quoted strings or unqouted strings
   g_out <- d %>% 
     ggplot(
-      aes(
-        x      = !!ensym(x_aes)
-        ,y     = !!ensym(y_aes)
-        ,color = !!ensym(color_aes)
+      aes_string(
+        x      = x_aes
+        ,y     = y_aes
+        ,color = color_aes
       )
     ) +
     geom_line() +
