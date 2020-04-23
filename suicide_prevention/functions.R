@@ -102,8 +102,8 @@ make_facet_graph <- function(
       )
     ) +
     geom_line() +
-    geom_point(shape = 21) 
-  # scale_x_continuous(breaks = seq(2007,2017,5))
+    geom_point(shape = 21) +
+    scale_x_continuous(breaks = seq(2007,2017,5))
   
   if(smooth){
     g_out <- g_out +

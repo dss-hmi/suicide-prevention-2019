@@ -7,7 +7,20 @@
 #    http://shiny.rstudio.com/
 #
 
+
+
 library(shiny)
+
+
+# not sure where to put this so its here for now
+facet_choices <- c(
+    "None"              = "."
+    ,"Race + Ethnicity" = "race_ethnicity"
+    ,"Sex"              = "sex"
+    ,"Suicide Cause"    = "suicide_cause"
+    
+)
+
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -15,17 +28,25 @@ shinyUI(fluidPage(
     # Application title
     titlePanel("Suicide Prevention"),
 
-    # Sidebar with a slider input for number of bins
+    
     sidebarLayout(
         sidebarPanel(
-            selectInput(inputId  = "y_value_select"
-                        ,label   = "Y Axis"
-                        ,choices = c("rate_suicides"
-                                     ,"n_suicides")
-                        ,selected = "n_suicides")
+            selectInput(inputId   = "y_value_select"
+                        ,label    = "Y Axis"
+                        ,choices  = c("rate_suicides", "n_suicides")
+                        ,selected = "n_suicides"
+                        )
+            ,selectInput(inputId  = "facet_row_select"
+                         ,label   = "Facet Row"
+                         ,choices = facet_choices)
+            ,selectInput(inputId  = "facet_col_select"
+                         ,label   = "Facet Column"
+                         ,choices = facet_choices
+                         )
+            
         ),
 
-        # Show a plot of the generated distribution
+        
         mainPanel(
             plotOutput("aPlot",width = 900, height = 500)
         )
