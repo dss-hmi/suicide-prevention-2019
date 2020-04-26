@@ -1,7 +1,7 @@
 ---
-title: "Florida Demographic Growth"
+title: "Florida Youth Suicide (1)"
 author: "Andriy Koval"
-date: "March 27, 2020"
+date: "April 26, 2020"
 output:
   html_document:
     theme: simplex
@@ -46,7 +46,7 @@ opts_chunk$set(
 echoChunks <- TRUE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
+read_chunk("./analysis/blogposts/florida-youth-suicide-1/fl-youth-suicide-1.R") 
 # read_chunk("../../../analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
 ```
 # Abstract
@@ -73,7 +73,7 @@ The data comes from Florida Health Charts and contains suicide mortality between
 
 ## Data Tweaks
 This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. 
-```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE}
+```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
 ds0 %>% glimpse()
 ```
 
@@ -85,14 +85,44 @@ ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
 
 # Q1 - Overal trends
 
-To begin, let us answer the most fundamental question
+To begin, let us answer the most fundamental question: 
 
 > What is the overall trajectory of suicides in FL between 2006 and 2017? 
 
-
-
-```{r g1, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r g11, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
+
+We exclude persons younger than `10` from our analysis. For the ages `<10` suicide is extremely rare and often calls into question the classification of the underlying cause of death (e.g. can a 4-year-old really _intend_ to kill oneself?). Here is the frequency of suicides for each age group: 
+
+```{r g12, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+As we see, there are only `4` suicide events for this age group. We remove them and redraw the graph with the same scale across the facets for a better comparison among age groups.
+
+```{r g13, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
+# Q2 - Across age groups
+
+> How does change in suicide mortality differ by age? 
+
+Note that age groups do not have the same definition: ages younger than `25` are grouped into 5-year bins, while older ages are grouped into 10-year bins. This makes it difficult to compare absolute counts across age groups. Also, we must account for the fact that demographic growth may be uneven across the groups, which it is:
+
+```{r g21, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+Notice that the age groups `10_14` and `15_19` have been ___declining___ by an average of `2,680` and `2,970` respectively, while `20_24` age group have been ___increasing___ by an average of `12,500` persons per year. 
+
+We compute an age-adjusted rate measure:
+
+```{r g22, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+# Q3 - Sex 
+
+```{r g31, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
 
 session information
 ===========================================================================
