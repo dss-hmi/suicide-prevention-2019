@@ -9,7 +9,7 @@ output:
     toc_depth: 3
     keep_md: true
     toc_float: true
-    code_folding: show
+    code_folding: hide
 ---
 
 <!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
@@ -46,139 +46,52 @@ opts_chunk$set(
 echoChunks <- TRUE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./analysis/blogposts/florida-demographic-growth/fl-demo-growth.R") # path from the root to the R script.
-# read_chunk("../../../analysis/blogposts/florida-demographic-growth/fl-demo-growth.R") # path from the root to the R script. 
+read_chunk("./analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
+# read_chunk("../../../analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
 ```
 # Abstract
 
-This blogposts shows how to extract population estimates data reported by the [Florida Department of Health](http://www.flhealthcharts.com/FLQUERY/Population/PopulationRpt.aspx), prepare them for analysis, and conduct a very basic exploration of the demographic growth. The blog post leaves visual exploration of the trends for the future, focusing instead on data genesis. 
+
 
 # Environment
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
 ```{r load-packages, echo=echoChunks, message=FALSE}
 ```
 
-
-
-# Data Origin
-The initial extract of the data was obtained from [www.flhealthcharts.com](http://www.flhealthcharts.com/FLQUERY/Population/PopulationRpt.aspx) a reporting tool for population counts estimated by the Florida Department of Health. The figure below shows the modifications to the default query the produces the data product used in this demonstration:  
-
-![View of the reporting tool](../../../analysis/blogposts/florida-demographic-growth/data/FloridaPopulation-2006-2020.PNG)
-
-The tool gives the option to save the product of the query as an Excel book (`.xls`), however, the import of this extension into R has been problematic, so I have converted ("save as") the file manually into a more modern Excel format, `.xlsx`. This file is the raw source for the current report and can be dowloaded for closer inspection [here](https://github.com/dss-hmi/suicide-prevention-2019/raw/3ff78365931214e342640523f2096c2eac443b2f/analysis/blogposts/florida-demographic-growth/data/FloridaPopulation.xlsx). 
-
-
-## Data import 
-
-The structure of the Excel file requires some tidying to enable a nimble analytic flow
-
-![View of the extracted data](../../../analysis/blogposts/florida-demographic-growth/data/extracted-data.PNG)
-
-<!-- Load any Global functions and variables declared in the R file.  Suppress the output. -->
  ```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
  ```
-<!-- Declare any global functions specific to a Rmd output.  Suppress the output. -->
-<!-- # ```{r, echo=echoChunks, message=FALSE} -->
-<!-- # #Put code in here.  It doesn't call a chunk in the codebehind file. -->
-<!-- # ``` -->
-<!-- Load the datasets.   -->
+ 
+```{r declare-functions, echo=echoChunks, results='show', message=FALSE}
+ ```
+
+# Data  
+
+The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The the dataset is [available for download here](). 
 ```{r load-data, echo=echoChunks, results='show', message=FALSE}
-ds0 %>% dplyr::glimpse(90)
 ```
 
-# Data Tweaking
-We can identify several problems to address:  
-1. Not all columns have names  
-2. `race`, `ethnicity`, `sex`, and `age_group` are stored in merged spreadsheet cells     
-3. Sums for categories are recorded in rows as observations (e.g `Total`)   
-4. Some values of `age_group` are misinterpreted as dates (e.g. `1-4` becomes `4-Jan`)     
-5. `age_group` does not bin the population evenly (e.g. `20-24` vs `25-34`)       
 
-### 1  Rename columns
-To address (1) we  skipped the first 3 lines during import, and now need to assign the name of the columns manually:
+## Data Tweaks
+This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. 
 ```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE}
-```
-### 2 + 3  Fill values, remove totals
-To address (2) we apply `tidyr::fill()` which carries the observation forward until it encounters a non-empty cell.  `dplyr::filter` addresses (3),  removing observations that store total counts, while `stringr::str_replace` recodes values that got misinterpreted as dates.
-```{r tweak-data-2, echo=echoChunks, results='show', message=FALSE}
+ds0 %>% glimpse()
 ```
 
-### 4 Correct dates
-We need to do some investigation to address (4) and recode values that got misinterpreted as dates during the import
-```{r tweak-data-4, echo=echoChunks, results='show', message=FALSE}
-```
-### 5 Regroup Age 
-Now we need to recode the values of `age` into a new grouping variable `age_group5`, which will correct the unevennes of the original grouping in `age_group`
-```{r tweak-data-5, echo=echoChunks, results='show', message=FALSE}
-```
+The unit of analysis of this dataset is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. For convenience, we create a combined variable `race_ethnicity`.
 
-### Pivot Long 
-To enable a more seemless graph making, as well as to provide a more convenient shape for subsequent aggregation over age groups, we need to `tidyr:pivot_long` (formely known as `tidyr::gather`) the columns storing population estimates for each year. 
-```{r tweak-data-6, echo=echoChunks, results='show', message=FALSE}
-```
-### Factors 
-Before aggregating over `age_group` and `age_group5` let us transform string variables into factors. so that we don't have to do it in the individual data sets. 
-```{r tweak-data-7, echo=echoChunks, results='show', message=FALSE}
-```
-
-### Aggregate
-Note that at this point, each row contains a population estimate for a given age in years. However, as you might have noticed that counts for each year of age are not unique:
 ```{r}
-ds2 %>% 
-  dplyr::filter(
-    age %in% c(25:39), race_ethnicity == "White + Hispanic",sex == "Female", year==2018
-  ) %>% 
-  dplyr::select(race, ethnicity, age_group, age_group5, sex, age,count)
-```
-In fact, it appears that Florida Health Charts computes the total for 5-year category and then divides it evenly among constituent elements of the `age_category`. My guess, this deals with privacy guidelines. Therefore, the most granualar age break up is only 5-year categories. 
-
-To preserve the original grouping we create two separate datasets, each providing the totals for respective age category.
-```{r tweak-data-8, echo=echoChunks, results='show', message=FALSE}
-```
-It is the `ds_age_group5` that will be focus of subsequent graphs. However, to better demonstrate why we needed to create new grouping of ages, we will preserve both dataframes. 
-
-## Save to disk
-```{r save-to-disk}
-```
-The cleaned version of this dataset is available for download [here](https://github.com/dss-hmi/suicide-prevention-2019/blob/4b2c812274c678b80ae351045619d3135d4e271f/analysis/blogposts/florida-demographic-growth/data/clean_data.rds).
-
-# Graphing
-
-We will consider several questions in order to demonstrate plotting from this cleaned dataset. 
-
-1. How does the total population of Florida changes between 2006 and 2020?  
-2. How does each ethnic group change during this time?  
-3. what Ethnic group is most dissimilar from the other three in their dynamics?  
-4. What would it look like if we used the original `age_group`?  
-
-## 1. Total population 
-> How does the total population of Florida changes between 2006 and 2020?
-
-```{r g0, echo=TRUE, fig.height=5, fig.width=9, out.width = "900px",message=FALSE, results='show',cache=TRUE}
-
+ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
 ```
 
-## 2. Ethnic groups: Together
-> How does each ethnic group change during this time?
+# Q1 - Overal trends
 
-```{r g1, echo=TRUE, fig.height=5, fig.width=9, out.width = "900px",message=FALSE, results='show',cache=TRUE}
-```
+To begin, let us answer the most fundamental question
 
-## 3. Ethnic groups: Separate
-> what Ethnic group is most dissimilar from the other three in their dynamics?
+> What is the overall trajectory of suicides in FL between 2006 and 2017? 
 
-```{r q1, echo=TRUE, results='show', fig.height=5, fig.width=9,out.width = "900px", message=FALSE,cache=TRUE}
-```
 
-## 4. Age composition in 2019
-> What is the age composition of each ethnic group in 2019? 
 
-```{r g2, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
-```
-
-> What would it look like if we used the original `age_group`?
-
-```{r q2, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r g1, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 session information
