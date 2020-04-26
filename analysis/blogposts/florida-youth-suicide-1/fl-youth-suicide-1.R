@@ -40,7 +40,7 @@ age_groups_10_24    <-   lvl_age_groups[4:6]
 ggplot2::theme_set(ggplot2::theme_bw())
 
 # ---- declare-functions -------------------------------
-compute_rate <- function( d  ,grouping_frame   ,wide = FALSE ){
+compute_rate <- function( d  ,grouping_frame  ,wide = FALSE ){
   # d <- ds_population_suicide
   # grouping_frame <- c("year")
   # 
@@ -87,7 +87,7 @@ compute_rate <- function( d  ,grouping_frame   ,wide = FALSE ){
                   ,"n_other_gas"
                   ,"n_non_gun"
                   ,"n_non_gun_hang_drug")
-  d_n <- d_wide %>% dplyr::select_(.dots = c(grouping_frame , col_select)) %>% 
+  d_n <- d_wide %>% dplyr::select(c(grouping_frame , col_select)) %>% 
     tidyr::pivot_longer(
       cols       = col_select
       ,names_to  = "suicide_cause"
@@ -97,8 +97,9 @@ compute_rate <- function( d  ,grouping_frame   ,wide = FALSE ){
     dplyr::mutate(
       suicide_cause = gsub("^n_","",suicide_cause)
     )
-  d_rate <- d_wide %>% dplyr::select_(.dots = c(grouping_frame
-                                                ,gsub("^n_","rate_",col_select))) %>%
+  d_rate <- d_wide %>% dplyr::select(
+    c(grouping_frame, gsub("^n_","rate_",col_select))
+  ) %>%
     tidyr::pivot_longer(
       cols = gsub("^n_","rate_",col_select)
       ,names_to  = "suicide_cause"
@@ -109,7 +110,7 @@ compute_rate <- function( d  ,grouping_frame   ,wide = FALSE ){
       suicide_cause = gsub("^rate_","",suicide_cause)
     )
   
-  d_long <- d_wide %>% dplyr::select_(.dots = c(grouping_frame,"n_population")) %>% 
+  d_long <- d_wide %>% dplyr::select( c(grouping_frame,"n_population") ) %>% 
     dplyr::left_join(d_n) %>% 
     dplyr::left_join(d_rate)
   
@@ -186,7 +187,7 @@ florida_counties_map <- ggplot2::map_data("county") %>%
 ds0 <- ds_population_suicide %>%
   dplyr::mutate(
     year            = as.integer(year)
-    ,sex            = factor(sex)
+    ,sex            = factor(sex, levels = c("Male", "Female"))
     ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
     ,race           = factor(race)
     ,ethnicity      = factor(ethnicity)
@@ -196,10 +197,10 @@ ds0 <- ds_population_suicide %>%
   ) 
 ds0 %>% dplyr::glimpse(70)
 
-# ---- g1 ----------------------------
+# ---- g11 ----------------------------
 # What is the overall trajectory of suicides in FL between 2006 and 2017? 
 d <- ds0 %>% 
-  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
   compute_rate("year") %>% 
   dplyr::filter(suicide_cause == "suicide") %>% 
   tidyr::pivot_longer(cols = c("n_suicides", "rate_suicides"),names_to = "metric", values_to = "value") %>% 
@@ -227,15 +228,148 @@ d %>%
     , aes(label = round(value,2)), vjust =-0
   )+
   labs(
-    title = "Dynamics in suicide mortality in Florida among persons 10-84 years of age"
-  
+    title = "Trend in suicide mortality in Florida (ages 10+)"
+    
+  )
+
+# ---- g12 --------------
+d12 <- ds0 %>% 
+  compute_rate(c("year", "age_group")) %>% 
+  dplyr::filter(suicide_cause == "suicide") %>% 
+  tidyr::pivot_longer(cols = c("n_suicides", "rate_suicides"),names_to = "metric", values_to = "value") %>% 
+  dplyr::mutate(metric = car::recode(metric," 'n_suicides'='count';'rate_suicides'='rate_per100k'")) %>% 
+  dplyr::mutate(
+    metric = factor(
+      metric
+      ,levels = c("count","rate_per100k")
+      ,labels = c("Count", "Rate per 100,000")
+    )
+  )
+d12 %>% 
+  filter(metric == "Count") %>% 
+  ggplot(aes(x=year, y = value))+
+  geom_col(color = "black", fill = "salmon", alpha = .3)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  facet_wrap(~ age_group, scale = "free")+
+  labs(
+    title = "Counts of suicide events in Florida from 2006 to 2017"
+  )
+# ---- g13 --------------
+d12 %>% 
+  filter(metric == "Count") %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
+  ggplot(aes(x=year, y = value))+
+  geom_col(color = "black", fill = "salmon", alpha = .3)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  facet_wrap(~ age_group)+
+  labs(
+    title = "Counts of suicide events in Florida from 2006 to 2017 (ages 10+)"
+  )
+
+# ---- g21 ----------------
+# demographic growth among the age groups
+g21 <- d12 %>% 
+  filter(metric == "Count") %>% # population counts are duplicats
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
+  ggplot(aes(x=year,y=n_population))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  # scale_color_viridis_d(option = "magma",begin = .7, end = .1)+
+  # scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  # facet_wrap(~age_group, scales = "free")+
+  facet_wrap(~age_group)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, vjust = 7
+  ) +
+  labs(
+    title = "Demographic growth in Florida within age groups"
+  )
+g21
+
+# ---- g22 ----------------
+# suicide rate among the age groups
+g22 <- d12 %>% 
+  filter(metric == "Rate per 100,000") %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
+  ggplot(aes(x=year,y=value))+
+  geom_smooth(method = "lm",se = F, color = "salmon")+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  # scale_color_viridis_d(option = "magma",begin = .7, end = .1)+
+  # scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  # facet_wrap(~age_group, scales = "free")+
+  facet_wrap(~age_group)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, vjust = 7
+  ) +
+  geom_text(
+    data = d12 %>% 
+      filter(metric == "Rate per 100,000") %>% 
+      dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = round(value,1 ) )
+    # ,aes( label = round(value,1 ) )
+    ,vjust =-0.8, size = 3, color = "grey30", 
+  )+
+  labs(
+    title = "Trend of suicide rate in Florida across age groups (ages 10+)"
+    ,y = "Rate per 100,000", x = "Year"
+    
+  )
+g22
+
+
+# ---- g31 ------------------
+d <- ds0 %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
+  compute_rate(c("year","sex") )%>% 
+  dplyr::filter(suicide_cause == "suicide") %>% 
+  tidyr::pivot_longer(cols = c("n_suicides", "rate_suicides"),names_to = "metric", values_to = "value") %>% 
+  dplyr::mutate(metric = car::recode(metric," 'n_suicides'='count';'rate_suicides'='rate_per100k'")) %>% 
+  dplyr::mutate(
+    metric = factor(
+      metric
+      ,levels = c("count","rate_per100k")
+      ,labels = c("Count", "Rate per 100,000")
+    )
+  )
+d %>% 
+  ggplot(aes(x=year, y = value, group = sex, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  facet_wrap(~metric, scales = "free")+
+  scale_color_viridis_d(option = "magma",begin = .2, end = .65)+
+  ggpmisc::stat_poly_eq(formula = y ~ + x ,
+                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        parse = TRUE, vjust = 7) +   
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017))
+    , aes(label = round(value,2)), vjust =-0
+  )+
+  labs(
+    title = "Trend in suicide mortality in Florida (ages 10+)"
+    
   )
 
 
-# --- old --------------
+# ---- old --------------
 # What is the trajectory of suicides in FL between 2006 and 2017? 
 d <- ds0 %>% 
-  dplyr::filter(age_group %in% age_groups_in_focus) %>%
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
   dplyr::group_by(year, sex, age_group) %>% 
   dplyr::summarize(
     count = sum(n_suicides, na.rm = T)
