@@ -411,11 +411,57 @@ g41 +
 
 d51 <- ds0 %>% 
   dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
-  compute_rate(c("year","sex","race_ethnicity") ) %>% 
-  dplyr::filter(suicide_cause == "suicide")
+  compute_rate(c("year","race_ethnicity") ) %>% 
+  dplyr::filter(suicide_cause == "suicide") %>% 
+  dplyr::mutate(n_population = n_population/100000) %>% 
+  tidyr::pivot_longer(
+    cols = c("n_suicides", "rate_suicides","n_population")
+    ,names_to = "metric"
+    , values_to = "value"
+  ) %>% 
+  dplyr::mutate(
+    metric = factor(
+      metric
+      ,levels = c("n_suicides","rate_suicides","n_population")
+      ,labels = c("Suicide Count", "Suicide Rate (per 100k)", "Population Count (in 100k)")
+    )
+  )
+plot_51 <- function(d, metric_filter){
+  g <- d %>% 
+    filter(metric == metric_filter) %>% 
+    ggplot(aes(x=year, y = value))+
+    geom_smooth(method = "lm",se = F)+
+    geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+    geom_line(alpha = .2)+
+    scale_y_continuous(labels = scales::comma)+
+    scale_x_continuous(breaks = seq(2007,2017,5))+
+    geom_text(
+      data =  d51 %>%
+       filter(metric == metric_filter) %>% 
+       dplyr::filter(year %in% c(2006, 2017))
+      ,aes( label = scales::comma(value  ) )
+      ,vjust =-0.8, size = 3, color = "grey30"
+    )+
+    facet_wrap( ~ race_ethnicity, scales = "free",nrow = 1)+
+    ggpmisc::stat_poly_eq(
+      formula = y ~ + x
+      ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+      ,parse = TRUE
+      ,vjust = 3
+    )+
+    labs(
+      # title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter)
+      y = metric_filter, x = ""
+    )
+}
+g51 <- d51 %>% plot_51("Population Count (in 100k)")
+g52 <- d51 %>% plot_51("Suicide Rate (per 100k)")
+g53 <- d51 %>% plot_51("Suicide Count")
+ggpubr::ggarrange(g51, g52, g53, labels = c("Population","Rate","Count"), ncol =1, nrow = 3)
 
+# ---- g52 ------------------------
 
-d51 <- ds0 %>% 
+d52 <- ds0 %>% 
   dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
   compute_rate(c("year","sex","age_group","race_ethnicity") ) %>% 
   dplyr::filter(suicide_cause == "suicide") %>% # means
@@ -431,8 +477,8 @@ d51 <- ds0 %>%
       ,labels = c("Suicide Count", "Suicide Rate per 100,000", "Population Count")
     )
   )
-plot_g5 <- function(d, race_filter){
-  g5 <- d %>% 
+plot_g52 <- function(d, race_filter){
+  g52 <- d %>% 
     dplyr::filter(race_ethnicity == race_filter) %>% 
     ggplot(aes(x=year, y = value, color = sex))+
     geom_smooth(method = "lm",se = F)+
@@ -461,10 +507,10 @@ plot_g5 <- function(d, race_filter){
       title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter) 
     )
 }
-g51 <- d51 %>% plot_g5("White + Non-Hispanic"); g51
-g52 <- d51 %>% plot_g5("White + Hispanic"); g52
-g53 <- d51 %>% plot_g5("Black & Other + Non-Hispanic"); g53
-g54 <- d51 %>% plot_g5("Black & Other + Hispanic"); g54
+g521 <- d52 %>% plot_g52("White + Non-Hispanic"); g521
+g522 <- d52 %>% plot_g52("White + Hispanic"); g522
+g523 <- d52 %>% plot_g52("Black & Other + Non-Hispanic"); g523
+g524 <- d52 %>% plot_g52("Black & Other + Hispanic"); g524
 
 
 # ---- old --------------
