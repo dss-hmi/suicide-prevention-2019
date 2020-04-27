@@ -423,7 +423,7 @@ d51 <- ds0 %>%
     metric = factor(
       metric
       ,levels = c("n_suicides","rate_suicides","n_population")
-      ,labels = c("Suicide Count", "Suicide Rate (per 100k)", "Population Count (in 100k)")
+      ,labels = c("Suicide Count", "Suicide Rate (per 100k)", "Population Count (million)")
     )
   )
 plot_51 <- function(d, metric_filter){
@@ -439,7 +439,7 @@ plot_51 <- function(d, metric_filter){
       data =  d51 %>%
        filter(metric == metric_filter) %>% 
        dplyr::filter(year %in% c(2006, 2017))
-      ,aes( label = scales::comma(value  ) )
+      ,aes( label = scales::comma( round(value,1)  ) )
       ,vjust =-0.8, size = 3, color = "grey30"
     )+
     facet_wrap( ~ race_ethnicity, scales = "free",nrow = 1)+
@@ -454,10 +454,10 @@ plot_51 <- function(d, metric_filter){
       y = metric_filter, x = ""
     )
 }
-g51 <- d51 %>% plot_51("Population Count (in 100k)")
+g51 <- d51 %>% plot_51("Population Count (million)")
 g52 <- d51 %>% plot_51("Suicide Rate (per 100k)")
 g53 <- d51 %>% plot_51("Suicide Count")
-ggpubr::ggarrange(g51, g52, g53, labels = c("Population","Rate","Count"), ncol =1, nrow = 3)
+ggpubr::ggarrange(g51, g52, g53, labels = c("Pop","Rate","Count"), ncol =1, nrow = 3)
 
 # ---- g52 ------------------------
 
@@ -465,6 +465,7 @@ d52 <- ds0 %>%
   dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
   compute_rate(c("year","sex","age_group","race_ethnicity") ) %>% 
   dplyr::filter(suicide_cause == "suicide") %>% # means
+  dplyr::mutate(n_population = n_population/100000) %>% 
   tidyr::pivot_longer(
     cols = c("n_suicides", "rate_suicides","n_population")
     ,names_to = "metric"
@@ -474,8 +475,9 @@ d52 <- ds0 %>%
     metric = factor(
       metric
       ,levels = c("n_suicides","rate_suicides","n_population")
-      ,labels = c("Suicide Count", "Suicide Rate per 100,000", "Population Count")
-    )
+      ,labels = c("Suicide Count", "Suicide Rate (per 100k)", "Population Count (million)")
+    ),
+    metric = forcats::fct_rev(metric)
   )
 plot_g52 <- function(d, race_filter){
   g52 <- d %>% 
@@ -491,7 +493,7 @@ plot_g52 <- function(d, race_filter){
     # facet_wrap(~age_group, scales = "free")+
     facet_grid(metric ~ age_group, scales = "free")+
     geom_text(
-      data =  d51 %>%
+      data =  d52 %>%
         dplyr::filter(race_ethnicity == race_filter) %>% 
         dplyr::filter(year %in% c(2006, 2017))
       ,aes( label = round(value,1 ) )
@@ -504,15 +506,20 @@ plot_g52 <- function(d, race_filter){
       ,vjust = 3
     )+
     labs(
-      title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter) 
-    )
+      title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter), 
+      x = "", y = ""
+    )+
+    theme(legend.position = "bottom")
 }
-g521 <- d52 %>% plot_g52("White + Non-Hispanic"); g521
-g522 <- d52 %>% plot_g52("White + Hispanic"); g522
-g523 <- d52 %>% plot_g52("Black & Other + Non-Hispanic"); g523
-g524 <- d52 %>% plot_g52("Black & Other + Hispanic"); g524
+g521 <- d52 %>% plot_g52("White + Non-Hispanic")
+g522 <- d52 %>% plot_g52("White + Hispanic")
+g523 <- d52 %>% plot_g52("Black & Other + Non-Hispanic")
+g524 <- d52 %>% plot_g52("Black & Other + Hispanic")
 
-
+cat("\n## White + Non-Hispanic\n");g521
+cat("\n## White + Hispanic\n"); g522
+cat("\n## Black & Other + Non-Hispanic\n"); g523
+cat("\n## Black & Other + Hispanic\n"); g524
 # ---- old --------------
 
 
