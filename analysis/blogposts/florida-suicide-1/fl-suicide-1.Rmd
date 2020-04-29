@@ -46,8 +46,8 @@ opts_chunk$set(
 echoChunks <- TRUE
 options(width=120) #So the output is 50% wider than the default.
 # connect to the file with the underlying R script  
-read_chunk("./analysis/blogposts/florida-suicide-1/fl-suicide-1.R") 
-# read_chunk("../../../analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
+read_chunk("./analysis/blogposts/florida-suicide-1/fl-suicide-1.R")
+# read_chunk("../../../analysis/blogposts/florida-suicide-count/fl-suicide-count.R")
 ```
 # Abstract
 
@@ -60,6 +60,8 @@ This blogpost explores suicides trends in Florida between 2006 and 2017, examini
 > Q3 - How do suicide trends differ by gender? 
 
 > Q4 - How do suicide trends differ by gender and age group?
+
+> Q5 - How do suicide trend differ by race?
 
 # Environment
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
@@ -148,7 +150,25 @@ To help us compare the magnitute of suicide rate across age group, we redraw the
 ```{r g42, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+# Q5 - Race + Ethnicity
 
+> How do suicide trend differ by race?
+
+The data stored race and ethnicity into two separate variables, which we have combined to have well-populated groups
+```{r}
+ds0 %>% 
+  dplyr::filter(year == 2017) %>% 
+  group_by(race, ethnicity, race_ethnicity) %>%
+  summarize(population_in_2017 = sum(n_population)) 
+```
+The differences in group size, combined with the rarity of suicide events make it difficult to compare the trends across groups on the same scale. 
+
+```{r g51, echo=TRUE, fig.height=11, fig.width=15, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+When we start breaking down the groups with more categories (`age_group`, `sex`), this problem gets worse. Therefore the plots exploring the relationships between age, sex, and race are created for each of the race category individually, to avoid comparing across drastically different scales.  The graphs below are not ideal: while allowing to explore pattern within each race group they fail to provide a direct comparison among them. 
+```{r g52, echo=TRUE, fig.height=9, fig.width=23, out.width = "1200px", message=FALSE, results='asis',cache=TRUE}
+```
 session information
 ===========================================================================
 
