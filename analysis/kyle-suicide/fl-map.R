@@ -141,10 +141,14 @@ d <- ds_youth0 %>% prep_data_map(c("county","year"))
 
 # function to plot the map
 plot_florida_suicides <- function(d, year_i, metric){
-    # d <- youth_total_map_data
+  # d <- ds_youth0 %>%   prep_data_map(c("county","year"))
   # year_i <- 2017
   # metric <- "n_suicides"
-  # 
+  max_value <- d %>% dplyr::select(metric) %>% max()
+  var_names_labels <- c("n_suicides" = "Number of Suicides"
+                        ,"rate_per100k_suicide" = "Suicide Rate (per 100k)"
+                        ,"n_population" = "Population")
+  plot_title <- paste0("Youth (10-24) ",var_names_labels[metric]," For ", year_i)
   g1 <-  d %>% 
     dplyr::filter(year == year_i) %>%
     ggplot(aes_string(x = "long", y = "lat", group = "group", fill = metric)) +
@@ -152,31 +156,47 @@ plot_florida_suicides <- function(d, year_i, metric){
     coord_map() +
     theme_void() +
     # scale_fill_continuous(label = scales::label_comma())+
-    scale_fill_gradient2(
-      low   = "#fcfbfd" 
-      ,mid  = "#9e9ac8"
-      ,high = "#3f007d"
-      ,midpoint = median(youth_total_map_data$n_suicides)
-      ,label = scales::label_comma()
-    ) +
+    # scale_fill_gradient2(
+    #   low   = "#fcfbfd" 
+    #   ,mid  = "#9e9ac8"
+    #   ,high = "#3f007d"
+    #   ,midpoint = (max_value - 1) / 2
+    #   ,label = scales::label_comma()
+    #   # ,limits = c(1,max_value)
+    # ) +
+    scale_fill_viridis_c(option = "magma", direction = -1, label = scales::label_comma()) +
     theme(
-      legend.position = c(.4, .5)
+      legend.position = c(.3, .5)
     )+
     # facet_wrap(~year)+
     labs(
-      title = paste0("Total Youth (10-24) Suicides in Florida for ",year_i)
-      ,fill = "Number of Suicides"
-    )
+      title = plot_title
+      ,fill = var_names_labels[metric]
+    ) 
   # g1
   return(g1)
 }
 # How to use
 # youth_total_map_data %>% plot_florida_suicides(2016,"n_suicides")
-youth_total_map_data %>% plot_florida_suicides(2016,"n_population")
+# youth_total_map_data %>% plot_florida_suicides(2016,"n_population")
 
 ds_youth0 %>% 
   prep_data_map(c("county","year")) %>% 
   plot_florida_suicides(2008,"rate_per100k_suicide")
+
+ds_youth0 %>% 
+  prep_data_map(c("county","year")) %>% 
+  plot_florida_suicides(2008,"n_population")
+
+#testing 
+ds_youth0 %>%
+  prep_data_map(c("county","year")) %>% 
+  TabularManifest::histogram_continuous("n_population")
+
+ds_youth0 %>%
+  prep_data_map(c("county","year")) %>% 
+  corrgram::corrgram()
+  
 
 # ---- youth suicides by Race + Ethnicity --------------------------------------
 
