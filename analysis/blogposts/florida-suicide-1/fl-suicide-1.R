@@ -288,7 +288,7 @@ g22 <- d12 %>%
   ggpmisc::stat_poly_eq(
     formula = y ~ + x
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
-    ,parse = TRUE, vjust = 7
+    ,parse = TRUE, vjust = 3
   ) +
   geom_text(
     data = d12 %>% 
@@ -413,7 +413,7 @@ d51 <- ds0 %>%
   dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
   compute_rate(c("year","race_ethnicity") ) %>% 
   dplyr::filter(suicide_cause == "suicide") %>% 
-  dplyr::mutate(n_population = n_population/100000) %>% 
+  dplyr::mutate(n_population = n_population/1000000) %>% 
   tidyr::pivot_longer(
     cols = c("n_suicides", "rate_suicides","n_population")
     ,names_to = "metric"
@@ -457,7 +457,7 @@ plot_51 <- function(d, metric_filter){
 g51 <- d51 %>% plot_51("Population Count (million)")
 g52 <- d51 %>% plot_51("Suicide Rate (per 100k)")
 g53 <- d51 %>% plot_51("Suicide Count")
-ggpubr::ggarrange(g51, g52, g53, labels = c("Pop","Rate","Count"), ncol =1, nrow = 3)
+ggpubr::ggarrange(g51, g52, g53, labels = c("Population","Rate","Count"), ncol =1, nrow = 3)
 
 # ---- g52 ------------------------
 
@@ -520,99 +520,6 @@ cat("\n## White + Non-Hispanic\n");g521
 cat("\n## White + Hispanic\n"); g522
 cat("\n## Black & Other + Non-Hispanic\n"); g523
 cat("\n## Black & Other + Hispanic\n"); g524
-# ---- old --------------
-
-
-
- # (1)How does the overall trajectory of suicide RATE PER 100,000 differ by gender, age, and ethicity within the age group of interest?
-d <- ds0 %>% 
-  # dplyr::filter(age_group %in% age_groups_in_focus) %>%
-  # dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
-  dplyr::group_by(year, sex, age_group, race_ethnicity) %>% 
-  dplyr::summarize(
-    n_population = sum(n_population, na.rm = T)
-    ,n_suicides = sum(n_suicides, na.rm = T) 
-  ) %>% dplyr::ungroup() %>% 
-  dplyr::mutate(
-    rate_per100k_suicide = n_suicides/ n_population * 100000
-  )
-d %>% 
-  ggplot(aes(x=year, y = rate_per100k_suicide, color = sex))+
-  geom_smooth(method = "lm",se = F)+
-  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
-  geom_line(alpha = .2)+
-  scale_y_continuous(labels = scales::comma)+
-  scale_x_continuous(breaks = seq(2007,2017,5))+
-  ggpmisc::stat_poly_eq(formula = y ~  x ,
-                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
-                        parse = TRUE, vjust = 7) +   
-  geom_text(
-    data = d %>% dplyr::filter(year %in% c(2006, 2017))
-    , aes(label = round(rate_per100k_suicide,2) )
-    # , vjust =-0
-  )+
-  # facet_wrap(~race_ethnicity, scales = "free")+
-  # facet_grid(age_group ~race_ethnicity, scales = "free")+
-  facet_grid(race_ethnicity ~ age_group, scales = "free")+
-  theme_bw() 
-
-# How does the overall trajectory of suicide COUNTS differ by gender, age, and ethicity within the age group of interest? 
-d <- ds0 %>% 
-  # dplyr::filter(age_group %in% age_groups_in_focus) %>%
-  dplyr::filter(age_group %in% c("10_14","15_19","20_24")) %>%
-  dplyr::group_by(year, sex, age_group, race_ethnicity) %>% 
-  dplyr::summarize(
-    n_population = sum(n_population, na.rm = T)
-    ,n_suicides = sum(n_suicides, na.rm = T) 
-  ) %>% dplyr::ungroup() %>% 
-  dplyr::mutate(
-    rate_per100k_suicide = n_suicides/ n_population * 100000
-  )
-d %>% 
-  ggplot(aes(x=year, y = n_population, color = sex))+
-  geom_smooth(method = "lm",se = F)+
-  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
-  geom_line(alpha = .2)+
-  scale_y_continuous(labels = scales::comma)+
-  scale_x_continuous(breaks = seq(2007,2017,5))+
-  ggpmisc::stat_poly_eq(formula = y ~  x ,
-                        aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
-                        parse = TRUE, vjust = 7) +   
-  geom_text(
-    data = d %>% dplyr::filter(year %in% c(2006, 2017))
-    , aes(label = round(n_population,2) )
-    # , vjust =-0
-  )+
-  # facet_wrap(~race_ethnicity, scales = "free")+
-  facet_grid(age_group ~race_ethnicity, scales = "free")+
-  theme_bw() 
-
- 
-get_linear_model <- function(d, model_equation){
-  # eq_formula <- as.formula("count ~ year")
-  # eq_formula <- as.formula(model_equation)
-  m <- stats::glm(
-    formula = as.formula(model_equation)
-    ,family = "gaussian"
-    ,data = d
-  )
-  eq <- substitute(
-      italic(y) == x0 + x1 %.% italic(x)*","~~italic(r)^2~"="~r2,
-      list(
-        # x0  = format(unname(coef(m)[1]), digits = 2),
-        x0  = format(unname(coef(m)[1] + coef(m)[2]*x_at_intercept) , digits = 2,big.mark = ","),
-        x1  = format(unname(coef(m)[2]), digits = 2),
-        r2 = format((1 - (summary(m)$deviance/summary(m)$null.deviance)), digits = 3)
-        # https://stats.stackexchange.com/questions/46345/how-to-calculate-goodness-of-fit-in-glm-r
-      )
-    )
-  return(
-    list("model" = m, "equation" = eq)
-  )
-}
-# how to use
-# m <- d %>% get_linear_model("count ~ year")
-# m$equation
 
 
 
