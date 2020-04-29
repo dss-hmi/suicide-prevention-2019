@@ -19,21 +19,22 @@ requireNamespace("tidyr")  # data tidying
 path_file_input <- "https://github.com/dss-hmi/suicide-prevention-2019/raw/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv"
 
 # to help with sorting the levels of the `age_group` factor
-lvl_age_groups <-c(
-  "less_than_1"
-  ,"1_4"
-  ,"5_9"
-  ,"10_14"
-  ,"15_19"
-  ,"20_24"
-  ,"25_34"
-  ,"35_44"
-  ,"45_54"
-  ,"55_64"
-  ,"65_74"
-  ,"75_84"
-  ,"85_plus"
+lvl_age_groups <- c(
+  "less_than_1"         =   "<1"          
+  ,"1_4"                =   "1-4"  
+  ,"5_9"                =   "5-9"  
+  ,"10_14"              =   "10-14"    
+  ,"15_19"              =   "15-19"    
+  ,"20_24"              =   "20-24"    
+  ,"25_34"              =   "25-34"    
+  ,"35_44"              =   "35-44"    
+  ,"45_54"              =   "45-54"    
+  ,"55_64"              =   "55-64"    
+  ,"65_74"              =   "65-74"    
+  ,"75_84"              =   "75-84"    
+  ,"85_plus"            =   "85+"      
 )
+
 age_groups_in_focus <-   lvl_age_groups[4:12]
 age_groups_10_24    <-   lvl_age_groups[4:6]
 
@@ -162,7 +163,7 @@ ds0 <- ds_population_suicide %>%
     ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
     ,race           = factor(race)
     ,ethnicity      = factor(ethnicity)
-    ,age_group      = factor(age_group, levels = lvl_age_groups)
+    ,age_group      = factor(age_group, levels = names(lvl_age_groups), labels = lvl_age_groups)
     ,n_population   = as.integer(n_population)
     ,n_suicides     = as.integer(n_suicides)
   ) 

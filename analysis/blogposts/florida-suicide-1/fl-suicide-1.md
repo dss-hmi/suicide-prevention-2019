@@ -53,21 +53,22 @@ requireNamespace("tidyr")  # data tidying
  path_file_input <- "https://github.com/dss-hmi/suicide-prevention-2019/raw/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv"
  
  # to help with sorting the levels of the `age_group` factor
- lvl_age_groups <-c(
-   "less_than_1"
-   ,"1_4"
-   ,"5_9"
-   ,"10_14"
-   ,"15_19"
-   ,"20_24"
-   ,"25_34"
-   ,"35_44"
-   ,"45_54"
-   ,"55_64"
-   ,"65_74"
-   ,"75_84"
-   ,"85_plus"
+ lvl_age_groups <- c(
+   "less_than_1"         =   "<1"          
+   ,"1_4"                =   "1-4"  
+   ,"5_9"                =   "5-9"  
+   ,"10_14"              =   "10-14"    
+   ,"15_19"              =   "15-19"    
+   ,"20_24"              =   "20-24"    
+   ,"25_34"              =   "25-34"    
+   ,"35_44"              =   "35-44"    
+   ,"45_54"              =   "45-54"    
+   ,"55_64"              =   "55-64"    
+   ,"65_74"              =   "65-74"    
+   ,"75_84"              =   "75-84"    
+   ,"85_plus"            =   "85+"      
  )
+ 
  age_groups_in_focus <-   lvl_age_groups[4:12]
  age_groups_10_24    <-   lvl_age_groups[4:6]
  
@@ -193,7 +194,7 @@ ds0 <- ds_population_suicide %>%
     ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
     ,race           = factor(race)
     ,ethnicity      = factor(ethnicity)
-    ,age_group      = factor(age_group, levels = lvl_age_groups)
+    ,age_group      = factor(age_group, levels = names(lvl_age_groups), labels = lvl_age_groups)
     ,n_population   = as.integer(n_population)
     ,n_suicides     = as.integer(n_suicides)
   ) 
@@ -201,14 +202,14 @@ ds0 %>% dplyr::glimpse(70)
 ```
 
 ```
-Observations: 83,616
-Variables: 16
+Rows: 83,616
+Columns: 16
 $ county                                <chr> "Alachua", "Alachua...
 $ year                                  <int> 2006, 2006, 2006, 2...
 $ sex                                   <fct> Female, Female, Fem...
 $ race                                  <fct> Black & Other, Blac...
 $ ethnicity                             <fct> Hispanic, Hispanic,...
-$ age_group                             <fct> 1_4, 10_14, 15_19, ...
+$ age_group                             <fct> 1-4, 10-14, 15-19, ...
 $ n_population                          <int> 36, 50, 125, 250, 1...
 $ n_suicides                            <int> NA, NA, NA, NA, NA,...
 $ `Drugs & Biological Substances`       <dbl> NA, NA, NA, NA, NA,...
@@ -732,15 +733,20 @@ For the sake of documentation and reproducibility, the current report was render
 
 - Packages -----------------------------------------------------------------------------------------------------------
  package     * version date       lib source        
+ abind         1.4-5   2016-07-21 [1] CRAN (R 3.6.0)
  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.2)
  backports     1.1.5   2019-10-02 [1] CRAN (R 3.6.1)
  callr         3.4.3   2020-03-28 [1] CRAN (R 3.6.3)
+ car           3.0-7   2020-03-11 [1] CRAN (R 3.6.3)
+ carData       3.0-3   2019-11-16 [1] CRAN (R 3.6.1)
+ cellranger    1.1.0   2016-07-27 [1] CRAN (R 3.6.2)
  cli           2.0.2   2020-02-28 [1] CRAN (R 3.6.3)
  codetools     0.2-16  2018-12-24 [2] CRAN (R 3.6.3)
  colorspace    1.4-1   2019-03-18 [1] CRAN (R 3.6.1)
  cowplot       1.0.0   2019-07-11 [1] CRAN (R 3.6.2)
  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.2)
  curl          4.3     2019-12-02 [1] CRAN (R 3.6.2)
+ data.table    1.12.8  2019-12-09 [1] CRAN (R 3.6.2)
  desc          1.2.0   2018-05-01 [1] CRAN (R 3.6.2)
  devtools      2.3.0   2020-04-10 [1] CRAN (R 3.6.3)
  digest        0.6.25  2020-02-23 [1] CRAN (R 3.6.3)
@@ -749,6 +755,8 @@ For the sake of documentation and reproducibility, the current report was render
  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.2)
  fansi         0.4.1   2020-01-08 [1] CRAN (R 3.6.2)
  farver        2.0.3   2020-01-16 [1] CRAN (R 3.6.2)
+ forcats       0.4.0   2019-02-17 [1] CRAN (R 3.6.2)
+ foreign       0.8-75  2020-01-20 [2] CRAN (R 3.6.3)
  fs            1.3.1   2019-05-06 [1] CRAN (R 3.6.2)
  ggplot2     * 3.2.1   2019-08-10 [1] CRAN (R 3.6.2)
  ggpmisc       0.3.3   2019-12-01 [1] CRAN (R 3.6.3)
@@ -756,6 +764,7 @@ For the sake of documentation and reproducibility, the current report was render
  ggsignif      0.6.0   2019-08-08 [1] CRAN (R 3.6.2)
  glue          1.4.0   2020-04-03 [1] CRAN (R 3.6.3)
  gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.2)
+ haven         2.2.0   2019-11-08 [1] CRAN (R 3.6.2)
  hms           0.5.3   2020-01-08 [1] CRAN (R 3.6.2)
  htmltools     0.4.0   2019-10-04 [1] CRAN (R 3.6.2)
  knitr       * 1.28    2020-02-06 [1] CRAN (R 3.6.2)
@@ -765,10 +774,12 @@ For the sake of documentation and reproducibility, the current report was render
  magrittr    * 1.5     2014-11-22 [1] CRAN (R 3.6.2)
  memoise       1.1.0   2017-04-21 [1] CRAN (R 3.6.2)
  munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.2)
+ openxlsx      4.1.4   2019-12-06 [1] CRAN (R 3.6.3)
  pillar        1.4.3   2019-12-20 [1] CRAN (R 3.6.2)
  pkgbuild      1.0.6   2019-10-09 [1] CRAN (R 3.6.2)
  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.2)
  pkgload       1.0.2   2018-10-29 [1] CRAN (R 3.6.2)
+ plyr          1.8.6   2020-03-03 [1] CRAN (R 3.6.3)
  polynom       1.4-0   2019-03-22 [1] CRAN (R 3.6.2)
  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.2)
  processx      3.4.2   2020-02-09 [1] CRAN (R 3.6.2)
@@ -777,7 +788,10 @@ For the sake of documentation and reproducibility, the current report was render
  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.2)
  Rcpp          1.0.4.6 2020-04-09 [1] CRAN (R 3.6.3)
  readr         1.3.1   2018-12-21 [1] CRAN (R 3.6.2)
+ readxl        1.3.1   2019-03-13 [1] CRAN (R 3.6.2)
  remotes       2.1.1   2020-02-15 [1] CRAN (R 3.6.2)
+ reshape2      1.4.3   2017-12-11 [1] CRAN (R 3.6.2)
+ rio           0.5.16  2018-11-26 [1] CRAN (R 3.6.3)
  rlang         0.4.5   2020-03-01 [1] CRAN (R 3.6.3)
  rmarkdown     2.1     2020-01-20 [1] CRAN (R 3.6.2)
  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.2)
@@ -792,9 +806,11 @@ For the sake of documentation and reproducibility, the current report was render
  usethis       1.6.0   2020-04-09 [1] CRAN (R 3.6.3)
  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.2)
  vctrs         0.2.4   2020-03-10 [1] CRAN (R 3.6.3)
+ viridisLite   0.3.0   2018-02-01 [1] CRAN (R 3.6.2)
  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.2)
  xfun          0.12    2020-01-13 [1] CRAN (R 3.6.2)
  yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.2)
+ zip           2.0.4   2019-09-01 [1] CRAN (R 3.6.3)
 
 [1] C:/Users/an499583/Documents/R/win-library/3.6
 [2] C:/Users/an499583/Documents/R/R-3.6.3/library
