@@ -1,0 +1,140 @@
+---
+title: "Florida Youth Suicide (1)"
+author: "Andriy Koval"
+date: "April 26, 2020"
+output:
+  html_document:
+    theme: simplex
+    toc: true
+    toc_depth: 3
+    keep_md: true
+    toc_float: true
+    code_folding: hide
+---
+
+<!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
+<!--  The 1st mandatory chunck  -->
+<!--  Set the working directory to the repository's base directory -->
+```{r, echo=F, message=F} 
+#Don't combine this call with any other chunk 
+# cat("Working directory: ", getwd()) # check where you are
+  library(knitr)
+# Rmd is in "./reports/reportA/reportA.Rmd", but now the root is "./"
+  knitr::opts_knit$set(root.dir='../../../') # "go up" from the folder where this .Rmd is save until you arrive at the root/working directory
+```
+
+<!--  The 2nd mandatory chunck  -->
+<!-- Set the report-wide options, and point to the external code file. -->
+```{r set_options, echo=F}
+# set options shared by all chunks
+opts_chunk$set(
+  results='show', 
+  attr.source = ".numberLines",
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4, 
+  fig.width = 5.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/',     
+  dev = "png",
+  dpi = 400
+  # fig.path = 'figure_pdf/',     
+  # dev = "pdf"#,
+  # dev.args=list(pdf = list(colormodel = 'cmyk'))
+)
+echoChunks <- TRUE
+options(width=120) #So the output is 50% wider than the default.
+# connect to the file with the underlying R script  
+read_chunk("./analysis/blogposts/florida-youth-suicide-1/fl-youth-suicide-1.R") 
+# read_chunk("../../../analysis/blogposts/florida-suicide-count/fl-suicide-count.R") 
+```
+# Abstract
+
+
+
+# Environment
+<!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
+```{r load-packages, echo=echoChunks, message=FALSE}
+```
+
+ ```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
+ ```
+ 
+```{r declare-functions, echo=echoChunks, results='show', message=FALSE}
+ ```
+
+# Data  
+
+The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The the dataset is [available for download here](). 
+```{r load-data, echo=echoChunks, results='show', message=FALSE}
+```
+
+
+## Data Tweaks
+This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. 
+```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
+ds0 %>% glimpse()
+```
+
+The unit of analysis of this dataset is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. For convenience, we create a combined variable `race_ethnicity`.
+
+```{r}
+ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
+```
+
+# Q1 - Overal trends
+
+To begin, let us answer the most fundamental question: 
+
+> What is the overall trajectory of suicides in FL between 2006 and 2017? 
+
+```{r g11, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+We exclude persons younger than `10` from our analysis. For the ages `<10` suicide is extremely rare and often calls into question the classification of the underlying cause of death (e.g. can a 4-year-old really _intend_ to kill oneself?). Here is the frequency of suicides for each age group: 
+
+```{r g12, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+As we see, there are only `4` suicide events for this age group. We remove them and redraw the graph with the same scale across the facets for a better comparison among age groups.
+
+```{r g13, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
+# Q2 - Across age groups
+
+> How does change in suicide mortality differ by age? 
+
+Note that age groups do not have the same definition: ages younger than `25` are grouped into 5-year bins, while older ages are grouped into 10-year bins. This makes it difficult to compare absolute counts across age groups. Also, we must account for the fact that demographic growth may be uneven across the groups, which it is:
+
+```{r g21, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+Notice that the age groups `10_14` and `15_19` have been ___declining___ by an average of `2,680` and `2,970` respectively, while `20_24` age group have been ___increasing___ by an average of `12,500` persons per year. 
+
+We compute an age-adjusted rate measure:
+
+```{r g22, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+# Q3 - Sex 
+
+```{r g31, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
+
+session information
+===========================================================================
+
+For the sake of documentation and reproducibility, the current report was rendered in the following environment.  Click the line below to expand.
+
+<details>
+  <summary>Environment <span class="glyphicon glyphicon-plus-sign"></span></summary>
+```{r session-info, echo=FALSE}
+if( requireNamespace("devtools", quietly = TRUE) ) {
+  devtools::session_info()
+} else {
+  sessionInfo()
+} 
+```
