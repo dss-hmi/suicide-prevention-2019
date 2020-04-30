@@ -92,7 +92,7 @@ make_facet_graph <- function(
   ,smooth = FALSE
 ){
   # browser()
-  # use of ensym, allows user to either provided quoted strings or unqouted strings
+  
   g_out <- d %>% 
     ggplot(
       aes_string(

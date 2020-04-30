@@ -23,9 +23,8 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     
-    
-#check box for age groups
-#finish input values 
+#need to update color, and facets dynamically.
+
 
     
 #change from grid to wrap
@@ -38,8 +37,8 @@ shinyServer(function(input, output) {
         y_value     <- input$y_value_select
         facet_row   <- input$facet_row_select
         facet_col   <- input$facet_col_select
-        color_value <- "suicide_cause"
-        age_group_filter <- c("10_14", "15_19", "20_24")
+        color_value <- input$color_select
+        age_group_filter <- input$age_range_select
         suicide_type_value <- input$suicide_type_select
         smooth_value <- input$smooth_checkbox
         
