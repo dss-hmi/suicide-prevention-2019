@@ -22,6 +22,19 @@ facet_choices <- c(
 )
 
 
+suicide_type <- c(
+"Total Suicide"          = "suicide"
+,"Drug"                  = "drug"
+,"Gun"                   = "gun"
+,"Hanging"               = "hanging"
+,"Jump"                  = "jump"
+,"Other Sequelae"        = "other_seq" 
+,"Other Sol/Liq & Vapor" = "other_liq" 
+,"Other Gases & Vapor"   = "other_gas"
+,"Non-Gun"               = "non_gun"
+,"Non-Gun,Hanging,Drug"  = "non_gun_hang_drug"
+)
+
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
 
@@ -43,6 +56,16 @@ shinyUI(fluidPage(
                          ,label   = "Facet Column"
                          ,choices = facet_choices
                          )
+            ,selectInput(
+                inputId   = "suicide_type_select"
+                ,label    = "Suicide Type Filter"
+                ,choices  = suicide_type
+                ,multiple = TRUE
+                ,selected = "suicide"
+            )
+            ,checkboxInput(inputId = "smooth_checkbox"
+                           ,label  = "Linear Regression Line"
+                           ,value  = FALSE)
             
         ),
 

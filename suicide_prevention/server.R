@@ -26,7 +26,10 @@ shinyServer(function(input, output) {
     
 #check box for age groups
 #finish input values 
-#check boxes for suicide cause
+
+    
+#change from grid to wrap
+# offer the user choice of free scales or not
 
     
 
@@ -37,6 +40,8 @@ shinyServer(function(input, output) {
         facet_col   <- input$facet_col_select
         color_value <- "suicide_cause"
         age_group_filter <- c("10_14", "15_19", "20_24")
+        suicide_type_value <- input$suicide_type_select
+        smooth_value <- input$smooth_checkbox
         
         facet_row_col <- paste0(facet_row,"~",facet_col)
         
@@ -59,7 +64,7 @@ shinyServer(function(input, output) {
             )
         
         d <- d$long %>% 
-            filter(suicide_cause == "suicide") 
+            filter(suicide_cause %in% suicide_type_value) 
         
         g <- d %>%  
             make_facet_graph(
@@ -67,7 +72,7 @@ shinyServer(function(input, output) {
                 ,y_aes      = y_value
                 ,color_aes  = color_value
                 ,facet_expr = facet_row_col
-                ,smooth     = TRUE)
+                ,smooth     = smooth_value)
         g
         
         
@@ -75,3 +80,5 @@ shinyServer(function(input, output) {
     })
 
 })
+
+
