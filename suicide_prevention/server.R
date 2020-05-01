@@ -41,6 +41,9 @@ shinyServer(function(input, output) {
         age_group_filter <- input$age_range_select
         suicide_type_value <- input$suicide_type_select
         smooth_value <- input$smooth_checkbox
+        scales_values <- input$scales_checkbox
+        group_value <-  NULL
+        
         
         facet_row_col <- paste0(facet_row,"~",facet_col)
         
@@ -52,6 +55,11 @@ shinyServer(function(input, output) {
             
         if(!facet_col %in% c(".","suicide_cause")) {
             grouping_frame_values <- c(grouping_frame_values,facet_col)
+        }
+        
+        if(!color_value == "suicide_cause" && (facet_row %in% c(".","suicide_cause") | facet_col %in% c(".","suicide_cause"))) {
+            grouping_frame_values <- c(grouping_frame_values,color_value)
+            group_value <- color_value 
         }
         
         
@@ -70,8 +78,10 @@ shinyServer(function(input, output) {
                 x_aes       = x_value
                 ,y_aes      = y_value
                 ,color_aes  = color_value
+                ,group_aes  = group_value
                 ,facet_expr = facet_row_col
-                ,smooth     = smooth_value)
+                ,smooth     = smooth_value
+                ,scales     = scales_values)
         g
         
         

@@ -107,6 +107,9 @@ shinyUI(fluidPage(
             ,checkboxInput(inputId = "smooth_checkbox"
                            ,label  = "Linear Regression Line"
                            ,value  = FALSE)
+            ,checkboxInput(inputId = "scales_checkbox"
+                           ,label  = "Free Y Scales"
+                           ,value  = FALSE)
             
             
         ),

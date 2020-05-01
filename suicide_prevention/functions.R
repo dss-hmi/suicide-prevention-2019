@@ -88,8 +88,10 @@ make_facet_graph <- function(
   ,x_aes
   ,y_aes
   ,color_aes
+  ,group_aes = NULL
   ,facet_expr = NULL
   ,smooth = FALSE
+  ,scales = FALSE
 ){
   # browser()
   
@@ -99,6 +101,7 @@ make_facet_graph <- function(
         x      = x_aes
         ,y     = y_aes
         ,color = color_aes
+        ,group = group_aes
       )
     ) +
     geom_line() +
@@ -110,12 +113,18 @@ make_facet_graph <- function(
       geom_smooth(method = "lm", se = FALSE)
   }
   
+  
+  
   if(!is.null(facet_expr)){
     
     facet_formula <- enexpr(facet_expr)
-    
-    g_out <- g_out +
-      facet_grid(facet_formula)
+    if(scales){
+      g_out <- g_out +
+        facet_grid(facet_formula, scales = "free_y")
+    } else {
+      g_out <- g_out +
+        facet_grid(facet_formula)
+    }
   }
   
   return(g_out)
