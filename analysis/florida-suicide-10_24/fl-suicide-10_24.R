@@ -204,7 +204,55 @@ d %>%
                         ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
                         ,parse = TRUE
                         ,label.x = 0.9
-                        ,label.y = 0.1)
+                        ,label.y = 0.1) +
+  labs(
+    x  = NULL
+    ,y = NULL
+  )
+
+
+# ---- age-breakdown -----------------------------------------------------------
+
+d <- ds0 %>% 
+  compute_rate(c("year","age_group")) %>% 
+  filter(suicide_cause == "suicide") %>% 
+  select(-suicide_cause) %>% 
+  tidyr::pivot_longer(
+    cols       = c("n_suicides","n_population", "rate_suicides")
+    ,names_to  = "metric"
+    ,values_to = "value"
+  ) 
+
+labels <- c(
+  "n_suicides"     = "Suicides"
+  ,"n_population"  = "Population"
+  ,"rate_suicides" = "Rate per 100k"
+  ,"10-14"         =   "10-14"    
+  ,"15-19"         =   "15-19"    
+  ,"20-24"         =   "20-24" 
+  
+)
+
+d %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  facet_grid(metric ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse   = TRUE
+                        ,label.x = 0.05
+                        ,label.y = 1
+                        ,color   = "#D95F02") +
+  labs(
+    x  = NULL
+    ,y = NULL
+  )
+  
+
 
 
 

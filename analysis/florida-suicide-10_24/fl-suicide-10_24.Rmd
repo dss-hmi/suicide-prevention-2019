@@ -99,4 +99,9 @@ To begin, let us answer the most fundamental question:
 ```{r overall-trends, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+> What is the breakdown by age group
+
+```{r age-breakdown, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
 
