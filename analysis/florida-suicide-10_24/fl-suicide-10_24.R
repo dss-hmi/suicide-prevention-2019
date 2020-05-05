@@ -256,78 +256,138 @@ d %>%
 
 
 
-# ---- suicide cause -----------------------------------------------------------
+# ---- year-breakdown-count -------------------------------------------
+
 major_causes <- c("gun","hanging","drug","non_gun","non_gun_hang_drug")
 
+major_causes_order <- c(
+  "gun"                = "Gun"
+  ,"hanging"           = "Hanging"
+  ,"drug"              = "Drug"
+  ,"non_gun"           = "Non Gun"
+  ,"non_gun_hang_drug" = "Non Major")
+
 d <- ds0 %>% 
-  filter(age_group %in% age_groups_10_24) %>%
-  # filter(year == 2017) %>% 
   compute_rate("year")
 # d <- d$long
 
-
-g <- d %>%  
+d %>%  
   filter(suicide_cause %in% major_causes) %>% 
-  ggplot(aes(x = reorder(suicide_cause,-n_suicides), y = n_suicides)) +
-  geom_col(alpha = 0.4) +
-  geom_text(aes(label = n_suicides)) +
+  mutate(
+    suicide_cause = factor(
+      suicide_cause
+      ,levels = names(major_causes_order)
+      ,labels = major_causes_order
+      )
+  ) %>% 
+  ggplot(aes(x = suicide_cause, y = n_suicides)) +
+  geom_col(alpha = 0.4, fill = "#1B9E77", color = "#666666") +
+  geom_text(aes(label = n_suicides), hjust = 1) +
   coord_flip() +
-  facet_wrap(~year)
-g
+  facet_wrap(~year) +
+  labs(
+    x        = NULL
+    ,y       = NULL
+    ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
+    ,title   = "Breakdown of Yearly Suicide Counts"
+  )
 
-g <- d %>%  
+# ---- year-breakdown-rate -------------------------------------------
+
+d %>%  
   filter(suicide_cause %in% major_causes) %>% 
-  ggplot(aes(x = reorder(suicide_cause, rate_suicides), y = rate_suicides)) +
-  geom_col(alpha = 0.4) +
-  geom_text(aes(label = round(rate_suicides,1))) +
+  mutate(
+    suicide_cause = factor(
+      suicide_cause
+      ,levels = names(major_causes_order)
+      ,labels = major_causes_order
+    )
+  ) %>% 
+  ggplot(aes(x = suicide_cause, y = rate_suicides)) +
+  geom_col(alpha = 0.4, fill = "#1B9E77", color = "#666666") +
+  geom_text(aes(label = round(rate_suicides,1)), hjust = 1.1) +
   coord_flip() +
-  facet_wrap(~year)
-g
+  facet_wrap(~year) +
+  labs(
+    x        = NULL
+    ,y       = NULL
+    ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
+    ,title   = "Breakdown of Yearly Suicide Rates"
+  )
+
+# ---- yearly-type-facets ----
+
+# g <- d %>% 
+#   filter(suicide_cause %in% major_causes) %>% 
+#   ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+#   geom_line() +
+#   geom_point(shape = 21) +
+#   geom_smooth(method = "lm", se = FALSE) +
+#   ggpmisc::stat_poly_eq(
+#     formula = y ~ + x
+#     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+#     ,parse = TRUE
+#     # , vjust = 7
+#   ) 
+# g
+
 
 g <- d %>% 
   filter(suicide_cause %in% major_causes) %>% 
-  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
-  geom_line() +
-  geom_point(shape = 21)
-g
-
-
-g <- d %>% 
-  filter(suicide_cause %in% major_causes) %>% 
-  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
-  geom_line() +
-  geom_point(shape = 21) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  mutate(
+    suicide_cause = factor(
+      suicide_cause
+      ,levels = names(major_causes_order)
+      ,labels = major_causes_order
+    )
+  ) %>%
+  ggplot(aes(x = year, y = rate_suicides)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
   facet_wrap(~suicide_cause
-             # , scales = "free"
+             # , scales = "free_y"
              ) +
   ggpmisc::stat_poly_eq(
     formula = y ~ + x
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
     ,parse = TRUE
-    # , vjust = 7
-  ) 
+    ,label.x = 0.05
+    ,label.y = 0.99
+  ) +
+  labs(
+    x        = NULL
+    ,y       = NULL
+    ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
+  )
+  
 g
 
 #when ignoring race and ethnicity for age group 10-24 average increase of suicide
 #mortality from gun (+0.1) per year is simaliar to average 
 #increase from non-gun means (+0.105)
 
-d <- ds0 %>% 
-  filter(age_group %in% age_groups_10_24) %>% 
-  compute_rate(c("year","sex","race_ethnicity"))
-  
-d <- d$long  
-  
 
-g <- d %>% 
+# ---- rate-cause-race ---------------------------------------------
+
+d <- ds0 %>% 
+  compute_rate(c("year","sex","race_ethnicity"))
+
+
+d %>% 
   filter(suicide_cause %in% c("gun","non_gun")) %>% 
+  mutate(
+    suicide_cause = factor(suicide_cause
+                           ,levels = c("gun","non_gun")
+                           ,labels = c("Gun","Non-Gun"))
+  ) %>% 
   ggplot(aes(x = year, y = rate_suicides, color = sex)) +
   geom_line() +
   geom_point(shape = 21) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_x_continuous(breaks = seq(2007,2017,5)) +
+  scale_color_brewer(palette = "Dark2") +
   facet_grid(suicide_cause ~race_ethnicity
              # , scales = "free"
   ) +
@@ -336,8 +396,16 @@ g <- d %>%
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
     ,parse = TRUE
     # , vjust = 7
-  ) 
-g
+  ) +
+  labs(
+    x      = NULL
+    ,y     = NULL
+    ,title = "Rate of Suicides by Race and Sex"
+    ,color = "Sex"
+  )
+
+# ---- ----
+
 
 g <- d %>% 
   filter(suicide_cause %in% c("gun","non_gun")) %>% 
@@ -378,6 +446,8 @@ g
 
 
 # ---- graphing function --------------------------------------------------
+
+
 library(rlang)
 
 ds_test <- d %>% 

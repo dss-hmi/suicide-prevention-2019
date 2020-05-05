@@ -104,4 +104,27 @@ To begin, let us answer the most fundamental question:
 ```{r age-breakdown, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+# Q2 - Yearly Breakdowns
+
+```{r year-breakdown-count, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+```{r year-breakdown-rate, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+# Q3 - 
+
+```{r yearly-type-facets, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+When ignoring race and ethnicity for age group 10-24 average increase of suicide mortality from gun (+0.1) per year is simaliar to average increase from non-gun means (+0.105)
+
+# Q4 - Sex and Ethnicity
+
+```{r rate-cause-race, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
+
+
 
