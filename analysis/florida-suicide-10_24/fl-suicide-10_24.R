@@ -242,8 +242,11 @@ d <- ds0 %>%
   compute_rate(c("year","age_group")) %>% 
   filter(suicide_cause == "suicide") %>% 
   select(-suicide_cause) %>% 
+  mutate(
+    one_out_of = n_population / n_suicides
+  ) %>% 
   tidyr::pivot_longer(
-    cols       = c("n_suicides","n_population", "rate_suicides")
+    cols       = c("n_suicides","n_population", "rate_suicides", "one_out_of")
     ,names_to  = "metric"
     ,values_to = "value"
   ) 
@@ -252,6 +255,7 @@ labels <- c(
   "n_suicides"     = "Suicides"
   ,"n_population"  = "Population"
   ,"rate_suicides" = "Rate per 100k"
+  ,"one_out_of"    = "One out of"
   ,"10-14"         =   "10-14"    
   ,"15-19"         =   "15-19"    
   ,"20-24"         =   "20-24" 
@@ -259,6 +263,7 @@ labels <- c(
 )
 
 d %>% 
+  filter(!metric == "one_out_of") %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line(alpha = 0.5) +
   geom_point(shape = 21, size = 3, alpha = 0.8) +
@@ -276,7 +281,46 @@ d %>%
     x  = NULL
     ,y = NULL
   )
-  
+
+d1 <- d %>% 
+  filter(year %in% c(2006,2017)) %>% 
+  filter(metric == "one_out_of") %>% 
+  mutate(
+    value_round = round(value /1000, 2)
+  ) %>% 
+  arrange(age_group, year)
+d1 %>% neat()
+
+d2 <- d1 %>% 
+  select(-value) %>% 
+  tidyr::pivot_wider(values_from = value_round, names_from = year) %>% 
+  mutate(
+    pct_pool_shrink = (`2006` - `2017`) / `2006`
+  )
+d2 %>% neat()
+
+# ---- age-breakdown-1 -----------------------------------------------------------
+
+d %>% 
+  filter(metric == "one_out_of") %>% 
+  mutate( value = value/1000) %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  facet_wrap(metric ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse   = TRUE
+                        ,label.x = 0.05
+                        ,label.y = 1
+                        ,color   = "#D95F02") +
+  labs(
+    x  = NULL
+    ,y = "Thousands"
+  )
 
 
 
