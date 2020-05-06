@@ -360,6 +360,7 @@ g <- d %>%
     x        = NULL
     ,y       = NULL
     ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
+    ,title = "Rates per 100,000"
   )
   
 g
@@ -368,7 +369,38 @@ g
 #mortality from gun (+0.1) per year is simaliar to average 
 #increase from non-gun means (+0.105)
 
+g <- d %>% 
+  filter(suicide_cause %in% major_causes) %>% 
+  mutate(
+    suicide_cause = factor(
+      suicide_cause
+      ,levels = names(major_causes_order)
+      ,labels = major_causes_order
+    )
+  ) %>%
+  ggplot(aes(x = year, y = n_suicides)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  facet_wrap(~suicide_cause
+             # , scales = "free_y"
+  ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    ,label.x = 0.05
+    ,label.y = 0.99
+  ) +
+  labs(
+    x        = NULL
+    ,y       = NULL
+    ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
+    ,title = "Counts of suicide events"
+  )
 
+g
 # ---- rate-cause-race ---------------------------------------------
 
 d <- ds0 %>% 
@@ -404,6 +436,34 @@ d %>%
     ,color = "Sex"
   )
 
+d %>% 
+  filter(suicide_cause %in% c("gun","non_gun")) %>% 
+  mutate(
+    suicide_cause = factor(suicide_cause
+                           ,levels = c("gun","non_gun")
+                           ,labels = c("Gun","Non-Gun"))
+  ) %>% 
+  ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
+  geom_line() +
+  geom_point(shape = 21) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(breaks = seq(2007,2017,5)) +
+  scale_color_brewer(palette = "Dark2") +
+  facet_grid(sex ~race_ethnicity
+             # , scales = "free"
+  ) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) +
+  labs(
+    x      = NULL
+    ,y     = NULL
+    ,title = "Rate of Suicides by Race and Sex"
+    ,color = "Suicide Cause"
+  )
 # ---- ----
 
 
