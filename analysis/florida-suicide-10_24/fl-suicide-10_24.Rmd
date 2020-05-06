@@ -58,6 +58,13 @@ This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 20
 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
+> Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
+
+> Q2 - How do means of suicide compare in each year? 
+
+> Q3 - How do trends compare across the means of suicide?
+
+> Q4 - How do trends compare by race, sex, and means of means of suicide?
 
 # Environment
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
@@ -79,7 +86,7 @@ The data comes from Florida Health Charts and contains suicide mortality between
 
 
 ## Data Tweaks
-This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. The data is also filter to only include ages 10-24.
+This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. The data is also filter to only include individuals between ages 10 and 24.
 ```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
 ds0 %>% glimpse()
 ```
@@ -94,17 +101,19 @@ ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
 
 To begin, let us answer the most fundamental question: 
 
-> What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
+> Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
 ```{r overall-trends, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-> What is the breakdown by age group
+> Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
 
 ```{r age-breakdown, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q2 - Yearly Breakdowns
+
+> Q2 - How do means of suicide compare in each year? 
 
 ```{r year-breakdown-count, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
@@ -112,7 +121,9 @@ To begin, let us answer the most fundamental question:
 ```{r year-breakdown-rate, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-# Q3 - 
+# Q3 - Means across Years 
+
+> Q3 - How do trends compare across the means of suicide?
 
 ```{r yearly-type-facets, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
@@ -121,7 +132,9 @@ When ignoring race and ethnicity for age group 10-24 average increase of suicide
 
 # Q4 - Sex and Ethnicity
 
-```{r rate-cause-race, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+> Q4 - How do trends compare by race, sex, and means of means of suicide?
+
+```{r rate-cause-race, echo=TRUE, fig.height=7, fig.width=11, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 
