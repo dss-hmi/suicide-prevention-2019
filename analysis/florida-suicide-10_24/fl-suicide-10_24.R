@@ -172,6 +172,31 @@ compute_rate <- function( d  ,grouping_frame  ,wide = FALSE ){
 # ls_compute_rate <- ds0 %>% compute_rate("year")
 
 
+# ---- overall-trends-0 ---------------------------------------------------------
+d <- ds0 %>% 
+  compute_rate("year") %>% 
+  filter(suicide_cause == "suicide") %>% 
+  mutate(
+    one_out_of = n_population / n_suicides
+  )
+d
+
+d %>% 
+  ggplot(aes(x = year, y = one_out_of) )+
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse = TRUE
+                        ,label.x = 0.9
+                        ,label.y = 0.9) +
+  labs(
+    x  = NULL
+    ,y = NULL
+  )
 # ---- overall-trends ---------------------------------------------------------
 
 d <- ds0 %>% 
