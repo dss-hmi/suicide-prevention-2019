@@ -23,10 +23,12 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     
+#need to update color, and facets dynamically.
+
+
     
-#check box for age groups
-#finish input values 
-#check boxes for suicide cause
+#change from grid to wrap
+# offer the user choice of free scales or not
 
     
 
@@ -35,8 +37,13 @@ shinyServer(function(input, output) {
         y_value     <- input$y_value_select
         facet_row   <- input$facet_row_select
         facet_col   <- input$facet_col_select
-        color_value <- "suicide_cause"
-        age_group_filter <- c("10_14", "15_19", "20_24")
+        color_value <- input$color_select
+        age_group_filter <- input$age_range_select
+        suicide_type_value <- input$suicide_type_select
+        smooth_value <- input$smooth_checkbox
+        scales_values <- input$scales_checkbox
+        group_value <-  NULL
+        
         
         facet_row_col <- paste0(facet_row,"~",facet_col)
         
@@ -50,6 +57,11 @@ shinyServer(function(input, output) {
             grouping_frame_values <- c(grouping_frame_values,facet_col)
         }
         
+        if(!color_value == "suicide_cause" && (facet_row %in% c(".","suicide_cause") | facet_col %in% c(".","suicide_cause"))) {
+            grouping_frame_values <- c(grouping_frame_values,color_value)
+            group_value <- color_value 
+        }
+        
         
         
         d <- ds0 %>% 
@@ -59,15 +71,17 @@ shinyServer(function(input, output) {
             )
         
         d <- d$long %>% 
-            filter(suicide_cause == "suicide") 
+            filter(suicide_cause %in% suicide_type_value) 
         
         g <- d %>%  
             make_facet_graph(
                 x_aes       = x_value
                 ,y_aes      = y_value
                 ,color_aes  = color_value
+                ,group_aes  = group_value
                 ,facet_expr = facet_row_col
-                ,smooth     = TRUE)
+                ,smooth     = smooth_value
+                ,scales     = scales_values)
         g
         
         
@@ -75,3 +89,5 @@ shinyServer(function(input, output) {
     })
 
 })
+
+
