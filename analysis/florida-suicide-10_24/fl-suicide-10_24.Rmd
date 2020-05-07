@@ -111,6 +111,9 @@ To begin, let us answer the most fundamental question:
 ```{r age-breakdown, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+```{r age-breakdown-1, echo=TRUE, fig.height=2, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
 # Q2 - Yearly Breakdowns
 
 > Q2 - How do means of suicide compare in each year? 
