@@ -58,6 +58,7 @@ florida_counties_map <- ggplot2::map_data("county") %>%
     )
   ) %>% tibble::as_tibble()
 
+
 # ---- tweak-data-1 -----------------------------------------------------
 
 #mutate and filter data to include only ages 10-24
@@ -72,7 +73,7 @@ ds0 <- ds_population_suicide %>%
     ,age_group     = factor(age_group
                             ,levels = names(lvl_age_groups)
                             ,labels = lvl_age_groups
-                            )
+    )
     ,n_population  = as.integer(n_population)
     ,n_suicides    = as.integer(n_suicides)
   ) %>% filter(age_group %in% age_groups_10_24)
@@ -219,7 +220,7 @@ labels <- c(
   ,"rate_suicides" = "Rate per 100k"
   ,"n_out_of"      = "1 Out of"
 )
-  
+
 
 
 d %>% 
@@ -248,15 +249,15 @@ d <- ds0 %>%
   filter(suicide_cause == "suicide") %>% 
   select(-suicide_cause) %>% 
   mutate(
-<<<<<<< HEAD
+    <<<<<<< HEAD
     n_out_of     = n_population/n_suicides
     ,n_population = n_population/1000000
   ) %>% 
   tidyr::pivot_longer(
     cols       = c("n_suicides","n_population", "rate_suicides" ,"n_out_of")
-=======
-
->>>>>>> b13d685690b52ffae871e77c08a385206602fd82
+    =======
+      
+      >>>>>>> b13d685690b52ffae871e77c08a385206602fd82
     ,names_to  = "metric"
     ,values_to = "value"
   ) 
@@ -265,10 +266,10 @@ labels <- c(
   "n_suicides"     = "Suicides"
   ,"n_population"  = "Population \n (in Millions)"
   ,"rate_suicides" = "Rate per 100k"
-<<<<<<< HEAD
+  <<<<<<< HEAD
   ,"n_out_of"      = "1 Out of"
-=======
->>>>>>> b13d685690b52ffae871e77c08a385206602fd82
+  =======
+    >>>>>>> b13d685690b52ffae871e77c08a385206602fd82
   ,"10-14"         =   "10-14"    
   ,"15-19"         =   "15-19"    
   ,"20-24"         =   "20-24" 
@@ -341,13 +342,13 @@ d %>%
 # ---- year-breakdown-count -------------------------------------------
 
 suicide_cause_order <- c(
-"drug"        = "Drug"
-,"gun"          = "Gun"
-,"hanging"      = "Hanging"
-,"jump"         = "Jump"
-,"other_seq"    = "Other Sequelae"
-,"other_liq"    = "Other Liqud"
-,"other_gas"    = "Other Gas & Vapor"
+  "drug"        = "Drug"
+  ,"gun"          = "Gun"
+  ,"hanging"      = "Hanging"
+  ,"jump"         = "Jump"
+  ,"other_seq"    = "Other Sequelae"
+  ,"other_liq"    = "Other Liqud"
+  ,"other_gas"    = "Other Gas & Vapor"
 )
 
 
@@ -400,9 +401,9 @@ d %>%
 # ---- g5 -----------------------------------------------------------------
 
 major_causes <- c(
-"gun"           = "Gun"
-,"hanging"      = "Hanging"
-,"non_gun_hang" = "Non Gun/Hang")
+  "gun"           = "Gun"
+  ,"hanging"      = "Hanging"
+  ,"non_gun_hang" = "Non Gun/Hang")
 
 d %>% 
   filter(suicide_cause %in% names(major_causes)) %>%
@@ -477,7 +478,7 @@ g <- d %>%
   scale_x_continuous(breaks = seq(2007,2017,3)) +
   facet_wrap(~suicide_cause
              # , scales = "free_y"
-             ) +
+  ) +
   ggpmisc::stat_poly_eq(
     formula = y ~ + x
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
@@ -491,7 +492,7 @@ g <- d %>%
     ,caption = "Non-Major counts all types other then Gun, Hanging, and Drug"
     ,title = "Rates per 100,000"
   )
-  
+
 g
 
 #when ignoring race and ethnicity for age group 10-24 average increase of suicide
@@ -649,7 +650,7 @@ make_facet_graph <- function(
   ,color
   ,facet_expr = NULL
   ,smooth = FALSE
-  ){
+){
   
   # use of ensym, allows user to either provided quoted strings or unqouted strings
   g_out <- ds %>% 
@@ -658,11 +659,11 @@ make_facet_graph <- function(
         x      = !!ensym(x)
         ,y     = !!ensym(y)
         ,color = !!ensym(color)
-        )
-      ) +
+      )
+    ) +
     geom_line() +
     geom_point(shape = 21) 
-    # scale_x_continuous(breaks = seq(2007,2017,5))
+  # scale_x_continuous(breaks = seq(2007,2017,5))
   
   if(smooth){
     g_out <- g_out +
@@ -675,9 +676,9 @@ make_facet_graph <- function(
     
     g <- g +
       facet_grid(facet_formula)
-    }
+  }
   
-return(g)
+  return(g)
 }      
 
 
