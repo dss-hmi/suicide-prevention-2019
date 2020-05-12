@@ -172,6 +172,31 @@ compute_rate <- function( d  ,grouping_frame  ,wide = FALSE ){
 # ls_compute_rate <- ds0 %>% compute_rate("year")
 
 
+# ---- overall-trends-0 ---------------------------------------------------------
+d <- ds0 %>% 
+  compute_rate("year") %>% 
+  filter(suicide_cause == "suicide") %>% 
+  mutate(
+    one_out_of = n_population / n_suicides
+  )
+d
+
+d %>% 
+  ggplot(aes(x = year, y = one_out_of) )+
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse = TRUE
+                        ,label.x = 0.9
+                        ,label.y = 0.9) +
+  labs(
+    x  = NULL
+    ,y = NULL
+  )
 # ---- overall-trends ---------------------------------------------------------
 
 d <- ds0 %>% 
@@ -223,11 +248,15 @@ d <- ds0 %>%
   filter(suicide_cause == "suicide") %>% 
   select(-suicide_cause) %>% 
   mutate(
+<<<<<<< HEAD
     n_out_of     = n_population/n_suicides
     ,n_population = n_population/1000000
   ) %>% 
   tidyr::pivot_longer(
     cols       = c("n_suicides","n_population", "rate_suicides" ,"n_out_of")
+=======
+
+>>>>>>> b13d685690b52ffae871e77c08a385206602fd82
     ,names_to  = "metric"
     ,values_to = "value"
   ) 
@@ -236,7 +265,10 @@ labels <- c(
   "n_suicides"     = "Suicides"
   ,"n_population"  = "Population \n (in Millions)"
   ,"rate_suicides" = "Rate per 100k"
+<<<<<<< HEAD
   ,"n_out_of"      = "1 Out of"
+=======
+>>>>>>> b13d685690b52ffae871e77c08a385206602fd82
   ,"10-14"         =   "10-14"    
   ,"15-19"         =   "15-19"    
   ,"20-24"         =   "20-24" 
@@ -244,6 +276,7 @@ labels <- c(
 )
 
 d %>% 
+  filter(!metric == "one_out_of") %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line(alpha = 0.5) +
   geom_point(shape = 21, size = 3, alpha = 0.8) +
@@ -261,7 +294,46 @@ d %>%
     x  = NULL
     ,y = NULL
   )
-  
+
+d1 <- d %>% 
+  filter(year %in% c(2006,2017)) %>% 
+  filter(metric == "one_out_of") %>% 
+  mutate(
+    value_round = round(value /1000, 2)
+  ) %>% 
+  arrange(age_group, year)
+d1 %>% neat()
+
+d2 <- d1 %>% 
+  select(-value) %>% 
+  tidyr::pivot_wider(values_from = value_round, names_from = year) %>% 
+  mutate(
+    pct_pool_shrink = (`2006` - `2017`) / `2006`
+  )
+d2 %>% neat()
+
+# ---- age-breakdown-1 -----------------------------------------------------------
+
+d %>% 
+  filter(metric == "one_out_of") %>% 
+  mutate( value = value/1000) %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  facet_wrap(metric ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse   = TRUE
+                        ,label.x = 0.05
+                        ,label.y = 1
+                        ,color   = "#D95F02") +
+  labs(
+    x  = NULL
+    ,y = "Thousands"
+  )
 
 
 
