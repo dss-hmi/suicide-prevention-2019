@@ -71,6 +71,9 @@ This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 20
 ```{r load-packages, echo=echoChunks, message=FALSE, warning = FALSE}
 ```
 
+```{r load-sources, echo=echoChunks, message=FALSE, warning = FALSE}
+```
+
 ```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
 ```
  
@@ -123,6 +126,14 @@ To begin, let us answer the most fundamental question:
 
 ```{r year-breakdown-rate, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
+
+```{r g5, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+```{r g6, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
 
 # Q3 - Means across Years 
 
