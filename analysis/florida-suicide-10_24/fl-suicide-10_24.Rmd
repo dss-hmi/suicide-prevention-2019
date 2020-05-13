@@ -106,15 +106,28 @@ To begin, let us answer the most fundamental question:
 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
-```{r overall-trends, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r overall-trends, echo=TRUE, fig.height=6, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 > Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
 
-```{r age-breakdown, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r age-breakdown, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-```{r age-breakdown-1, echo=TRUE, fig.height=2, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+The `10-14` age group witnesses quite a dramatic decrease in the `One out of` measure, dwarfing the scale for the other two age groups. We recreate it separately:
+
+```{r age-breakdown-2, echo=TRUE, fig.height=3, fig.width=8, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+To explore whether certain age transitions are associated with increased suicidality, we plot the distribution of suicide events within each year of age among the observed years (2006 - 2018). 
+```{r age-breakdown-3, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+We see a marked spike in deaths during the 17 to 18 transition. 
+It appears the majority of deaths in 10-14 groups could be attributed to 13 and 14 year olds. 
+There appears to be a plateau following the age 25 for the next 15 years, which makes theoretical sence: after the turmoils of coming out of age and young adulthood, there life acquires a more stable character. 
+
+Also note, that when examining the trends within the `10-24` age group, the relationship bewtween the age and the suicide mortality is very well summarized by a linear model (R^2 = .85)
+```{r age-breakdown-4, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q2 - Yearly Breakdowns
