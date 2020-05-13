@@ -58,6 +58,9 @@ florida_counties_map <- ggplot2::map_data("county") %>%
     )
   ) %>% tibble::as_tibble()
 
+# For quick verification of the annual cohort structure
+ds_suicide_by_age <- readRDS("./data-unshared/derived/cause113-age10-age99/cause113-age10-age99.rds") 
+
 # ---- tweak-data-1 -----------------------------------------------------
 
 #mutate and filter data to include only ages 10-24
@@ -204,12 +207,16 @@ d %>%
   geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
   scale_y_continuous(labels = scales::comma) +
   scale_x_continuous(breaks = seq(2007,2017,3)) +
-  facet_wrap(~metric, scales = "free_y",nrow = 1 , labeller = as_labeller(labels)) +
+  facet_wrap(~metric, scales = "free_y",nrow = 2 , labeller = as_labeller(labels)) +
   ggpmisc::stat_poly_eq(formula = y ~ + x 
                         ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
                         ,parse = TRUE
                         ,label.x = 0.9
                         ,label.y = 0.05) +
+  geom_text(
+    data = d %>% dplyr::filter(year %in% c(2006, 2017))
+    , aes(label = round(value,2)), vjust =-0
+  )+
   labs(
     x  = NULL
     ,y = NULL
@@ -262,8 +269,95 @@ d %>%
     ,y = NULL
   )
 
+# ---- age-breakdown-2 -----------------------------------------------------------
+
+d %>% 
+  dplyr::filter(age_group %in% c("15-19","20-24")) %>% 
+  dplyr::filter(metric %in% c("n_out_of")) %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line(alpha = 0.5) +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
+  facet_wrap(~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse   = TRUE
+                        ,label.x = 0.05
+                        ,label.y = 1
+                        ,color   = "#D95F02") +
+  labs(
+    x  = NULL
+    ,y = NULL
+  )
 
 
+# ---- age-breakdown-3 -------------------------------------
+# Hypothesis: does entering high-school associated with increased suicide events?
+# Can we see the spike in mortality at 13-14 years of age?
+# For that we need to view by year mortality event? 
+
+d <- ds_suicide_by_age %>% 
+  mutate(age = as.integer(age)) %>% 
+  filter(age %in% c(10:40)) %>% 
+  group_by(year, age) %>% 
+  summarize(
+    n_suicide        = sum(count, na.rm = T)
+  ) %>% 
+  ungroup()
+
+g <- d %>% 
+  ggplot(aes(x = age, y = n_suicide))+
+  geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
+  geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, color = "salmon"
+    # , vjust = 7
+  )+
+  geom_boxplot(aes( group = age), fill = NA)+
+  scale_x_continuous(breaks = seq(10,40,1))+
+  scale_y_continuous(breaks = seq(0,100,10))+
+  geom_vline(xintercept = 24.5, size = 4, alpha = .1)+
+  geom_vline(xintercept = 17.5, size = 1, linetype = "dashed", color = "grey80")+
+  theme(
+    panel.grid.minor = element_blank()
+  )+
+  labs(
+    title = "Suicide events among person of the same age (2006-2018)"
+    ,x = "Age in years", y = "Count of suicides (all causes)"
+  )
+g
+
+# ---- age-breakdown-4 -------------------------------------
+# among 10-24 the increase across age is very linear
+g <- d %>% 
+  filter(age %in% c(10:24)) %>% 
+  ggplot(aes(x = age, y = n_suicide))+
+  geom_point(shape = 21, alpha = .4, size = 2, position = position_jitter(width = .1))+
+  geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
+  geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, color = "salmon"
+    # , vjust = 7
+  )+
+  geom_boxplot(aes( group = age), fill = NA)+
+  scale_x_continuous(breaks = seq(10,40,1))+
+  scale_y_continuous(breaks = seq(0,100,10))+
+  geom_vline(xintercept = 24.5, size = 4, alpha = .1)+
+  geom_vline(xintercept = 17.5, size = 1, linetype = "dashed", color = "grey80")+
+  theme(
+    panel.grid.minor = element_blank()
+  )+
+  labs(
+    title = "Suicide events among person of the same age (2006-2018)"
+    ,x = "Age in years", y = "Count of suicides (all causes)"
+  )
+g
 
 
 # ---- year-breakdown-count -------------------------------------------
