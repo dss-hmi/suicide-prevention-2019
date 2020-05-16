@@ -1,6 +1,6 @@
 ---
 title: "Florida Youth Suicide"
-author: "Kyle Belanger"
+author: "Andriy V. Koval & Kyle Belanger"
 date: "April 30, 2020"
 output:
   html_document:
@@ -106,38 +106,39 @@ To begin, let us answer the most fundamental question:
 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
-```{r overall-trends, echo=TRUE, fig.height=6, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q1-1, echo=TRUE, fig.height=6, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 > Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
 
-```{r age-breakdown, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q1b-1, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 The `10-14` age group witnesses quite a dramatic decrease in the `One out of` measure, dwarfing the scale for the other two age groups. We recreate it separately:
 
-```{r age-breakdown-2, echo=TRUE, fig.height=3, fig.width=8, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q1b-2, echo=TRUE, fig.height=3, fig.width=8, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 To explore whether certain age transitions are associated with increased suicidality, we plot the distribution of suicide events within each year of age among the observed years (2006 - 2018). 
-```{r age-breakdown-3, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q1b-3, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE, warning=FALSE}
 ```
 We see a marked spike in deaths during the 17 to 18 transition. 
 It appears the majority of deaths in 10-14 groups could be attributed to 13 and 14 year olds. 
 There appears to be a plateau following the age 25 for the next 15 years, which makes theoretical sence: after the turmoils of coming out of age and young adulthood, there life acquires a more stable character. 
 
 Also note, that when examining the trends within the `10-24` age group, the relationship bewtween the age and the suicide mortality is very well summarized by a linear model ($R^2 = .85$)
-```{r age-breakdown-4, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q1b-4, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q2 - Yearly Breakdowns
 
 > Q2 - How do means of suicide compare in each year? 
 
-```{r year-breakdown-count, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q2-1, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-```{r year-breakdown-rate, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+
+```{r q2-2, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 
@@ -147,10 +148,10 @@ Also note, that when examining the trends within the `10-24` age group, the rela
 
 > Q3 - How do trends compare across the means of suicide?
 
-```{r g5, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q3-1, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-```{r g6, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q3-2, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 
@@ -160,9 +161,12 @@ When ignoring race and ethnicity for age group 10-24 average increase of suicide
 
 > Q4 - How do trends compare by race, sex, and means of means of suicide?
 
-```{r rate-cause-race, echo=TRUE, fig.height=7, fig.width=11, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r q4-1, echo=TRUE, fig.height=7, fig.width=11, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+
+```{r q4-2, echo=TRUE, fig.height=7, fig.width=11, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
 
 
 

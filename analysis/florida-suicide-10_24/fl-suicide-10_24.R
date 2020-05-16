@@ -175,9 +175,9 @@ compute_rate <- function( d  ,grouping_frame  ,wide = FALSE ){
 # ls_compute_rate <- ds0 %>% compute_rate("year")
 
 
-# ---- overall-trends ---------------------------------------------------------
+# ---- q1-1 ---------------------------------------------------------
 
-d <- ds0 %>% 
+d1 <- ds0 %>% 
   compute_rate("year") %>% 
   filter(suicide_cause == "suicide") %>% 
   select(-suicide_cause) %>% 
@@ -200,7 +200,7 @@ labels <- c(
 
 
 
-d %>% 
+g1 <- d1 %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line(alpha = 0.5) +
   geom_point(shape = 21, size = 3, alpha = 0.8) +
@@ -214,18 +214,19 @@ d %>%
                         ,label.x = 0.9
                         ,label.y = 0.05) +
   geom_text(
-    data = d %>% dplyr::filter(year %in% c(2006, 2017))
+    data = d1 %>% dplyr::filter(year %in% c(2006, 2017))
     , aes(label = round(value,2)), vjust =-0
   )+
   labs(
     x  = NULL
     ,y = NULL
   )
+g1
 
 
-# ---- age-breakdown -----------------------------------------------------------
+# ---- q1b-1 -----------------------------------------------------------
 
-d <- ds0 %>% 
+d2 <- ds0 %>% 
   compute_rate(c("year","age_group")) %>% 
   filter(suicide_cause == "suicide") %>% 
   select(-suicide_cause) %>% 
@@ -250,7 +251,7 @@ labels <- c(
   
 )
 
-d %>% 
+g2 <- d2 %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line(alpha = 0.5) +
   geom_point(shape = 21, size = 3, alpha = 0.8) +
@@ -269,9 +270,11 @@ d %>%
     ,y = NULL
   )
 
-# ---- age-breakdown-2 -----------------------------------------------------------
+g2
 
-d %>% 
+# ---- q1b-2 -----------------------------------------------------------
+
+g3 <- d2 %>% 
   dplyr::filter(age_group %in% c("15-19","20-24")) %>% 
   dplyr::filter(metric %in% c("n_out_of")) %>% 
   ggplot(aes(x = year, y = value)) +
@@ -292,13 +295,15 @@ d %>%
     ,y = NULL
   )
 
+g3
 
-# ---- age-breakdown-3 -------------------------------------
+
+# ---- q1b-3 -------------------------------------
 # Hypothesis: does entering high-school associated with increased suicide events?
 # Can we see the spike in mortality at 13-14 years of age?
 # For that we need to view by year mortality event? 
 
-d <- ds_suicide_by_age %>% 
+d4 <- ds_suicide_by_age %>% 
   mutate(age = as.integer(age)) %>% 
   filter(age %in% c(10:40)) %>% 
   group_by(year, age) %>% 
@@ -307,7 +312,7 @@ d <- ds_suicide_by_age %>%
   ) %>% 
   ungroup()
 
-g <- d %>% 
+g4 <- d4 %>% 
   ggplot(aes(x = age, y = n_suicide))+
   geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
   geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
@@ -329,11 +334,12 @@ g <- d %>%
     title = "Suicide events among person of the same age (2006-2018)"
     ,x = "Age in years", y = "Count of suicides (all causes)"
   )
-g
+g4
 
-# ---- age-breakdown-4 -------------------------------------
+# ---- q1b-4 -------------------------------------
 # among 10-24 the increase across age is very linear
-g <- d %>% 
+
+g5 <- d4 %>% 
   filter(age %in% c(10:24)) %>% 
   ggplot(aes(x = age, y = n_suicide))+
   geom_point(shape = 21, alpha = .4, size = 2, position = position_jitter(width = .1))+
@@ -345,7 +351,7 @@ g <- d %>%
     ,parse = TRUE, color = "salmon"
     # , vjust = 7
   )+
-  geom_boxplot(aes( group = age), fill = NA)+
+  geom_boxplot(aes( group = age), fill = NA, outlier.shape = NA)+
   scale_x_continuous(breaks = seq(10,40,1))+
   scale_y_continuous(breaks = seq(0,100,10))+
   geom_vline(xintercept = 24.5, size = 4, alpha = .1)+
@@ -357,10 +363,12 @@ g <- d %>%
     title = "Suicide events among person of the same age (2006-2018)"
     ,x = "Age in years", y = "Count of suicides (all causes)"
   )
-g
+g5
 
 
-# ---- year-breakdown-count -------------------------------------------
+# ---- q2-1 -------------------------------------------
+
+#yearly count of suicide means 
 
 suicide_cause_order <- c(
   "drug"        = "Drug"
@@ -375,11 +383,11 @@ suicide_cause_order <- c(
 
 
 
-d <- ds0 %>% 
+d6 <- ds0 %>% 
   compute_rate("year")
-# d <- d$long
 
-d %>%  
+
+g6 <- d6 %>%  
   filter(!suicide_cause %in% c("suicide","non_gun_hang")) %>% 
   mutate(
     suicide_cause = factor(suicide_cause
@@ -396,11 +404,11 @@ d %>%
     ,y       = NULL
     ,title   = "Breakdown of Yearly Suicide Counts"
   )
+g6
 
+# ---- q2-2 -------------------------------------------
 
-# ---- year-breakdown-rate -------------------------------------------
-
-d %>%  
+g7 <-  d6 %>%  
   filter(!suicide_cause %in% c("suicide","non_gun_hang")) %>% 
   mutate(
     suicide_cause = factor(suicide_cause
@@ -418,15 +426,17 @@ d %>%
     ,title   = "Breakdown of Yearly Suicide Rates"
   )
 
+g7
 
-# ---- g5 -----------------------------------------------------------------
+
+# ---- q3-1 --------------------------------------------------------
 
 major_causes <- c(
   "gun"           = "Gun"
   ,"hanging"      = "Hanging"
   ,"non_gun_hang" = "Non Gun/Hang")
 
-d %>% 
+g8 <- d6 %>% 
   filter(suicide_cause %in% names(major_causes)) %>%
   mutate(
     suicide_cause = factor(suicide_cause
@@ -436,17 +446,25 @@ d %>%
   ggplot(aes(x = year,y = n_suicides, color = suicide_cause)) +
   geom_line() +
   geom_point(shape = 21, size = 3) +
+  geom_smooth(method = "lm", se = F) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    # , vjust = 7
+  ) +
   scale_x_continuous(breaks = seq(2006,2017,2)) +
   scale_color_brewer(palette = "Dark2") +
   labs(
     x = NULL
     ,y = " Count"
-  )
+  ) 
 
+g8
 
-# ---- g6 -----------------------------------------------------------------
+# ---- q3-2 -----------------------------------------------------------------
 
-d %>% 
+g9 <- d6 %>% 
   filter(suicide_cause %in% names(major_causes)) %>%
   mutate(
     suicide_cause = factor(suicide_cause
@@ -456,6 +474,12 @@ d %>%
   ggplot(aes(x = year,y = rate_suicides, color = suicide_cause)) +
   geom_line() +
   geom_point(shape = 21, size = 3) +
+  geom_smooth(method = "lm", se = F) +
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+  ) +
   scale_x_continuous(breaks = seq(2006,2017,2)) +
   scale_color_brewer(palette = "Dark2") +
   labs(
@@ -463,21 +487,21 @@ d %>%
     ,y = " Rate"
   )
 
+g9
 
+# ---- q4-1---------------------------------------------
 
-# ---- rate-cause-race ---------------------------------------------
-
-d <- ds0 %>% 
-  compute_rate(c("year","sex","race_ethnicity"))
-
-
-d %>% 
+d10 <- ds0 %>% 
+  compute_rate(c("year","sex","race_ethnicity")) %>% 
   filter(suicide_cause %in% c("gun","hanging","non_gun_hang")) %>% 
   mutate(
     suicide_cause = factor(suicide_cause
                            ,levels = c("gun","hanging","non_gun_hang")
                            ,labels = c("Gun","Hang","Other"))
-  ) %>% 
+  )
+  
+
+g10 <- d10 %>% 
   ggplot(aes(x = year, y = rate_suicides, color = sex)) +
   geom_line() +
   geom_point(shape = 21) +
@@ -499,14 +523,11 @@ d %>%
     ,title = "Rate of Suicides by Race and Sex"
     ,color = "Sex"
   )
+g10
 
-d %>% 
-  filter(suicide_cause %in% c("gun","non_gun","hanging")) %>% 
-  mutate(
-    suicide_cause = factor(suicide_cause
-                           ,levels = c("gun","haning","non_gun")
-                           ,labels = c("Gun","Hang","Non-Gun"))
-  ) %>% 
+# ---- q4-2 -----------
+
+g11 <- d10 %>% 
   ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
   geom_line() +
   geom_point(shape = 21) +
@@ -528,6 +549,8 @@ d %>%
     ,title = "Rate of Suicides by Race and Sex"
     ,color = "Suicide Cause"
   )
+g11
+
 # ---- ----
 
 
