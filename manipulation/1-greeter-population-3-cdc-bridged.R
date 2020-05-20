@@ -14,14 +14,78 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 # ---- declare-globals ---------------------------------------------------------
-path_input       <- "data-unshared/raw/cdc-bridged/Bridged-Race Population Estimates 2018.txt"
+# path_input       <- "data-unshared/raw/cdc-bridged/Bridged-Race Population Estimates 2018.txt"
+
+path_folder <- "./data-unshared/raw/cdc-bridged"
 
 # ---- load-data ---------------------------------------------------------------
-ds <- readr::read_delim(path_input, 
-                       "\t", escape_double = FALSE, trim_ws = TRUE)
+# ds <- readr::read_delim(path_input, 
+#                         "\t", escape_double = FALSE, trim_ws = TRUE)
+
+input_files <- list.files(path_folder, full.names = TRUE)
+
+
+
+ls_input <- list()
+
+for(i in seq_along(input_files)){
+  element_name <- gsub(pattern = ".txt", replacement = "",input_files[i])
+  (year_i <- stringr::str_sub(basename(element_name),-4))
+  ls_input[[year_i]] <- readr::read_tsv(input_files[i]
+                                              , trim_ws = TRUE)
+}
 
 
 # ----- tweak-data ---------------
+# https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697
+# find county codes here
+
+
+
+for(i in names(ls_input)){
+  # i <- names(ls_input)[1]
+  # (year_i <- stringr::str_sub(basename(i),-4))
+  # names(ls_input[[i]]) <- year_i
+  ls_input[[i]] <- ls_input[[i]] %>% 
+    # mutate(
+    #   year =  as.integer(year_i)
+    # ) %>% 
+    rename_all(snakecase::to_snake_case) %>% 
+    select(-notes, -race_code,-ethnicity_code,-gender_code,-age_code ) %>%
+    mutate_at(
+      "county", ~stringr::str_remove_all(.," County, FL")
+    ) %>% 
+    mutate_at(
+      "age", ~stringr::str_remove_all(.," years")) %>% 
+    mutate_at(
+      "age", as.integer)
+}
+
+ds0 <- ls_input %>% bind_rows(.id = "year")
+
+# ---- tweak-data-1 -----
+
+
+ds0 %>% group_by(ethnicity) %>% 
+  count()
+
+ds1 <- ds0 %>% 
+  mutate(
+    race_f = forcats::fct_recode(race,
+                                "Black & Other"  =  "American Indian or Alaska Native" 
+                                ,"Black & Other" =  "Asian or Pacific Islander"        
+                                ,"Black & Other" =  "Black or African American")
+    ,ethnicity_f = forcats::fct_recode(ethnicity,
+                                    "Hispanic"      = "Hispanic or Latino"
+                                    ,"Non-Hispanic" = "Not Hispanic or Latino")
+  )
+
+
+
+
+
+
+
 
 
 # Study the following example for the batch processing
