@@ -134,7 +134,8 @@ ds1 <- ds0 %>% tidyr::gather("year","value", 7:19 )
 ds2 <- ds1 %>% tidyr::spread(measure,value)
 ds2 %>% glimpse(60)
 
-
+d <- ds2 %>% 
+  filter(age_group == "55-64")
 # save-to-disk ------------------------------------------------------------
 
 
