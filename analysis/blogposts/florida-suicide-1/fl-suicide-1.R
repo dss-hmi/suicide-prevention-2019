@@ -160,6 +160,10 @@ ds0 <- ds_population_suicide %>%
   dplyr::mutate(
     year            = as.integer(year)
     ,sex            = factor(sex, levels = c("Male", "Female"))
+    ,sex            = forcats::fct_recode(sex,
+                                          c("Men" = "Male"),
+                                          c("Women" = "Female")
+                                          )
     ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
     ,race           = factor(race)
     ,ethnicity      = factor(ethnicity)
@@ -205,7 +209,7 @@ d %>%
     , aes(label = round(value,2)), vjust =-0
   )+
   labs(
-    title = "Trend in suicide mortality in Florida (ages 10+)"
+    title = "Trend in suicide mortality in Florida (ages 10+)", y = NULL
     
   )
 
@@ -232,6 +236,7 @@ d12 %>%
   facet_wrap(~ age_group, scale = "free")+
   labs(
     title = "Counts of suicide events in Florida from 2006 to 2017"
+    ,y = "Number of deaths by suicide", x = NULL
   )
 # ---- g13 --------------
 d12 %>% 
@@ -244,6 +249,7 @@ d12 %>%
   facet_wrap(~ age_group)+
   labs(
     title = "Counts of suicide events in Florida from 2006 to 2017 (ages 10+)"
+    ,y = "Number of deaths by suicide", x = NULL
   )
 
 # ---- g21 ----------------
@@ -268,8 +274,35 @@ g21 <- d12 %>%
   ) +
   labs(
     title = "Demographic growth in Florida within age groups"
+    ,y = "Population count estimate", x = NULL
   )
 g21
+
+# ---- g21a ----------------
+# demographic growth among the age groups
+g21a <- d12 %>% 
+  filter(metric == "Count") %>% # population counts are duplicats
+  dplyr::filter(age_group %in% c("10-14","15-19","20-24")) %>%
+  ggplot(aes(x=year,y=n_population))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  # scale_color_viridis_d(option = "magma",begin = .7, end = .1)+
+  # scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  # facet_wrap(~age_group, scales = "free")+
+  facet_wrap(~age_group)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, vjust = 6
+  ) +
+  labs(
+    title = "Demographic growth in Florida within age groups"
+    ,y = "Population count estimate", x = NULL
+  )
+g21a
 
 # ---- g22 ----------------
 # suicide rate among the age groups
@@ -289,7 +322,7 @@ g22 <- d12 %>%
   ggpmisc::stat_poly_eq(
     formula = y ~ + x
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
-    ,parse = TRUE, vjust = 3
+    ,parse = TRUE, vjust = 1
   ) +
   geom_text(
     data = d12 %>% 
@@ -302,7 +335,7 @@ g22 <- d12 %>%
   )+
   labs(
     title = "Trend of suicide rate in Florida across age groups (ages 10+)"
-    ,y = "Rate per 100,000"
+    ,y = "Rate per 100,000", x = NULL
     
   )
 g22
@@ -337,7 +370,7 @@ g31 <- d31 %>%
     formula = y ~ + x 
     ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
     ,parse = TRUE
-    ,vjust = 5
+    ,vjust = 7
   ) +
   geom_text(
     data = d31 %>% 
@@ -347,8 +380,9 @@ g31 <- d31 %>%
   )+
   labs(
     title = "Trend in suicide mortality in Florida (ages 10+)"
-
-  )
+    ,y = NULL, x = NULL, color = NULL
+  )+
+  theme(legend.position = "top")
 g31
 
 # ---- g41 -------------------
@@ -386,9 +420,9 @@ g41 <- d41 %>%
   )+
   labs(
     title = "Trend in suicide mortality in Florida (ages 10+)"
-    ,y = "Rate per 100,000", x = "Year"
-    
-  )
+    ,y = "Rate per 100,000", x = NULL, color = NULL
+  )+
+  theme(legend.position = "top")
 g41+
     ggpmisc::stat_poly_eq(
     formula = y ~ + x 
@@ -452,13 +486,72 @@ plot_51 <- function(d, metric_filter){
     )+
     labs(
       # title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter)
-      y = metric_filter, x = ""
+      y = metric_filter, x = "", color = NULL
     )
 }
 g51 <- d51 %>% plot_51("Population Count (million)")
-g52 <- d51 %>% plot_51("Suicide Rate (per 100k)")
+# g52 <- d51 %>% plot_51("Suicide Rate (per 100k)")
 g53 <- d51 %>% plot_51("Suicide Count")
-ggpubr::ggarrange(g51, g52, g53, labels = c("Population","Rate","Count"), ncol =1, nrow = 3)
+
+ggpubr::ggarrange(g51, g53 ,labels = c("Population","Count"), ncol =1, nrow = 2)
+
+# ---- g51a --------------------------
+
+metric_filter <- "Suicide Rate (per 100k)"
+g52 <- d51 %>% 
+  filter(metric == metric_filter) %>% 
+  ggplot(aes(x=year, y = value))+
+  geom_smooth(method = "lm",se = F,color = "springgreen2")+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  geom_text(
+    data =  d51 %>%
+      filter(metric == metric_filter) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = scales::comma( round(value,1)  ) )
+    ,vjust =-0.8, size = 3, color = "grey30"
+  )+
+  facet_wrap( ~ race_ethnicity, nrow = 1)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    ,vjust = 6
+  )+
+  labs(
+    y = metric_filter, x = "", color = NULL
+  )
+
+g52a <- d51 %>% 
+  filter(metric == metric_filter) %>% 
+  ggplot(aes(x=year, y = value))+
+  geom_smooth(method = "lm",se = F,color = "springgreen2")+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  geom_text(
+    data =  d51 %>%
+      filter(metric == metric_filter) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = scales::comma( round(value,1)  ) )
+    ,vjust =-0.8, size = 3, color = "grey30"
+  )+
+  facet_wrap( ~ race_ethnicity, nrow = 1, scales = "free")+
+  # ggpmisc::stat_poly_eq(
+  #   formula = y ~ + x
+  #   ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+  #   ,parse = TRUE
+  #   ,vjust = 7
+  # )+
+  labs(
+    y = metric_filter, x = "", color = NULL
+  )
+
+ggpubr::ggarrange(g52, g52a , ncol =1, nrow = 2)
+
 
 # ---- g52 ------------------------
 
@@ -508,9 +601,9 @@ plot_g52 <- function(d, race_filter){
     )+
     labs(
       title = paste0("Trend in suicide mortality in Florida (ages 10+): ",race_filter), 
-      x = "", y = ""
+      x = "", y = "", color = NULL
     )+
-    theme(legend.position = "bottom")
+    theme(legend.position = "top")
 }
 g521 <- d52 %>% plot_g52("White + Non-Hispanic")
 g522 <- d52 %>% plot_g52("White + Hispanic")
