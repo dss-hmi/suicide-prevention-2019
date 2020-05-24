@@ -304,6 +304,7 @@ g21a <- d12 %>%
   )
 g21a
 
+
 # ---- g22 ----------------
 # suicide rate among the age groups
 g22 <- d12 %>% 
@@ -339,6 +340,43 @@ g22 <- d12 %>%
     
   )
 g22
+
+# ---- g22a ----------------
+# suicide rate among the age groups
+g22a <- d12 %>% 
+  filter(metric == "Rate per 100,000") %>% 
+  dplyr::filter(age_group %in% c("10-14","15-19","20-24")) %>%
+  # dplyr::mutate(age_group = base::droplevels(age_group)) %>% 
+  ggplot(aes(x=year,y=value))+
+  geom_smooth(method = "lm",se = F, color = "springgreen2")+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  # scale_color_viridis_d(option = "magma",begin = .7, end = .1)+
+  # scale_fill_viridis_d(option = "magma",begin = .7, end = .1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  # facet_wrap(~age_group, scales = "free")+
+  facet_wrap(~age_group)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, vjust = 3
+  ) +
+  geom_text(
+    data = d12 %>% 
+      filter(metric == "Rate per 100,000") %>% 
+      dplyr::filter(age_group %in% c("10-14","15-19","20-24")) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = round(value,1 ) )
+    # ,aes( label = round(value,1 ) )
+    ,vjust =-0.8, size = 3, color = "grey30", 
+  )+
+  labs(
+    title = "Trend of suicide rate in Florida across age groups (ages 10+)"
+    ,y = "Rate per 100,000", x = NULL
+    
+  )
+g22a
 
 
 # ---- g31 ------------------
@@ -552,6 +590,84 @@ g52a <- d51 %>%
 
 ggpubr::ggarrange(g52, g52a , ncol =1, nrow = 2)
 
+# ---- g51c --------------------------
+
+d51c <- ds0 %>% 
+  dplyr::filter(age_group %in% lvl_age_groups[4:13]) %>%
+  compute_rate(c("year","race_ethnicity","sex") ) %>% 
+  dplyr::filter(suicide_cause == "suicide") %>% 
+  dplyr::mutate(n_population = n_population/1000000) %>% 
+  tidyr::pivot_longer(
+    cols = c("n_suicides", "rate_suicides","n_population")
+    ,names_to = "metric"
+    , values_to = "value"
+  ) %>% 
+  dplyr::mutate(
+    metric = factor(
+      metric
+      ,levels = c("n_suicides","rate_suicides","n_population")
+      ,labels = c("Suicide Count", "Suicide Rate (per 100k)", "Population Count (million)")
+    )
+  )
+
+metric_filter <- "Suicide Rate (per 100k)"
+g51c <- d51c %>% 
+  filter(metric == metric_filter) %>% 
+  ggplot(aes(x=year, y = value, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_color_viridis_d(option = "magma",begin = .2, end = .65)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  geom_text(
+    data =  d51c %>%
+      filter(metric == metric_filter) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = scales::comma( round(value,1)  ) )
+    ,vjust =-0.8, size = 3, color = "grey30"
+  )+
+  facet_wrap( ~ race_ethnicity, nrow = 1)+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE
+    ,vjust = 5
+  )+
+  theme(legend.position = "none")+
+  labs(
+    y = metric_filter, x = "", color = NULL
+  )
+g51c
+g51ca <- d51c %>% 
+  filter(metric == metric_filter) %>% 
+  ggplot(aes(x=year, y = value, color = sex))+
+  geom_smooth(method = "lm",se = F)+
+  geom_point(shape = 21, size =3, alpha = .8, fill = NA)+
+  geom_line(alpha = .2)+
+  scale_color_viridis_d(option = "magma",begin = .2, end = .65)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(breaks = seq(2007,2017,5))+
+  geom_text(
+    data =  d51c %>%
+      filter(metric == metric_filter) %>% 
+      dplyr::filter(year %in% c(2006, 2017))
+    ,aes( label = scales::comma( round(value,1)  ) )
+    ,vjust =-0.8, size = 3, color = "grey30"
+  )+
+  facet_wrap( ~ race_ethnicity, nrow = 1, scales = "free")+
+  # ggpmisc::stat_poly_eq(
+  #   formula = y ~ + x
+  #   ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+  #   ,parse = TRUE
+  #   ,vjust = 7
+  # )+
+  theme(legend.position = "top")+
+  labs(
+    y = metric_filter, x = "", color = NULL
+  )
+g51ca
+# ggpubr::ggarrange(g51c, g51ca , ncol =1, nrow = 2)
 
 # ---- g52 ------------------------
 

@@ -51,15 +51,15 @@ read_chunk("./analysis/blogposts/florida-suicide-1/fl-suicide-1.R")
 ```
 # Abstract
 
-This blogpost explores suicides  trends in Florida between 2006 and 2017, examining the difference by age, gender, and race. The post answers the following questions:  
+This blogpost explores suicides  trends in Florida between 2006 and 2017, examining the difference by age, sex, and race. The post answers the following questions:  
 
 > Q1 - What is the overall trajectory of suicides in FL between 2006 and 2017? 
 
 > Q2 - How does change in suicide mortality differ by age? 
 
-> Q3 - How do suicide trends differ by gender? 
+> Q3 - How do suicide trends differ by sex? 
 
-> Q4 - How do suicide trends differ by gender and age group?
+> Q4 - How do suicide trends differ by sex and age group?
 
 > Q5 - How do suicide trend differ by race?
 
@@ -136,6 +136,10 @@ To compare the change in suicide mortality among different age groups, we comput
 ```{r g22, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+Again, focusing on the three youngest age groups to help with the scale:  
+```{r g22a, echo=TRUE, fig.height=3, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
 # Q3 - Sex 
 
 > How do suicide trends differ by gender? 
@@ -177,6 +181,11 @@ The differences in group size, combined with the rarity of suicide events make i
 However, when working with `rate per 100,000` metric, which adjusts for group size, it makes sense to have both views: constrained to the same scale (top) and plotted on free scales (bottom) 
 
 ```{r g51a, echo=TRUE, fig.height=6, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+Now we break down by sex:  
+
+```{r g51c, echo=TRUE, fig.height=3.5, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 
