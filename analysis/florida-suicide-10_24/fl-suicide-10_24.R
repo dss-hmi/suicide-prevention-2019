@@ -37,7 +37,14 @@ age_groups_in_focus <-   lvl_age_groups[4:12]
 age_groups_10_24    <-   lvl_age_groups[4:6]
 
 #set default ggplot theme
-ggplot2::theme_set(ggplot2::theme_bw())
+#set default ggplot theme
+ggplot2::theme_set(
+  ggplot2::theme_bw(
+  )+
+    theme(
+      strip.background = element_rect(fill="grey90", color = NA)
+    )
+)
 
 # ---- load-data ---------------------------------------------------------------
 # data prepared by "./manipulation/9-aggregator.R" combining population estimates and suicide counts
@@ -436,6 +443,10 @@ major_causes <- c(
   ,"hanging"      = "Hanging"
   ,"non_gun_hang" = "Non Gun/Hang")
 
+major_causes_colors <- c(
+  
+)
+
 g8 <- d6 %>% 
   filter(suicide_cause %in% names(major_causes)) %>%
   mutate(
@@ -507,7 +518,8 @@ g10 <- d10 %>%
   geom_point(shape = 21) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_x_continuous(breaks = seq(2007,2017,5)) +
-  scale_color_brewer(palette = "Dark2") +
+  # scale_color_brewer(palette = "Dark2") +
+  scale_color_viridis_d(option = "magma",begin = .2, end = .65)+
   facet_grid(suicide_cause ~race_ethnicity
              # , scales = "free"
   ) +
