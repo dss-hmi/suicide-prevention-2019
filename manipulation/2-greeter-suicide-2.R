@@ -53,21 +53,23 @@ for(i in names(ls_input)){
   
   d <- ls_input[[i]] %>% tidyr::fill(custom_names_part1) %>% 
     filter_at(vars(custom_names_part1),all_vars(!stringr::str_detect(.,"Total"))) %>% 
-    select(-locus1, -locus2, -starts_with("Total"))
+    select(-locus1, -locus2, -starts_with("Total"), -starts_with("..."))
   
   
-  names_stem <- setdiff(custom_names_part1,c("locus1", "locus2"))
+  names_stem <- setdiff(custom_names_part1,c("locus1","locus2"))
   names_body <- setdiff(names(d), names_stem)
   
   d_out <- d %>% 
     tidyr::pivot_longer(names_body
                         ,names_to  = "age"
                         ,values_to = "n_suicides"
-                        )
+                        ) %>% 
+    mutate_at("age", as.integer)
   
   ls_input[[i]] <- d_out
   
 }
+
 
 
 # ---- combine-data ----
@@ -106,29 +108,29 @@ rmarkdown::render(
 # ds0 <- readxl::read_excel(input_file, col_names = TRUE, skip = 4)
 # 
 # names_all <- names(ds0)
-# names_part2 <- names_all[8:length(names_all)] 
+# names_part2 <- names_all[8:length(names_all)]
 # custom_names_part1 <- c("county"
 #                         ,"locus1"
 #                         ,"locus2"
 #                         ,"cause"
 #                         ,"sex"
 #                         ,"race"
-#                         ,"ethnicity" 
+#                         ,"ethnicity"
 # )
 # names(ds0) <- c(custom_names_part1,names_part2)
 # 
 # #GOT IT!!!!
 # 
-# ds1 <-  ds0 %>% tidyr::fill(custom_names_part1) %>% 
-#   filter_at(vars(custom_names_part1),all_vars(!stringr::str_detect(.,"Total")))
-# # filter(locus1 != "Total") %>% 
-# # filter(locus2 != "Total") %>% 
-# # filter(cause != "Total") %>% 
-# # filter(sex != "Total") %>% 
-# # filter(race != "Total") %>% 
-# # filter(ethnicity != "Total") %>% 
-# select(-locus1, -locus2) %>% 
-#   select(-starts_with("Total"))
+# ds1 <-  ds0 %>% tidyr::fill(custom_names_part1) %>%
+#   filter_at(vars(custom_names_part1),all_vars(!stringr::str_detect(.,"Total"))) %>% 
+# # filter(locus1 != "Total") %>%
+# # filter(locus2 != "Total") %>%
+# # filter(cause != "Total") %>%
+# # filter(sex != "Total") %>%
+# # filter(race != "Total") %>%
+# # filter(ethnicity != "Total") %>%
+#  select(-locus1, -locus2) %>%
+#   select(-starts_with("Total"), -starts_with("..."))
 # 
 # names_stem <- setdiff(custom_names_part1,c("locus1", "locus2"))
 # names_body <- setdiff(names(ds1), names_stem)
@@ -140,5 +142,5 @@ rmarkdown::render(
 #   mutate(
 #     year = "2018"
 #   )
-
+# 
 
