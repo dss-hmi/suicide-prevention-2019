@@ -30,8 +30,18 @@ ls_input <- list()
 
 for(i in seq_along(input_files)){
   element_name <- gsub(pattern = ".txt", replacement = "",input_files[i])
-  (year_i <- stringr::str_sub(basename(element_name),-4))
-  ls_input[[year_i]] <- readr::read_tsv(input_files[i]
+  year_i <- stringr::str_sub(basename(element_name),-4)
+  if(stringr::str_detect(element_name,"01")){
+    element_title <- paste0(year_i, "_01to42")
+  }
+  if(stringr::str_detect(element_name,"43")){
+    element_title <- paste0(year_i, "_43to84")
+  }
+  if(stringr::str_detect(element_name,"less")){
+    element_title <- paste0(year_i, "lessthan1and85plus")
+  }
+  
+  ls_input[[element_title]] <- readr::read_tsv(input_files[i]
                                               , trim_ws = TRUE)
 }
 
@@ -56,12 +66,21 @@ for(i in names(ls_input)){
       "county", ~stringr::str_remove_all(.," County, FL")
     ) %>% 
     mutate_at(
-      "age", ~stringr::str_remove_all(.," years")) %>% 
+      "age", ~stringr::str_remove_all(.,c(" years| year"))) %>% 
+    mutate_at(
+      "age", ~stringr::str_replace_all(., c("< 1"  = "0"
+                                            ,"85\\+" = "86"))) %>%
     mutate_at(
       "age", as.integer)
 }
 
-ds0 <- ls_input %>% bind_rows(.id = "year")
+ds0 <- ls_input %>% bind_rows(.id = "year") %>% 
+  mutate_at(
+    "year", ~stringr::str_sub(.,0,4)
+  ) %>% 
+  mutate_at(
+    "year", as.integer
+  )
 
 # ---- tweak-data-1 -----
 
@@ -83,59 +102,10 @@ ds1 <- ds0 %>%
 
 
 
+# save-to-disk ------------------------------------------------------------
 
 
+ds1 %>% readr::write_rds("./data-unshared/derived/1-greeted-population-3-cdc.rds"
+                         ,compress = 'gz')
+ds1 %>% readr::write_csv("./data-unshared/derived/1-greeted-population-3-cdc.csv")
 
-
-
-# Study the following example for the batch processing
-# 
-# ls_input <- list()
-# for(i in seq_along(input_files)){
-#   # i <- 1
-#   element_name <- input_files[i] %>% names()
-#   if(element_name %in% c("count_Total", "rate_Total")){
-#     ls_input[[element_name]] <- readxl::read_excel(input_files[i], col_names = FALSE, skip = 3)
-#   }else{
-#     ls_input[[element_name]] <- readxl::read_excel(input_files[i], col_names = FALSE, skip = 4)
-#   }
-#   
-#   # View(ls_input[[element_name]])
-# }
-# 
-# 
-# for(i in names(ls_input)){
-#   # i <- ls_input[1] %>% names()
-#   # element_name <- ls_input[[i]] %>% names()
-#   names(ls_input[[i]]) <-  c("external","injury","mortality_cause", "sex","age_group","age", c(2006:2018),'total')
-#   ls_input[[i]]<- ls_input[[i]] %>% 
-#     dplyr::mutate_all(fill_last_seen) %>% 
-#     dplyr::mutate(
-#       mortality_cause = ifelse(mortality_cause == "Suicide By Firearms Discharge (X72-X74)","Firearms", mortality_cause)
-#       ,mortality_cause = ifelse(mortality_cause == "Suicide By Other & Unspecified Means & Sequelae (X60-X71, X75-X84, Y87.0)","Other", mortality_cause)
-#     ) %>% 
-#     dplyr::select(-external, -injury) %>% 
-#     dplyr::distinct() %>%
-#     dplyr::mutate(
-#       measure = gsub("(\\w+)_(\\w+)$", "\\1",i)
-#       ,race    = gsub("(\\w+)_(\\w+)$", "\\2",i)
-#     ) %>% 
-#     dplyr::select(measure, race, dplyr::everything()) %>% 
-#     dplyr::select(-total) %>% 
-#     dplyr::mutate(
-#       `2006`  = as.numeric(`2006`)
-#       ,`2007` = as.numeric(`2007`)
-#       ,`2008` = as.numeric(`2008`)
-#       ,`2009` = as.numeric(`2009`)
-#       ,`2010` = as.numeric(`2010`)
-#       ,`2011` = as.numeric(`2011`)
-#       ,`2012` = as.numeric(`2012`)
-#       ,`2013` = as.numeric(`2013`)
-#       ,`2014` = as.numeric(`2014`)
-#       ,`2015` = as.numeric(`2015`)
-#       ,`2016` = as.numeric(`2016`)
-#       ,`2017` = as.numeric(`2017`)
-#       ,`2018` = as.numeric(`2018`)
-#       
-#     )
-# }
