@@ -79,7 +79,7 @@ ds0 <- ls_input %>% bind_rows(.id = "year")
 ds0 %>% readr::write_rds("./data-unshared/derived/2-greeted-suicide-2.rds"
                          ,compress = 'gz')
 # for read-only inspection
-ds2 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide-2.csv") 
+ds0 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide-2.csv") 
 
 
 # ---- publish ---------------------------------
