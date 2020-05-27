@@ -32,60 +32,59 @@ ls_input <- list()
 for(i in seq_along(input_files)){
   element_name <- gsub(pattern = ".xlsx", replacement = "",input_files[i])
   year_i <- stringr::str_sub(basename(element_name),-4)
-  ls_input[[year_i]] <- readxl::read_excel(input_files[i], col_names = FALSE, skip = 2)
+  ls_input[[year_i]] <- readxl::read_excel(input_files[i], col_names = TRUE, skip = 4)
 }
 
 
-# to bring all batches into the same dataframe:
-ds0 <- ls_input %>% dplyr::bind_rows()
-ds0 %>% head(30) %>% neat()
-# ---- tweak-data -----------------------------------------------------
-# hardcoding, because cheaper and easy to check
-names(ds0) <- c(
-  "county"
-  ,"year"
-  ,"mortality_locus"
-  ,"mortality_cause"
-  ,"age_group"
-  ,"sex"
-  ,"race"
-  ,"ethnicity"
-  ,"resident_deaths"
-)
+# ---- tweak-data ----
 
-ds1 <- ds0 %>% 
-  tidyr::fill(county, year, mortality_locus, mortality_cause, age_group, sex, race, ethnicity) 
-ds1 %>% dplyr::glimpse(60)
+for(i in names(ls_input)){
+  names_all           <- names(ls_input[[i]])
+  names_part2         <- names_all[8:length(names_all)]
+  custom_names_part1  <- c("county"
+                           ,"locus1"
+                           ,"locus2"
+                           ,"cause"
+                           ,"sex"
+                           ,"race"
+                           ,"ethnicity" 
+                          )
+  names(ls_input[[i]]) <- c(custom_names_part1,names_part2)
+  
+  d <- ls_input[[i]] %>% tidyr::fill(custom_names_part1) %>% 
+    filter_at(vars(custom_names_part1),all_vars(!stringr::str_detect(.,"Total"))) %>% 
+    select(-locus1, -locus2, -starts_with("Total"))
+  
+  
+  names_stem <- setdiff(custom_names_part1,c("locus1", "locus2"))
+  names_body <- setdiff(names(d), names_stem)
+  
+  d_out <- d %>% 
+    tidyr::pivot_longer(names_body
+                        ,names_to  = "age"
+                        ,values_to = "n_suicides"
+                        )
+  
+  ls_input[[i]] <- d_out
+  
+}
 
-ds1 <- ds1 %>% 
-  dplyr::mutate(
-    age_group = tolower(age_group)
-    ,age_group = gsub("-","_",age_group)
-    ,age_group = gsub("\\+","_plus",age_group)
-    ,age_group = gsub("'","",age_group)
-  )
-ds1 %>% 
-  dplyr::distinct(age_group)
-# because it will be easier to compute on site + demonstration of summary logic
-ds2 <- ds1 %>% 
-  dplyr::filter(! county    == "Total") %>% 
-  dplyr::filter(! year      == "Total") %>% 
-  dplyr::filter(! mortality_locus      == "Total") %>% 
-  dplyr::filter(! mortality_cause      == "Total") %>% 
-  dplyr::filter(! sex       == "Total") %>% 
-  dplyr::filter(! race      == "Total") %>% 
-  dplyr::filter(! ethnicity == "Total") %>% 
-  dplyr::filter(! age_group == "total") %>% 
-  dplyr::select(-mortality_locus) # because it adds nothing
+
+# ---- combine-data ----
+
+ds0 <- ls_input %>% bind_rows(.id = "year")
 
 # ---- save-to-disk ----------------------------
-ds2 %>% pryr::object_size()
-ds2 %>%          saveRDS("./data-unshared/derived/2-greeted-suicide.rds")
-ds2 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide.csv") # for read-only inspection
+
+ds0 %>% readr::write_rds("./data-unshared/derived/2-greeted-suicide-2.rds"
+                         ,compress = 'gz')
+# for read-only inspection
+ds2 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide-2.csv") 
+
 
 # ---- publish ---------------------------------
 rmarkdown::render(
-  input = "./analysis/2-greeter/2-greeter-suicide.Rmd"
+  input = "./analysis/2-greeter/2-greeter-suicide-2.Rmd"
   ,output_format = c(
     "html_document" 
     # ,"pdf_document"
@@ -95,5 +94,51 @@ rmarkdown::render(
   ,clean=TRUE
 )
 
+
+
+
+# ---- single-file-testing ----
+
+# used for testing script, unneeded for final production script
+
+# input_file <- "./data-unshared/raw/cause113-county/cause113-county-2018.xlsx"
+# 
+# ds0 <- readxl::read_excel(input_file, col_names = TRUE, skip = 4)
+# 
+# names_all <- names(ds0)
+# names_part2 <- names_all[8:length(names_all)] 
+# custom_names_part1 <- c("county"
+#                         ,"locus1"
+#                         ,"locus2"
+#                         ,"cause"
+#                         ,"sex"
+#                         ,"race"
+#                         ,"ethnicity" 
+# )
+# names(ds0) <- c(custom_names_part1,names_part2)
+# 
+# #GOT IT!!!!
+# 
+# ds1 <-  ds0 %>% tidyr::fill(custom_names_part1) %>% 
+#   filter_at(vars(custom_names_part1),all_vars(!stringr::str_detect(.,"Total")))
+# # filter(locus1 != "Total") %>% 
+# # filter(locus2 != "Total") %>% 
+# # filter(cause != "Total") %>% 
+# # filter(sex != "Total") %>% 
+# # filter(race != "Total") %>% 
+# # filter(ethnicity != "Total") %>% 
+# select(-locus1, -locus2) %>% 
+#   select(-starts_with("Total"))
+# 
+# names_stem <- setdiff(custom_names_part1,c("locus1", "locus2"))
+# names_body <- setdiff(names(ds1), names_stem)
+# 
+# 
+# ds2 <- ds1 %>% tidyr::pivot_longer(names_body
+#                                    ,names_to  = "age"
+#                                    ,values_to = "n_suicides") %>%
+#   mutate(
+#     year = "2018"
+#   )
 
 
