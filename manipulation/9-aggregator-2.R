@@ -103,3 +103,56 @@ compute_rate <- function(
 ds_example   <- ds0 %>% compute_rate(grouping_frame = c("county", "year"))
 ds_example_w <- ds0 %>% compute_rate(grouping_frame = c("county", "year"), wide = TRUE)
 
+
+# ---- store-data ----
+
+ls_grouping_frame <- list(
+   c("county","year"                                )
+  ,c("county","year","gender"                       )
+  ,c("county","year"         ,"race_ethnicity"      )
+  ,c("county","year"                          ,"age")
+  ,c("county","year","gender","race_ethnicity"      )
+  ,c("county","year"         ,"race_ethnicity","age")
+  ,c("county","year","gender"                 ,"age")
+  ,c("county","year","gender","race_ethnicity","age")
+  ,c(         "year"                                )
+  ,c(         "year","gender"                       )
+  ,c(         "year"         ,"race_ethnicity"      )
+  ,c(         "year"                          ,"age")
+  ,c(         "year","gender","race_ethnicity"      )
+  ,c(         "year"         ,"race_ethnicity","age")
+  ,c(         "year","gender"                 ,"age")
+  ,c(         "year","gender","race_ethnicity","age")
+)
+
+
+
+#loop through all combos of grouping frame to store data
+
+for(i in seq_along(ls_grouping_frame)){
+  path_to_folder <- "./data-unshared/derived/rate/"
+  frame_i        <- ls_grouping_frame[[i]]
+  file_name      <- paste0(path_to_folder, paste0(frame_i, collapse = "-"),".rds")
+  d_computed     <- ds0 %>% compute_rate(grouping_frame = frame_i)
+  
+  d_computed %>% readr::write_rds(file_name, compress = "gz")
+}
+
+
+# store youth data 
+
+
+ds_youth <- ds0 %>% filter(age %in% 10:24)
+
+
+for(i in seq_along(ls_grouping_frame)){
+  path_to_folder <- "./data-unshared/derived/rate/youth/"
+  frame_i        <- ls_grouping_frame[[i]]
+  file_name      <- paste0(path_to_folder
+                           ,paste0(frame_i, collapse = "-")
+                           ,"-10-24"
+                           ,".rds")
+  d_computed     <- ds_youth %>% compute_rate(grouping_frame = frame_i)
+  
+  d_computed %>%readr::write_rds(file_name, compress = "gz")
+}
