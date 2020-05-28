@@ -71,7 +71,8 @@ for(i in names(ls_input)){
       "age", ~stringr::str_replace_all(., c("< 1"  = "0"
                                             ,"85\\+" = "86"))) %>%
     mutate_at(
-      "age", as.integer)
+      "age", as.integer) %>% 
+    tidyr::drop_na()
 }
 
 ds0 <- ls_input %>% bind_rows(.id = "year") %>% 
