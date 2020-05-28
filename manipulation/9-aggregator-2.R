@@ -46,5 +46,60 @@ ds_suicide <- ds_suicide %>%
 # --- join-data
 
 ds0 <- ds_population %>% 
-  left_join(ds_suicide, by = c("year","county", "gender", "age", "race_f", "ethnicity_f")) 
+  left_join(ds_suicide, by = c("year"
+                               ,"county"
+                               ,"gender"
+                               ,"age"
+                               ,"race_f"
+                               ,"ethnicity_f")) %>% 
+  mutate_at("cause", ~stringr::str_replace_na(.,"None")) %>% 
+  mutate_at("n_suicides", ~stringr::str_replace_na(.,0)) %>% 
+  mutate_at("n_suicides", as.integer) %>% 
+  mutate(
+    race_ethnicity  = paste0(race_f, " + ", ethnicity_f)
+    ,race_ethnicity = forcats::as_factor(race_ethnicity) 
+    ,cause          = forcats::as_factor(cause)
+    ,gender         = forcats::as_factor(gender)
+  )
+
+# ---- compute-rate-function ----
+
+compute_rate <- function(
+  d
+  ,grouping_frame
+  ,wide = FALSE
+){
+  #test variables
+  # d <- ds0
+  # grouping_frame = c("county", "year")
+  #end test
   
+  d_wide <- d %>% 
+    group_by_at(c(grouping_frame, "cause")) %>% 
+    summarise(
+      n_population = sum(population, na.rm = TRUE)
+      ,n_suicides  = sum(n_suicides, na.rm = TRUE)
+    ) %>% 
+    ungroup() %>% 
+    mutate(
+      rate_suicide = ((n_suicides/n_population)*100000)
+    )
+  
+  d_long <- d_wide %>% 
+    tidyr::pivot_longer(c(n_suicides,rate_suicide)
+                        ,names_to = "metric" 
+                        ,values_to = "value" 
+                        )
+  
+  if(wide){
+    return(d_wide)
+  }
+  
+  return(d_long)
+  
+}
+  
+#how to use
+ds_example   <- ds0 %>% compute_rate(grouping_frame = c("county", "year"))
+ds_example_w <- ds0 %>% compute_rate(grouping_frame = c("county", "year"), wide = TRUE)
+
