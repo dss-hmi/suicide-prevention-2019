@@ -54,7 +54,7 @@ read_chunk("./analysis/florida-suicide-10_24/fl-suicide-10_24.R")
 
 <!-- NEED TO UPDATE  -->
 
-This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 2006 and 2017, examining the effects of race and gender. The post answers the following questions:  
+This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 2006 and 2017, examining the effects of race and gender. The post answers the following questions with respect to population in focus:  
 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
@@ -67,29 +67,33 @@ This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 20
 > Q4 - How do trends compare by race, sex, and means of means of suicide?
 
 # Environment
+
+___This section contains technical information for deeper analysis and reproduction. Casual readers are invited to skip it.___   
+
+Packages used in this report. 
 <!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
 ```{r load-packages, echo=echoChunks, message=FALSE, warning = FALSE}
 ```
-
+Script dependencies.
 ```{r load-sources, echo=echoChunks, message=FALSE, warning = FALSE}
 ```
-
+Definitions of global object (file paths,  factor levels, object groups ) used throughout the report. 
 ```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
 ```
- 
+Definitions of custom functions.  
 ```{r declare-functions, echo=echoChunks, results='show', message=FALSE}
 ```
 
 # Data  
 
-The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The the dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
+The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The groomed dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
 
 ```{r load-data, echo=echoChunks, results='show', message=FALSE}
 ```
 
 
 ## Data Tweaks
-This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. The data is also filter to only include individuals between ages 10 and 24.
+This dataset already comes  to this report well-groomed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. The data is also filtered to only include individuals between ages 10 and 24.
 ```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
 ds0 %>% glimpse()
 ```
@@ -170,4 +174,19 @@ When ignoring race and ethnicity for age group 10-24 average increase of suicide
 
 
 
+
+session information  
+===========================================================================
+
+For the sake of documentation and reproducibility, the current report was rendered in the following environment.  Click the line below to expand.
+
+<details>
+  <summary>Environment <span class="glyphicon glyphicon-plus-sign"></span></summary>
+```{r session-info, echo=FALSE}
+if( requireNamespace("devtools", quietly = TRUE) ) {
+  devtools::session_info()
+} else {
+  sessionInfo()
+} 
+```
 

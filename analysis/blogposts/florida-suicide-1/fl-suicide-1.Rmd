@@ -51,15 +51,15 @@ read_chunk("./analysis/blogposts/florida-suicide-1/fl-suicide-1.R")
 ```
 # Abstract
 
-This blogpost explores suicides trends in Florida between 2006 and 2017, examining the effects of age and gender. The post answers the following questions:  
+This blogpost explores suicides  trends in Florida between 2006 and 2017, examining the difference by age, sex, and race. The post answers the following questions:  
 
 > Q1 - What is the overall trajectory of suicides in FL between 2006 and 2017? 
 
 > Q2 - How does change in suicide mortality differ by age? 
 
-> Q3 - How do suicide trends differ by gender? 
+> Q3 - How do suicide trends differ by sex? 
 
-> Q4 - How do suicide trends differ by gender and age group?
+> Q4 - How do suicide trends differ by sex and age group?
 
 > Q5 - How do suicide trend differ by race?
 
@@ -76,7 +76,7 @@ This blogpost explores suicides trends in Florida between 2006 and 2017, examini
 
 # Data  
 
-The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The the dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
+The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age group, and race. The the dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
 
 ```{r load-data, echo=echoChunks, results='show', message=FALSE}
 ```
@@ -85,10 +85,12 @@ The data comes from Florida Health Charts and contains suicide mortality between
 ## Data Tweaks
 This dataset already comes  well-gromed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. 
 ```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
-ds0 %>% glimpse()
+ds0 %>% glimpse(90)
 ```
 
-The unit of analysis of this dataset is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. For convenience, we create a combined variable `race_ethnicity`.
+The unit of analysis of this dataset is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. In this report we focus on the __total number__ of suicide, regardless the means.  
+
+For convenience, we create a combined variable `race_ethnicity`.
 
 ```{r}
 ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
@@ -103,11 +105,13 @@ To begin, let us answer the most fundamental question:
 ```{r g11, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-We exclude persons younger than `10` from our analysis. For the ages `<10` suicide is extremely rare and often calls into question the classification of the underlying cause of death (e.g. can a 4-year-old really _intend_ to kill oneself?). Here is the frequency of suicides for each age group: 
+We exclude persons younger than `10` from our analysis. There were only a handful of cases of suicide among persons younger than 10. Here is the frequency of suicides for each age group: 
 
 ```{r g12, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
-As we see, there are only `4` suicide events for this age group. We remove them and redraw the graph with the same scale across the facets for a better comparison among age groups.
+As we see, there are only `4` suicide events for this age group. (The original data was retrieved in November 2019, as of May 2020, the FLDH has updated its mortality report and now includes only 2 cases of suicides among persons younger than 10: one in 2013 and another in 2016).  
+
+We remove the youngest three age groups and redraw the graph with the same scale across the facets for a better comparison among age groups.
 
 ```{r g13, echo=TRUE, fig.height=7, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
@@ -121,11 +125,19 @@ Note that age groups do not have the same definition: ages younger than `25` are
 
 ```{r g21, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
-Notice that the age groups `10_14` and `15_19` have been ___declining___ by an average of `2,680` and `2,970` respectively, while `20_24` age group have been ___increasing___ by an average of `12,500` persons per year. 
+Notice that the age groups `10_14` and `15_19` have been ___declining___ by an average of `2,680` and `2,970` respectively, while `20_24` age group have been ___increasing___ by an average of `12,500` persons per year.  Due to uneven size, compared to other age groups, it's hard to make out trends for these three; we zoom in to take a closer look:  
+
+
+```{r g21a, echo=TRUE, fig.height=3, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
 
 To compare the change in suicide mortality among different age groups, we compute an age-adjusted rate measure:
 
 ```{r g22, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+Again, focusing on the three youngest age groups to help with the scale:  
+```{r g22a, echo=TRUE, fig.height=3, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q3 - Sex 
@@ -142,12 +154,12 @@ Existing research suggests that suicide prevalence will differ substantially bet
 > How do suicide trends differ by gender and age group?
 
 
-```{r g41, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r g41, echo=TRUE, fig.height=9, fig.width=13, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 To help us compare the magnitute of suicide rate across age group, we redraw the graph with the same scale across the facets:
 
-```{r g42, echo=TRUE, fig.height=9, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r g42, echo=TRUE, fig.height=9, fig.width=13, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q5 - Race + Ethnicity
@@ -161,15 +173,27 @@ ds0 %>%
   group_by(race, ethnicity, race_ethnicity) %>%
   summarize(population_in_2017 = sum(n_population)) 
 ```
-The differences in group size, combined with the rarity of suicide events make it difficult to compare the trends across groups on the same scale. 
+The differences in group size, combined with the rarity of suicide events make it difficult to compare the trends across groups on the same scale. To make comparison of the shapes of the trends easier, we plot each group and metric on individual scale:
 
-```{r g51, echo=TRUE, fig.height=11, fig.width=15, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```{r g51, echo=TRUE, fig.height=6, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-When we start breaking down the groups with more categories (`age_group`, `sex`), this problem gets worse. Therefore the plots exploring the relationships between age, sex, and race are created for each of the race category individually, to avoid comparing across drastically different scales.  The graphs below are not ideal: while allowing to explore pattern within each race group they fail to provide a direct comparison among them. 
-```{r g52, echo=TRUE, fig.height=9, fig.width=23, out.width = "1200px", message=FALSE, results='asis',cache=TRUE}
+However, when working with `rate per 100,000` metric, which adjusts for group size, it makes sense to have both views: constrained to the same scale (top) and plotted on free scales (bottom) 
+
+```{r g51a, echo=TRUE, fig.height=6, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
-session information
+
+Now we break down by sex:  
+
+```{r g51c, echo=TRUE, fig.height=3.5, fig.width=12, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+
+Unfortunately, when we start breaking down the groups by more categories (`age_group`, `sex`), this problem gets worse. Therefore the plots exploring the relationships between age, sex, and race are created for each of the race category individually to to avoid comparing across drastically different scales.  The graphs below are not ideal: while allowing to explore pattern within each race group they fail to provide a direct comparison among them. A more nuanced visualization is needed for this combination of variables.   
+```{r g52, echo=TRUE, fig.height=9, fig.width=23, out.width = "1200px", message=FALSE, results='asis',cache=TRUE, dpi = 200}
+```
+
+session information  
 ===========================================================================
 
 For the sake of documentation and reproducibility, the current report was rendered in the following environment.  Click the line below to expand.
