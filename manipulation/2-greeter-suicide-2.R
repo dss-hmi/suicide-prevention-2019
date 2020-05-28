@@ -45,7 +45,7 @@ for(i in names(ls_input)){
                            ,"locus1"
                            ,"locus2"
                            ,"cause"
-                           ,"sex"
+                           ,"gender"
                            ,"race"
                            ,"ethnicity" 
                           )
@@ -74,14 +74,32 @@ for(i in names(ls_input)){
 
 # ---- combine-data ----
 
-ds0 <- ls_input %>% bind_rows(.id = "year")
+ds0 <- ls_input %>% bind_rows(.id = "year") %>% 
+  mutate_at("year", as.integer)
+
+
+# ---- tweek-data-1 ----
+# tweek data to allow factors to match other data sets
+
+ds1 <- ds0 %>% 
+  mutate(
+    race_f = forcats::fct_recode(race,
+                                 "Black & Other"  =  "Black" 
+                                 ,"Black & Other" =  "Other")
+    ,ethnicity_f = forcats::fct_recode(ethnicity,
+                                        "Hispanic"      = "Hispanic"
+                                        ,"Non-Hispanic" = "Non-Hispanic")
+  )
+
+
+
 
 # ---- save-to-disk ----------------------------
 
-ds0 %>% readr::write_rds("./data-unshared/derived/2-greeted-suicide-2.rds"
+ds1 %>% readr::write_rds("./data-unshared/derived/2-greeted-suicide-2.rds"
                          ,compress = 'gz')
 # for read-only inspection
-ds0 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide-2.csv") 
+ds1 %>% readr::write_csv("./data-unshared/derived/2-greeted-suicide-2.csv") 
 
 
 # ---- publish ---------------------------------
