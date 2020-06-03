@@ -65,6 +65,46 @@ ds0 <- ds_population %>%
 ds0 %>% readr::write_rds("./data-unshared/derived/9-population-suicide-2.rds", compress = "gz")
 
 
+# ----- test-data ----------------
+# boxplot with years as obs for each age bin
+ds0 %>% glimpse()
+d4 <- ds0 %>% 
+  mutate(age = as.integer(age)) %>% 
+  filter(age %in% c(10:85)) %>%
+  filter(year %in% 2006:2018) %>% 
+  group_by(year, age) %>% 
+  summarize(
+    n_suicide        = sum(n_suicides, na.rm = T)
+  ) %>% 
+  ungroup()
+d4 %>% glimpse()
+
+
+
+g4 <- d4 %>% 
+  ggplot(aes(x = age, y = n_suicide))+
+  geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
+  geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, color = "salmon"
+    # , vjust = 7
+  )+
+  geom_boxplot(aes( group = age), fill = NA)+
+  scale_x_continuous(breaks = seq(10,85,5))+
+  # scale_y_continuous(breaks = seq(0,100,10))+
+  geom_vline(xintercept = 24.5, size = 4, alpha = .1)+
+  geom_vline(xintercept = 17.5, size = 1, linetype = "dashed", color = "grey80")+
+  theme(
+    panel.grid.minor = element_blank()
+  )+
+  labs(
+    title = "Suicide events among person of the same age (2006-2018)"
+    ,x = "Age in years", y = "Count of suicides (all causes)"
+  )
+g4
+
 # ---- compute-rate-function ----
 
 compute_rate <- function(
