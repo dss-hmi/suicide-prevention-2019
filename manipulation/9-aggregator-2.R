@@ -43,7 +43,7 @@ ds_suicide <- ds_suicide %>%
   ) 
 
 
-# --- join-data
+# ---- join-data ---------------
 
 ds0 <- ds_population %>% 
   left_join(ds_suicide, by = c("year"
@@ -61,6 +61,9 @@ ds0 <- ds_population %>%
     ,cause          = forcats::as_factor(cause)
     ,gender         = forcats::as_factor(gender)
   )
+
+ds0 %>% readr::write_rds("./data-unshared/derived/9-population-suicide-2.rds", compress = "gz")
+
 
 # ---- compute-rate-function ----
 
@@ -103,40 +106,43 @@ compute_rate <- function(
 ds_example   <- ds0 %>% compute_rate(grouping_frame = c("county", "year"))
 ds_example_w <- ds0 %>% compute_rate(grouping_frame = c("county", "year"), wide = TRUE)
 
+# ---- save-to-disk ---------
+
+
 
 # ---- store-data ----
-
-ls_grouping_frame <- list(
-   c("county","year"                                )
-  ,c("county","year","gender"                       )
-  ,c("county","year"         ,"race_ethnicity"      )
-  ,c("county","year"                          ,"age")
-  ,c("county","year","gender","race_ethnicity"      )
-  ,c("county","year"         ,"race_ethnicity","age")
-  ,c("county","year","gender"                 ,"age")
-  ,c("county","year","gender","race_ethnicity","age")
-  ,c(         "year"                                )
-  ,c(         "year","gender"                       )
-  ,c(         "year"         ,"race_ethnicity"      )
-  ,c(         "year"                          ,"age")
-  ,c(         "year","gender","race_ethnicity"      )
-  ,c(         "year"         ,"race_ethnicity","age")
-  ,c(         "year","gender"                 ,"age")
-  ,c(         "year","gender","race_ethnicity","age")
-)
-
-
-
-#loop through all combos of grouping frame to store data
-
-for(i in seq_along(ls_grouping_frame)){
-  path_to_folder <- "./data-unshared/derived/rate/"
-  frame_i        <- ls_grouping_frame[[i]]
-  file_name      <- paste0(path_to_folder, paste0(frame_i, collapse = "-"),".rds")
-  d_computed     <- ds0 %>% compute_rate(grouping_frame = frame_i)
-  
-  d_computed %>% readr::write_rds(file_name, compress = "gz")
-}
+# 
+# ls_grouping_frame <- list(
+#    c("county","year"                                )
+#   ,c("county","year","gender"                       )
+#   ,c("county","year"         ,"race_ethnicity"      )
+#   ,c("county","year"                          ,"age")
+#   ,c("county","year","gender","race_ethnicity"      )
+#   ,c("county","year"         ,"race_ethnicity","age")
+#   ,c("county","year","gender"                 ,"age")
+#   ,c("county","year","gender","race_ethnicity","age")
+#   ,c(         "year"                                )
+#   ,c(         "year","gender"                       )
+#   ,c(         "year"         ,"race_ethnicity"      )
+#   ,c(         "year"                          ,"age")
+#   ,c(         "year","gender","race_ethnicity"      )
+#   ,c(         "year"         ,"race_ethnicity","age")
+#   ,c(         "year","gender"                 ,"age")
+#   ,c(         "year","gender","race_ethnicity","age")
+# )
+# 
+# 
+# 
+# #loop through all combos of grouping frame to store data
+# 
+# for(i in seq_along(ls_grouping_frame)){
+#   path_to_folder <- "./data-unshared/derived/rate/"
+#   frame_i        <- ls_grouping_frame[[i]]
+#   file_name      <- paste0(path_to_folder, paste0(frame_i, collapse = "-"),".rds")
+#   d_computed     <- ds0 %>% compute_rate(grouping_frame = frame_i)
+#   
+#   d_computed %>% readr::write_rds(file_name, compress = "gz")
+# }
 
 
 # store youth data 
