@@ -48,7 +48,10 @@ ggplot2::theme_set(
 
 # ---- load-data ---------------------------------------------------------------
 # data prepared by "./manipulation/9-aggregator.R" combining population estimates and suicide counts
+
 ds_population_suicide <-   readr::read_csv(path_file_input)
+ds_population_suicide_2 <-   readr::read_rds("./data-unshared/derived/9-population-suicide-2.rds")
+
 
 # map of florida counties
 florida_counties_map <- ggplot2::map_data("county") %>% 
@@ -58,9 +61,9 @@ florida_counties_map <- ggplot2::map_data("county") %>%
     , ~stringr::str_replace_all(
       .
       ,c(
-        "de soto" = "desoto"
-        ,"st johns" ="saint johns"
-        ,"st lucie" = "saint lucie"
+        "de soto" = "Desoto"
+        ,"st johns" ="Saint Johns"
+        ,"st lucie" = "Saint Lucie"
       )
     )
   ) %>% tibble::as_tibble()
@@ -310,16 +313,48 @@ g3
 # Can we see the spike in mortality at 13-14 years of age?
 # For that we need to view by year mortality event? 
 
-d4 <- ds_suicide_by_age %>% 
+# d4 <- ds_suicide_by_age %>%
+
+d4 <- ds_population_suicide_2 %>% 
   mutate(age = as.integer(age)) %>% 
-  filter(age %in% c(10:40)) %>% 
+  filter(age %in% c(10:85)) %>%
+  filter(year %in% 2006:2018) %>% 
   group_by(year, age) %>% 
   summarize(
-    n_suicide        = sum(count, na.rm = T)
+    n_suicide        = sum(n_suicides, na.rm = T)
   ) %>% 
   ungroup()
+d4 %>% glimpse()
+
+
 
 g4 <- d4 %>% 
+  ggplot(aes(x = age, y = n_suicide))+
+  geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
+  geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
+  ggpmisc::stat_poly_eq(
+    formula = y ~ + x
+    ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+    ,parse = TRUE, color = "salmon"
+    # , vjust = 7
+  )+
+  geom_boxplot(aes( group = age), fill = NA)+
+  scale_x_continuous(breaks = seq(10,85,5))+
+  # scale_y_continuous(breaks = seq(0,100,10))+
+  geom_vline(xintercept = 24.5, size = 4, alpha = .1)+
+  geom_vline(xintercept = 17.5, size = 1, linetype = "dashed", color = "grey80")+
+  theme(
+    panel.grid.minor = element_blank()
+  )+
+  labs(
+    title = "Suicide events among person of the same age (2006-2018)"
+    ,x = "Age in years", y = "Count of suicides (all causes)"
+  )
+g4
+
+# ---- q1b-4 --------------
+g4 <- d4 %>% 
+  dplyr::filter(age %in% 10:40) %>% 
   ggplot(aes(x = age, y = n_suicide))+
   geom_smooth(method = "lm", se= F, size = 1,color = "salmon")+
   geom_smooth(method = "loess", se= F, size = 1,color = "cyan3")+
@@ -342,8 +377,7 @@ g4 <- d4 %>%
     ,x = "Age in years", y = "Count of suicides (all causes)"
   )
 g4
-
-# ---- q1b-4 -------------------------------------
+# ---- q1b-5 -------------------------------------
 # among 10-24 the increase across age is very linear
 
 g5 <- d4 %>% 

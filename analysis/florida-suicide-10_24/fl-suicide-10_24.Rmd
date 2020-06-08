@@ -130,8 +130,10 @@ We see a marked spike in deaths during the 17 to 18 transition.
 It appears the majority of deaths in 10-14 groups could be attributed to 13 and 14 year olds. 
 There appears to be a plateau following the age 25 for the next 15 years, which makes theoretical sence: after the turmoils of coming out of age and young adulthood, there life acquires a more stable character. 
 
-Also note, that when examining the trends within the `10-24` age group, the relationship bewtween the age and the suicide mortality is very well summarized by a linear model ($R^2 = .85$)
 ```{r q1b-4, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+Also note, that when examining the trends within the `10-24` age group, the relationship bewtween the age and the suicide mortality is very well summarized by a linear model ($R^2 = .85$)
+```{r q1b-5, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
 # Q2 - Yearly Breakdowns
