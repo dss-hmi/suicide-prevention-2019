@@ -100,13 +100,22 @@ ds1 <- ds0 %>%
                                     ,"Non-Hispanic" = "Not Hispanic or Latino")
   )
 
+ds2 <- ds1 %>% 
+  group_by(
+    year, county,county_code,gender,age,race_f, ethnicity_f
+  ) %>% 
+  summarise(
+    population = sum(population)
+  ) %>% ungroup()
+
+
 
 
 
 # save-to-disk ------------------------------------------------------------
 
 
-ds1 %>% readr::write_rds("./data-unshared/derived/1-greeted-population-3-cdc.rds"
+ds2 %>% readr::write_rds("./data-unshared/derived/1-greeted-population-3-cdc.rds"
                          ,compress = 'gz')
-ds1 %>% readr::write_csv("./data-unshared/derived/1-greeted-population-3-cdc.csv")
+ds2 %>% readr::write_csv("./data-unshared/derived/1-greeted-population-3-cdc.csv")
 

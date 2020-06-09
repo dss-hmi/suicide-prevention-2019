@@ -24,7 +24,6 @@ ds_suicide    <- readr::read_rds(path_file_input_1)
 # ---- tweak-data ------------------------------
 
 ds_population <- ds_population %>% 
-  select(-race,-ethnicity) %>% 
   mutate_at(
     "county", ~stringr::str_replace_all(.
                                         ,c(
@@ -36,11 +35,13 @@ ds_population <- ds_population %>%
 
 
 ds_suicide <- ds_suicide %>%
-  select(-race,-ethnicity) %>% 
   mutate(
     age    = if_else(age < 85,age,as.integer(86))
     ,cause = if_else(stringr::str_detect(cause,"Firearms"),"Firearms","Other")
-  ) 
+  ) %>% group_by(year,county,cause,gender,age,race_f,ethnicity_f) %>% 
+  summarise(.groups = "keep"
+    ,n_suicides = sum(n_suicides)
+  )
 
 
 # ---- join-data ---------------
