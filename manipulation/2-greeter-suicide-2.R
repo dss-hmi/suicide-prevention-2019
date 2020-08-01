@@ -81,17 +81,22 @@ ds0 <- ls_input %>% bind_rows(.id = "year") %>%
 # ---- tweek-data-1 ----
 # tweek data to allow factors to match other data sets
 
-ds1 <- ds0 %>% 
-  mutate(
-    race_f = forcats::fct_recode(race,
-                                 "Black & Other"  =  "Black" 
-                                 ,"Black & Other" =  "Other")
-    ,ethnicity_f = forcats::fct_recode(ethnicity,
-                                        "Hispanic"      = "Hispanic"
-                                        ,"Non-Hispanic" = "Non-Hispanic")
-  )
+# Update 2020-08-01
+# This should not be done here, but only after aggregating numbers
+# over the original definitions of race and ethnicity
+# ds1 <- ds0 %>% 
+#   mutate(
+#     race_f = forcats::fct_recode(race,
+#                                  "Black & Other"  =  "Black" 
+#                                  ,"Black & Other" =  "Other")
+#     ,ethnicity_f = forcats::fct_recode(ethnicity,
+#                                         "Hispanic"      = "Hispanic"
+#                                         ,"Non-Hispanic" = "Non-Hispanic")
+#   )
 
+# ds1 %>% group_by(race,race_f, ethnicity, ethnicity_f) %>% count()
 
+ds1 <- ds0
 
 
 # ---- save-to-disk ----------------------------
