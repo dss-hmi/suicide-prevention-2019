@@ -108,6 +108,7 @@ ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
 
 To begin, let us answer the most fundamental question: 
 
+rong spell 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
 ```{r q1-1, echo=TRUE, fig.height=6, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
