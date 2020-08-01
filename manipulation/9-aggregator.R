@@ -100,7 +100,7 @@ ds_population_suicide <- dplyr::left_join(
 )
 # NOTE: the order of dfs in join is correct. Otherwise, not complete population count
 ds_population_suicide %>% dplyr::glimpse()
-
+# ds_population_suicide %>% group_by(race,ethnicity) %>% count()
 # Save to disk
 # This data product (`ds_population_suicide`) is most generic that combines
 # suicide counts and population estimates. Rates can be computes from its data.
