@@ -68,9 +68,10 @@ florida_counties_map <- ggplot2::map_data("county") %>%
     )
   ) %>% tibble::as_tibble()
 
-# For quick verification of the annual cohort structure
-# ds_suicide_by_age <- readRDS("./data-unshared/derived/cause113-age10-age99/cause113-age10-age99.rds") 
-
+# ---- inspect-data --------------
+ds_population_suicide %>% glimpse()
+ds_population_suicide_2 %>% glimpse()
+ds_population_suicide_2 %>% distinct() %>%  glimpse()
 # ---- tweak-data-1 -----------------------------------------------------
 
 #mutate and filter data to include only ages 10-24
@@ -94,12 +95,22 @@ ds0 <- ds_population_suicide %>%
     n_population, n_suicides, everything()
   )
 
+ds0 %>% glimpse()
 
 ds1 <- ds_population_suicide_2 %>% 
   select(
     county, year, sex=gender, race=race_f, ethnicity = ethnicity_f,
     age, n_population = population, n_suicides, suicide_method = cause
-  )
+  ) %>% 
+  distinct() %>% 
+  slice(1:100000)
+ds1
+
+ds0 %>% skimr::skim()
+
+ds2 <- ds1 %>% 
+  filter(suicide_method != "None") %>% 
+  tidyr::pivot_wider(names_from = "suicide_method", values_from = "n_suicides")
 
 ds0 %>% dplyr::glimpse(70)
 ds1 %>% dplyr::glimpse(70)
