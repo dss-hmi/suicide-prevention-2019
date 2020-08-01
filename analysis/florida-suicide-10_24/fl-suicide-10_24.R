@@ -69,7 +69,7 @@ florida_counties_map <- ggplot2::map_data("county") %>%
   ) %>% tibble::as_tibble()
 
 # For quick verification of the annual cohort structure
-ds_suicide_by_age <- readRDS("./data-unshared/derived/cause113-age10-age99/cause113-age10-age99.rds") 
+# ds_suicide_by_age <- readRDS("./data-unshared/derived/cause113-age10-age99/cause113-age10-age99.rds") 
 
 # ---- tweak-data-1 -----------------------------------------------------
 
@@ -79,7 +79,7 @@ ds0 <- ds_population_suicide %>%
   dplyr::mutate(
     year          = as.integer(year)
     ,sex           = factor(sex,levels = c("Male", "Female"))
-    ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
+    # ,race_ethnicity = factor(paste0(race, " + ", ethnicity))
     ,race          = factor(race)
     ,ethnicity     = factor(ethnicity)
     ,age_group     = factor(age_group
@@ -88,11 +88,22 @@ ds0 <- ds_population_suicide %>%
     )
     ,n_population  = as.integer(n_population)
     ,n_suicides    = as.integer(n_suicides)
-  ) %>% filter(age_group %in% age_groups_10_24)
+  ) %>% filter(age_group %in% age_groups_10_24) %>% 
+  select(
+    county, year, sex, age_group, race, ethnicity, 
+    n_population, n_suicides, everything()
+  )
 
+
+ds1 <- ds_population_suicide_2 %>% 
+  select(
+    county, year, sex=gender, race=race_f, ethnicity = ethnicity_f,
+    age, n_population = population, n_suicides, suicide_method = cause
+  )
 
 ds0 %>% dplyr::glimpse(70)
-
+ds1 %>% dplyr::glimpse(70)
+# ---- inspect-data ---------------------------
 
 # ---- declare-functions----------------------------------------
 
