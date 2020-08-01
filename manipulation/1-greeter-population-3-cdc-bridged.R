@@ -89,20 +89,23 @@ ds0 <- ls_input %>% bind_rows(.id = "year") %>%
 ds0 %>% group_by(ethnicity) %>% 
   count()
 
-ds1 <- ds0 %>% 
-  mutate(
-    race_f = forcats::fct_recode(race,
-                                "Black & Other"  =  "American Indian or Alaska Native" 
-                                ,"Black & Other" =  "Asian or Pacific Islander"        
-                                ,"Black & Other" =  "Black or African American")
-    ,ethnicity_f = forcats::fct_recode(ethnicity,
-                                    "Hispanic"      = "Hispanic or Latino"
-                                    ,"Non-Hispanic" = "Not Hispanic or Latino")
-  )
+# Update 2020-08-01
+# This should not be done here, but only after aggregating numbers
+# over the original definitions of race and ethnicity
+# ds1 <- ds0 %>% 
+#   mutate(
+#     race_f = forcats::fct_recode(race,
+#                                 "Black & Other"  =  "American Indian or Alaska Native" 
+#                                 ,"Black & Other" =  "Asian or Pacific Islander"        
+#                                 ,"Black & Other" =  "Black or African American")
+#     ,ethnicity_f = forcats::fct_recode(ethnicity,
+#                                     "Hispanic"      = "Hispanic or Latino"
+#                                     ,"Non-Hispanic" = "Not Hispanic or Latino")
+#   )
 
 
 
-
+ds1 <- ds0
 # save-to-disk ------------------------------------------------------------
 
 
