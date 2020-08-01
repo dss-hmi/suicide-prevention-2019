@@ -20,11 +20,16 @@ path_file_input_1 <- "./data-unshared/derived/2-greeted-suicide-2.rds"
 ds_population <- readr::read_rds(path_file_input_0)
 ds_suicide    <- readr::read_rds(path_file_input_1)
 
+# ds_suicide %>% glimpse()
+# ds_population %>% glimpse()
+# ---- compare-data -----------------
+
+ds_population %>% distinct(race,ethnicity) 
+ds_suicide %>% distinct(race,ethnicity) 
 
 # ---- tweak-data ------------------------------
 
-ds_population <- ds_population %>% 
-  select(-race,-ethnicity) %>% 
+ds_pop <- ds_population %>% 
   mutate_at(
     "county", ~stringr::str_replace_all(.
                                         ,c(
@@ -32,37 +37,93 @@ ds_population <- ds_population %>%
                                           ,"St. Lucie" = "Saint Lucie"
                                           ,"DeSoto"    = "Desoto"
                                         ))
+  ) %>% 
+   mutate(
+      race2 = forcats::fct_recode(race,
+                                  "Black & Other"  =  "American Indian or Alaska Native"
+                                  ,"Black & Other" =  "Asian or Pacific Islander"
+                                  ,"Black & Other" =  "Black or African American")
+      ,race3 = forcats::fct_recode(race,
+                                  "Other"  =  "American Indian or Alaska Native"
+                                  ,"Other" =  "Asian or Pacific Islander"
+                                  ,"Black" =  "Black or African American")
+      ,ethnicity = forcats::fct_recode(ethnicity,
+                                      "Hispanic"      = "Hispanic or Latino"
+                                      ,"Non-Hispanic" = "Not Hispanic or Latino")
+    ) %>% 
+  rename(race4 = race, sex = gender) %>% 
+  mutate_at(c("race2","race3","ethnicity"), as.character)
+ds_pop %>% distinct(race4, race3, race2, ethnicity)
+ds_pop %>% glimpse()
+
+ds_sui <- ds_suicide %>%
+  mutate(  
+    age    = if_else(age < 85,age,as.integer(86))
+    ,cause = forcats::fct_recode(cause,
+      "Firearms" = "Suicide By Firearms Discharge (X72-X74)",
+      "Other" = "Suicide By Other & Unspecified Means & Sequelae (X60-X71, X75-X84, Y87.0)"
+    )
+    ,race3 = race
+    ,race2 = forcats::fct_recode(race3,
+                                 "Black & Other" = "Black",
+                                 "Black & Other" = "Other"
+                                 )
+  )  %>% 
+  mutate_at(c("race2"), as.character) %>% 
+  rename(sex = gender) %>% 
+  select(-race)
+  
+ds_sui %>% glimpse()
+ds_sui %>% group_by(cause) %>% count()
+ds_sui %>% distinct(race3, race2, ethnicity) 
+
+# ---- prepare-for-joining -------------------
+# `race` has several definitions. Therefore, before joining, we must aggregate
+# both files using the compatible aggregation
+
+ds_pop_agg <- ds_pop %>% 
+  group_by(county, year, sex, age, race3, ethnicity) %>% 
+  summarize(
+    n_population = sum(population, na.rm = T)
   )
 
+ds_pop_agg
 
-ds_suicide <- ds_suicide %>%
-  select(-race,-ethnicity) %>% 
+ds_sui_agg <- ds_sui %>% 
+  group_by(county, year, sex, age, race3, ethnicity, cause) %>% 
+  summarize(
+    n_suicides = sum(n_suicides, na.rm = T)
+  ) %>% 
+  tidyr::pivot_wider(names_from = "cause", values_from = "n_suicides") %>% 
+  rename(
+    n_firearms = Firearms, n_other = Other
+  ) %>% 
   mutate(
-    age    = if_else(age < 85,age,as.integer(86))
-    ,cause = if_else(stringr::str_detect(cause,"Firearms"),"Firearms","Other")
-  ) 
-
+    n_suicides = sum( n_firearms, n_other, na.rm=T)
+  )
+ds_sui_agg
 
 # ---- join-data ---------------
 
-ds0 <- ds_population %>% 
-  left_join(ds_suicide, by = c("year"
+ds0 <- ds_pop_agg %>% 
+  left_join(ds_sui_agg, by = c("year"
                                ,"county"
-                               ,"gender"
+                               ,"sex"
                                ,"age"
-                               ,"race_f"
-                               ,"ethnicity_f")) %>% 
-  mutate_at("cause", ~stringr::str_replace_na(.,"None")) %>% 
-  mutate_at("n_suicides", ~stringr::str_replace_na(.,0)) %>% 
-  mutate_at("n_suicides", as.integer) %>% 
-  mutate(
-    race_ethnicity  = paste0(race_f, " + ", ethnicity_f)
-    ,race_ethnicity = forcats::as_factor(race_ethnicity) 
-    ,cause          = forcats::as_factor(cause)
-    ,gender         = forcats::as_factor(gender)
-  )
+                               ,"race3"
+                               ,"ethnicity")) %>% 
+  mutate_at(c("n_firearms","n_other","n_suicides"), ~stringr::str_replace_na(.,0)) %>% 
+  mutate_at(c("n_firearms","n_other","n_suicides"), as.integer) %>% 
+  ungroup()
+  
+ds1 <- ds0 %>%   
+  mutate_at(c("county", "sex","race3","ethnicity"), forcats::as_factor) %>% 
+  select(county, year, sex, age, race3, ethnicity, n_population, n_suicides, 
+         n_firearms, n_other)
 
-ds0 %>% readr::write_rds("./data-unshared/derived/9-population-suicide-2.rds", compress = "gz")
+ds1 %>% glimpse()
+
+ds1 %>% readr::write_rds("./data-unshared/derived/9-population-suicide-2.rds", compress = "gz")
 
 
 # ----- test-data ----------------
