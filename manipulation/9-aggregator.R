@@ -56,8 +56,10 @@ ds_suicide    <- ds_suicide %>%
   ) %>% 
   dplyr::select(
     "county", "year", "sex", "race", "ethnicity", "age_group",dplyr::everything()
-  ) # because we want the same order of columns in both datasets
+  )   # because we want the same order of columns in both datasets
+  
 
+ds_suicide %>% group_by(n_suicides) %>% count()
 # ---- inspect-data  ---------------------------
 ds_suicide %>% dplyr::distinct(mortality_cause) 
 
@@ -93,13 +95,19 @@ ds_suicide_wide %>% dplyr::glimpse()
 rm(d_suicide, d_suicide_wide)
 
 
+numeric_vars <- setdiff(names(ds_suicide_wide),c("county", "year", "sex", "race", "ethnicity", "age_group"))
+
 ds_population_suicide <- dplyr::left_join(
   ds_population %>% dplyr::filter(year %in% unique(ds_suicide_wide$year)) # only for available counts
   ,ds_suicide_wide
   ,by = c("county", "year", "sex", "race", "ethnicity", "age_group")
-)
+) %>% 
+  mutate_at(numeric_vars, ~stringr::str_replace_na(.,0)) %>% 
+  mutate_at(numeric_vars, as.integer)
 # NOTE: the order of dfs in join is correct. Otherwise, not complete population count
 ds_population_suicide %>% dplyr::glimpse()
+ds_population_suicide %>% skimr::skim_without_charts()
+
 # ds_population_suicide %>% group_by(race,ethnicity) %>% count()
 # Save to disk
 # This data product (`ds_population_suicide`) is most generic that combines
