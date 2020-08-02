@@ -1,6 +1,8 @@
 ---
 title: "Florida Youth Suicide"
-author: "Andriy V. Koval & Kyle Belanger"
+authors:
+  - Andriy Koval 
+  - Kyle Belanger
 date: "April 30, 2020"
 output:
   html_document:
@@ -58,13 +60,13 @@ This blogpost explores youth (ages 10 - 24) suicide trends in Florida between 20
 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 
-> Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
+> Q2 - What ages are most vulnerable to suicide? 
 
-> Q2 - How do means of suicide compare in each year? 
+> Q3 - What are the most prevalent methods of youth suicide? 
 
-> Q3 - How do trends compare across the means of suicide?
+> Q4 - How do trends compare across the methds of suicide?
 
-> Q4 - How do trends compare by race, sex, and means of means of suicide?
+> Q5 - How do trends compare by race, sex, and methods of suicide?
 
 # Environment
 
@@ -86,60 +88,89 @@ Definitions of custom functions.
 
 # Data  
 
-The data comes from Florida Health Charts and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. The groomed dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
+The suicide data comes from [Florida Health Charts](http://www.flhealthcharts.com/charts/default.aspx) and contains suicide mortality between 2006 and 2017, broken down by suicide means, county, sex, age, and race. Additionally, we  use [Bridged-Race Population Estimates](https://wonder.cdc.gov/bridged-race-population.html) to help with age-specific rate calculations.  
 
-```{r load-data, echo=echoChunks, results='show', message=FALSE}
+
+The groomed dataset is [available for download here](https://github.com/dss-hmi/suicide-prevention-2019/blob/b225979bad5e4728d7a594fd455ab929d3ccafb0/data-public/derived/9-population-suicide.csv).  
+
+```{r load-data, echo=echoChunks, results='hide', message=FALSE, cache = TRUE}
+```
+
+```{r tweak-data-1, echo=echoChunks, results='hide', message=FALSE, cache=TRUE}
 ```
 
 
-## Data Tweaks
-This dataset already comes  to this report well-groomed, so only some minor housekeeping tweaks are necessary to make graphing more convenient. The data is also filtered to only include individuals between ages 10 and 24.
-```{r tweak-data-1, echo=echoChunks, results='show', message=FALSE,cache=TRUE}
-ds0 %>% glimpse()
+The unit of analysis is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. For convenience, we create a combined variable `race_ethnicity`.
+
+```{r inspect-data-1, echo=echoChunks, results='show', message=FALSE, cache = TRUE}
 ```
 
-The unit of analysis of this dataset is defined by the first 6 variables: `county`, `year`, `sex`, `race`, `ethnicity`, `age_group`. For each unit, there are two measures: the number of people (`n_population`) and the number of observed suicide events (`n_suicides`). The latter is broken down by 7 means of suicide. For convenience, we create a combined variable `race_ethnicity`.
+Another data set, `ds2`, augmented with CDC population estimates,
+has very similar structure, but differs from `ds1` in three respects:   
+1. `age` instead of `age_group`, providing higher resolution   
 
+2. Mortality cause grouped into two categories `fireamrs` and `other`, as opposed to a more granular, 7-category classification of mortality cause in `ds1`  
+
+3. Covers years `2000-2018` as opposed to `2006-2018` in `ds1`
+
+These differences arose from certain limitations in data procurement. We use `ds2` to explore age difference with higher resolution, at the expense of reducing resolution in mortality cause. 
+
+The combined variable `race_ethinicity` is the product of the two respective components:  
 ```{r}
-ds0 %>% group_by(race, ethnicity, race_ethnicity) %>% count() %>% select(-n)
+ds1 %>% distinct(race, ethnicity, race_ethnicity) 
 ```
 
 # Q1 - Overall Trend
 
 To begin, let us answer the most fundamental question: 
 
-rong spell 
 > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
+
+To aid interpretation we have created an additional metric `1 out of`, which is a direct inverse of `Rate per 100K`, but offers a different perspective on the magnitude of the estimate. 
 
 ```{r q1-1, echo=TRUE, fig.height=6, fig.width=9, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-> Q1b - How do trends in population growth, suicide count and suicide rate compare among age group? 
+The number of youth suicides increased by `98` cases during this time period, constituting a `48%` growth. If in `2006` one out every `17.5` thousands committed suicide, in `2017` one out of every `12` thousand persons between age `10` and `24` took their own life. The demographic growth does not explain the increased number of suicide cases: the rate per `100,000` increased by `r scales::percent((8.34-5.74)/5.74)` from `5.74` to `8.34`.
+
+Given these general trends for the entire `10 - 24` group, we would like to understand how  trends in population growth, suicide count and suicide rate compare among age group:
 
 ```{r q1b-1, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-The `10-14` age group witnesses quite a dramatic decrease in the `One out of` measure, dwarfing the scale for the other two age groups. We recreate it separately:
+Note the sharp change in population count from `2011` to `2013`. The `15-19` group dropped, while the `20-24` group grew quite dramatically.  A closer examination, shows that while this demographic growth was present in all racial groups, it was particularly pronounced among  `Non-white + Non-Hispanic` youth. One possible explanation could be attributed to cohort effect: disproportionate amount of those in `15-19` group transitioned to `20-24` group during these years, but were not matched by the similar number of `10-14`year old transitioning into `15-19` group. Another possible explanation could reside in migration patterns. 
+
+```{r q1b-1a, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
+```
+
+The `10-14` age group exhibits quite a dramatic decrease in the `One out of` measure, dwarfing the scale for the other two age groups. We recreate it separately:
 
 ```{r q1b-2, echo=TRUE, fig.height=3, fig.width=8, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+# Q2 - Suicide across lifespan
+
+> Q2 - What ages are most vulnerable to suicide?  
+
 To explore whether certain age transitions are associated with increased suicidality, we plot the distribution of suicide events within each year of age among the observed years (2006 - 2018). 
 ```{r q1b-3, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE, warning=FALSE}
 ```
-We see a marked spike in deaths during the 17 to 18 transition. 
-It appears the majority of deaths in 10-14 groups could be attributed to 13 and 14 year olds. 
-There appears to be a plateau following the age 25 for the next 15 years, which makes theoretical sence: after the turmoils of coming out of age and young adulthood, there life acquires a more stable character. 
 
+There appears to be two plateau across the lifespan, each preceeded by sharp increase: the first from ages `25` to `40` and another from ages `45` to `60`, after which the frequency of suicide declines monotonically. 
+
+We see a marked spike in deaths during the 17 to 18 transition. 
+It appears the majority of deaths in 10-14 groups could be attributed to 13 and 14 year olds. (hyphenated line). The plateau following the age 25 makes theoretical sense: after the turmoils of coming out of age and young adulthood, there life acquires a more stable character.
 ```{r q1b-4, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
-Also note, that when examining the trends within the `10-24` age group, the relationship bewtween the age and the suicide mortality is very well summarized by a linear model ($R^2 = .85$)
+Also note, that when examining the trends within the `10-24` age group, the relationship between the age and the suicide mortality is very well summarized by a linear model ($R^2 = .85$): 
 ```{r q1b-5, echo=TRUE, fig.height=7, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
-# Q2 - Yearly Breakdowns
+# Q3 - Prevalent Methods
 
-> Q2 - How do means of suicide compare in each year? 
+> Q3 - What are the most prevalent methods of youth suicide? 
+
+Florida Health Charts captures the causes of suicide mortality using `7` categories. We examine the raw event count and rates per `100,000` rates in the following two graphs:
 
 ```{r q2-1, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
@@ -148,12 +179,13 @@ Also note, that when examining the trends within the `10-24` age group, the rela
 ```{r q2-2, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
 
+Notice that two methods `gun` and `hanging` consistently explain the most cases of suicide in this age group. Going further, we will collapse the other `5` categories into a single `non-gun/hang`, so that we have sufficient `n` to compute reliable rates. 
 
 
+# Q4 - Methods across Years 
 
-# Q3 - Means across Years 
 
-> Q3 - How do trends compare across the means of suicide?
+> Q4 - How do trends compare across the methds of suicide?
 
 ```{r q3-1, echo=TRUE, fig.height=5, fig.width=10, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
@@ -164,9 +196,9 @@ Also note, that when examining the trends within the `10-24` age group, the rela
 
 When ignoring race and ethnicity for age group 10-24 average increase of suicide mortality from gun (+0.1) per year is simaliar to average increase from non-gun means (+0.105)
 
-# Q4 - Sex and Ethnicity
+# Q5 - Sex and Ethnicity
 
-> Q4 - How do trends compare by race, sex, and means of means of suicide?
+> Q5 - How do trends compare by race, sex, and means of means of suicide?
 
 ```{r q4-1, echo=TRUE, fig.height=7, fig.width=11, out.width = "900px", message=FALSE, results='show',cache=TRUE}
 ```
