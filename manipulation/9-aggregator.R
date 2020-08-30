@@ -113,7 +113,7 @@ ds_population_suicide %>% skimr::skim_without_charts()
 # This data product (`ds_population_suicide`) is most generic that combines
 # suicide counts and population estimates. Rates can be computes from its data.
 ds_population_suicide %>% 
-  # readr::write_rds("./data-unshared/derived/9-population-suicide.rds")
+  readr::write_rds("./data-unshared/derived/9-population-suicide.rds",compress = "gz")
   readr::write_csv("./data-unshared/derived/9-population-suicide.csv")
 
 ds <- readr::read_csv("./data-unshared/derived/9-population-suicide.csv")
