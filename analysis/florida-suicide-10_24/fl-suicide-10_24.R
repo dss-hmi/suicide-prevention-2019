@@ -16,7 +16,7 @@ source("./scripts/common-functions.R")
 # ---- declare-globals ----------------------------------------
 library(ggplot2)
 # you will need to replace this path to the location where you stored your data file
-path_file_input <- "data-unshared/derived/9-population-suicide.csv"
+path_file_input <- "data-unshared/derived/9-population-suicide.rds"
 path_file_input2 <- "./data-unshared/derived/9-population-suicide-2.rds"
 
 # to help with sorting the levels of the `age_group` factor
@@ -51,7 +51,7 @@ ggplot2::theme_set(
 # ---- load-data ---------------------------------------------------------------
 # data prepared by "./manipulation/9-aggregator.R" combining population estimates and suicide counts
 
-ds_population_suicide <-   readr::read_csv(path_file_input)
+ds_population_suicide <-   readr::read_rds(path_file_input)
 ds_population_suicide_2 <-   readr::read_rds(path_file_input2)
 
 
@@ -134,6 +134,8 @@ ds2 <- ds_population_suicide_2 %>%
 ds1 %>% glimpse()
 ds2 %>% glimpse()
 # ---- inspect-data-2 ---------------------------
+ds1 %>% distinct(race, ethnicity, race_ethnicity)
+ds2 %>% distinct(race, ethnicity, race_ethnicity)
 
 # ---- declare-functions----------------------------------------
 
@@ -227,7 +229,7 @@ compute_rate <- function( d  ,grouping_frame  ,wide = FALSE ){
 
 
 # ---- q1-1 ---------------------------------------------------------
-
+# > Q1 - What is the overall trajectory of youth suicides in FL between 2006 and 2017? 
 d1 <- ds1 %>% 
   compute_rate("year") %>% 
   filter(suicide_cause == "suicide") %>% 
@@ -248,8 +250,6 @@ labels <- c(
   ,"rate_suicides" = "Rate per 100K"
   ,"n_out_of"      = "1 out of"
 )
-
-
 
 g1 <- d1 %>% 
   ggplot(aes(x = year, y = value)) +
@@ -275,7 +275,7 @@ g1 <- d1 %>%
 g1
 
 
-# ---- q1b-1 -----------------------------------------------------------
+# ---- q1-2 -----------------------------------------------------------
 
 d2 <- ds1 %>% 
   compute_rate(c("year","age_group")) %>% 
@@ -308,7 +308,8 @@ g2 <- d2 %>%
   geom_point(shape = 21, size = 3, alpha = 0.8) +
   geom_smooth(method = "lm", se = FALSE, color = "#1B9E77") +
   facet_grid(metric ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::comma, expand = expansion(mult=c(.2,.5))) +
+  # scale_y_continuous(labels = scales::comma) +
   scale_x_continuous(breaks = seq(2007,2017,3), minor_breaks = seq(2006,2017,1)) +
   ggpmisc::stat_poly_eq(formula = y ~ + x 
                         ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
@@ -323,51 +324,7 @@ g2 <- d2 %>%
 
 g2
 
-# ---- q1b-1a --------
-d2 <- ds1 %>% 
-  compute_rate(c("year","age_group","race_ethnicity")) %>% 
-  filter(suicide_cause == "suicide") %>% 
-  select(-suicide_cause) %>% 
-  mutate(
-    n_population = n_population/1000000
-  ) %>% 
-  distinct()
- 
-labels <- c(
-  "Black & Other + Hispanic"     = "Black & Other \n Hispanic"
-  ,"Black & Other + Non-Hispanic"  = "Black & Other \n Non-Hispanic"
-  ,"White + Hispanic" = "White \n Hispanic"
-  ,"White + Non-Hispanic"      = "White \n Non-Hispanic"
-  ,"10-14"         =   "10-14"   
-  ,"15-19"         =   "15-19"    
-  ,"20-24"         =   "20-24" 
-  
-)
-
-g2 <- d2 %>% 
-  ggplot(aes(x = year, y = n_population, color = race_ethnicity)) +
-  geom_smooth(method = "lm", se = FALSE, color = "grey70",alpha =.5) +
-  geom_line(alpha = 0.99) +
-  geom_point(shape = 21, size = 3, alpha = 1) +
-  facet_grid(race_ethnicity ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
-  # scale_color_viridis_d(begin = .0, end = .7, option = "viridis")+
-  scale_y_continuous(labels = scales::comma) +
-  scale_x_continuous(breaks = seq(2007,2017,3), minor_breaks = seq(2006,2017,1)) +
-  ggpmisc::stat_poly_eq(formula = y ~ + x 
-                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
-                        ,parse   = TRUE
-                        ,label.x = 0.05
-                        ,label.y = 1
-                        ,color   = "#D95F02") +
-  labs(
-    x  = NULL
-    ,y = "Population in millions"
-    ,color = NULL
-  )+theme(legend.position = "bottom")
-
-g2
-
-# ---- q1b-2 -----------------------------------------------------------
+# ---- q1-3 -----------------------------------------------------------
 
 g3 <- d2 %>% 
   dplyr::filter(age_group %in% c("15-19","20-24")) %>% 
@@ -390,10 +347,58 @@ g3 <- d2 %>%
     ,y = NULL
   )
 
-g3+labs(title = "One ouf of how many committ suicide? ")
+g3+labs(title = "One ouf of how many commit suicide? ")
+
+# ---- q1-4 --------
+d3 <- ds1 %>% 
+  compute_rate(c("year","age_group","race_ethnicity")) %>% 
+  filter(suicide_cause == "suicide") %>% 
+  select(-suicide_cause) %>% 
+  mutate(
+    n_population = n_population/1000000
+  ) %>% 
+  distinct()
+ 
+labels <- c(
+  "Black & Other + Hispanic"     = "Black & Other \n Hispanic"
+  ,"Black & Other + Non-Hispanic"  = "Black & Other \n Non-Hispanic"
+  ,"White + Hispanic" = "White \n Hispanic"
+  ,"White + Non-Hispanic"      = "White \n Non-Hispanic"
+  ,"10-14"         =   "10-14"   
+  ,"15-19"         =   "15-19"    
+  ,"20-24"         =   "20-24" 
+  
+)
+
+g2 <- d3 %>% 
+  ggplot(aes(x = year, y = n_population, color = race_ethnicity)) +
+  geom_smooth(method = "lm", se = FALSE, color = "grey70",alpha =.5) +
+  geom_line(alpha = 0.99) +
+  geom_point(shape = 21, size = 3, alpha = 1) +
+  facet_grid(race_ethnicity ~ age_group, scales = "free_y", labeller = as_labeller(labels)) +
+  # scale_color_viridis_d(begin = .0, end = .7, option = "viridis")+
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks = seq(2007,2017,3), minor_breaks = seq(2006,2017,1)) +
+  ggpmisc::stat_poly_eq(formula = y ~ + x 
+                        ,aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
+                        ,parse   = TRUE
+                        ,label.x = 0.05
+                        ,label.y = 1
+                        ,color   = "#D95F02") +
+  labs(
+    x  = NULL
+    ,y = "Population in millions"
+    ,color = NULL
+    ,title = "Population growth among Florida youth (10-24)"
+  # scale_color_viridis_d(option = "volcano", begin = .0 , end = .8)
+  )+theme(legend.position = "bottom")
+
+g2
 
 
-# ---- q1b-3 -------------------------------------
+
+
+# ---- q2-1 -------------------------------------
 # Hypothesis: does entering high-school associated with increased suicide events?
 # Can we see the spike in mortality at 13-14 years of age?
 # For that we need to view by year mortality event? 
@@ -432,12 +437,12 @@ g4 <- d4 %>%
     panel.grid.minor = element_blank()
   )+
   labs(
-    title = "Suicide events among person of the same age (2006-2018)"
+    title = "Suicide events among persons of the same age (2006-2018)"
     ,x = "Age in years", y = "Count of suicides (all causes)"
   )
 g4
 
-# ---- q1b-4 --------------
+# ---- q2-2 --------------
 g4 <- d4 %>% 
   dplyr::filter(age %in% 10:40) %>% 
   ggplot(aes(x = age, y = n_suicide))+
@@ -462,7 +467,7 @@ g4 <- d4 %>%
     ,x = "Age in years", y = "Count of suicides (all causes)"
   )
 g4
-# ---- q1b-5 -------------------------------------
+# ---- q2-3 -------------------------------------
 # among 10-24 the increase across age is very linear
 
 g5 <- d4 %>% 
@@ -492,7 +497,7 @@ g5 <- d4 %>%
 g5
 
 
-# ---- q2-1 -------------------------------------------
+# ---- q3-1 -------------------------------------------
 
 #yearly count of suicide means 
 
@@ -532,7 +537,7 @@ g6 <- d6 %>%
   )
 g6
 
-# ---- q2-2 -------------------------------------------
+# ---- q3-2 -------------------------------------------
 
 g7 <-  d6 %>%  
   filter(!suicide_cause %in% c("suicide","non_gun_hang")) %>% 
@@ -555,7 +560,7 @@ g7 <-  d6 %>%
 g7
 
 
-# ---- q3-1 --------------------------------------------------------
+# ---- q4-1 --------------------------------------------------------
 
 major_causes <- c(
   "gun"           = "Gun"
@@ -587,12 +592,14 @@ g8 <- d6 %>%
   scale_color_brewer(palette = "Dark2") +
   labs(
     x = NULL
-    ,y = " Count"
+    ,y = "Count"
+    , title = "Florida suicide mortality among youth (10-24) by means of death"
+    , color = "Method"
   ) 
 
 g8
 
-# ---- q3-2 -----------------------------------------------------------------
+# ---- q4-2 -----------------------------------------------------------------
 
 g9 <- d6 %>% 
   filter(suicide_cause %in% names(major_causes)) %>%
@@ -614,12 +621,14 @@ g9 <- d6 %>%
   scale_color_brewer(palette = "Dark2") +
   labs(
     x = NULL
-    ,y = " Rate"
+    ,y = "Rate per 100,000"
+    , title = "Florida suicide mortality among youth (10-24) by means of death"
+    , color = "Method"
   )
 
 g9
 
-# ---- q4-1---------------------------------------------
+# ---- q5-1---------------------------------------------
 
 d10 <- ds1 %>% 
   compute_rate(c("year","sex","race_ethnicity")) %>% 
@@ -627,7 +636,7 @@ d10 <- ds1 %>%
   mutate(
     suicide_cause = factor(suicide_cause
                            ,levels = c("gun","hanging","non_gun_hang")
-                           ,labels = c("Gun","Hang","Other"))
+                           ,labels = c("Gun","Hang","Non Gun/Hang"))
   )
   
 
@@ -650,13 +659,13 @@ g10 <- d10 %>%
   ) +
   labs(
     x      = NULL
-    ,y     = NULL
+    ,y     = "Rate per 100,000"
     ,title = "Rate of Suicides by Race and Sex"
     ,color = "Sex"
   )
 g10
 
-# ---- q4-2 -----------
+# ---- q5-2 -----------
 
 g11 <- d10 %>% 
   ggplot(aes(x = year, y = rate_suicides, color = suicide_cause)) +
@@ -666,7 +675,7 @@ g11 <- d10 %>%
   scale_x_continuous(breaks = seq(2007,2017,5), minor_breaks = seq(2006,2017,1)) +
   scale_color_brewer(palette = "Dark2") +
   facet_grid(sex ~race_ethnicity
-             # , scales = "free"
+             , scales = "free"
   ) +
   ggpmisc::stat_poly_eq(
     formula = y ~ + x
@@ -676,9 +685,9 @@ g11 <- d10 %>%
   ) +
   labs(
     x      = NULL
-    ,y     = NULL
+    ,y     = "Rate per 100,000"
     ,title = "Rate of Suicides by Race and Sex"
-    ,color = "Suicide Cause"
+    ,color = "Method"
   )
 g11
 
